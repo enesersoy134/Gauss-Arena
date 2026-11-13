@@ -40,9 +40,7 @@ export default function MultiSelectBubble({
     const isExactMatch =
       correctlySelected === totalCorrect && wronglySelected === 0;
 
-    const accuracyRaw =
-      totalCorrect > 0 ? (correctlySelected - wronglySelected) / totalCorrect : 0;
-    const accuracy = Math.max(0, Math.min(1, Number(accuracyRaw.toFixed(2))));
+    const accuracy = isExactMatch ? 1 : 0;
 
     const res = { isCorrect: isExactMatch, accuracy };
     setResult(res);

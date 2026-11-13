@@ -64,6 +64,7 @@ export interface MatchSettings {
  */
 export interface BaseQuestion<T = unknown> {
   id: string;
+  examType?: 'TYT' | 'AYT' | string;
   subject: SubjectType;
   topic: string;
   type: QuestionType;
@@ -399,3 +400,6 @@ export type Question =
   | MatrixToggleQuestion
   | SliderQuestion
   | HotspotQuestion;
+
+export * from './kahoot';
+

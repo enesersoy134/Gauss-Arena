@@ -78,19 +78,22 @@ export function calculateQuestionScore({
   timeLimitSeconds,
   elapsedTimeMs,
   isCorrect,
-  streak = 0
+  streak = 0,
+  accuracy
 }: {
   basePoints: number;
   timeLimitSeconds: number;
   elapsedTimeMs: number;
   isCorrect: boolean;
   streak?: number;
+  accuracy?: number;
 }): {
   points: number;
   speedBonus: number;
   streakMultiplier: number;
 } {
-  if (!isCorrect) {
+  const effectiveAcc = isCorrect ? 1 : Math.max(0, Math.min(1, typeof accuracy === 'number' ? accuracy : 0));
+  if (effectiveAcc <= 0) {
     return { points: 0, speedBonus: 0, streakMultiplier: 1.0 };
   }
 
@@ -103,13 +106,15 @@ export function calculateQuestionScore({
 
   // Seri / Combo Çarpanı (3+ seri -> x1.25, 2 seri -> x1.10)
   let streakMultiplier = 1.0;
-  if (streak >= 3) {
-    streakMultiplier = 1.25;
-  } else if (streak >= 2) {
-    streakMultiplier = 1.1;
+  if (isCorrect) {
+    if (streak >= 3) {
+      streakMultiplier = 1.25;
+    } else if (streak >= 2) {
+      streakMultiplier = 1.1;
+    }
   }
 
-  const points = Math.round((basePoints + speedBonus) * streakMultiplier);
+  const points = Math.round((basePoints + speedBonus) * streakMultiplier * effectiveAcc);
 
   return {
     points,

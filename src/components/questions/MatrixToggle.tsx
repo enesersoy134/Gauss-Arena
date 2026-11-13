@@ -22,6 +22,25 @@ export const MatrixToggle: React.FC<QuestionComponentProps<MatrixToggleQuestion>
   });
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [submissionStats, setSubmissionStats] = useState<{
+    correct: number;
+    total: number;
+    accuracy: number;
+    isCorrect: boolean;
+  } | null>(null);
+
+  // Soru değiştiğinde sıfırla
+  React.useEffect(() => {
+    setIsSubmitted(false);
+    setSubmissionStats(null);
+    const initial: Record<string, boolean | null> = {};
+    rows.forEach((r) => {
+      columns.forEach((c) => {
+        initial[`${r.id}_${c.id}`] = null;
+      });
+    });
+    setCellStates(initial);
+  }, [question.id]);
 
   // Hücreye tıklandığında döngü: null -> true -> false -> true
   const handleToggleCell = (rowId: string, colId: string) => {
@@ -65,19 +84,25 @@ export const MatrixToggle: React.FC<QuestionComponentProps<MatrixToggleQuestion>
     const accuracy = totalCells > 0 ? correctCount / totalCells : 0;
     const isCorrect = correctCount === totalCells;
 
+    setSubmissionStats({
+      correct: correctCount,
+      total: totalCells,
+      accuracy,
+      isCorrect,
+    });
     setIsSubmitted(true);
     onSubmit({ isCorrect, accuracy });
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-6 select-none font-sans">
+    <div className="w-full flex flex-col items-center gap-5 select-none font-sans">
       {/* 1. TABLO KAPSAYICISI (Responsive Yatay Kaydırma) */}
       <div className="w-full overflow-x-auto pb-2 px-1">
         <div className="min-w-max mx-auto flex flex-col gap-3">
           {/* TABLO BAŞLIK SATIRI (SÜTUNLAR) */}
           <div className="flex items-center gap-3">
             {/* Sol Köşe Boşluk / Başlık */}
-            <div className="w-56 p-3 rounded-xl bg-isler-deep/90 border border-isler-primary/20 flex items-center justify-start text-xs font-poppins font-bold text-isler-muted uppercase tracking-wider">
+            <div className="w-36 sm:w-52 shrink-0 p-3 rounded-xl bg-isler-deep/90 border border-isler-primary/20 flex items-center justify-start text-xs font-poppins font-bold text-isler-muted uppercase tracking-wider">
               Hücre / Kategori
             </div>
 
@@ -85,7 +110,7 @@ export const MatrixToggle: React.FC<QuestionComponentProps<MatrixToggleQuestion>
             {columns.map((col) => (
               <div
                 key={col.id}
-                className="w-56 p-3 rounded-xl bg-isler-deep/90 border border-isler-primary/20 flex items-center justify-center text-center text-sm font-poppins font-bold text-white shadow-sm"
+                className="w-40 sm:w-52 shrink-0 p-3 rounded-xl bg-isler-deep/90 border border-isler-primary/20 flex items-center justify-center text-center text-xs sm:text-sm font-poppins font-bold text-white shadow-sm"
               >
                 {col.title}
               </div>
@@ -99,11 +124,11 @@ export const MatrixToggle: React.FC<QuestionComponentProps<MatrixToggleQuestion>
               className="flex items-center gap-3 p-2 rounded-2xl bg-isler-surface/70 border border-white/5 hover:border-isler-primary/30 transition-all duration-200"
             >
               {/* Satır Başlığı Kartı */}
-              <div className="w-56 p-3.5 rounded-xl bg-isler-deep flex flex-col justify-center border border-white/5">
-                <span className="text-base font-poppins font-bold text-white">
+              <div className="w-36 sm:w-52 shrink-0 p-3 sm:p-3.5 rounded-xl bg-isler-deep flex flex-col justify-center border border-white/5">
+                <span className="text-sm sm:text-base font-poppins font-bold text-white">
                   {row.title}
                 </span>
-                <span className="text-[11px] text-isler-muted/60 mt-0.5">
+                <span className="text-[10px] sm:text-[11px] text-isler-muted/60 mt-0.5">
                   Özelliklerini Ayarla
                 </span>
               </div>
@@ -128,7 +153,7 @@ export const MatrixToggle: React.FC<QuestionComponentProps<MatrixToggleQuestion>
                     disabled={disabled || isSubmitted}
                     onClick={() => handleToggleCell(row.id, col.id)}
                     className={`
-                      w-56 h-20 rounded-xl px-4 flex items-center justify-between transition-all duration-200 border cursor-pointer relative group
+                      w-40 sm:w-52 shrink-0 h-16 sm:h-20 rounded-xl px-3 sm:px-4 flex items-center justify-between transition-all duration-200 border cursor-pointer relative group
                       ${
                         isCellCorrect
                           ? 'bg-game-correct/10 border-game-correct shadow-correct-glow'
@@ -215,8 +240,36 @@ export const MatrixToggle: React.FC<QuestionComponentProps<MatrixToggleQuestion>
         </div>
       </div>
 
-      {/* 2. ALT: KONTROL ET VE İLERLEME ÇUBUĞU */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full max-w-2xl px-2 mt-2">
+      {/* 2. GÖNDERİM SONUÇ ROZETİ */}
+      {isSubmitted && submissionStats && (
+        <div
+          className={`px-4 py-2.5 rounded-2xl border flex items-center gap-2 text-xs sm:text-sm font-mono font-bold animate-scale-up ${
+            submissionStats.isCorrect
+              ? 'bg-game-correct/20 text-game-correct border-game-correct/50 shadow-lg shadow-game-correct/20'
+              : submissionStats.accuracy > 0
+              ? 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-lg shadow-amber-500/20'
+              : 'bg-game-wrong/20 text-game-wrong border-game-wrong/50'
+          }`}
+        >
+          {submissionStats.isCorrect ? (
+            <CheckCircle2 className="w-4 h-4 text-game-correct shrink-0" />
+          ) : submissionStats.accuracy > 0 ? (
+            <span className="text-amber-400 font-black">⚡</span>
+          ) : (
+            <X className="w-4 h-4 text-game-wrong shrink-0" />
+          )}
+          <span>
+            {submissionStats.isCorrect
+              ? `✓ Tümü Doğru! (${submissionStats.total} / ${submissionStats.total}) — %100 Puan`
+              : submissionStats.accuracy > 0
+              ? `⚡ ${submissionStats.correct} / ${submissionStats.total} Doğru (%${Math.round(submissionStats.accuracy * 100)} Puan)`
+              : `❌ 0 / ${submissionStats.total} Doğru (0 Puan)`}
+          </span>
+        </div>
+      )}
+
+      {/* 3. ALT: KONTROL ET VE İLERLEME ÇUBUĞU */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full max-w-2xl px-2 mt-1">
         {/* İlerleme Bilgisi */}
         <div className="flex items-center gap-2 text-xs font-poppins text-isler-muted">
           <span>Hücre Durumu:</span>

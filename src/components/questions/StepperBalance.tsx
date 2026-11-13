@@ -141,8 +141,7 @@ export default function StepperBalance({
     });
 
     const isAllCorrect = correctCount === slots.length;
-    const accuracyRaw = slots.length > 0 ? correctCount / slots.length : (isAllCorrect ? 1 : 0);
-    const accuracy = Math.max(0, Math.min(1, Number(accuracyRaw.toFixed(2))));
+    const accuracy = isAllCorrect ? 1 : 0;
 
     const res = { isCorrect: isAllCorrect, accuracy };
     setResult(res);
@@ -160,9 +159,9 @@ export default function StepperBalance({
         </div>
       )}
 
-      {/* Ana Denklem & Stepper Kartı */}
-      <div className="w-full rounded-2xl bg-isler-surface/90 border border-isler-primary/40 p-4 md:p-8 shadow-isler-glow backdrop-blur-md">
-        <div className="flex flex-wrap items-center justify-center gap-2.5 md:gap-4 text-center">
+      {/* Ana Denklem & Stepper Kartı (Kompakt / Taşmasız) */}
+      <div className="w-full rounded-2xl bg-isler-surface/90 border border-isler-primary/40 p-2.5 sm:p-4 md:p-5 shadow-isler-glow backdrop-blur-md">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 text-center">
           {segments.map((seg) => {
             if (seg.type === 'slot' && seg.slot) {
               const slot = seg.slot;
@@ -181,7 +180,7 @@ export default function StepperBalance({
               return (
                 <div
                   key={seg.key}
-                  className="inline-flex flex-col items-center gap-1.5 p-1.5 rounded-xl bg-isler-elevated/40 border border-white/5"
+                  className="inline-flex flex-col items-center gap-1 p-1 sm:p-1.5 rounded-xl bg-isler-elevated/40 border border-white/5"
                 >
                   {/* [+] Artır Butonu */}
                   <button
@@ -189,27 +188,27 @@ export default function StepperBalance({
                     disabled={isInteractionDisabled || val >= maxVal}
                     onClick={() => handleIncrement(slot)}
                     aria-label={`${slot.id} artır`}
-                    className="w-12 h-9 md:w-14 md:h-10 rounded-lg bg-isler-primary hover:bg-isler-hover active:scale-95 text-white flex items-center justify-center transition-all shadow-btn-glow disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-9 h-7 sm:w-11 sm:h-8 rounded-lg bg-isler-primary hover:bg-isler-hover active:scale-95 text-white flex items-center justify-center transition-all shadow-btn-glow disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    <Plus className="w-5 h-5 stroke-[3]" />
+                    <Plus className="w-4 h-4 sm:w-5 sm:h-5 stroke-[3]" />
                   </button>
 
                   {/* Sayaç Ekranı */}
                   <div
-                    className={`relative w-12 h-14 md:w-14 md:h-16 rounded-xl border-2 flex items-center justify-center font-mono text-2xl md:text-3xl font-extrabold text-white transition-all ${slotBorder}`}
+                    className={`relative w-9 h-10 sm:w-11 sm:h-12 rounded-xl border-2 flex items-center justify-center font-mono text-lg sm:text-xl font-extrabold text-white transition-all ${slotBorder}`}
                   >
                     <span>{val}</span>
 
                     {/* Sonuç Onay / Hata Rozeti */}
                     {submitted && (
-                      <div className="absolute -top-2 -right-2">
+                      <div className="absolute -top-1.5 -right-1.5">
                         {isCorrectSlot ? (
-                          <div className="w-5 h-5 rounded-full bg-game-correct text-black flex items-center justify-center shadow-md">
-                            <Check className="w-3.5 h-3.5 stroke-[3]" />
+                          <div className="w-4 h-4 rounded-full bg-game-correct text-black flex items-center justify-center shadow-md">
+                            <Check className="w-3 h-3 stroke-[3]" />
                           </div>
                         ) : (
-                          <div className="w-5 h-5 rounded-full bg-game-wrong text-white flex items-center justify-center shadow-md">
-                            <X className="w-3.5 h-3.5 stroke-[3]" />
+                          <div className="w-4 h-4 rounded-full bg-game-wrong text-white flex items-center justify-center shadow-md">
+                            <X className="w-3 h-3 stroke-[3]" />
                           </div>
                         )}
                       </div>
@@ -222,14 +221,14 @@ export default function StepperBalance({
                     disabled={isInteractionDisabled || val <= minVal}
                     onClick={() => handleDecrement(slot)}
                     aria-label={`${slot.id} azalt`}
-                    className="w-12 h-9 md:w-14 md:h-10 rounded-lg bg-isler-surface border border-isler-primary/40 hover:bg-isler-elevated active:scale-95 text-isler-muted hover:text-white flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-9 h-7 sm:w-11 sm:h-8 rounded-lg bg-isler-surface border border-isler-primary/40 hover:bg-isler-elevated active:scale-95 text-isler-muted hover:text-white flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    <Minus className="w-5 h-5 stroke-[3]" />
+                    <Minus className="w-4 h-4 sm:w-5 sm:h-5 stroke-[3]" />
                   </button>
 
                   {/* Gönderim Sonrası Doğru Değer İpucu */}
                   {submitted && !isCorrectSlot && (
-                    <span className="text-[11px] font-mono font-bold text-game-correct bg-game-correct/10 px-1.5 py-0.5 rounded border border-game-correct/30 mt-0.5">
+                    <span className="text-[10px] font-mono font-bold text-game-correct bg-game-correct/10 px-1 py-0.2 rounded border border-game-correct/30 mt-0.5">
                       Hedef: {slot.correctValue}
                     </span>
                   )}
@@ -246,8 +245,8 @@ export default function StepperBalance({
                 key={seg.key}
                 className={`font-poppins select-text font-bold ${
                   isArrow
-                    ? 'text-isler-primary text-2xl md:text-4xl px-1 md:px-2 drop-shadow-[0_0_12px_rgba(241,78,19,0.7)]'
-                    : 'text-white text-xl md:text-3xl tracking-wide'
+                    ? 'text-isler-primary text-xl sm:text-2xl md:text-3xl px-1 drop-shadow-[0_0_12px_rgba(241,78,19,0.7)]'
+                    : 'text-white text-base sm:text-lg md:text-2xl tracking-wide'
                 }`}
               >
                 {textContent}
@@ -280,7 +279,7 @@ export default function StepperBalance({
             ) : (
               <>
                 <AlertCircle className="w-5 h-5" />
-                <span>%{Math.round((result?.accuracy ?? 0) * 100)} Denge Sağlandı</span>
+                <span>Tepkime Dengelenemedi</span>
               </>
             )
           ) : (

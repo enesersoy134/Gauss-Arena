@@ -159,10 +159,13 @@ class DuelSession {
         optIdx = -1;
         score = 0;
       } else {
+        const qType = q.type || q.interactiveQuestion?.type;
+        const allowsPartial = ['matrix_toggle', 'pair_matching', 'swipe_grouping'].includes(qType);
         isCorrect = Boolean(answerInput.isCorrect);
-        accuracy = typeof answerInput.accuracy === 'number'
+        const rawAcc = typeof answerInput.accuracy === 'number'
           ? Math.max(0, Math.min(1, answerInput.accuracy))
           : (isCorrect ? 1 : 0);
+        accuracy = isCorrect ? 1 : (allowsPartial ? rawAcc : 0);
         optIdx = answerInput.selectedOptionIndex !== undefined && answerInput.selectedOptionIndex !== null
           ? Number(answerInput.selectedOptionIndex)
           : -1;

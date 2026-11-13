@@ -28,6 +28,7 @@ import {
   Eye,
   X,
   GraduationCap,
+  Smartphone,
 } from 'lucide-react';
 
 export interface AdminPanelProps {
@@ -41,6 +42,7 @@ export interface AdminPanelProps {
   updatePlayerDemo: (opts: { playerId?: string; elo?: number; streak?: number }) => Promise<any>;
   resetDemo: () => Promise<any>;
   onNavigateToStudent: (playerId?: string) => void;
+  onNavigateToSmartboard?: () => void;
   onOpenWindow: (url: string) => void;
   onTestQuestion: (question: Question) => void;
 }
@@ -58,6 +60,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   updatePlayerDemo,
   resetDemo,
   onNavigateToStudent,
+  onNavigateToSmartboard,
   onOpenWindow,
   onTestQuestion,
 }) => {
@@ -194,6 +197,28 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
           {/* Sağ: Hızlı Demo Aksiyonları (Yatay kaydırılabilir kompakt tek satır) */}
           <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0 flex-nowrap shrink-0">
+            {/* Akıllı Tahta Modu (/tahta) */}
+            <button
+              onClick={() => (onNavigateToSmartboard ? onNavigateToSmartboard() : onNavigateToStudent())}
+              className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25 flex items-center gap-1.5 transition-all shadow-sm shadow-emerald-500/10 shrink-0 whitespace-nowrap"
+              title="Sınıf içi düello için Akıllı Tahta Modunu (/tahta) açar"
+            >
+              <span className="text-sm">🖥️</span>
+              <span className="sm:hidden">Tahta</span>
+              <span className="hidden sm:inline">Akıllı Tahta Modu (/tahta)</span>
+            </button>
+
+            {/* Öğrenci Katılım Ekranı (/katil - Kahoot Oyuncu Testi) */}
+            <button
+              onClick={() => onOpenWindow('/katil')}
+              className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-amber-500/40 bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 flex items-center gap-1.5 transition-all shadow-sm shadow-amber-500/10 shrink-0 whitespace-nowrap"
+              title="Mobil canlı sınıf yarışması öğrenci ekranını (/katil) açar"
+            >
+              <Smartphone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="sm:hidden">Katıl</span>
+              <span className="hidden sm:inline">Öğrenci Katılım (/katil)</span>
+            </button>
+
             {/* Yan Yana Çift Öğrenci Aç */}
             <button
               onClick={handleOpenSideBySideWindows}

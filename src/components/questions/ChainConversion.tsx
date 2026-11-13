@@ -78,8 +78,8 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
       }
     });
 
-    const accuracy = steps.length > 0 ? correctCount / steps.length : 0;
     const isCorrect = correctCount === steps.length;
+    const accuracy = isCorrect ? 1 : 0;
 
     setIsSubmitted(true);
     onSubmit({ isCorrect, accuracy });
@@ -87,19 +87,19 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
 
   return (
     <div className="w-full flex flex-col items-center gap-6 select-none font-sans">
-      {/* 1. ÜST: YATAY ZİNCİR AKIŞI */}
-      <div className="w-full overflow-x-auto pb-4 pt-2 px-1">
-        <div className="flex items-center justify-center min-w-max gap-3 mx-auto">
+      {/* 1. ÜST: YATAY / DUYARLI ZİNCİR AKIŞI (Kaydırmasız, Tam Sığan) */}
+      <div className="w-full pb-2 pt-1 px-1">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 w-full mx-auto">
           {/* Başlangıç Değeri Kartı */}
-          <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-isler-surface border border-isler-primary/30 w-52 min-h-[140px] shadow-lg relative">
-            <span className="text-[11px] font-poppins font-bold uppercase tracking-wider text-isler-muted/80 bg-isler-deep/80 px-2.5 py-1 rounded-full mb-2">
+          <div className="flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-isler-surface border border-isler-primary/30 flex-1 min-w-[110px] max-w-[175px] min-h-[95px] sm:min-h-[110px] shadow-lg relative">
+            <span className="text-[10px] sm:text-[11px] font-poppins font-bold uppercase tracking-wider text-isler-muted/80 bg-isler-deep/80 px-2 py-0.5 rounded-full mb-1 sm:mb-2">
               Başlangıç
             </span>
-            <div className="text-white font-mono text-lg font-bold text-center leading-snug break-words px-2">
+            <div className="text-white font-mono text-sm sm:text-base font-bold text-center leading-tight break-words px-1">
               {startEntity}
             </div>
-            <span className="text-[11px] text-isler-muted/60 mt-2 font-medium">
-              Girdi Tanımlandı
+            <span className="text-[10px] text-isler-muted/60 mt-1 font-medium">
+              Girdi
             </span>
           </div>
 
@@ -116,15 +116,15 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
             return (
               <React.Fragment key={step.stepNumber}>
                 {/* Ara Ok & Etiket */}
-                <div className="flex flex-col items-center justify-center px-1">
+                <div className="flex flex-col items-center justify-center px-0.5 shrink-0">
                   {step.arrowLabel && (
-                    <span className="text-[11px] font-mono font-semibold text-isler-primary bg-isler-deep border border-isler-primary/30 px-2 py-0.5 rounded-full mb-1 max-w-[120px] truncate text-center shadow">
+                    <span className="text-[9px] sm:text-[10px] font-mono font-semibold text-isler-primary bg-isler-deep border border-isler-primary/30 px-1.5 py-0.5 rounded-full mb-0.5 max-w-[95px] text-center leading-tight shadow break-words">
                       {step.arrowLabel}
                     </span>
                   )}
                   <div className="flex items-center text-isler-primary">
-                    <div className="w-8 h-0.5 bg-isler-primary/60" />
-                    <ArrowRight className="w-5 h-5 -ml-1 text-isler-primary" />
+                    <div className="w-3 sm:w-5 h-0.5 bg-isler-primary/60" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 -ml-1 text-isler-primary" />
                   </div>
                 </div>
 
@@ -134,14 +134,14 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
                   disabled={disabled || isSubmitted}
                   onClick={() => handleStepClick(idx)}
                   className={`
-                    group flex flex-col items-center justify-center p-4 rounded-2xl w-56 min-h-[140px] text-left transition-all duration-200 relative
+                    group flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl flex-1 min-w-[110px] max-w-[175px] min-h-[95px] sm:min-h-[110px] text-left transition-all duration-200 relative
                     ${
                       isStepCorrect
                         ? 'bg-game-correct/15 border-2 border-game-correct shadow-correct-glow'
                         : isStepWrong
                         ? 'bg-game-wrong/15 border-2 border-game-wrong shadow-wrong-glow'
                         : isActive
-                        ? 'bg-isler-elevated/90 border-2 border-dashed border-isler-primary shadow-[0_0_20px_rgba(241,78,19,0.4)] scale-105'
+                        ? 'bg-isler-elevated/90 border-2 border-dashed border-isler-primary shadow-[0_0_20px_rgba(241,78,19,0.4)] scale-102'
                         : isFilled
                         ? 'bg-isler-surface border border-isler-primary/60 hover:border-isler-primary hover:bg-isler-elevated cursor-pointer'
                         : 'bg-isler-deep/60 border border-white/10 hover:border-white/20'
@@ -149,9 +149,9 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
                   `}
                 >
                   {/* Adım Başlığı & Rozeti */}
-                  <div className="flex items-center justify-between w-full mb-2">
+                  <div className="flex items-center justify-between w-full mb-1">
                     <span
-                      className={`text-[11px] font-poppins font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                      className={`text-[10px] sm:text-[11px] font-poppins font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                         isStepCorrect
                           ? 'bg-game-correct/20 text-game-correct'
                           : isStepWrong
@@ -165,20 +165,20 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
                     </span>
 
                     {/* Durum İkonu */}
-                    {isStepCorrect && <Check className="w-4 h-4 text-game-correct" />}
-                    {isStepWrong && <X className="w-4 h-4 text-game-wrong" />}
+                    {isStepCorrect && <Check className="w-3.5 h-3.5 text-game-correct" />}
+                    {isStepWrong && <X className="w-3.5 h-3.5 text-game-wrong" />}
                     {!isSubmitted && isFilled && (
-                      <span className="text-[10px] text-isler-muted/50 group-hover:text-isler-primary transition-colors">
+                      <span className="text-[9px] text-isler-muted/50 group-hover:text-isler-primary transition-colors">
                         Değiştir
                       </span>
                     )}
                   </div>
 
                   {/* Değer Alanı */}
-                  <div className="flex-1 flex items-center justify-center w-full my-1">
+                  <div className="flex-1 flex items-center justify-center w-full my-0.5">
                     {chosenValue ? (
                       <div
-                        className={`text-center font-mono font-bold text-base px-2 leading-snug break-words ${
+                        className={`text-center font-mono font-bold text-xs sm:text-sm px-1 leading-tight break-words ${
                           isStepCorrect
                             ? 'text-game-correct'
                             : isStepWrong
@@ -191,14 +191,14 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
                     ) : (
                       <div className="flex flex-col items-center justify-center">
                         <span
-                          className={`font-mono text-2xl font-bold ${
+                          className={`font-mono text-xl font-bold ${
                             isActive ? 'text-isler-primary' : 'text-isler-muted/40'
                           }`}
                         >
                           ?
                         </span>
-                        <span className="text-[11px] text-isler-muted/50 mt-1">
-                          {isActive ? 'Havuzdan Seçin' : 'Bekliyor'}
+                        <span className="text-[10px] text-isler-muted/50 mt-0.5">
+                          {isActive ? 'Havuzdan Seç' : 'Bekliyor'}
                         </span>
                       </div>
                     )}
@@ -206,7 +206,7 @@ export const ChainConversion: React.FC<QuestionComponentProps<ChainConversionQue
 
                   {/* Yanlış ise alt tarafta doğru cevabı göster */}
                   {isStepWrong && (
-                    <div className="w-full text-center text-[11px] font-mono font-semibold text-game-correct bg-game-correct/10 rounded py-0.5 mt-1">
+                    <div className="w-full text-center text-[10px] font-mono font-semibold text-game-correct bg-game-correct/10 rounded py-0.5 mt-0.5">
                       Doğru: {step.correctValue}
                     </div>
                   )}

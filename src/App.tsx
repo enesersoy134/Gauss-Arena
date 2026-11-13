@@ -5,6 +5,8 @@ import { getRecommendationsForTopic } from './utils/resourceRecommendations';
 import LiveDuelScreen from './components/game/LiveDuelScreen';
 import GameScreen from './components/game/GameScreen';
 import AdminPanel from './components/admin/AdminPanel';
+import SmartboardScreen from './components/smartboard/SmartboardScreen';
+import KahootPlayerView from './components/smartboard/KahootPlayerView';
 import {
   Swords,
   Flame,
@@ -96,6 +98,15 @@ export default function App() {
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>(['matematik', 'fizik', 'kimya']);
   const [selectedTournamentId, setSelectedTournamentId] = useState<string>('tour-tyt-1');
 
+  // Mod bazlı kuyruk durumu
+  const isRankedQueueing = Boolean(myQueueEntry && myQueueEntry.mode === 'ranked');
+  const isTournamentQueueing = Boolean(myQueueEntry && myQueueEntry.mode === 'tournament');
+  const isSelectedModeQueueing = Boolean(
+    myQueueEntry &&
+      myQueueEntry.mode === selectedMode &&
+      (selectedMode !== 'tournament' || myQueueEntry.tournamentId === selectedTournamentId)
+  );
+
   // Coin Dönüştürme State
   const [coinsToConvert, setCoinsToConvert] = useState<number>(100);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
@@ -105,22 +116,7 @@ export default function App() {
     setTimeout(() => setActionMessage(null), 3500);
   };
 
-  // 1. CANLI SOCKET DÜELLO EKRANI (Sunucuda maç varsa)
-  if (activeDuel || duelSummary) {
-    return (
-      <LiveDuelScreen
-        currentPlayerId={currentPlayerId}
-        activeDuel={activeDuel}
-        roundResultEvent={roundResultEvent}
-        duelSummary={duelSummary}
-        onSubmitAnswer={submitDuelAnswer}
-        onReadyForNextRound={readyForNextRound}
-        onExit={exitDuel}
-      />
-    );
-  }
-
-  // 2. GELİŞTİRİCİ SORU TEST MODU (Forced Questions ile simülasyon)
+  // 1. GELİŞTİRİCİ SORU TEST MODU (Forced Questions ile simülasyon - Admin panelinden test etme)
   if (forcedQuestions && forcedQuestions.length > 0) {
     return (
       <GameScreen
@@ -131,7 +127,8 @@ export default function App() {
     );
   }
 
-  // 3. YÖNETİCİ & OPERATÖR PANELİ (/admin)
+  // 2. YÖNETİCİ & OPERATÖR PANELİ (/admin)
+  // Operatör admin panelindeyken arka planda öğrenciler yarışsa bile admin paneli bozulmamalı
   if (currentPath.startsWith('/admin')) {
     return (
       <AdminPanel
@@ -148,12 +145,38 @@ export default function App() {
           const targetUrl = playerId ? `/?player=${playerId}` : '/';
           navigateTo(targetUrl);
         }}
+        onNavigateToSmartboard={() => navigateTo('/tahta')}
         onOpenWindow={(url: string) => {
           window.open(url, '_blank', 'width=520,height=920,left=650,top=30');
         }}
         onTestQuestion={(q: Question) => {
           setForcedQuestions([q]);
         }}
+      />
+    );
+  }
+
+  // 3. CANLI SINIF YARIŞMASI ÖĞRENCİ TELEFON EKRANI (/katil)
+  if (currentPath.startsWith('/katil')) {
+    return <KahootPlayerView onExit={() => navigateTo('/')} />;
+  }
+
+  // 4. AKILLI TAHTA MODU (/tahta veya /smartboard)
+  if (currentPath.startsWith('/tahta') || currentPath.startsWith('/smartboard')) {
+    return <SmartboardScreen onExit={() => navigateTo('/')} />;
+  }
+
+  // 5. CANLI SOCKET DÜELLO EKRANI (Yalnızca öğrenci arayüzünde aktif maç varsa)
+  if (activeDuel || duelSummary) {
+    return (
+      <LiveDuelScreen
+        currentPlayerId={currentPlayerId}
+        activeDuel={activeDuel}
+        roundResultEvent={roundResultEvent}
+        duelSummary={duelSummary}
+        onSubmitAnswer={submitDuelAnswer}
+        onReadyForNextRound={readyForNextRound}
+        onExit={exitDuel}
       />
     );
   }
@@ -239,7 +262,7 @@ export default function App() {
           </div>
 
           {/* Sağ: Gerçekçi Öğrenci Profil Hapı (Profile Pill) */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <div className="flex items-center gap-2 sm:gap-3 bg-[#0F0510] border border-white/10 rounded-2xl px-2.5 sm:px-3.5 py-1 sm:py-1.5 shadow-sm">
               <img
                 src={currentPlayer.avatarUrl}
@@ -294,7 +317,7 @@ export default function App() {
             <span className="sm:hidden">Düello</span>
             <span className="hidden sm:inline md:hidden">Düello & Eşleşme</span>
             <span className="hidden md:inline">1v1 Düello & Karşılaşma</span>
-            {isQueueing && <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 animate-ping shrink-0" />}
+            {isRankedQueueing && <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 animate-ping shrink-0" />}
           </button>
 
           <button
@@ -323,6 +346,7 @@ export default function App() {
             <span className="sm:hidden">Turnuva</span>
             <span className="hidden sm:inline md:hidden">Turnuvalar</span>
             <span className="hidden md:inline">Turnuvalar & Ödül Havuzu</span>
+            {isTournamentQueueing && <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 animate-ping shrink-0" />}
           </button>
 
           <button
@@ -594,14 +618,34 @@ export default function App() {
                 )}
 
                 {/* Ana Katılım / Çıkış Butonu */}
-                <div className="pt-2">
-                  {!isQueueing ? (
+                <div className="pt-2 flex flex-col gap-2">
+                  {/* Farklı bir mod sırasında bekliyorsa uyarı notu */}
+                  {isQueueing && !isSelectedModeQueueing && (
+                    <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-amber-400" />
+                      <span>
+                        {myQueueEntry?.mode === 'tournament'
+                          ? 'ℹ️ Şu an Turnuva sırasında bekliyorsunuz. Dereceli maça katılırsanız turnuva sırasından çıkılır.'
+                          : 'ℹ️ Şu an Dereceli Lig sırasında bekliyorsunuz. Turnuva maçına katılırsanız dereceli sırasından çıkılır.'}
+                      </span>
+                    </div>
+                  )}
+
+                  {!isSelectedModeQueueing ? (
                     <button
                       onClick={handleStartQueue}
                       className="btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#F14E13]/30"
                     >
                       <Swords className="w-4 h-4" />
-                      <span>⚔️ 1v1 Düelloya Katıl</span>
+                      <span>
+                        {selectedMode === 'tournament'
+                          ? isQueueing
+                            ? '🏆 Turnuva Maçı Ara (Dereceli Sırasından Geç)'
+                            : '🏆 Turnuva Maçı Ara'
+                          : isQueueing
+                          ? '⚔️ Dereceli 1v1 Düelloya Katıl (Turnuva Sırasından Geç)'
+                          : '⚔️ 1v1 Düelloya Katıl'}
+                      </span>
                     </button>
                   ) : (
                     <button
@@ -611,7 +655,7 @@ export default function App() {
                       <span className="w-2.5 h-2.5 rounded-full bg-red-400 animate-ping" />
                       <span>Kuyruktan Çık</span>
                       <span className="font-mono text-xs opacity-80">
-                        ({myQueueEntry?.waitSeconds ?? 0}s)
+                        ({Math.floor(myQueueEntry?.waitSeconds ?? 0)}s)
                       </span>
                     </button>
                   )}
@@ -621,7 +665,7 @@ export default function App() {
 
             {/* SAĞ KOLON: Öğrenci Rehberi & Canlı Eşleşme Radarı (5 Kolon) */}
             <div className="lg:col-span-5 flex flex-col gap-6">
-              {isQueueing ? (
+              {isSelectedModeQueueing && myQueueEntry ? (
                 /* Kuyrukta Bekleme Durumu (Radar Görseli) */
                 <div className="game-card p-6 border-amber-500/40 flex flex-col items-center text-center gap-4 animate-fade-in">
                   <div className="relative w-28 h-28 flex items-center justify-center my-2">
@@ -633,11 +677,14 @@ export default function App() {
                   </div>
 
                   <div>
+                    <div className="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono font-bold mb-1.5">
+                      {myQueueEntry.mode === 'tournament' ? '🏆 Turnuva Sırası' : '⚔️ Dereceli Lig Sırası'}
+                    </div>
                     <h3 className="font-poppins font-bold text-lg text-white">
                       Uygun Rakip Aranıyor...
                     </h3>
                     <p className="text-xs text-[#B5CBC8] mt-1">
-                      {selectedExamType} • {selectedSubjects.join(', ')} kategorisinde seviyenize uygun rakip aranıyor.
+                      {myQueueEntry.examType} • {myQueueEntry.subjects.join(', ')} kategorisinde seviyenize uygun rakip aranıyor.
                     </p>
                   </div>
 
@@ -647,7 +694,7 @@ export default function App() {
                       <span>Bekleme Süresi:</span>
                     </span>
                     <span className="text-amber-400 font-bold text-sm">
-                      {myQueueEntry?.waitSeconds ?? 0} saniye
+                      {Math.floor(myQueueEntry?.waitSeconds ?? 0)} saniye
                     </span>
                   </div>
 
@@ -950,24 +997,33 @@ export default function App() {
                     Turnuvaya Kaydol
                   </button>
 
-                  <button
-                    onClick={() => {
-                      setSelectedMode('tournament');
-                      setSelectedTournamentId(t.id);
-                      setSelectedExamType(t.examType);
-                      setActiveTab('matchmaking');
-                      joinQueue({
-                        examType: t.examType,
-                        subjects: t.allowedSubjects,
-                        mode: 'tournament',
-                        tournamentId: t.id,
-                      });
-                    }}
-                    className="btn-primary flex-1 py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
-                  >
-                    <Swords className="w-3.5 h-3.5" />
-                    <span>Turnuva Maçı Ara</span>
-                  </button>
+                  {myQueueEntry?.mode === 'tournament' && myQueueEntry?.tournamentId === t.id ? (
+                    <button
+                      onClick={leaveQueue}
+                      className="flex-1 py-2.5 px-3 rounded-xl bg-red-600/20 border border-red-500/40 text-red-300 hover:bg-red-600/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
+                      <span>⏳ Turnuva Rakibi Aranıyor ({Math.floor(myQueueEntry.waitSeconds ?? 0)}s) — Sıradan Çık</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setSelectedMode('tournament');
+                        setSelectedTournamentId(t.id);
+                        setSelectedExamType(t.examType);
+                        joinQueue({
+                          examType: t.examType,
+                          subjects: t.allowedSubjects,
+                          mode: 'tournament',
+                          tournamentId: t.id,
+                        });
+                      }}
+                      className="btn-primary flex-1 py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
+                    >
+                      <Swords className="w-3.5 h-3.5" />
+                      <span>Turnuva Maçı Ara</span>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

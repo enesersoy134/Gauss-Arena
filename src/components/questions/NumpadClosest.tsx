@@ -136,15 +136,15 @@ export default function NumpadClosest({
   const isValidInput = inputStr.length > 0 && inputStr !== '-';
 
   return (
-    <div className="w-full flex flex-col gap-6">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+    <div className="w-full flex flex-col gap-2.5 md:gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 md:gap-6 items-stretch">
         {/* =========================================================================
          * SOL TARAF: DİJİTAL LCD EKRAN VE DURUM
          * ========================================================================= */}
-        <div className="md:col-span-6 flex flex-col justify-between gap-4">
+        <div className="md:col-span-6 flex flex-col justify-between gap-2.5 md:gap-4">
           {/* LCD Konsol Ekranı */}
           <div
-            className={`relative p-6 rounded-2xl bg-[#09030A] border-2 flex flex-col justify-between min-h-[170px] md:min-h-[220px] transition-all duration-300 ${
+            className={`relative px-3.5 py-2 md:p-6 rounded-2xl bg-[#09030A] border-2 flex flex-row md:flex-col items-center md:items-stretch justify-between min-h-0 md:min-h-[200px] transition-all duration-300 ${
               isSubmitted
                 ? lastSubmission?.isCorrect
                   ? 'border-[#22C55E] shadow-[0_0_30px_rgba(34,197,94,0.4)]'
@@ -152,38 +152,39 @@ export default function NumpadClosest({
                 : 'border-isler-primary shadow-[0_0_30px_-10px_rgba(241,78,19,0.5)]'
             }`}
           >
-            {/* Üst Bilgi Satırı */}
-            <div className="flex items-center justify-between">
-              <span className="px-2.5 py-1 rounded bg-[#1A0E1C] border border-isler-primary/30 text-[11px] font-poppins font-bold text-[#FF7A45] tracking-wider uppercase">
-                Dijital Konsol Girişi
+            {/* Üst / Sol Bilgi Satırı */}
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 md:px-2.5 md:py-1 rounded bg-[#1A0E1C] border border-isler-primary/30 text-[10px] md:text-[11px] font-poppins font-bold text-[#FF7A45] tracking-wider uppercase">
+                <span className="md:hidden">GİRİŞ</span>
+                <span className="hidden md:inline">Dijital Konsol Girişi</span>
               </span>
 
               {isValidInput && !isSubmitted && (
-                <span className="text-xs font-poppins font-bold text-[#4ADE80] flex items-center gap-1">
+                <span className="text-[11px] md:text-xs font-poppins font-bold text-[#4ADE80] flex items-center gap-1">
                   ✓ Hazır
                 </span>
               )}
             </div>
 
-            {/* Orta Değer Girişi ve Birim */}
-            <div className="flex items-baseline gap-3 my-2 overflow-x-auto py-2">
-              <span className="font-mono font-black text-5xl md:text-6xl text-white tracking-wider">
+            {/* Orta / Sağ Değer Girişi ve Birim */}
+            <div className="flex items-baseline gap-2 md:gap-3 my-0 md:my-2 overflow-x-auto py-0 md:py-2">
+              <span className="font-mono font-black text-2xl sm:text-3xl md:text-5xl text-white tracking-wider">
                 {inputStr || '0'}
               </span>
 
               {!isLocked && (
-                <span className="w-1.5 h-10 bg-isler-primary animate-pulse rounded-full inline-block" />
+                <span className="w-1 md:w-1.5 h-6 md:h-10 bg-isler-primary animate-pulse rounded-full inline-block" />
               )}
 
               {payload.unit && (
-                <span className="font-poppins font-bold text-xl md:text-2xl text-[#FF7A45]">
+                <span className="font-poppins font-bold text-sm sm:text-base md:text-2xl text-[#FF7A45]">
                   {payload.unit}
                 </span>
               )}
             </div>
 
-            {/* Alt Açıklama / İpucu */}
-            <div className="text-[11px] font-poppins text-isler-muted flex items-center justify-between border-t border-white/10 pt-2">
+            {/* Alt Açıklama / İpucu (Desktop) */}
+            <div className="hidden md:flex text-[11px] font-poppins text-isler-muted items-center justify-between border-t border-white/10 pt-2">
               <span>{allowDecimals ? 'Virgüllü giriş serbest' : 'Tam sayı girişi'}</span>
               <span>{allowNegative ? 'Negatif değer kabul edilir' : 'Pozitif değer'}</span>
             </div>
@@ -192,7 +193,7 @@ export default function NumpadClosest({
           {/* Sonuç Geribildirim Kartı */}
           {isSubmitted && lastSubmission && (
             <div
-              className={`p-4 rounded-xl border flex flex-col gap-2 ${
+              className={`p-3 md:p-4 rounded-xl border flex flex-col gap-1.5 md:gap-2 ${
                 lastSubmission.isCorrect
                   ? 'bg-[#22C55E]/15 border-[#22C55E]/50'
                   : 'bg-[#EF4444]/15 border-[#EF4444]/50'
@@ -201,22 +202,22 @@ export default function NumpadClosest({
               <div className="flex items-center gap-2">
                 {lastSubmission.isCorrect ? (
                   <>
-                    <CheckCircle2 className="w-5 h-5 text-[#22C55E]" />
-                    <span className="font-poppins font-bold text-sm text-[#4ADE80]">
+                    <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-[#22C55E]" />
+                    <span className="font-poppins font-bold text-xs md:text-sm text-[#4ADE80]">
                       {lastSubmission.diff === 0 ? 'Tam İsabet!' : 'Tolerans Dahilinde Doğru!'}
                     </span>
                   </>
                 ) : (
                   <>
-                    <AlertTriangle className="w-5 h-5 text-[#EF4444]" />
-                    <span className="font-poppins font-bold text-sm text-[#F87171]">
+                    <AlertTriangle className="w-4 h-4 md:w-5 md:h-5 text-[#EF4444]" />
+                    <span className="font-poppins font-bold text-xs md:text-sm text-[#F87171]">
                       Fark Oluştu (Sapma: {lastSubmission.diff.toFixed(2)})
                     </span>
                   </>
                 )}
               </div>
 
-              <div className="text-xs font-poppins text-isler-muted flex items-center justify-between">
+              <div className="text-[11px] md:text-xs font-poppins text-isler-muted flex items-center justify-between">
                 <span>
                   Hedef Değer:{' '}
                   <strong className="text-white font-mono">
@@ -237,16 +238,16 @@ export default function NumpadClosest({
         {/* =========================================================================
          * SAĞ TARAF: NUMERİK TUŞ TAKIMI (NUMPAD)
          * ========================================================================= */}
-        <div className="md:col-span-6 p-4 md:p-6 rounded-2xl bg-isler-surface border border-isler-primary/35 flex flex-col gap-3 shadow-lg">
+        <div className="md:col-span-6 p-2.5 sm:p-4 md:p-5 rounded-2xl bg-isler-surface border border-isler-primary/35 flex flex-col gap-2 md:gap-3 shadow-lg">
           {/* Tuş Izgarası (3x4) */}
-          <div className="grid grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5">
             {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((digit) => (
               <button
                 key={digit}
                 type="button"
                 disabled={isLocked}
                 onClick={() => handleDigit(digit)}
-                className="h-14 md:h-16 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-black text-2xl text-white hover:border-isler-primary hover:bg-isler-elevated active:scale-95 transition-all duration-150 flex items-center justify-center select-none disabled:opacity-40"
+                className="h-10 sm:h-12 md:h-14 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-black text-lg sm:text-xl md:text-2xl text-white hover:border-isler-primary hover:bg-isler-elevated active:scale-95 transition-all duration-150 flex items-center justify-center select-none disabled:opacity-40"
               >
                 {digit}
               </button>
@@ -257,7 +258,7 @@ export default function NumpadClosest({
               type="button"
               disabled={isLocked || !allowNegative}
               onClick={handleNegative}
-              className={`h-14 md:h-16 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-bold text-2xl text-isler-muted transition-all duration-150 flex items-center justify-center select-none ${
+              className={`h-10 sm:h-12 md:h-14 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-bold text-lg sm:text-xl md:text-2xl text-isler-muted transition-all duration-150 flex items-center justify-center select-none ${
                 allowNegative && !isLocked
                   ? 'hover:border-isler-primary hover:bg-isler-elevated active:scale-95 text-white'
                   : 'opacity-30 cursor-not-allowed'
@@ -271,7 +272,7 @@ export default function NumpadClosest({
               type="button"
               disabled={isLocked}
               onClick={() => handleDigit('0')}
-              className="h-14 md:h-16 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-black text-2xl text-white hover:border-isler-primary hover:bg-isler-elevated active:scale-95 transition-all duration-150 flex items-center justify-center select-none disabled:opacity-40"
+              className="h-10 sm:h-12 md:h-14 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-black text-lg sm:text-xl md:text-2xl text-white hover:border-isler-primary hover:bg-isler-elevated active:scale-95 transition-all duration-150 flex items-center justify-center select-none disabled:opacity-40"
             >
               0
             </button>
@@ -281,7 +282,7 @@ export default function NumpadClosest({
               type="button"
               disabled={isLocked || !allowDecimals}
               onClick={handleDecimal}
-              className={`h-14 md:h-16 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-bold text-2xl text-isler-muted transition-all duration-150 flex items-center justify-center select-none ${
+              className={`h-10 sm:h-12 md:h-14 rounded-xl bg-isler-deep border border-isler-primary/30 font-mono font-bold text-lg sm:text-xl md:text-2xl text-isler-muted transition-all duration-150 flex items-center justify-center select-none ${
                 allowDecimals && !isLocked
                   ? 'hover:border-isler-primary hover:bg-isler-elevated active:scale-95 text-white'
                   : 'opacity-30 cursor-not-allowed'
@@ -292,15 +293,15 @@ export default function NumpadClosest({
           </div>
 
           {/* Alt Aksiyon Butonları: SİL & GÖNDER */}
-          <div className="grid grid-cols-3 gap-2.5 pt-1">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 pt-0.5 sm:pt-1">
             {/* Sil Butonu */}
             <button
               type="button"
               disabled={isLocked || inputStr.length === 0}
               onClick={handleDelete}
-              className="col-span-1 h-14 md:h-16 rounded-xl bg-[#25121B] border border-[#EF4444]/40 font-poppins font-bold text-sm text-[#F87171] hover:bg-[#EF4444]/20 hover:border-[#EF4444] active:scale-95 transition-all duration-150 flex items-center justify-center gap-1.5 disabled:opacity-40 select-none"
+              className="col-span-1 h-10 sm:h-12 md:h-14 rounded-xl bg-[#25121B] border border-[#EF4444]/40 font-poppins font-bold text-xs sm:text-sm text-[#F87171] hover:bg-[#EF4444]/20 hover:border-[#EF4444] active:scale-95 transition-all duration-150 flex items-center justify-center gap-1.5 disabled:opacity-40 select-none"
             >
-              <Delete className="w-4 h-4" />
+              <Delete className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Sil</span>
             </button>
 
@@ -309,9 +310,9 @@ export default function NumpadClosest({
               type="button"
               disabled={isLocked || !isValidInput}
               onClick={handleSubmit}
-              className="col-span-2 h-14 md:h-16 rounded-xl btn-primary font-poppins font-extrabold text-base flex items-center justify-center gap-2 select-none disabled:opacity-40 disabled:pointer-events-none"
+              className="col-span-2 h-10 sm:h-12 md:h-14 rounded-xl btn-primary font-poppins font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 select-none disabled:opacity-40 disabled:pointer-events-none"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Gönder {isValidInput ? `(${inputStr})` : ''}</span>
             </button>
           </div>

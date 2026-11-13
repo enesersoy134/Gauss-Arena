@@ -9,10 +9,130 @@ const { loadQuestionBank, selectMatchQuestions, getDifficultyDistribution } = re
 const { MatchmakingQueue } = require('./engine/matchmakingQueue');
 const { GameStore, WEEKLY_BRACKETS } = require('./engine/economyTournaments');
 const { DuelSession } = require('./engine/duelSession');
+const { RAW_INTERACTIVE_QUESTIONS, normalizeInteractiveQuestion } = require('./engine/interactiveQuestionPool');
 
 function isAuthorizedSocketPlayer(socketToPlayerIdMap, socketId, playerId) {
   const bound = socketToPlayerIdMap.get(socketId);
   return !bound || bound === String(playerId);
+}
+
+function generateKahootPin(roomsMap) {
+  let pin = '';
+  do {
+    pin = String(Math.floor(100000 + Math.random() * 900000));
+  } while (roomsMap.has(pin));
+  return pin;
+}
+
+function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = [], count = 7 } = {}) {
+  const normSubjects = Array.isArray(subjects)
+    ? subjects.map((s) => String(s).toLowerCase().trim()).filter(Boolean)
+    : [];
+  const normalizedExam = String(examType || 'KARMA').toUpperCase();
+
+  const candidatePool = [];
+
+  // 1. RAW_INTERACTIVE_QUESTIONS havuzundan filtreye uyanları al
+  for (const rawQ of RAW_INTERACTIVE_QUESTIONS) {
+    const qExam = String(rawQ.examType || 'TYT').toUpperCase();
+    const qSubj = String(rawQ.subject || '').toLowerCase();
+
+    const examMatches = normalizedExam === 'KARMA' || qExam === normalizedExam;
+    const subjMatches = normSubjects.length === 0 || normSubjects.includes(qSubj);
+
+    if (examMatches && subjMatches) {
+      candidatePool.push(normalizeInteractiveQuestion(rawQ, qExam));
+    }
+  }
+
+  // 2. Eğer yetersizse questionBank.allQuestions havuzundan ekle
+  if (candidatePool.length < count && questionBank && Array.isArray(questionBank.allQuestions)) {
+    for (const q of questionBank.allQuestions) {
+      const qExam = String(q.examType || 'TYT').toUpperCase();
+      const qSubj = String(q.subject || '').toLowerCase();
+      const examMatches = normalizedExam === 'KARMA' || qExam === normalizedExam;
+      const subjMatches = normSubjects.length === 0 || normSubjects.includes(qSubj);
+
+      if (examMatches && subjMatches) {
+        const id = q.id || q.externalId;
+        if (!candidatePool.some((c) => (c.id || c.externalId) === id)) {
+          candidatePool.push(q);
+        }
+      }
+    }
+  }
+
+  // 3. Hala yetersizse filtreleri esneterek RAW_INTERACTIVE_QUESTIONS havuzundan tamamla
+  if (candidatePool.length < count) {
+    for (const rawQ of RAW_INTERACTIVE_QUESTIONS) {
+      const norm = normalizeInteractiveQuestion(rawQ, rawQ.examType || 'TYT');
+      const id = norm.id || norm.externalId;
+      if (!candidatePool.some((c) => (c.id || c.externalId) === id)) {
+        candidatePool.push(norm);
+      }
+      if (candidatePool.length >= count) break;
+    }
+  }
+
+  // Karıştır
+  const shuffled = [...candidatePool];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  const selected = shuffled.slice(0, count);
+
+  return selected.map((q) => {
+    const iq = q.interactiveQuestion || q;
+    const timeLimitSec =
+      iq.timeLimitSeconds ||
+      q.timeLimitSeconds ||
+      Math.round((q.durationMs || 25000) / 1000) ||
+      25;
+    return {
+      ...q,
+      ...iq,
+      id: iq.id || q.externalId || q.id,
+      type: iq.type || 'universal_choice',
+      prompt: iq.prompt || q.text || '',
+      topic: iq.topic || q.subTopic || '',
+      subject: (iq.subject || q.subject || 'matematik').toLowerCase(),
+      explanation: iq.explanation || q.explanation || '',
+      payload: iq.payload || {
+        variant: 'test',
+        optionCount: (q.options || []).length,
+        options: q.options || [],
+        correctIndex: typeof q.correctOptionIndex === 'number' ? q.correctOptionIndex : 0,
+        shuffleOptions: false,
+      },
+      timeLimitSeconds: timeLimitSec,
+      durationMs: timeLimitSec * 1000,
+      points: iq.points || q.points || 100,
+      interactiveQuestion: iq,
+    };
+  });
+}
+
+function getPublicRoomState(room) {
+  if (!room) return null;
+  const currentQuestion = room.questions[room.currentQuestionIndex] || null;
+  const leaderboard = Array.from(room.players.values()).sort((a, b) => b.score - a.score);
+
+  return {
+    pin: room.pin,
+    status: room.status,
+    examType: room.examType,
+    subjects: room.subjects,
+    currentQuestionIndex: room.currentQuestionIndex,
+    totalQuestions: room.questions.length,
+    questionStartedAt: room.questionStartedAt,
+    durationMs: room.durationMs,
+    currentQuestion,
+    answeredCount: room.currentAnswers.size,
+    totalPlayers: room.players.size,
+    leaderboard,
+  };
 }
 
 function createAppServer(listenPort = null) {
@@ -24,6 +144,16 @@ function createAppServer(listenPort = null) {
     app.use(express.static(distPath));
   }
   app.use(express.static(path.join(__dirname, '..', 'public')));
+
+  // SPA İstemci Yönlendirme Desteği (Client-side routing /admin vb.)
+  if (fs.existsSync(path.join(distPath, 'index.html'))) {
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+        return next();
+      }
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  }
 
   const httpServer = http.createServer(app);
   const io = new Server(httpServer, {
@@ -38,6 +168,44 @@ function createAppServer(listenPort = null) {
   const activeDuels = new Map(); // matchId -> { session: DuelSession, advancing: boolean }
   const playerToMatchId = new Map(); // playerId -> matchId
   const socketToPlayerId = new Map(); // socket.id -> playerId
+  const kahootRooms = new Map(); // pin -> room
+
+  function finishKahootQuestion(room) {
+    if (!room) return;
+    if (room.questionTimer) {
+      clearTimeout(room.questionTimer);
+      room.questionTimer = null;
+    }
+    if (room.status !== 'QUESTION') return;
+
+    for (const player of room.players.values()) {
+      const ans = room.currentAnswers.get(player.id);
+      if (ans) {
+        player.score += ans.score;
+        player.lastRoundPoints = ans.score;
+        player.lastRoundCorrect = ans.isCorrect;
+        if (ans.isCorrect) {
+          player.streak += 1;
+          player.correctCount += 1;
+        } else if (ans.score > 0) {
+          // Kısmi doğru: puan eklenir, seri korunur
+        } else {
+          player.streak = 0;
+          player.wrongCount += 1;
+        }
+      } else {
+        player.hasAnsweredCurrent = false;
+        player.lastRoundCorrect = false;
+        player.lastRoundPoints = 0;
+        player.lastRoundTimeMs = room.durationMs;
+        player.streak = 0;
+        player.wrongCount += 1;
+      }
+    }
+
+    room.status = 'INTERMISSION';
+    io.to('kahoot:' + room.pin).emit('kahoot:roomState', getPublicRoomState(room));
+  }
 
   function buildFullState() {
     const now = Date.now();
@@ -64,7 +232,7 @@ function createAppServer(listenPort = null) {
       questionBankStats: questionBank.stats,
       queueSnapshot: remaining.map((e) => ({
         ...e,
-        waitSeconds: Math.max(0, Math.round(((now - e.enqueuedAt) / 1000) * 10) / 10),
+        waitSeconds: Math.max(0, Math.floor((now - e.enqueuedAt) / 1000)),
       })),
       pairDiagnostics,
       pairwiseMatchesLast24h: queue.pairwiseMatches,
@@ -426,6 +594,233 @@ function createAppServer(listenPort = null) {
     socket.on('duel:roundReady', handleRoundReady);
     socket.on('duel:RoundReady', handleRoundReady);
 
+    // ==========================================
+    // CANLI SINIF / KAHOOT YARIŞMA MOTORU
+    // ==========================================
+
+    socket.on('kahoot:createRoom', (payload, callback) => {
+      const pin = generateKahootPin(kahootRooms);
+      const examType = payload?.examType || 'KARMA';
+      const subjects = Array.isArray(payload?.subjects) ? payload.subjects : [];
+      const questionCount = Number(payload?.questionCount) || 7;
+
+      const questions = selectKahootQuestions(questionBank, {
+        examType,
+        subjects,
+        count: questionCount,
+      });
+
+      const firstQ = questions[0];
+      const durationMs = (firstQ?.timeLimitSeconds || 25) * 1000;
+
+      const room = {
+        pin,
+        hostSocketId: socket.id,
+        status: 'LOBBY',
+        examType,
+        subjects,
+        questions,
+        currentQuestionIndex: 0,
+        questionStartedAt: 0,
+        durationMs,
+        players: new Map(),
+        currentAnswers: new Map(),
+        questionTimer: null,
+      };
+
+      kahootRooms.set(pin, room);
+      socket.join('kahoot:' + pin);
+
+      const state = getPublicRoomState(room);
+      socket.emit('kahoot:roomState', state);
+      if (typeof callback === 'function') {
+        callback({ ok: true, pin, roomState: state });
+      }
+    });
+
+    socket.on('kahoot:joinRoom', (payload, callback) => {
+      const pin = String(payload?.pin || '').trim();
+      const room = kahootRooms.get(pin);
+
+      if (!room) {
+        const err = { message: 'Bu PIN koduna ait aktif bir yarışma bulunamadı!' };
+        socket.emit('kahoot:error', err);
+        if (typeof callback === 'function') callback({ ok: false, error: err.message });
+        return;
+      }
+
+      const rawName = String(payload?.playerName || '').trim();
+      if (!rawName) {
+        const err = { message: 'Lütfen geçerli bir isim giriniz!' };
+        socket.emit('kahoot:error', err);
+        if (typeof callback === 'function') callback({ ok: false, error: err.message });
+        return;
+      }
+
+      const playerId = payload?.playerId
+        ? String(payload.playerId)
+        : 'kp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+      const avatarUrl = payload?.avatarUrl || '';
+
+      let player = room.players.get(playerId);
+      if (player) {
+        player.name = rawName;
+        if (avatarUrl) player.avatarUrl = avatarUrl;
+        player.socketId = socket.id;
+      } else {
+        player = {
+          id: playerId,
+          name: rawName,
+          avatarUrl,
+          socketId: socket.id,
+          score: 0,
+          streak: 0,
+          correctCount: 0,
+          wrongCount: 0,
+          hasAnsweredCurrent: false,
+          lastRoundPoints: 0,
+          lastRoundCorrect: false,
+          lastRoundTimeMs: 0,
+        };
+        room.players.set(playerId, player);
+      }
+
+      socket.join('kahoot:' + pin);
+      const state = getPublicRoomState(room);
+
+      socket.emit('kahoot:joined', { pin, playerId, roomState: state });
+      io.to('kahoot:' + pin).emit('kahoot:roomState', state);
+
+      if (typeof callback === 'function') {
+        callback({ ok: true, pin, playerId, roomState: state });
+      }
+    });
+
+    socket.on('kahoot:getRoom', (payload, callback) => {
+      const pin = String(payload?.pin || '').trim();
+      const room = kahootRooms.get(pin);
+      if (!room) {
+        const err = { message: 'Oda bulunamadı' };
+        socket.emit('kahoot:error', err);
+        if (typeof callback === 'function') callback({ ok: false, error: err.message });
+        return;
+      }
+      socket.join('kahoot:' + pin);
+      const state = getPublicRoomState(room);
+      socket.emit('kahoot:roomState', state);
+      if (typeof callback === 'function') callback({ ok: true, roomState: state });
+    });
+
+    socket.on('kahoot:startGame', ({ pin }) => {
+      const room = kahootRooms.get(String(pin || '').trim());
+      if (!room) return;
+      if (room.questionTimer) {
+        clearTimeout(room.questionTimer);
+        room.questionTimer = null;
+      }
+
+      room.status = 'QUESTION';
+      room.currentQuestionIndex = 0;
+      room.currentAnswers.clear();
+      const q = room.questions[0];
+      room.durationMs = (q?.timeLimitSeconds || 25) * 1000;
+      room.questionStartedAt = Date.now();
+      for (const p of room.players.values()) {
+        p.hasAnsweredCurrent = false;
+      }
+      room.questionTimer = setTimeout(() => {
+        finishKahootQuestion(room);
+      }, room.durationMs);
+      io.to('kahoot:' + room.pin).emit('kahoot:roomState', getPublicRoomState(room));
+    });
+
+    socket.on('kahoot:submitAnswer', ({ pin, playerId, questionIndex, answerResult }) => {
+      const room = kahootRooms.get(String(pin || '').trim());
+      if (!room) return;
+      if (room.status !== 'QUESTION') return;
+      if (Number(questionIndex) !== room.currentQuestionIndex) return;
+
+      const pId = String(playerId || '');
+      const player = room.players.get(pId);
+      if (!player) return;
+      if (room.currentAnswers.has(pId)) return;
+
+      const q = room.questions[room.currentQuestionIndex] || {};
+      const qType = q.type || q.interactiveQuestion?.type;
+      const isCorrect = Boolean(answerResult && answerResult.isCorrect);
+      const allowsPartial = ['matrix_toggle', 'pair_matching', 'swipe_grouping'].includes(qType);
+      const rawAccuracy = typeof answerResult?.accuracy === 'number' ? answerResult.accuracy : (isCorrect ? 1 : 0);
+      const effectiveAccuracy = isCorrect
+        ? 1
+        : allowsPartial
+        ? Math.max(0, Math.min(1, Number(rawAccuracy) || 0))
+        : 0;
+      const elapsedMs = Math.max(300, Date.now() - room.questionStartedAt);
+      const remainingRatio = Math.max(0, Math.min(1, 1 - elapsedMs / room.durationMs));
+      const basePoints = q.points || 100;
+
+      let points = 0;
+      if (effectiveAccuracy > 0) {
+        const speedBonus = Math.round(basePoints * 0.5 * remainingRatio);
+        const streakBonus = isCorrect ? Math.min(50, player.streak * 10) : 0;
+        points = Math.round((basePoints + speedBonus + streakBonus) * effectiveAccuracy);
+      } else {
+        points = 0;
+      }
+
+      player.hasAnsweredCurrent = true;
+      player.lastRoundCorrect = isCorrect;
+      player.lastRoundPoints = points;
+      player.lastRoundTimeMs = elapsedMs;
+
+      room.currentAnswers.set(pId, {
+        isCorrect,
+        accuracy: effectiveAccuracy,
+        score: points,
+        timeMs: elapsedMs,
+      });
+
+      if (room.currentAnswers.size >= room.players.size && room.players.size > 0) {
+        finishKahootQuestion(room);
+      } else {
+        io.to('kahoot:' + room.pin).emit('kahoot:roomState', getPublicRoomState(room));
+      }
+    });
+
+    socket.on('kahoot:endQuestion', ({ pin }) => {
+      const room = kahootRooms.get(String(pin || '').trim());
+      if (!room || room.status !== 'QUESTION') return;
+      finishKahootQuestion(room);
+    });
+
+    socket.on('kahoot:nextQuestion', ({ pin }) => {
+      const room = kahootRooms.get(String(pin || '').trim());
+      if (!room) return;
+      if (room.questionTimer) {
+        clearTimeout(room.questionTimer);
+        room.questionTimer = null;
+      }
+
+      if (room.currentQuestionIndex + 1 < room.questions.length) {
+        room.currentQuestionIndex++;
+        room.status = 'QUESTION';
+        room.currentAnswers.clear();
+        const q = room.questions[room.currentQuestionIndex];
+        room.durationMs = (q?.timeLimitSeconds || 25) * 1000;
+        room.questionStartedAt = Date.now();
+        for (const p of room.players.values()) {
+          p.hasAnsweredCurrent = false;
+        }
+        room.questionTimer = setTimeout(() => {
+          finishKahootQuestion(room);
+        }, room.durationMs);
+        io.to('kahoot:' + room.pin).emit('kahoot:roomState', getPublicRoomState(room));
+      } else {
+        room.status = 'FINISHED';
+        io.to('kahoot:' + room.pin).emit('kahoot:roomState', getPublicRoomState(room));
+      }
+    });
+
     socket.on('disconnect', () => {
       socketToPlayerId.delete(socket.id);
     });
@@ -434,20 +829,33 @@ function createAppServer(listenPort = null) {
   const close = () =>
     new Promise((resolve) => {
       clearInterval(tickInterval);
+      for (const room of kahootRooms.values()) {
+        if (room.questionTimer) {
+          clearTimeout(room.questionTimer);
+          room.questionTimer = null;
+        }
+      }
+      for (const entry of activeDuels.values()) {
+        if (entry.intermissionTimer) {
+          clearTimeout(entry.intermissionTimer);
+          entry.intermissionTimer = null;
+        }
+      }
       io.close(() => {
         httpServer.close(() => resolve());
       });
     });
 
   if (listenPort !== null) {
+    const HOST = listenPort === 0 ? '127.0.0.1' : (process.env.HOST || '0.0.0.0');
     return new Promise((resolve) => {
-      httpServer.listen(listenPort, '127.0.0.1', () => {
-        resolve({ app, httpServer, io, close });
+      httpServer.listen(listenPort, HOST, () => {
+        resolve({ app, httpServer, io, close, kahootRooms });
       });
     });
   }
 
-  return Promise.resolve({ app, httpServer, io, close });
+  return Promise.resolve({ app, httpServer, io, close, kahootRooms });
 }
 
 if (require.main === module) {
@@ -460,4 +868,10 @@ if (require.main === module) {
   });
 }
 
-module.exports = { createAppServer, isAuthorizedSocketPlayer };
+module.exports = {
+  createAppServer,
+  isAuthorizedSocketPlayer,
+  selectKahootQuestions,
+  generateKahootPin,
+  getPublicRoomState,
+};

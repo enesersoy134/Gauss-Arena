@@ -87,7 +87,7 @@ export default function OrderingAndFormula({
         return isMatch;
       });
 
-    const accuracy = correctOrder.length > 0 ? correctCount / correctOrder.length : 0;
+    const accuracy = isExactMatch ? 1 : 0;
     setIsSubmitted(true);
 
     onSubmit({
@@ -179,7 +179,7 @@ export default function OrderingAndFormula({
                 type="button"
                 disabled={isLocked}
                 onClick={() => handleSlotClick(currentSlotIdx)}
-                className={`min-w-[70px] md:min-w-[90px] h-[60px] md:h-[70px] px-3.5 rounded-xl flex items-center justify-center font-mono font-bold text-xl md:text-2xl transition-all duration-200 select-none ${slotStyle} ${
+                className={`min-w-[56px] sm:min-w-[70px] h-[48px] sm:h-[58px] px-2.5 sm:px-3.5 rounded-xl flex items-center justify-center font-mono font-bold text-lg sm:text-xl transition-all duration-200 select-none ${slotStyle} ${
                   !isLocked && placedItem ? 'cursor-pointer hover:border-[#EF4444] hover:bg-[#EF4444]/10 active:scale-95' : ''
                 } ${!isLocked && !placedItem ? 'cursor-default' : ''}`}
                 title={placedItem && !isLocked ? 'Çıkarmak için dokunun' : undefined}
@@ -191,7 +191,7 @@ export default function OrderingAndFormula({
         </div>
       ) : (
         /* SIRALAMA (SEQUENCE) YUVALARI */
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {slots.map((placedItem, slotIdx) => {
             const isTargetCorrect =
               isSubmitted && placedItem?.text === payload.correctOrder?.[slotIdx];
@@ -215,7 +215,7 @@ export default function OrderingAndFormula({
                 type="button"
                 disabled={isLocked}
                 onClick={() => handleSlotClick(slotIdx)}
-                className={`relative flex flex-col justify-between p-4 rounded-xl transition-all duration-200 min-h-[105px] text-left select-none ${slotCardStyle} ${
+                className={`relative flex flex-col justify-between p-2.5 sm:p-3 rounded-xl transition-all duration-200 min-h-[80px] sm:min-h-[90px] text-left select-none ${slotCardStyle} ${
                   !isLocked && placedItem ? 'cursor-pointer hover:border-[#EF4444] active:scale-95' : 'cursor-default'
                 }`}
                 title={placedItem && !isLocked ? 'Yuvadan çıkarmak için dokunun' : undefined}
