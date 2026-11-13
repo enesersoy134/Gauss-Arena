@@ -347,6 +347,10 @@ export default function App() {
   };
 
   const handleStartQueue = () => {
+    if (selectedMode === 'practice') {
+      handleStartPracticeFromMatchmaking();
+      return;
+    }
     if (!isCompetitiveUnlocked) {
       showToast(
         '🔒 1v1 Rekabetçi Düello kilitli! Önce Günün Öğretici Mini Oyununu tamamlamalısın.'
