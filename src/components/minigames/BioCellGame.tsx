@@ -3,6 +3,7 @@ import { CheckCircle2, RotateCcw, ArrowRight, Sparkles } from 'lucide-react';
 
 export interface BioCellGameProps {
   onComplete: () => void;
+  onNextSubject?: () => void;
 }
 
 type OrganelleSvgType =
@@ -482,13 +483,12 @@ const PinnedOrganelleIllustration: React.FC<{
   );
 };
 
-export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete }) => {
+export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete, onNextSubject }) => {
   const [stageIdx, setStageIdx] = useState<number>(0);
   const currentStage = CELL_STAGES[stageIdx];
 
-  const [selectedOrgId, setSelectedOrgId] = useState<string>(
-    CELL_STAGES[0].trayOptions[1].id
-  );
+  // Kullanıcı kendisi seçene kadar hiçbir organel seçili başlamaz
+  const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
   const [pinnedByStage, setPinnedByStage] = useState<Record<number, string[]>>({
     0: [],
     1: [],
@@ -498,29 +498,34 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete }) => {
     text: string;
   }>({
     type: 'info',
-    text: 'Alttaki 7 organel arasından bu hücreye ait olanları seçip doğru iğne yuvasına tuttur!',
+    text: 'Alttaki tepsiden bir organel seç, ardından hücre üzerindeki ilgili iğne yuvasına tıkla!',
   });
 
   const currentPinnedIds = pinnedByStage[stageIdx] || [];
   const isCurrentCellWorking = currentPinnedIds.length === currentStage.slots.length;
+  const areAllStagesDone =
+    (pinnedByStage[0] || []).length === CELL_STAGES[0].slots.length &&
+    (pinnedByStage[1] || []).length === CELL_STAGES[1].slots.length;
 
   const switchStage = (newIdx: number) => {
     setStageIdx(newIdx);
-    const pinnedInNew = pinnedByStage[newIdx] || [];
-    const firstUnpinned = CELL_STAGES[newIdx].trayOptions.find(
-      (o) => o.isValidForCell && !pinnedInNew.includes(o.id)
-    );
-    if (firstUnpinned) {
-      setSelectedOrgId(firstUnpinned.id);
-    }
+    setSelectedOrgId(null);
     setStatusMsg({
       type: 'info',
-      text: `${CELL_STAGES[newIdx].title}: Alttaki 7 organel arasından doğru olanları hücrenin üstüne iğnele!`,
+      text: `${CELL_STAGES[newIdx].title}: Alttaki 7 organel arasından birini seç, ardından hücre üzerindeki doğru yuvaya tıkla!`,
     });
   };
 
   const handlePinSlotClick = (slotOrg: CellSlotOrganelle) => {
     if (currentPinnedIds.includes(slotOrg.id)) return;
+
+    if (!selectedOrgId) {
+      setStatusMsg({
+        type: 'error',
+        text: `⚠️ Önce alttaki tepsiden bir organel seçmelisin! (Hedef: "${slotOrg.slotLabel}" - ${slotOrg.slotHint})`,
+      });
+      return;
+    }
 
     const chosenOption = currentStage.trayOptions.find((o) => o.id === selectedOrgId);
     if (!chosenOption) return;
@@ -549,31 +554,29 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete }) => {
     const nextPinned = [...currentPinnedIds, slotOrg.id];
     const nextMap = { ...pinnedByStage, [stageIdx]: nextPinned };
     setPinnedByStage(nextMap);
+    // Asla otomatik sıradaki organeli seçme - öğrenci kendi seçsin
+    setSelectedOrgId(null);
 
-    const remaining = currentStage.trayOptions.find(
-      (o) => o.isValidForCell && !nextPinned.includes(o.id)
-    );
-    if (remaining) {
-      setSelectedOrgId(remaining.id);
-      setStatusMsg({
-        type: 'success',
-        text: `📍 ${slotOrg.name} hücreye iğnelendi! (${nextPinned.length}/4 tamamlandı)`,
-      });
-    } else {
+    if (nextPinned.length === currentStage.slots.length) {
       setStatusMsg({
         type: 'success',
         text: currentStage.activeAnimationText,
       });
       onComplete();
+    } else {
+      setStatusMsg({
+        type: 'success',
+        text: `📍 ${slotOrg.name} hücreye iğnelendi! (${nextPinned.length}/4 tamamlandı). Şimdi sıradaki organeli tepsiden seç!`,
+      });
     }
   };
 
   const handleReset = () => {
     setPinnedByStage((prev) => ({ ...prev, [stageIdx]: [] }));
-    setSelectedOrgId(currentStage.trayOptions[0].id);
+    setSelectedOrgId(null);
     setStatusMsg({
       type: 'info',
-      text: 'Hücre üzerindeki iğneler çıkarıldı. 7 organel arasından doğru 4 tanesini tekrar iğnele!',
+      text: 'Hücre üzerindeki iğneler çıkarıldı. Tepsiden bir organel seçip doğru yuvaya iğnele!',
     });
   };
 
@@ -857,6 +860,15 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete }) => {
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             )}
+            {isCurrentCellWorking && (stageIdx === 1 || areAllStagesDone) && onNextSubject && (
+              <button
+                onClick={onNextSubject}
+                className="btn-primary !py-1.5 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-500/20"
+              >
+                <span>Sonraki Derse Geç (Kimya)</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
             <button
               onClick={handleReset}
               className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5"
@@ -875,7 +887,15 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete }) => {
             return (
               <button
                 key={org.id}
-                onClick={() => !isPinned && setSelectedOrgId(org.id)}
+                onClick={() => {
+                  if (!isPinned) {
+                    setSelectedOrgId(org.id);
+                    setStatusMsg({
+                      type: 'info',
+                      text: `Seçildi: "${org.name}" (${org.roleShort}). Şimdi hücre üzerindeki ilgili iğne yuvasına tıkla!`,
+                    });
+                  }
+                }}
                 disabled={isPinned}
                 className={`p-2.5 rounded-xl font-poppins font-bold text-xs flex items-center gap-2 border transition-all text-left ${
                   isPinned

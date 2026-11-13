@@ -3,6 +3,7 @@ import { CheckCircle2, RotateCcw, ArrowRight, FlaskConical } from 'lucide-react'
 
 export interface ChemMoleculeGameProps {
   onComplete: () => void;
+  onNextSubject?: () => void;
 }
 
 interface BottleDef {
@@ -279,7 +280,7 @@ const FORMULA_STAGES: FormulaStage[] = [
   },
 ];
 
-export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({ onComplete }) => {
+export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({ onComplete, onNextSubject }) => {
   const [stageIdx, setStageIdx] = useState<number>(0);
   const [beakerItems, setBeakerItems] = useState<string[]>([]);
   const [completedStages, setCompletedStages] = useState<number[]>([]);
@@ -579,13 +580,24 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({ onComplete }
 
         <div className="flex items-center gap-2 shrink-0">
           {isSuccess && (
-            <button
-              onClick={handleNextStage}
-              className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
-            >
-              <span>Sonraki Formül ({((stageIdx + 1) % 3) + 1}/3)</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            <>
+              <button
+                onClick={handleNextStage}
+                className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
+              >
+                <span>Sonraki Formül ({((stageIdx + 1) % 3) + 1}/3)</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              {onNextSubject && (
+                <button
+                  onClick={onNextSubject}
+                  className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
+                >
+                  <span>Sonraki Derse Geç (Fizik)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </>
           )}
           <button
             onClick={handleReset}

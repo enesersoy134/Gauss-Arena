@@ -8,6 +8,7 @@ import {
   X,
   RotateCcw,
   Gamepad2,
+  ArrowRight,
 } from 'lucide-react';
 import BioCellGame from './BioCellGame';
 import ChemMoleculeGame from './ChemMoleculeGame';
@@ -95,8 +96,16 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
 
   if (!isOpen) return null;
 
+  const currentIndex = MINI_GAME_SUBJECTS.findIndex((s) => s.id === activeSubject);
+  const nextSubjectMeta = MINI_GAME_SUBJECTS[(currentIndex + 1) % MINI_GAME_SUBJECTS.length];
+  const isCurrentDone = completedMiniGames.includes(activeSubject);
+
   const handleCompleteCurrent = () => {
     onCompleteMiniGame(activeSubject);
+  };
+
+  const handleNextSubject = () => {
+    setActiveSubject(nextSubjectMeta.id);
   };
 
   return (
@@ -204,7 +213,39 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
 
         {/* ORTA ALAN: Aktif Mini Oyun Sahnesi */}
         <div className="p-4 sm:p-5 overflow-y-auto flex-1 flex flex-col gap-3">
-          {isCompetitiveUnlocked && (
+          {/* O DERS BİTTİĞİNDE: SONRAKİ DERSE GEÇ BARI */}
+          {isCurrentDone && (
+            <div className="bg-gradient-to-r from-emerald-950/80 via-[#1A0E1C] to-emerald-950/80 border-2 border-emerald-400 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl shadow-emerald-950/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center text-xl shrink-0">
+                  🎉
+                </div>
+                <div>
+                  <div className="font-poppins font-black text-xs sm:text-sm text-white flex items-center gap-2">
+                    <span>{MINI_GAME_SUBJECTS[currentIndex].label} Dersi Başarıyla Tamamlandı!</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                      {completedMiniGames.length}/6 Bitti
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#B5CBC8] mt-0.5">
+                    Tebrikler! Sıradaki öğretici oyuna geçebilir veya 1v1 Arenaya katılabilirsin.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+                <button
+                  onClick={handleNextSubject}
+                  className="btn-primary !py-2.5 !px-5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-600/30 w-full sm:w-auto"
+                >
+                  <span>Sonraki Derse Geç ({nextSubjectMeta.icon} {nextSubjectMeta.label})</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {isCompetitiveUnlocked && !isCurrentDone && (
             <div className="bg-emerald-500/15 border border-emerald-500/40 rounded-2xl px-4 py-2.5 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-xs text-emerald-200">
                 <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -222,12 +263,24 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
             </div>
           )}
 
-          {activeSubject === 'biyoloji' && <BioCellGame onComplete={handleCompleteCurrent} />}
-          {activeSubject === 'kimya' && <ChemMoleculeGame onComplete={handleCompleteCurrent} />}
-          {activeSubject === 'fizik' && <PhysBalanceGame onComplete={handleCompleteCurrent} />}
-          {activeSubject === 'matematik' && <MathProfitGame onComplete={handleCompleteCurrent} />}
-          {activeSubject === 'geometri' && <GeoShapePuzzle onComplete={handleCompleteCurrent} />}
-          {activeSubject === 'turkce' && <TurkRapBattle onComplete={handleCompleteCurrent} />}
+          {activeSubject === 'biyoloji' && (
+            <BioCellGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+          )}
+          {activeSubject === 'kimya' && (
+            <ChemMoleculeGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+          )}
+          {activeSubject === 'fizik' && (
+            <PhysBalanceGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+          )}
+          {activeSubject === 'matematik' && (
+            <MathProfitGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+          )}
+          {activeSubject === 'geometri' && (
+            <GeoShapePuzzle onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+          )}
+          {activeSubject === 'turkce' && (
+            <TurkRapBattle onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+          )}
         </div>
       </div>
     </div>

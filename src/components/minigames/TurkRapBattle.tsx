@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { CheckCircle2, RotateCcw } from 'lucide-react';
+import { CheckCircle2, RotateCcw, ArrowRight } from 'lucide-react';
 
 export interface TurkRapBattleProps {
   onComplete: () => void;
+  onNextSubject?: () => void;
 }
 
 interface RapStageRound {
@@ -132,7 +133,7 @@ const ROUNDS: RapStageRound[] = [
   },
 ];
 
-export const TurkRapBattle: React.FC<TurkRapBattleProps> = ({ onComplete }) => {
+export const TurkRapBattle: React.FC<TurkRapBattleProps> = ({ onComplete, onNextSubject }) => {
   const [roundIdx, setRoundIdx] = useState<number>(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isFinished, setIsFinished] = useState<boolean>(false);
@@ -333,6 +334,16 @@ export const TurkRapBattle: React.FC<TurkRapBattleProps> = ({ onComplete }) => {
                   ? `Sıradaki Tur (${roundIdx + 2}/3) →`
                   : '🎉 Atışmayı Kazan!'}
               </span>
+            </button>
+          )}
+
+          {isFinished && onNextSubject && (
+            <button
+              onClick={onNextSubject}
+              className="btn-primary !py-2 !px-5 text-xs sm:text-sm font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-500/20"
+            >
+              <span>Sonraki Derse Geç (Biyoloji)</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           )}
 

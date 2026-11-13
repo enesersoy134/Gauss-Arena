@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { CheckCircle2, RotateCcw } from 'lucide-react';
+import { CheckCircle2, RotateCcw, ArrowRight } from 'lucide-react';
 
 export interface GeoShapePuzzleProps {
   onComplete: () => void;
+  onNextSubject?: () => void;
 }
 
 interface AngleBlock {
@@ -19,7 +20,7 @@ const ANGLE_BLOCKS: AngleBlock[] = [
   { angle: 120, label: '120° Dilim', desc: 'Altıgen Açısı', color: '#A855F7' },
 ];
 
-export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete }) => {
+export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNextSubject }) => {
   const [selectedAngle, setSelectedAngle] = useState<AngleBlock['angle']>(60);
   const [solved, setSolved] = useState<{
     straight180: boolean;
@@ -375,13 +376,24 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete }) =>
           })}
         </div>
 
-        <button
-          onClick={handleReset}
-          className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5 shrink-0"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>Sıfırla</span>
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          {isAllDone && onNextSubject && (
+            <button
+              onClick={onNextSubject}
+              className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
+            >
+              <span>Sonraki Derse Geç (Türkçe)</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+          <button
+            onClick={handleReset}
+            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5 shrink-0"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Sıfırla</span>
+          </button>
+        </div>
       </div>
     </div>
   );

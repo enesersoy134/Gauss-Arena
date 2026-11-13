@@ -10,6 +10,7 @@ import {
 
 export interface PhysBalanceGameProps {
   onComplete: () => void;
+  onNextSubject?: () => void;
 }
 
 interface PlacedWeight {
@@ -59,7 +60,7 @@ const LEVELS: LevelConfig[] = [
   },
 ];
 
-export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete }) => {
+export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete, onNextSubject }) => {
   const [levelIdx, setLevelIdx] = useState<number>(0);
   const currentLevel = LEVELS[levelIdx];
 
@@ -410,20 +411,31 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete }) 
         </div>
 
         {isBalanced ? (
-          <button
-            onClick={handleNextOrFinish}
-            disabled={isGameFinished}
-            className="btn-primary py-2.5 px-6 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500 shrink-0"
-          >
-            <CheckCircle2 className="w-4 h-4" />
-            <span>
-              {isGameFinished
-                ? '✓ Tork Simülasyonu Tamamlandı!'
-                : levelIdx < LEVELS.length - 1
-                ? 'Harika! 2. Aşamaya Geç →'
-                : '🎉 Dengeyi Onayla & Tamamla'}
-            </span>
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={handleNextOrFinish}
+              disabled={isGameFinished}
+              className="btn-primary py-2.5 px-6 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500 shrink-0"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              <span>
+                {isGameFinished
+                  ? '✓ Tork Simülasyonu Tamamlandı!'
+                  : levelIdx < LEVELS.length - 1
+                  ? 'Harika! 2. Aşamaya Geç →'
+                  : '🎉 Dengeyi Onayla & Tamamla'}
+              </span>
+            </button>
+            {onNextSubject && (
+              <button
+                onClick={onNextSubject}
+                className="btn-primary py-2.5 px-5 text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500 shrink-0"
+              >
+                <span>Sonraki Derse Geç (Matematik)</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            )}
+          </div>
         ) : (
           <div className="text-xs text-[#B5CBC8] flex items-center gap-1.5 font-mono">
             <HelpCircle className="w-4 h-4 text-amber-400 shrink-0" />
