@@ -229,23 +229,35 @@ export default function App() {
     );
   }
 
-  // 2. BİREYSEL EKSİK KONU TELAFİ & PEKİŞTİRME ANTRENMANI
+  // 2. BİREYSEL EKSİK KONU TELAFİ & ALIŞTIRMA MODU
   if (revisionPracticeQuestions && revisionPracticeQuestions.length > 0) {
     return (
       <RevisionPracticeScreen
         questions={revisionPracticeQuestions}
         topics={revisionPracticeTopics}
+        modeTitle={isPracticeSession ? '🎯 Bireysel Soru Alıştırması' : '🎯 Eksik Konu Pekiştirme'}
+        subtitle={isPracticeSession ? 'BİREYSEL ALIŞTIRMA MODU' : 'BİREYSEL TELAFİ ANTRENMANI'}
+        exitLabel={isPracticeSession ? '← Karşılaşma Seçeneklerine Dön' : 'Antrenmandan Çık'}
+        rewardLabel={isPracticeSession ? '+15 Coin Alıştırma Ödülü' : '+30 Coin Telafi Ödülü'}
         onComplete={async (stats) => {
-          await completeRevisionPractice(currentPlayerId, stats.solvedTopics);
-          showToast(
-            `🎉 Eksik konu telafi antrenmanını tamamladınız! +30 Coin kazandınız ve eksiklik yüzdeniz düştü! (${stats.correctCount}/${stats.totalCount} Doğru)`
-          );
+          if (isPracticeSession) {
+            showToast(
+              `🎉 Bireysel soru alıştırmasını başarıyla tamamladınız! (${stats.correctCount}/${stats.totalCount} Doğru)`
+            );
+          } else {
+            await completeRevisionPractice(currentPlayerId, stats.solvedTopics);
+            showToast(
+              `🎉 Eksik konu telafi antrenmanını tamamladınız! +30 Coin kazandınız ve eksiklik yüzdeniz düştü! (${stats.correctCount}/${stats.totalCount} Doğru)`
+            );
+          }
           setRevisionPracticeQuestions(null);
           setRevisionPracticeTopics([]);
+          setIsPracticeSession(false);
         }}
         onExit={() => {
           setRevisionPracticeQuestions(null);
           setRevisionPracticeTopics([]);
+          setIsPracticeSession(false);
         }}
       />
     );
@@ -442,6 +454,7 @@ export default function App() {
     }
 
     const shuffled = [...matchedQuestions].sort(() => Math.random() - 0.5);
+    setIsPracticeSession(false);
     setRevisionPracticeTopics(topicNames);
     setRevisionPracticeQuestions(shuffled);
   };
@@ -459,7 +472,42 @@ export default function App() {
       matched = ALL_INTERACTIVE_QUESTIONS.slice(0, 3);
     }
     const shuffled = [...matched].sort(() => Math.random() - 0.5);
+    setIsPracticeSession(false);
     setRevisionPracticeTopics([topicName]);
+    setRevisionPracticeQuestions(shuffled);
+  };
+
+  // Karşılaşma Seçenekleri altındaki Bireysel Alıştırma Başlatıcı
+  const handleStartPracticeFromMatchmaking = () => {
+    soundEngine.playClick();
+    if (selectedSubjects.length === 0) {
+      showToast('Lütfen alıştırma yapmak için en az bir ders seçin!');
+      return;
+    }
+
+    const filtered = ALL_INTERACTIVE_QUESTIONS.filter((q) => {
+      const qExam = (q as any).examType || 'TYT';
+      const examMatch = qExam === selectedExamType || selectedExamType === 'TYT';
+      const subjectMatch = selectedSubjects.includes(q.subject);
+      let diffMatch = true;
+      if (selectedDifficultyMode === 'easy') diffMatch = q.difficulty === 'kolay';
+      else if (selectedDifficultyMode === 'medium') diffMatch = q.difficulty === 'orta';
+      else if (selectedDifficultyMode === 'hard') diffMatch = q.difficulty === 'zor';
+
+      return subjectMatch && (selectedDifficultyMode === 'adaptive' || diffMatch);
+    });
+
+    let pool = filtered;
+    if (pool.length < practiceQuestionCount) {
+      const subjectPool = ALL_INTERACTIVE_QUESTIONS.filter((q) => selectedSubjects.includes(q.subject));
+      pool = subjectPool.length > 0 ? subjectPool : ALL_INTERACTIVE_QUESTIONS;
+    }
+
+    const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, practiceQuestionCount);
+    const topics = Array.from(new Set(shuffled.map((q) => q.topic || q.subject)));
+
+    setIsPracticeSession(true);
+    setRevisionPracticeTopics(topics);
     setRevisionPracticeQuestions(shuffled);
   };
 
