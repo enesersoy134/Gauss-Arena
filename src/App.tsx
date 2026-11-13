@@ -543,7 +543,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Sağ: Öğretici Mini Oyunlar Butonu + Gerçekçi Öğrenci Profil Hapı (Profile Pill) */}
+          {/* Sağ: Günlük Görev Butonu + Gerçekçi Öğrenci Profil Hapı (Profile Pill) */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={() => setShowMiniGameScreen(true)}
@@ -552,11 +552,11 @@ export default function App() {
                   ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25'
                   : 'bg-amber-500/20 border-amber-500/50 text-amber-300 hover:bg-amber-500/30 animate-pulse'
               }`}
-              title="6 Branşta Oynarken Öğreten Günlük Mini Oyunlar"
+              title="6 Branşta Oynarken Öğreten Günlük Görevler"
             >
               <Gamepad2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
-              <span className="hidden md:inline">Öğretici Mini Oyunlar</span>
-              <span className="md:hidden">Mini Oyun</span>
+              <span className="hidden md:inline">Günlük Görev</span>
+              <span className="md:hidden">Görev</span>
               <span className="font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-black/30">
                 {isCompetitiveUnlocked ? `🔓 ${completedMiniGames.length}/6` : '🔒 Kilitli'}
               </span>

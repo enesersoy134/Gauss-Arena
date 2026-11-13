@@ -141,7 +141,7 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
               </div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="font-poppins font-black text-sm sm:text-base text-white">
-                  ÖĞRETİCİ MİNİ OYUNLAR
+                  GÜNLÜK GÖREV
                 </h2>
                 {isCompetitiveUnlocked ? (
                   <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">

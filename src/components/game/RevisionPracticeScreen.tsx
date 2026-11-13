@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { Question } from '../../types/game';
 import { AnswerResult } from '../questions/questionProps';
 import QuestionRenderer from '../questions/QuestionRenderer';
@@ -50,6 +50,12 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
   const [correctCount, setCorrectCount] = useState<number>(0);
   const [correctQuestionIds, setCorrectQuestionIds] = useState<Set<string>>(new Set());
   const [isFinished, setIsFinished] = useState<boolean>(false);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+
+  // Yeni soruya geçildiğinde otomatik en üste yumuşak kaydır
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentIndex, isFinished]);
 
   // Ses Durumu
   const [isSoundMuted, setIsSoundMuted] = useState<boolean>(soundEngine.getMuted());
@@ -86,6 +92,11 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
     } else {
       soundEngine.playWrong();
     }
+
+    // Cevaplandığında çözüm kartına doğru yumuşak kaydır
+    setTimeout(() => {
+      feedbackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
   };
 
   // Şimdi Tekrar Dene
@@ -94,6 +105,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
     setHasAnswered(false);
     setLastResult(null);
     setRetryCount((prev) => prev + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Sıradaki Soruya Geç veya Tamamla
@@ -104,10 +116,12 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
       setHasAnswered(false);
       setLastResult(null);
       setRetryCount(0);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       setIsFinished(true);
       soundEngine.stopMusic();
       soundEngine.playVictory();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -124,6 +138,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
     setCorrectQuestionIds(new Set());
     setIsFinished(false);
     soundEngine.startMusic('lobby');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Ödülü Al ve Çık
@@ -417,6 +432,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
          * =================================================================== */}
         {hasAnswered && lastResult && (
           <div
+            ref={feedbackRef}
             className={`p-5 sm:p-6 rounded-3xl border-2 shadow-2xl flex flex-col gap-4 animate-fade-in ${
               lastResult.isCorrect
                 ? 'bg-gradient-to-br from-emerald-950/40 via-[#1A0E1C] to-black border-emerald-500/60 shadow-emerald-950/40'
@@ -512,6 +528,68 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
           </div>
         )}
       </main>
+
+      {/* =====================================================================
+       * STICKY BOTTOM AKSİYON BARI (EKRANI AŞAĞI KAYDIRMADAN TEK TIKLA GEÇİŞ)
+       * Kullanıcı soruya yanıt verdiği anda ekranın altında sabitlenir.
+       * ===================================================================== */}
+      {hasAnswered && lastResult && (
+        <aside aria-label="Soru Aksiyonu" className="sticky bottom-0 z-50 w-full bg-[#160A18]/95 backdrop-blur-md border-t-2 border-orange-500/50 px-4 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] animate-slide-up">
+          <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div
+                className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                  lastResult.isCorrect
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                    : 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
+                }`}
+              >
+                {lastResult.isCorrect ? (
+                  <CheckCircle2 className="w-5 h-5" />
+                ) : (
+                  <Lightbulb className="w-5 h-5" />
+                )}
+              </div>
+              <div className="min-w-0">
+                <span className="font-poppins font-black text-xs sm:text-sm text-white block truncate">
+                  {lastResult.isCorrect ? '✅ Harika! Doğru Cevap' : '💡 Detaylı Çözüm Hazır'}
+                </span>
+                <span className="text-[11px] text-[#B5CBC8] hidden sm:block truncate">
+                  {lastResult.isCorrect
+                    ? 'Tebrikler! Sıradaki soruya tek tıkla geçebilirsiniz.'
+                    : 'İster çözümü inceleyin, ister hemen tekrar deneyin veya sıradaki soruya geçin.'}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {!lastResult.isCorrect && (
+                <button
+                  type="button"
+                  onClick={handleRetry}
+                  className="px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-poppins font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Tekrar Dene</span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={handleNext}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 hover:brightness-110 active:scale-95 text-white font-poppins font-black text-xs sm:text-sm flex items-center gap-2 transition-all shadow-xl shadow-[#F14E13]/40 border border-white/20 animate-pulse"
+              >
+                <span>
+                  {currentIndex + 1 >= questions.length
+                    ? '🏆 Antrenmanı Tamamla'
+                    : 'Sıradaki Soruya Geç'}
+                </span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </aside>
+      )}
 
       <footer className="max-w-4xl mx-auto w-full text-center text-[11px] text-zinc-500 py-3">
         İşler Teknoloji • Bireysel Eksik Konu Telafi Modülü
