@@ -632,9 +632,9 @@ export default function App() {
             }`}
           >
             <Swords className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
-            <span className="sm:hidden">Düello</span>
-            <span className="hidden sm:inline md:hidden">Düello & Eşleşme</span>
-            <span className="hidden md:inline">1v1 Düello & Karşılaşma</span>
+            <span className="sm:hidden">Karşılaşma</span>
+            <span className="hidden sm:inline md:hidden">Düello & Alıştırma</span>
+            <span className="hidden md:inline">Karşılaşma & Alıştırma</span>
             {isRankedQueueing && <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-300 animate-ping shrink-0" />}
           </button>
 
