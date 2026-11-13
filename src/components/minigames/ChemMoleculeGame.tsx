@@ -335,9 +335,10 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({ onComplete, 
   };
 
   const handleNextStage = () => {
-    const nextIdx = (stageIdx + 1) % FORMULA_STAGES.length;
-    setStageIdx(nextIdx);
-    setBeakerItems([]);
+    if (stageIdx < FORMULA_STAGES.length - 1) {
+      setStageIdx(stageIdx + 1);
+      setBeakerItems([]);
+    }
   };
 
   const handleReset = () => {
@@ -581,13 +582,15 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({ onComplete, 
         <div className="flex items-center gap-2 shrink-0">
           {isSuccess && (
             <>
-              <button
-                onClick={handleNextStage}
-                className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
-              >
-                <span>Sonraki Formül ({((stageIdx + 1) % 3) + 1}/3)</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              {stageIdx < FORMULA_STAGES.length - 1 && (
+                <button
+                  onClick={handleNextStage}
+                  className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
+                >
+                  <span>Sonraki Formül ({stageIdx + 2}/3)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
               {onNextSubject && (
                 <button
                   onClick={onNextSubject}

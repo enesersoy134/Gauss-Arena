@@ -848,30 +848,23 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
                   <div className="font-poppins font-black text-xs text-white truncate mt-0.5" title={tv.title}>
                     {tv.title}
                   </div>
-                  <div className="text-[10px] font-mono font-semibold truncate mt-0.5" style={{ color: tv.color }}>
-                    {tv.funcType}
-                  </div>
                 </div>
 
                 {/* Değişken Durumu ve Katkı Değeri */}
-                <div className="text-center w-full">
-                  <div className="flex items-center justify-between text-[10px] font-mono px-0.5">
-                    <span className="font-bold text-white bg-white/10 px-1.5 py-0.2 rounded">
+                <div className="w-full">
+                  <div className="flex items-center justify-between text-[10px] font-mono px-1.5 py-1 rounded-lg bg-black/40 border border-white/5">
+                    <span className="font-bold text-white bg-white/10 px-1.5 py-0.5 rounded">
                       {tv.varName} = {tv.currentX}
                     </span>
                     {tv.isOptimal ? (
-                      <span className="text-emerald-300 font-bold">✓ ZİRVE</span>
+                      <span className="text-emerald-300 font-bold">
+                        ✓ ZİRVE ({tv.currentVal >= 0 ? `+${tv.currentVal}` : tv.currentVal}k)
+                      </span>
                     ) : (
                       <span className="text-amber-300 font-bold">
-                        {tv.currentVal >= 0 ? `+${tv.currentVal}` : tv.currentVal}
+                        {tv.currentVal >= 0 ? `+${tv.currentVal}` : tv.currentVal}k ₺
                       </span>
                     )}
-                  </div>
-                  <div
-                    className="font-mono font-black text-xs mt-0.5 truncate"
-                    style={{ color: tv.color }}
-                  >
-                    {tv.formulaDisplay}
                   </div>
                 </div>
 
