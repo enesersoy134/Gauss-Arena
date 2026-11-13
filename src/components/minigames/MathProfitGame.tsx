@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CheckCircle2, RotateCcw, RotateCw, ArrowRight } from 'lucide-react';
 
 export interface MathProfitGameProps {
@@ -358,6 +358,7 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({
   );
   const [activeHintId, setActiveHintId] = useState<LeverId>('x2');
   const [solvedStageIds, setSolvedStageIds] = useState<string[]>([]);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const termValues = currentStage.levers.map((f) => ({
     ...f,
@@ -376,6 +377,14 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({
     setStageIndex(idx);
     setValues(getInitialValuesForStage(targetStage));
     setActiveHintId('x2');
+
+    // Yeni denkleme geçildiğinde en üste yumuşak kaydır
+    const scrollParent = rootRef.current?.closest('.overflow-y-auto');
+    if (scrollParent) {
+      scrollParent.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const updateX = (id: LeverId, nextX: 1 | 2 | 3 | 4) => {
@@ -455,7 +464,7 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({
   const optimalPtY = mapDetailY(activeLeverObj.maxVal, activeLeverObj);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div ref={rootRef} className="flex flex-col gap-3">
       {/* ÜST SEKMELER: 3 FARKLI MATEMATİKSEL EŞİTLİK SEÇİCİ */}
       <div className="flex flex-wrap items-center justify-between gap-2 bg-[#0F0510] border border-white/10 rounded-2xl p-2.5">
         <div className="flex flex-wrap items-center gap-2">

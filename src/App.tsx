@@ -35,6 +35,7 @@ import {
   Lock,
   Unlock,
   Gamepad2,
+  ArrowRight,
 } from 'lucide-react';
 
 type ActiveTab = 'matchmaking' | 'economy' | 'tournaments' | 'revision';
@@ -817,43 +818,37 @@ export default function App() {
                 )}
               </div>
 
-              {/* Günlük Öğretici Mini Oyun & Rekabetçi Kilit Kartı */}
+              {/* Günlük Görev Kartı */}
               <div
-                className={`game-card p-5 border flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                className={`game-card p-4 sm:p-5 border flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                   isCompetitiveUnlocked
-                    ? 'border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 to-[#1A0E1C]'
-                    : 'border-amber-500/50 bg-gradient-to-r from-amber-950/40 to-[#1A0E1C]'
+                    ? 'border-emerald-500/30 bg-gradient-to-r from-emerald-950/30 via-[#1A0E1C] to-emerald-950/20'
+                    : 'border-[#F14E13]/40 bg-gradient-to-r from-[#F14E13]/10 via-[#1A0E1C] to-transparent'
                 }`}
               >
-                <div className="flex items-start sm:items-center gap-3.5">
+                <div className="flex items-center gap-3.5">
                   <div
-                    className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
+                    className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${
                       isCompetitiveUnlocked
                         ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
-                        : 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+                        : 'bg-[#F14E13]/20 border-[#F14E13]/40 text-[#F14E13]'
                     }`}
                   >
-                    {isCompetitiveUnlocked ? (
-                      <Unlock className="w-6 h-6" />
-                    ) : (
-                      <Lock className="w-6 h-6" />
-                    )}
+                    <Gamepad2 className="w-5 h-5" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="font-poppins font-bold text-sm sm:text-base text-white">
-                        {isCompetitiveUnlocked
-                          ? '🔓 1v1 Rekabetçi Arena Kilidi Açıldı!'
-                          : '🔒 1v1 Rekabetçi Mod Kilitli — Günlük Öğrenme Görevi'}
+                        Günlük Görev
                       </h3>
-                      <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-[#B5CBC8]">
-                        {completedMiniGames.length} / 6 Branş Deneyimlendi
+                      <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-zinc-300">
+                        {completedMiniGames.length} / 6 Tamamlandı
                       </span>
                     </div>
-                    <p className="text-xs text-[#B5CBC8] mt-1 leading-relaxed">
+                    <p className="text-xs text-[#B5CBC8] mt-0.5">
                       {isCompetitiveUnlocked
-                        ? 'Günün öğretici simülasyonunu başarıyla tamamladın! Artık 1v1 Düelloya katılabilir veya 6 branşın (Biyoloji, Kimya, Fizik, Matematik, Geometri, Türkçe) tamamını deneyimleyebilirsin.'
-                        : '1v1 Rekabetçi Düello modunun kilidini açmak için günün Öğretici Mini Oyununu (Keşif & Simülasyon) tamamla. (Ekstra Coin/Momentum vermez, oynarken öğretir.)'}
+                        ? 'Günün görevlerini tamamladın veya diğer branşları deneyimleyebilirsin.'
+                        : '1v1 maç kilidini açmak için günün görevini tamamla.'}
                     </p>
                   </div>
                 </div>
@@ -861,16 +856,13 @@ export default function App() {
                 <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                   <button
                     onClick={() => setShowMiniGameScreen(true)}
-                    className={`btn-primary !py-2.5 !px-4 text-xs font-bold flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`btn-primary !py-2.5 !px-5 text-xs font-bold flex items-center gap-2 whitespace-nowrap shadow-md ${
                       isCompetitiveUnlocked ? '!bg-emerald-600 hover:!bg-emerald-500' : ''
                     }`}
                   >
                     <Gamepad2 className="w-4 h-4" />
-                    <span>
-                      {isCompetitiveUnlocked
-                        ? '6 Branş Mini Oyunlar (Demo)'
-                        : 'Mini Oyunu Başlat & Kilidi Aç'}
-                    </span>
+                    <span>Günlük Göreve Git</span>
+                    <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
