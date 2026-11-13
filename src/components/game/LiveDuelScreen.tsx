@@ -32,6 +32,8 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
   onReadyForNextRound,
   onExit,
 }) => {
+  const cleanPlayerName = (name: string) => (name ? name.split('(')[0].trim() : '');
+
   // 1. MAÇ SONU EKRANI (duelSummary mevcutsa)
   if (duelSummary) {
     const isPlayerA = duelSummary.playerA.id === currentPlayerId;
@@ -40,7 +42,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
 
     const player1Info: PlayerInfo = {
       id: summaryMe.id,
-      name: summaryMe.name,
+      name: cleanPlayerName(summaryMe.name),
       elo: Math.round(summaryMe.elo),
       streak: summaryMe.streak,
       avatarUrl: summaryMe.avatarUrl,
@@ -48,7 +50,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
 
     const player2Info: PlayerInfo = {
       id: summaryOpp.id,
-      name: summaryOpp.name,
+      name: cleanPlayerName(summaryOpp.name),
       elo: Math.round(summaryOpp.elo),
       streak: summaryOpp.streak,
       avatarUrl: summaryOpp.avatarUrl,
@@ -142,7 +144,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
 
   const player1Info: PlayerInfo = {
     id: myPlayer.id,
-    name: myPlayer.name,
+    name: cleanPlayerName(myPlayer.name),
     elo: myPlayer.elo,
     streak: myPlayer.streak,
     avatarUrl: myPlayer.avatarUrl,
@@ -150,7 +152,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
 
   const player2Info: PlayerInfo = {
     id: opponentPlayer.id,
-    name: opponentPlayer.name,
+    name: cleanPlayerName(opponentPlayer.name),
     elo: opponentPlayer.elo,
     streak: opponentPlayer.streak,
     avatarUrl: opponentPlayer.avatarUrl,
@@ -272,7 +274,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
       />
 
       {/* Soru Aşaması (QuestionStage - Soru puanı ve tipi adı göstermez) */}
-      <main className="flex-1 flex flex-col justify-center py-4">
+      <main className="flex-1 flex flex-col justify-center py-2 sm:py-4 px-2 sm:px-4">
         <QuestionStage
           question={interactiveQ}
           opponentAnswered={opponentPlayer.hasAnsweredCurrent}
@@ -282,6 +284,38 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
             onSubmit={handleAnswerSubmit}
             disabled={myPlayer.hasAnsweredCurrent}
           />
+
+          {/* Henüz cevap verilmediyse: Soruyu Geç (Boş Bırak) butonu */}
+          {!myPlayer.hasAnsweredCurrent && (
+            <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-white/5 flex items-center justify-between flex-wrap gap-2">
+              <span className="text-[10px] sm:text-[11px] text-[#B5CBC8] font-mono">
+                Emin değilseniz soruyu boş bırakabilirsiniz.
+              </span>
+              <button
+                onClick={() => {
+                  onSubmitAnswer(
+                    activeDuel.matchId,
+                    activeDuel.currentQuestionIndex,
+                    { isCorrect: false, accuracy: 0, skipped: true },
+                    -1
+                  );
+                }}
+                className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-mono font-semibold text-[#B5CBC8] hover:text-white bg-[#0F0510] border border-white/10 hover:border-amber-500/50 flex items-center gap-1.5 transition-all shadow-sm"
+              >
+                <span>⏭️ Soruyu Geç (Boş Bırak)</span>
+              </button>
+            </div>
+          )}
+
+          {/* Cevap verildi / geçildi ama rakip henüz tamamlamadıysa: Bekleme Kartı */}
+          {myPlayer.hasAnsweredCurrent && !opponentPlayer.hasAnsweredCurrent && (
+            <div className="mt-3 sm:mt-4 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 to-orange-500/10 border border-amber-500/40 flex items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm text-amber-200 animate-pulse shadow-lg shadow-amber-500/5">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping shrink-0" />
+              <span className="font-semibold text-center">
+                ⏳ Hamlen kaydedildi! Rakibin ({cleanPlayerName(opponentPlayer.name)}) soruyu tamamlaması veya geçmesi bekleniyor...
+              </span>
+            </div>
+          )}
         </QuestionStage>
       </main>
     </div>

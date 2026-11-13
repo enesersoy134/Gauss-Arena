@@ -39,9 +39,10 @@ function makePairKey(idA, idB) {
 }
 
 class MatchmakingQueue {
-  constructor() {
+  constructor(options = {}) {
     this.entries = new Map(); // playerId -> QueueEntry
     this.pairwiseMatches = []; // { pairKey, playerAId, playerBId, timestamp }
+    this.enableGhost = options.enableGhost !== undefined ? options.enableGhost : true;
   }
 
   enqueue(ticket) {
@@ -193,7 +194,7 @@ class MatchmakingQueue {
     };
   }
 
-  tick(now = Date.now()) {
+  tick(now = Date.now(), allowGhost = this.enableGhost) {
     const list = Array.from(this.entries.values()).sort((a, b) => a.enqueuedAt - b.enqueuedAt);
     const matchedIds = new Set();
     const matches = [];
@@ -233,13 +234,14 @@ class MatchmakingQueue {
       });
     }
 
-    // 2. Check > 30s Ghost fallback for remaining players
-    for (const entry of list) {
-      if (matchedIds.has(entry.playerId)) continue;
-      const waitSec = (now - entry.enqueuedAt) / 1000;
-      if (waitSec >= 30) {
-        matchedIds.add(entry.playerId);
-        this.entries.delete(entry.playerId);
+    // 2. Check > 30s Ghost fallback for remaining players (only if allowGhost is enabled)
+    if (allowGhost) {
+      for (const entry of list) {
+        if (matchedIds.has(entry.playerId)) continue;
+        const waitSec = (now - entry.enqueuedAt) / 1000;
+        if (waitSec >= 30) {
+          matchedIds.add(entry.playerId);
+          this.entries.delete(entry.playerId);
 
         const ghostElo = Math.round(entry.elo + (Math.sign(entry.streak) * 15));
         const ghostPlayer = {
@@ -271,6 +273,7 @@ class MatchmakingQueue {
         });
       }
     }
+  }
 
     // 3. Build rich inspector snapshot for remaining entries
     const remaining = Array.from(this.entries.values());

@@ -33,7 +33,7 @@ function createAppServer(listenPort = null) {
   const bankDir = path.join(__dirname, '..', 'question-bank');
   const questionBank = loadQuestionBank(bankDir);
   const store = new GameStore();
-  const queue = new MatchmakingQueue();
+  const queue = new MatchmakingQueue({ enableGhost: false });
 
   const activeDuels = new Map(); // matchId -> { session: DuelSession, advancing: boolean }
   const playerToMatchId = new Map(); // playerId -> matchId
@@ -165,6 +165,7 @@ function createAppServer(listenPort = null) {
       clearTimeout(entry.intermissionTimer);
       entry.intermissionTimer = null;
     }
+    entry.readyPlayers = new Set();
     const next = duel.advanceToNextQuestion(Date.now());
     entry.advancing = false;
     if (next.finished) {
@@ -187,6 +188,10 @@ function createAppServer(listenPort = null) {
 
     if (res.bothAnswered && !entry.advancing) {
       entry.advancing = true;
+      entry.readyPlayers = new Set();
+      if (duel.playerB.isGhost) {
+        entry.readyPlayers.add(String(duel.playerB.id));
+      }
       io.emit('duel:roundResult', {
         matchId: duel.matchId,
         roundResult: res.roundResult,
@@ -226,6 +231,10 @@ function createAppServer(listenPort = null) {
       const durationMs = q ? q.durationMs || 60000 : 60000;
       if (now - duel.questionStartedAt >= durationMs) {
         entry.advancing = true;
+        entry.readyPlayers = new Set();
+        if (duel.playerB.isGhost) {
+          entry.readyPlayers.add(String(duel.playerB.id));
+        }
         const timeoutRes = duel.forceQuestionTimeout(now);
         io.emit('duel:roundResult', {
           matchId,
@@ -396,7 +405,23 @@ function createAppServer(listenPort = null) {
       if (!isAuthorizedSocketPlayer(socketToPlayerId, socket.id, playerId)) return;
       const entry = activeDuels.get(matchId);
       if (!entry || !entry.advancing) return;
-      advanceDuelRound(entry.session, entry);
+
+      if (!entry.readyPlayers) {
+        entry.readyPlayers = new Set();
+        if (entry.session && entry.session.playerB.isGhost) {
+          entry.readyPlayers.add(String(entry.session.playerB.id));
+        }
+      }
+
+      entry.readyPlayers.add(String(playerId));
+      io.emit('duel:readyUpdate', { matchId, readyPlayerIds: Array.from(entry.readyPlayers) });
+
+      const playerAId = String(entry.session.playerA.id);
+      const playerBId = String(entry.session.playerB.id);
+
+      if (entry.readyPlayers.has(playerAId) && entry.readyPlayers.has(playerBId)) {
+        advanceDuelRound(entry.session, entry);
+      }
     };
     socket.on('duel:roundReady', handleRoundReady);
     socket.on('duel:RoundReady', handleRoundReady);

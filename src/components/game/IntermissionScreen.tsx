@@ -61,6 +61,7 @@ export const IntermissionScreen: React.FC<IntermissionScreenProps> = ({
   onDone
 }) => {
   const [timeLeft, setTimeLeft] = useState<number>(countdownSec);
+  const [isReadyClicked, setIsReadyClicked] = useState<boolean>(false);
 
   // Bu raunttan önceki skorlar (sayarak artma efekti için)
   const prevP1Score = Math.max(0, player1TotalScore - roundResult.player1Points);
@@ -160,7 +161,7 @@ export const IntermissionScreen: React.FC<IntermissionScreenProps> = ({
                 className="w-10 h-10 rounded-xl border border-[#F14E13] bg-[#0F0510]"
               />
               <div>
-                <span className="font-poppins font-bold text-sm text-white block">{player1.name}</span>
+                <span className="font-poppins font-bold text-sm text-white block">{player1.name.split('(')[0].trim()}</span>
                 <span className="text-[11px] text-[#F14E13] font-semibold">SEN</span>
               </div>
             </div>
@@ -212,7 +213,7 @@ export const IntermissionScreen: React.FC<IntermissionScreenProps> = ({
                 className="w-10 h-10 rounded-xl border border-[#3B82F6] bg-[#0F0510]"
               />
               <div>
-                <span className="font-poppins font-bold text-sm text-white block">{player2.name}</span>
+                <span className="font-poppins font-bold text-sm text-white block">{player2.name.split('(')[0].trim()}</span>
                 <span className="text-[11px] text-[#3B82F6] font-semibold">RAKİP</span>
               </div>
             </div>
@@ -309,11 +310,28 @@ export const IntermissionScreen: React.FC<IntermissionScreenProps> = ({
 
       {/* Hemen Geç Butonu (Hızlı oynanış için) */}
       <button
-        onClick={onDone}
-        className="btn-primary text-sm py-2 px-6 flex items-center gap-2 mt-2"
+        onClick={() => {
+          setIsReadyClicked(true);
+          onDone();
+        }}
+        disabled={isReadyClicked}
+        className={`btn-primary text-sm py-2.5 px-6 flex items-center justify-center gap-2 mt-2 transition-all ${
+          isReadyClicked
+            ? 'opacity-80 cursor-not-allowed bg-[#2A162D] border-orange-500/40 text-orange-200 shadow-none'
+            : ''
+        }`}
       >
-        <span>{isLastQuestion ? 'Sonucu Gör' : 'Sıradaki Soruya Geç'}</span>
-        <ArrowRight className="w-4 h-4" />
+        {isReadyClicked ? (
+          <>
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping mr-1" />
+            <span>⏳ Rakibin Hazır Olması Bekleniyor...</span>
+          </>
+        ) : (
+          <>
+            <span>{isLastQuestion ? 'Sonucu Gör' : 'Sıradaki Soruya Geç'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </>
+        )}
       </button>
     </div>
   );

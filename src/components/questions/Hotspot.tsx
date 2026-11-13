@@ -48,7 +48,7 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
   return (
     <div className="w-full flex flex-col items-center gap-6 select-none font-sans">
       {/* 1. GÖRSEL / GRAFİK ALANI */}
-      <div className="relative w-full max-w-4xl aspect-[16/10] max-h-[520px] rounded-2xl bg-isler-deep border-2 border-isler-primary/40 shadow-2xl overflow-hidden flex items-center justify-center">
+      <div className="relative w-full max-w-3xl aspect-[16/10] rounded-2xl bg-isler-deep border border-white/15 overflow-hidden flex items-center justify-center">
         {/* ARKA PLAN: ÖKARYOT HÜCRE SVG, MATEMATİK PARABOL SVG VEYA HARİCİ GÖRSEL */}
         {isCellDiagram ? (
           <svg
@@ -210,7 +210,7 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
           <svg
             viewBox="0 0 800 500"
             className="w-full h-full select-none"
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="none"
           >
             <defs>
               {/* Izgara Deseni */}
@@ -313,17 +313,9 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
             </text>
 
             {/* PARABOL EĞRİSİ: f(x) = x² - 4 */}
-            {/* Noktalar: Tepe(400, 370), Kök1(280, 250), Kök2(520, 250), Uçlar(160, 50), (640, 50) */}
+            {/* Noktalar: Tepe(400, 370), Kök1(280, 250), Kök2(520, 250) */}
             <path
-              d="M 160 50 Q 280 250 400 370 Q 520 250 640 50"
-              fill="none"
-              stroke="#f14e13dc"
-              strokeWidth="5"
-              strokeOpacity="0.2"
-              filter="blur(4px)"
-            />
-            <path
-              d="M 160 50 Q 280 250 400 370 Q 520 250 640 50"
+              d="M 200 37 Q 400 703 600 37"
               fill="none"
               stroke="#60A5FA"
               strokeWidth="3.5"
@@ -366,7 +358,7 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
           return (
             <div
               key={region.id}
-              className="absolute -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center pointer-events-auto"
+              className="absolute -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center pointer-events-auto"
               style={{
                 left: `${region.xPercent}%`,
                 top: `${region.yPercent}%`,
@@ -377,47 +369,32 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
                 disabled={disabled || isSubmitted}
                 onClick={() => handleRegionClick(region.id)}
                 className={`
-                  relative group flex items-center justify-center p-3 rounded-full transition-all duration-300 cursor-pointer
-                  ${disabled || isSubmitted ? 'cursor-default' : 'hover:scale-125'}
+                  relative group flex items-center justify-center w-8 h-8 rounded-full transition-transform duration-150 cursor-pointer
+                  ${disabled || isSubmitted ? 'cursor-default' : 'hover:scale-110 active:scale-95'}
                 `}
                 title={region.label}
               >
-                {/* Dış Nabız Dalgaları (Radar Pulse) */}
-                {!isSubmitted && (
-                  <span className="absolute inset-0 rounded-full bg-isler-primary opacity-40 animate-ping" />
-                )}
-
-                {/* Seçildikten Sonraki Radar Halkası Animasyonu */}
+                {/* Seçildikten Sonraki Halka */}
                 {isSelected && (
                   <span
-                    className={`absolute -inset-4 rounded-full border-2 border-dashed animate-spin ${
-                      isThisCorrect ? 'border-game-correct' : 'border-game-wrong'
+                    className={`absolute -inset-1 rounded-full border-2 border-dashed ${
+                      isThisCorrect ? 'border-emerald-400' : 'border-rose-400'
                     }`}
                   />
-                )}
-
-                {/* Başarı Dalgalanması */}
-                {showSuccess && (
-                  <span className="absolute -inset-2 rounded-full bg-game-correct/30 animate-pulse shadow-correct-glow" />
-                )}
-
-                {/* Hata Dalgalanması */}
-                {showWrong && (
-                  <span className="absolute -inset-2 rounded-full bg-game-wrong/30 animate-pulse shadow-wrong-glow" />
                 )}
 
                 {/* Çekirdek Daire (Hotspot Core) */}
                 <div
                   className={`
-                    w-7 h-7 rounded-full flex items-center justify-center border-2 transition-all duration-300 shadow-md
+                    w-7 h-7 rounded-full flex items-center justify-center border-2 transition-colors duration-200
                     ${
                       showSuccess
-                        ? 'bg-game-correct border-white text-white shadow-correct-glow scale-110'
+                        ? 'bg-emerald-500 border-white text-white'
                         : showWrong
-                        ? 'bg-game-wrong border-white text-white shadow-wrong-glow scale-110'
+                        ? 'bg-rose-500 border-white text-white'
                         : isSelected
-                        ? 'bg-isler-primary border-white text-white shadow-btn-glow scale-110'
-                        : 'bg-isler-deep/90 border-isler-primary text-isler-primary group-hover:bg-isler-primary group-hover:text-white'
+                        ? 'bg-[#F14E13] border-white text-white'
+                        : 'bg-[#0F0510] border-[#F14E13] text-[#F14E13] group-hover:bg-[#F14E13] group-hover:text-white'
                     }
                   `}
                 >
@@ -431,18 +408,18 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
                 </div>
               </button>
 
-              {/* Bölge Etiketi (Kapsül) */}
+              {/* Bölge Etiketi (Kapsül) - Kesinlikle butonun merkezini kaydırmaz */}
               <div
                 className={`
-                  px-2.5 py-1 rounded-full text-[11px] font-mono font-bold tracking-tight shadow-lg transition-all duration-200 pointer-events-none mt-1 whitespace-nowrap
+                  absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-bold tracking-tight transition-all duration-200 pointer-events-none whitespace-nowrap border
                   ${
                     showSuccess
-                      ? 'bg-game-correct text-white border border-white/40'
+                      ? 'bg-emerald-600 text-white border-emerald-400'
                       : showWrong
-                      ? 'bg-game-wrong text-white border border-white/40'
+                      ? 'bg-rose-600 text-white border-rose-400'
                       : isSelected
-                      ? 'bg-isler-primary text-white border border-white/30'
-                      : 'bg-isler-deep/95 text-isler-muted border border-white/10 group-hover:text-white'
+                      ? 'bg-[#F14E13] text-white border-orange-400'
+                      : 'bg-[#0F0510]/90 text-[#B5CBC8] border-white/10 group-hover:text-white'
                   }
                 `}
               >
@@ -456,19 +433,19 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
       {/* 2. ALT BİLGİ VE GERİ BİLDİRİM */}
       <div className="flex items-center justify-center gap-3 text-xs font-poppins">
         {!isSubmitted ? (
-          <div className="flex items-center gap-2 text-isler-muted bg-isler-surface px-4 py-2 rounded-full border border-isler-primary/30">
-            <Target className="w-4 h-4 text-isler-primary animate-pulse" />
+          <div className="flex items-center gap-2 text-[#B5CBC8] bg-[#0F0510] px-4 py-2 rounded-full border border-white/10">
+            <Target className="w-4 h-4 text-[#F14E13]" />
             <span>Hedef bölgeye doğrudan dokunarak seçiminizi kilitleyin.</span>
           </div>
         ) : selectedRegionId === correctRegionId ? (
-          <div className="flex items-center gap-2 text-game-correct bg-game-correct/10 px-5 py-2.5 rounded-full border border-game-correct/40 font-bold shadow-correct-glow">
+          <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-5 py-2.5 rounded-full border border-emerald-500/30 font-bold">
             <Check className="w-4 h-4 stroke-[3]" />
             <span>Kusursuz İsabet! Doğru bölgeyi buldunuz.</span>
           </div>
         ) : (
-          <div className="flex items-center gap-2 text-game-wrong bg-game-wrong/10 px-5 py-2.5 rounded-full border border-game-wrong/40 font-bold shadow-wrong-glow">
+          <div className="flex items-center gap-2 text-rose-400 bg-rose-500/10 px-5 py-2.5 rounded-full border border-rose-500/30 font-bold">
             <X className="w-4 h-4 stroke-[3]" />
-            <span>Hatalı Bölge! Doğru hedef yeşil renkle işaretlendi.</span>
+            <span>Hatalı Bölge! Doğru hedef işaretlendi.</span>
           </div>
         )}
       </div>

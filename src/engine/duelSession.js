@@ -153,18 +153,25 @@ class DuelSession {
     let score = 0;
 
     if (typeof answerInput === 'object' && answerInput !== null) {
-      isCorrect = Boolean(answerInput.isCorrect);
-      accuracy = typeof answerInput.accuracy === 'number'
-        ? Math.max(0, Math.min(1, answerInput.accuracy))
-        : (isCorrect ? 1 : 0);
-      optIdx = answerInput.selectedOptionIndex !== undefined && answerInput.selectedOptionIndex !== null
-        ? Number(answerInput.selectedOptionIndex)
-        : -1;
-      const baseScore = calculateQuestionScore(isCorrect || accuracy > 0, remainingMs, durationMs);
-      score = round2(baseScore * (isCorrect ? 1 : accuracy));
+      if (answerInput.skipped) {
+        isCorrect = false;
+        accuracy = 0;
+        optIdx = -1;
+        score = 0;
+      } else {
+        isCorrect = Boolean(answerInput.isCorrect);
+        accuracy = typeof answerInput.accuracy === 'number'
+          ? Math.max(0, Math.min(1, answerInput.accuracy))
+          : (isCorrect ? 1 : 0);
+        optIdx = answerInput.selectedOptionIndex !== undefined && answerInput.selectedOptionIndex !== null
+          ? Number(answerInput.selectedOptionIndex)
+          : -1;
+        const baseScore = calculateQuestionScore(isCorrect || accuracy > 0, remainingMs, durationMs);
+        score = round2(baseScore * (isCorrect ? 1 : accuracy));
+      }
     } else {
       optIdx = answerInput === null || answerInput === undefined ? -1 : Number(answerInput);
-      isCorrect = optIdx === q.correctOptionIndex;
+      isCorrect = optIdx >= 0 && q.correctOptionIndex !== undefined && q.correctOptionIndex >= 0 && optIdx === q.correctOptionIndex;
       accuracy = isCorrect ? 1 : 0;
       score = calculateQuestionScore(isCorrect, remainingMs, durationMs);
     }
@@ -194,10 +201,10 @@ class DuelSession {
 
   forceQuestionTimeout(now = Date.now()) {
     if (!this.currentAnswers.has(this.playerA.id)) {
-      this.submitAnswer(this.playerA.id, this.currentQuestionIndex, -1, this.questionStartedAt + 60000);
+      this.submitAnswer(this.playerA.id, this.currentQuestionIndex, { isCorrect: false, accuracy: 0, skipped: true }, this.questionStartedAt + 60000);
     }
     if (!this.currentAnswers.has(this.playerB.id)) {
-      this.submitAnswer(this.playerB.id, this.currentQuestionIndex, -1, this.questionStartedAt + 60000);
+      this.submitAnswer(this.playerB.id, this.currentQuestionIndex, { isCorrect: false, accuracy: 0, skipped: true }, this.questionStartedAt + 60000);
     }
     return {
       roundResult: this.buildCurrentRoundResult(),

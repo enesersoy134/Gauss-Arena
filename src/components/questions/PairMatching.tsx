@@ -67,8 +67,8 @@ export default function PairMatching({
     if (newMatches.length === totalCount && totalCount > 0) {
       setIsSubmitted(true);
       const correctCount = newMatches.filter((m) => m.leftId === m.rightId).length;
-      const accuracy = correctCount / totalCount;
-      const isCorrect = accuracy === 1;
+      const isCorrect = correctCount === totalCount;
+      const accuracy = isCorrect ? 1 : 0;
 
       onSubmit({
         isCorrect,

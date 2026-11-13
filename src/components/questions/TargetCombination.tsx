@@ -26,24 +26,29 @@ export default function TargetCombination({
       return;
     }
 
-    const nextSelected = [...selectedIds, id];
-    setSelectedIds(nextSelected);
-
-    // Tam 2 seçim yapıldığında OTOMATİK gönder
-    if (nextSelected.length === 2) {
-      const correctSet = new Set(correctPairIds);
-      const isExactPair =
-        nextSelected.every((item) => correctSet.has(item)) &&
-        nextSelected[0] !== nextSelected[1];
-
-      const matchCount = nextSelected.filter((item) => correctSet.has(item)).length;
-      const accuracy = isExactPair ? 1 : matchCount === 1 ? 0.5 : 0;
-
-      const res = { isCorrect: isExactPair, accuracy };
-      setResult(res);
-      setSubmitted(true);
-      onSubmit(res);
+    if (selectedIds.length < 2) {
+      setSelectedIds((prev) => [...prev, id]);
+    } else {
+      // 2 kart zaten seçiliyse son seçileni yenisiyle değiştir
+      setSelectedIds((prev) => [prev[0], id]);
     }
+  };
+
+  const handleConfirm = () => {
+    if (isInteractionDisabled || selectedIds.length === 0) return;
+
+    const correctSet = new Set(correctPairIds);
+    const isExactPair =
+      selectedIds.length === 2 &&
+      selectedIds.every((item) => correctSet.has(item)) &&
+      selectedIds[0] !== selectedIds[1];
+
+    // Tek direnç veya 1 doğru + 1 yanlış kesinlikle 0 doğruluk ve false
+    const accuracy = isExactPair ? 1 : 0;
+    const res = { isCorrect: isExactPair, accuracy };
+    setResult(res);
+    setSubmitted(true);
+    onSubmit(res);
   };
 
   const isTargetMatched = result?.isCorrect ?? false;
@@ -177,6 +182,31 @@ export default function TargetCombination({
         })}
       </div>
 
+      {/* Seçim Onay Butonu */}
+      {!submitted && (
+        <div className="flex flex-col items-center gap-2 pt-2">
+          <button
+            type="button"
+            onClick={handleConfirm}
+            disabled={isInteractionDisabled || selectedIds.length === 0}
+            className={`btn-primary px-8 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-[#F14E13]/30 ${
+              selectedIds.length === 0
+                ? 'opacity-40 cursor-not-allowed'
+                : selectedIds.length === 1
+                ? 'opacity-85 hover:opacity-100'
+                : ''
+            }`}
+          >
+            <span>Seçimi Onayla ({selectedIds.length}/2 Direnç Seçildi)</span>
+          </button>
+          {selectedIds.length === 1 && (
+            <span className="text-xs text-amber-300 font-mono">
+              ⚠️ Dikkat: Hedefe ulaşmak için tam 2 direnç seçmelisiniz.
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Gönderim Sonrası Bildirim */}
       {submitted && result && (
         <div
@@ -195,9 +225,7 @@ export default function TargetCombination({
             <>
               <AlertCircle className="w-5 h-5" />
               <span>
-                {result.accuracy > 0
-                  ? 'Kısmi eşleşme: 1 doğru seçim yaptınız (%50 Doğruluk).'
-                  : 'Hatalı kombinasyon! Doğru ikili yeşil ile vurgulanmıştır.'}
+                Hatalı kombinasyon! Hedefe ulaşmak için her iki doğru direnci (veya bileşeni) birlikte seçmelisiniz.
               </span>
             </>
           )}
