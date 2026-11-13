@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "turkce",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-TUR-E-001",
+      "subTopic": "Sözcükte Anlam",
+      "text": "\"Keskin\" sözcüğü aşağıdaki cümlelerin hangisinde mecaz anlamda kullanılmıştır?",
+      "imageUrl": null,
+      "options": [
+        "Bıçağın keskin tarafına dikkat et.",
+        "Keskin bir zekâya sahip olduğu hemen anlaşılıyordu.",
+        "Camın keskin kenarı elini çizdi.",
+        "Baltanın ağzı oldukça keskindi."
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-E-002",
+      "subTopic": "Yazım Kuralları",
+      "text": "Aşağıdaki cümlelerin hangisinde \"de / da\" bağlacının yazımıyla ilgili bir yanlışlık yapılmıştır?",
+      "imageUrl": null,
+      "options": [
+        "Sen de bizimle sinemaya gelecek misin?",
+        "Kitabımı okulda unutmuşum.",
+        "Bu soruyu Ahmet'te doğru çözmüş.",
+        "Toplantıda önemli kararlar alındı."
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-E-003",
+      "subTopic": "Noktalama İşaretleri",
+      "text": "Tamamlanmış cümlelerin sonuna aşağıdaki noktalama işaretlerinden hangisi konur?",
+      "imageUrl": null,
+      "options": [
+        "Virgül",
+        "Noktalı virgül",
+        "Nokta",
+        "İki nokta"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-E-004",
+      "subTopic": "Cümlede Anlam",
+      "text": "Aşağıdaki cümlelerin hangisinde \"neden-sonuç\" ilişkisi vardır?",
+      "imageUrl": null,
+      "options": [
+        "Sınavı kazanmak için gece gündüz çalıştı.",
+        "Yağmur şiddetli yağdığından maç ertelendi.",
+        "Seni görmek üzere buraya geldim.",
+        "Başarılı olmak adına plan yaptı."
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-E-005",
+      "subTopic": "Sözcük Türleri",
+      "text": "\"Hızlı tren istasyona zamanında ulaştı.\" cümlesinde \"hızlı\" sözcüğünün türü nedir?",
+      "imageUrl": null,
+      "options": [
+        "İsim",
+        "Sıfat",
+        "Zarf",
+        "Zamir"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-E-006",
+      "subTopic": "Ses Bilgisi",
+      "text": "Aşağıdaki sözcüklerin hangisinde ünlü düşmesi vardır?",
+      "imageUrl": null,
+      "options": [
+        "Kitapçı",
+        "Ağzı",
+        "Güzellik",
+        "Yolculuk"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

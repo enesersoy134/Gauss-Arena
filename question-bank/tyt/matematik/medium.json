@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "matematik",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-MAT-M-001",
+      "subTopic": "Mutlak Değer",
+      "text": "$$|2x - 6| = 10$$ denklemini sağlayan $$x$$ değerlerinin çarpımı kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "-16",
+        "-12",
+        "6",
+        "16"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-MAT-M-002",
+      "subTopic": "Köklü Sayılar",
+      "text": "$$\\sqrt{75} - \\sqrt{27} + \\sqrt{12}$$ işleminin sonucu kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "$$2\\sqrt{3}$$",
+        "$$3\\sqrt{3}$$",
+        "$$4\\sqrt{3}$$",
+        "$$5\\sqrt{3}$$"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-M-003",
+      "subTopic": "Yaş Problemleri",
+      "text": "Bir babanın yaşı oğlunun yaşının $$3$$ katıdır. $$6$$ yıl sonra yaşları toplamı $$60$$ olacağına göre oğul bugün kaç yaşındadır?",
+      "imageUrl": null,
+      "options": [
+        "10",
+        "12",
+        "14",
+        "15"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-M-004",
+      "subTopic": "Kümeler",
+      "text": "$$s(A) = 12$$, $$s(B) = 9$$ ve $$s(A \\cap B) = 4$$ olduğuna göre $$s(A \\cup B)$$ kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "15",
+        "17",
+        "19",
+        "21"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-M-005",
+      "subTopic": "Fonksiyonlar",
+      "text": "$$f(x) = 4x - 5$$ olduğuna göre $$f(3) + f^{-1}(7)$$ toplamı kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "8",
+        "10",
+        "12",
+        "14"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-M-006",
+      "subTopic": "Hız Problemleri",
+      "text": "Aralarında $$360\\text{ km}$$ bulunan iki araç birbirine doğru $$50\\text{ km/s}$$ ve $$40\\text{ km/s}$$ hızlarla aynı anda hareket ederse kaç saat sonra karşılaşırlar?",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

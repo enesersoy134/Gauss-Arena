@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "matematik",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-MAT-M-001",
+      "subTopic": "Parabol",
+      "text": "$$f(x) = x^2 - 6x + 13$$ parabolünün tepe noktasının ordinatı ($$k$$ değeri) kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-MAT-M-002",
+      "subTopic": "Logaritma Denklemleri",
+      "text": "$$\\log_3(x - 1) + \\log_3(x + 1) = 1$$ denklemini sağlayan pozitif $$x$$ değeri kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "$$\\sqrt{2}$$",
+        "2",
+        "$$\\sqrt{5}$$",
+        "3"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-M-003",
+      "subTopic": "Geometrik Dizi",
+      "text": "İlk terimi $$a_1 = 3$$ ve ortak çarpanı $$r = 2$$ olan pozitif terimli bir geometrik dizinin $$5.$$ terimi kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "24",
+        "36",
+        "48",
+        "96"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-MAT-M-004",
+      "subTopic": "Trigonometrik Özdeşlikler",
+      "text": "$$0 < x < \\frac{\\pi}{2}$$ olmak üzere $$\\sin(x) = \\frac{3}{5}$$ ise $$\\sin(2x)$$ değeri kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "$$\\frac{12}{25}$$",
+        "$$\\frac{18}{25}$$",
+        "$$\\frac{24}{25}$$",
+        "$$\\frac{4}{5}$$"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-MAT-M-005",
+      "subTopic": "Türev - Teğet Denklemi",
+      "text": "$$f(x) = x^2 + 3x - 1$$ eğrisine $$x = 2$$ apsisli noktasından çizilen teğetin eğimi kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "6",
+        "7",
+        "9"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-MAT-M-006",
+      "subTopic": "Belirsiz İntegral",
+      "text": "$$f'(x) = 6x^2 - 4x + 3$$ ve $$f(1) = 7$$ olduğuna göre $$f(2)$$ kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "14",
+        "16",
+        "18",
+        "20"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

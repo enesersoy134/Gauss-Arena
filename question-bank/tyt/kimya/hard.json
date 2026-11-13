@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "kimya",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-KIM-H-001",
+      "subTopic": "Sınırlayıcı Bileşen",
+      "text": "$$4\\text{ mol } \text{N}_2$$ ve $$6\\text{ mol } \text{H}_2$$ gazları $$\text{N}_2 + 3\text{H}_2 \\rightarrow 2\text{NH}_3$$ denklemine göre tam verimle tepkimeye girdiğinde kaç mol $$\text{NH}_3$$ oluşur?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-H-002",
+      "subTopic": "Koligatif Özellikler",
+      "text": "Uçucu olmayan bir katının saf suda çözünmesiyle oluşan çözeltinin 1 atm basınçta kaynamaya başlama sıcaklığı ve donmaya başlama sıcaklığı saf suya göre nasıl değişir?",
+      "imageUrl": null,
+      "options": [
+        "Yükselir - Düşer",
+        "Düşer - Yükselir",
+        "Yükselir - Yükselir",
+        "Düşer - Düşer"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-KIM-H-003",
+      "subTopic": "Sabit Oranlar Yasası",
+      "text": "$$\text{Fe}_2\text{O}_3$$ bileşiğinde kütlece birleşme oranı $$\frac{m_{\text{Fe}}}{m_{\text{O}}} = \frac{7}{3}$$ olduğuna göre $$21\\text{ g Fe}$$ ile yeterince oksijenin tepkimesinden kaç gram $$\text{Fe}_2\text{O}_3$$ oluşur?",
+      "imageUrl": null,
+      "options": [
+        "24",
+        "27",
+        "30",
+        "35"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-H-004",
+      "subTopic": "Asit Baz Tepkimeleri",
+      "text": "$$2\\text{ mol } \text{H}_2\text{SO}_4$$ içeren sulu çözeltiyi tam nötralleştirmek için kaç mol $$\text{NaOH}$$ gerekir?",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "TYT-KIM-H-005",
+      "subTopic": "İzotop Atomlar",
+      "text": "Doğada $$^{35}\text{Cl}$$ izotopu $$\\%75$$, $$^{37}\text{Cl}$$ izotopu $$\\%25$$ oranında bulunduğuna göre klorun ortalama atom kütlesi kaç akb'dir?",
+      "imageUrl": null,
+      "options": [
+        "35.2",
+        "35.5",
+        "36.0",
+        "36.5"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-H-006",
+      "subTopic": "Yüzde Verim",
+      "text": "$$\text{CaCO}_3(k) \\rightarrow \text{CaO}(k) + \text{CO}_2(g)$$ tepkimesine göre $$200\\text{ g } \text{CaCO}_3$$ $$\\%50$$ verimle ayrıştığında kaç mol $$\text{CO}_2$$ oluşur? ($$\text{CaCO}_3 = 100\\text{ g/mol}$$)",
+      "imageUrl": null,
+      "options": [
+        "0.5",
+        "1",
+        "1.5",
+        "2"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

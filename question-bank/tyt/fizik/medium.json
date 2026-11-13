@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "fizik",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 18000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-FIZ-M-001",
+      "subTopic": "Doğrusal Hareket",
+      "text": "Durgun halden harekete geçen bir araç $$4\\text{ m/s}^2$$ sabit ivme ile $$5\\text{ saniye}$$ boyunca hızlanıyor. Bu süre sonunda aracın aldığı toplam yol kaç metredir?",
+      "imageUrl": null,
+      "options": [
+        "20",
+        "40",
+        "50",
+        "100"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-M-002",
+      "subTopic": "Basınç",
+      "text": "Özkütlesi $$2\\text{ g/cm}^3$$ olan sıvının $$5\\text{ m}$$ derinliğinde oluşturduğu sıvı basıncı kaç $$\\text{kPa}$$ olur? ($$g = 10\\text{ m/s}^2$$)",
+      "imageUrl": null,
+      "options": [
+        "50",
+        "80",
+        "100",
+        "120"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-M-003",
+      "subTopic": "Kaldırma Kuvveti",
+      "text": "Hacmi $$400\\text{ cm}^3$$ olan bir cisim özkütlesi $$1\\text{ g/cm}^3$$ olan suya tamamen daldırıldığında cisme etki eden kaldırma kuvveti kaç $$\\text{N}$$ olur? ($$g = 10\\text{ m/s}^2$$)",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-FIZ-M-004",
+      "subTopic": "Enerji Korunumu",
+      "text": "Yerden $$20\\text{ m}$$ yükseklikten serbest bırakılan bir cisim yere kaç $$\\text{m/s}$$ hızla çarpar? ($$g = 10\\text{ m/s}^2$$, sürtünmeler önemsiz)",
+      "imageUrl": null,
+      "options": [
+        "10",
+        "15",
+        "20",
+        "25"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-M-005",
+      "subTopic": "Elektrik Devreleri",
+      "text": "Birbirine paralel bağlı $$6\\,\\Omega$$ ve $$3\\,\\Omega$$'luk iki direncin eşdeğer direnci kaç $$\\Omega$$'dur?",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "9"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-FIZ-M-006",
+      "subTopic": "Dalgalar",
+      "text": "Yayılma hızı $$20\\text{ m/s}$$ ve frekansı $$4\\text{ Hz}$$ olan periyodik bir dalganın dalga boyu kaç metredir?",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "5",
+        "8",
+        "10"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

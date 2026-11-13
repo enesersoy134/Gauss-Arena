@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "kimya",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-KIM-H-001",
+      "subTopic": "Çözünürlük Dengesi (Kçç)",
+      "text": "Belirli bir sıcaklıkta $$\text{AgCl}$$ katısının saf sudaki çözünürlüğü $$10^{-5}\\text{ M}$$ olduğuna göre çözünürlük çarpımı $$K_{\\text{çç}}$$ kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "$$10^{-5}$$",
+        "$$2 \\times 10^{-5}$$",
+        "$$10^{-10}$$",
+        "$$4 \\times 10^{-10}$$"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-H-002",
+      "subTopic": "Faraday Elektroliz Yasası",
+      "text": "Erimiş $$\text{AlCl}_3$$ tuzu $$3\\text{ Faraday}$$ elektrik yükü ile elektroliz edildiğinde katotta kaç mol $$\text{Al}$$ metali toplanır? ($$\text{Al}^{3+}$$)",
+      "imageUrl": null,
+      "options": [
+        "0.5",
+        "1",
+        "2",
+        "3"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-H-003",
+      "subTopic": "Nernst Denklemi ve Pil Potansiyeli",
+      "text": "$$\text{Zn}(k) + \text{Cu}^{2+}(1\\text{ M}) \\rightarrow \text{Zn}^{2+}(1\\text{ M}) + \text{Cu}(k)$$ pilinde $$E^\\circ_{\\text{pil}} = 1.10\\text{ V}$$ olduğuna göre $$\text{Cu}^{2+}$$ derişimi artırılırsa pil potansiyeli nasıl değişir?",
+      "imageUrl": null,
+      "options": [
+        "1.10 V'tan büyük olur",
+        "1.10 V'tan küçük olur",
+        "Değişmez",
+        "Sıfır olur"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-KIM-H-004",
+      "subTopic": "Hess Yasası",
+      "text": "$$\text{C}(k) + \text{O}_2(g) \\rightarrow \text{CO}_2(g)$$ tepkimesinin entalpisi $$\\Delta H = -390\\text{ kJ}$$ ise $$2\text{CO}_2(g) \\rightarrow 2\text{C}(k) + 2\text{O}_2(g)$$ tepkimesinin $$\\Delta H$$ değeri kaç $$\\text{kJ}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "-780",
+        "-390",
+        "+390",
+        "+780"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "AYT-KIM-H-005",
+      "subTopic": "Hız Denklemi Bulma",
+      "text": "Hız bağıntısı $$r = k \\cdot [A]^2 \\cdot [B]$$ olan bir tepkimede kabın hacmi sabit sıcaklıkta yarıya indirilirse tepkime hızı kaç katına çıkar?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "AYT-KIM-H-006",
+      "subTopic": "Organik Fonksiyonel Gruplar",
+      "text": "Bir karboksilik asit ile bir alkolün su açığa çıkararak birleşmesi tepkimesinden oluşan organik bileşik sınıfı hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Eter",
+        "Ester",
+        "Aldehit",
+        "Keton"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

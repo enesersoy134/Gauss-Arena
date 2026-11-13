@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "kimya",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-KIM-M-001",
+      "subTopic": "Molarite",
+      "text": "$$0.4\\text{ mol NaOH}$$ katısı suda çözülerek toplam hacim $$200\\text{ mL}$$'ye tamamlanıyor. Çözeltinin molar derişimi kaç $$\\text{M}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "0.5",
+        "1.0",
+        "2.0",
+        "4.0"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-M-002",
+      "subTopic": "İdeal Gaz Denklemi",
+      "text": "$$0^\\circ\\text{C}$$ sıcaklıkta $$5.6\\text{ L}$$ sabit hacimli kapta bulunan $$0.5\\text{ mol}$$ ideal gazın basıncı kaç $$\\text{atm}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-M-003",
+      "subTopic": "Kimyasal Denge",
+      "text": "İleri yöndeki hız sabiti $$k_i = 0.6$$ ve geri yöndeki hız sabiti $$k_g = 0.15$$ olan tek basamaklı denge tepkimesinin denge sabiti $$K_c$$ kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-M-004",
+      "subTopic": "Sulu Çözeltilerde pH",
+      "text": "$$25^\\circ\\text{C}$$'de $$0.01\\text{ M HCl}$$ kuvvetli asit çözeltisinin $$\\text{pH}$$ değeri kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "12",
+        "13"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-M-005",
+      "subTopic": "Yükseltgenme Basamakları",
+      "text": "$$\text{KMnO}_4$$ bileşiğinde $$\text{Mn}$$ (Mangan) elementinin yükseltgenme basamağı kaçtır? ($$\text{K}: +1, \text{O}: -2$$)",
+      "imageUrl": null,
+      "options": [
+        "+4",
+        "+5",
+        "+6",
+        "+7"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "AYT-KIM-M-006",
+      "subTopic": "Hibritleşme",
+      "text": "Metan ($$\text{CH}_4$$) molekülündeki merkez karbon atomunun hibritleşme türü nedir?",
+      "imageUrl": null,
+      "options": [
+        "$$sp$$",
+        "$$sp^2$$",
+        "$$sp^3$$",
+        "$$dsp^2$$"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

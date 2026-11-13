@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "fizik",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-FIZ-M-001",
+      "subTopic": "Eğik Atış",
+      "text": "Hava direncinin önemsiz olduğu ortamda düşey yukarı $$30\\text{ m/s}$$ hızla atılan bir cismin çıkabileceği maksimum yükseklik kaç metredir? ($$g = 10\\text{ m/s}^2$$)",
+      "imageUrl": null,
+      "options": [
+        "30",
+        "45",
+        "60",
+        "90"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-M-002",
+      "subTopic": "Esnek Olmayan Çarpışma",
+      "text": "Sürtünmesiz yatay düzlemde $$10\\text{ m/s}$$ hızla giden $$2\\text{ kg}$$ kütleli cisim durmakta olan $$3\\text{ kg}$$ kütleli cisme çarparak kenetleniyor. Ortak kütlenin hızı kaç $$\\text{m/s}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "5",
+        "6"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-M-003",
+      "subTopic": "Merkezcil Kuvvet",
+      "text": "Yarıçapı $$2\\text{ m}$$ olan yatay sürtünmesiz yörüngede $$6\\text{ m/s}$$ çizgisel hızla dolanan $$3\\text{ kg}$$ kütleli cisme etki eden merkezcil kuvvet kaç $$\\text{N}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "27",
+        "36",
+        "54",
+        "72"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-M-004",
+      "subTopic": "Basit Harmonik Hareket",
+      "text": "Yay sabiti $$k = 100\\text{ N/m}$$ olan yayın ucuna $$4\\text{ kg}$$ kütleli cisim bağlanarak basit harmonik hareket yaptırılıyor. Hareketin periyodu kaç saniyedir? ($$\\pi = 3$$)",
+      "imageUrl": null,
+      "options": [
+        "0.6",
+        "1.2",
+        "1.8",
+        "2.4"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-M-005",
+      "subTopic": "Sığaçlar (Kondansatörler)",
+      "text": "Sığası $$4\\text{ F}$$ olan bir kondansatör $$12\\text{ V}$$ gerilim altında yüklendiğinde depoladığı yük kaç $$\\text{Coulomb}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "24",
+        "36",
+        "48",
+        "60"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-M-006",
+      "subTopic": "Fotoelektrik Olay",
+      "text": "Eşik enerjisi $$2.2\\text{ eV}$$ olan bir metale $$5.0\\text{ eV}$$ enerjili fotonlar düşürüldüğünde sökülen fotoelektronların maksimum kinetik enerjisi kaç $$\\text{eV}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "1.8",
+        "2.8",
+        "3.2",
+        "7.2"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

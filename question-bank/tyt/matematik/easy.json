@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "matematik",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-MAT-E-001",
+      "subTopic": "Birinci Dereceden Denklemler",
+      "text": "$$3x - 7 = 14$$ olduğuna göre $$x$$ kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-E-002",
+      "subTopic": "Temel Kavramlar",
+      "text": "Ardışık üç çift tam sayının toplamı $$42$$ olduğuna göre, bu sayıların en büyüğü kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "12",
+        "14",
+        "16",
+        "18"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-E-003",
+      "subTopic": "Rasyonel Sayılar",
+      "text": "$$\\frac{3}{4} + \\frac{5}{8}$$ işleminin sonucu kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "$$\\frac{7}{8}$$",
+        "$$\\frac{9}{8}$$",
+        "$$\\frac{11}{8}$$",
+        "$$\\frac{13}{8}$$"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-E-004",
+      "subTopic": "Üslü Sayılar",
+      "text": "$$2^5 + 2^5$$ işleminin sonucu aşağıdakilerden hangisine eşittir?",
+      "imageUrl": null,
+      "options": [
+        "$$2^6$$",
+        "$$2^{10}$$",
+        "$$4^5$$",
+        "$$2^7$$"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-MAT-E-005",
+      "subTopic": "Oran Orantı",
+      "text": "$$\\frac{a}{b} = \\frac{3}{5}$$ ve $$a + b = 40$$ olduğuna göre $$b - a$$ kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "8",
+        "10",
+        "12",
+        "15"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-E-006",
+      "subTopic": "Yüzde Problemleri",
+      "text": "$$240$$ sayısının $$\\%25$$'i kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "45",
+        "50",
+        "60",
+        "75"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

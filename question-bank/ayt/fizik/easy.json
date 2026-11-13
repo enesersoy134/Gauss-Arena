@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "fizik",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-FIZ-E-001",
+      "subTopic": "Vektörler",
+      "text": "Aynı düzlemde aralarında $$90^\\circ$$ açı bulunan $$6\\text{ N}$$ ve $$8\\text{ N}$$ büyüklüğündeki iki kuvvetin bileşkesi kaç $$\\text{N}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "10",
+        "12",
+        "14",
+        "16"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-FIZ-E-002",
+      "subTopic": "İtme ve Momentum",
+      "text": "Kütlesi $$3\\text{ kg}$$ olan bir cisim $$8\\text{ m/s}$$ hızla hareket etmektedir. Cismin çizgisel momentumu kaç $$\\text{kg}\\cdot\\text{m/s}$$'dir?",
+      "imageUrl": null,
+      "options": [
+        "16",
+        "24",
+        "32",
+        "48"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-E-003",
+      "subTopic": "Tork ve Denge",
+      "text": "Dönme noktasına dik uzaklığı $$0.5\\text{ m}$$ olan noktaya uygulanan $$40\\text{ N}$$ kuvvetin oluşturduğu tork kaç $$\\text{N}\\cdot\\text{m}$$'dir?",
+      "imageUrl": null,
+      "options": [
+        "10",
+        "20",
+        "30",
+        "40"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-E-004",
+      "subTopic": "Çembersel Hareket",
+      "text": "Periyodu $$0.2\\text{ saniye}$$ olan düzgün çembersel hareket yapan bir cismin frekansı kaç $$\\text{s}^{-1}$$'dir?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "5",
+        "10"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-E-005",
+      "subTopic": "Yay Enerjisi",
+      "text": "Yay sabiti $$k = 200\\text{ N/m}$$ olan bir yay $$0.2\\text{ m}$$ sıkıştırıldığında yayda depolanan esneklik potansiyel enerjisi kaç $$\\text{Joule}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-E-006",
+      "subTopic": "Transformatörler",
+      "text": "Giriş sarım sayısı $$100$$, çıkış sarım sayısı $$400$$ olan ideal bir transformatörün girişine $$50\\text{ V}$$ alternatif gerilim uygulanırsa çıkış gerilimi kaç $$\\text{V}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "100",
+        "150",
+        "200",
+        "250"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

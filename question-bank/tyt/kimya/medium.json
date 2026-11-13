@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "kimya",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-KIM-M-001",
+      "subTopic": "Periyodik Özellikler",
+      "text": "Periyodik sistemde aynı periyotta soldan sağa doğru gidildikçe atom yarıçapı ve birinci iyonlaşma enerjisi genel olarak nasıl değişir?",
+      "imageUrl": null,
+      "options": [
+        "Artar - Artar",
+        "Azalır - Artar",
+        "Azalır - Azalır",
+        "Artar - Azalır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-M-002",
+      "subTopic": "Mol Kavramı",
+      "text": "Normal koşullarda (NK) $$11.2\\text{ litre}$$ hacim kaplayan $$\text{CH}_4$$ gazı kaç gramdır? ($$\text{C}=12, \text{H}=1$$)",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "8",
+        "12",
+        "16"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-M-003",
+      "subTopic": "Kimyasal Hesaplamalar",
+      "text": "$$0.5\\text{ mol } \text{C}_3\text{H}_8$$ gazı tamamen yakıldığında kaç mol $$\text{CO}_2$$ gazı oluşur?",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "1.5",
+        "2",
+        "3"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-M-004",
+      "subTopic": "Çözelti Derişimleri",
+      "text": "$$160\\text{ g}$$ suda $$40\\text{ g}$$ şeker çözünerek hazırlanan çözeltinin kütlece yüzde derişimi kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "15",
+        "20",
+        "25",
+        "30"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-M-005",
+      "subTopic": "Zayıf Etkileşimler",
+      "text": "Aşağıdaki moleküllerden hangisinin yoğun fazlarında moleküller arasında hidrojen bağı görülür?",
+      "imageUrl": null,
+      "options": [
+        "$$\text{CH}_4$$",
+        "$$\text{HCl}$$",
+        "$$\text{NH}_3$$",
+        "$$\text{CO}_2$$"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-M-006",
+      "subTopic": "Atomun Yapısı",
+      "text": "$$^{24}_{12}\text{Mg}^{2+}$$ iyonunun elektron sayısı kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "10",
+        "12",
+        "14",
+        "24"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

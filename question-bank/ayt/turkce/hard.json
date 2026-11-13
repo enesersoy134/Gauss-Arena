@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "turkce",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-TUR-H-001",
+      "subTopic": "Divan Edebiyatı Şairleri",
+      "text": "16. yüzyıl Divan şairi olan, \"Su Kasidesi\" ve \"Leyla vü Mecnun\" mesnevisiyle tanınan büyük şairimiz kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Bâkî",
+        "Fuzûlî",
+        "Nedîm",
+        "Şeyh Gâlip"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-H-002",
+      "subTopic": "Tanzimat Tiyatrosu",
+      "text": "Şinasi tarafından yazılan ve Türk edebiyatında Batılı anlamda ilk tiyatro eseri kabul edilen töre komedisi hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Vatan yahut Silistre",
+        "Şair Evlenmesi",
+        "Çok Bilen Çok Yanılır",
+        "Zavallı Çocuk"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-H-003",
+      "subTopic": "Cumhuriyet Dönemi Romanı",
+      "text": "\"Saatleri Ayarlama Enstitüsü\" ve \"Huzur\" romanlarında Doğu-Batı çatışmasını, zaman ve musiki kavramlarını işleyen yazarımız kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Peyami Safa",
+        "Ahmet Hamdi Tanpınar",
+        "Yakup Kadri Karaosmanoğlu",
+        "Oğuz Atay"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-H-004",
+      "subTopic": "Modernist Roman",
+      "text": "Türk edebiyatında postmodernizmin öncüsü sayılan \"Tutunamayanlar\" ve \"Tehlikeli Oyunlar\" adlı eserlerin yazarı kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Yaşar Kemal",
+        "Orhan Kemal",
+        "Oğuz Atay",
+        "Kemal Tahir"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-TUR-H-005",
+      "subTopic": "Fecriati Topluluğu",
+      "text": "\"Sanat şahsi ve muhteremdir\" görüşünü savunan Fecriati topluluğunun en önemli şairi olup \"Merdiven\" ve \"Sessiz Gemi\" şiirleriyle?(Not: Sessiz Gemi Yahya Kemal, Merdiven ve Obeliks) \"Merdiven\" şiiriyle tanınan şair kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Ahmet Haşim",
+        "Yahya Kemal Beyatlı",
+        "Faruk Nafiz Çamlıbel",
+        "Necip Fazıl Kısakürek"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-TUR-H-006",
+      "subTopic": "İkinci Yeni Şiiri",
+      "text": "\"Üvercinka\" ve \"Göçebe\" adlı şiir kitaplarıyla İkinci Yeni hareketinin öncü isimlerinden olan şairimiz kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Cemal Süreya",
+        "Attilâ İlhan",
+        "Cahit Sıtkı Tarancı",
+        "Ahmet Muhip Dıranas"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "turkce",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-TUR-M-001",
+      "subTopic": "Cümlenin Ögeleri",
+      "text": "\"Genç yazar, son romanında çocukluk yıllarını içtenlikle anlatmış.\" cümlesinin nesnesi aşağıdakilerden hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Genç yazar",
+        "son romanında",
+        "çocukluk yıllarını",
+        "içtenlikle"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-M-002",
+      "subTopic": "Fiilimsiler",
+      "text": "Aşağıdaki cümlelerin hangisinde sıfat-fiil (ortaç) kullanılmıştır?",
+      "imageUrl": null,
+      "options": [
+        "Koşarak yanımıza geldi.",
+        "Okunacak kitapları masaya ayırdım.",
+        "Gülüp geçmek bazen en iyisidir.",
+        "Eve varmadan beni ara."
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-M-003",
+      "subTopic": "Paragrafta Ana Düşünce",
+      "text": "Bir yazarın eserinin kalıcı olmasını sağlayan temel unsur, kendi çağının sorunlarını anlatırken tüm insanlığın ortak duygularına dokunabilmesidir. Bu cümlede vurgulanan kavram hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Özgünlük",
+        "Evrensellik",
+        "Akıcılık",
+        "Duruluk"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-M-004",
+      "subTopic": "Ses Olayları",
+      "text": "\"Kayıp etti\" birleşik fiili \"kaybetti\" şeklinde yazıldığında hangi iki ses olayı bir arada görülür?",
+      "imageUrl": null,
+      "options": [
+        "Ünsüz türemesi - Ünlü daralması",
+        "Ünlü düşmesi - Ünsüz yumuşaması",
+        "Ünsüz benzeşmesi - Ünlü daralması",
+        "Ulama - Kaynaştırma"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-M-005",
+      "subTopic": "Anlatım Bozuklukları",
+      "text": "\"Şüphesiz bu sınavı kesinlikle kazanabilir.\" cümlesindeki anlatım bozukluğunun nedeni nedir?",
+      "imageUrl": null,
+      "options": [
+        "Özne-yüklem uyuşmazlığı",
+        "Çelişen sözcüklerin bir arada kullanılması",
+        "Gereksiz yardımcı fiil kullanımı",
+        "Tamlama yanlışlığı"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-M-006",
+      "subTopic": "Yapı Bilgisi",
+      "text": "Aşağıdaki sözcüklerden hangisi hem yapım hem çekim eki almıştır?",
+      "imageUrl": null,
+      "options": [
+        "Evler",
+        "Gözlükçü",
+        "Kitaplığımız",
+        "Yollar"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

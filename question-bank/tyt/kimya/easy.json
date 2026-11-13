@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "kimya",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-KIM-E-001",
+      "subTopic": "Kimya Bilimi",
+      "text": "Periyodik tabloda $$\text{Na}$$ sembolü ile gösterilen element aşağıdakilerden hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Azot",
+        "Sodyum",
+        "Potasyum",
+        "Nikel"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-E-002",
+      "subTopic": "Atom ve Periyodik Sistem",
+      "text": "Proton sayısı $$17$$, nötron sayısı $$18$$ olan klor atomunun kütle numarası kaçtır?",
+      "imageUrl": null,
+      "options": [
+        "17",
+        "18",
+        "34",
+        "35"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "TYT-KIM-E-003",
+      "subTopic": "Maddenin Halleri",
+      "text": "Maddenin katı halden doğrudan gaz haline geçmesi olayına ne ad verilir?",
+      "imageUrl": null,
+      "options": [
+        "Erime",
+        "Kırağılaşma",
+        "Süblimleşme",
+        "Yoğuşma"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-E-004",
+      "subTopic": "Asitler ve Bazlar",
+      "text": "Oda koşullarında sulu çözeltisinin $$\\text{pH}$$ değeri $$7$$'den küçük olan maddeler için aşağıdakilerden hangisi doğrudur?",
+      "imageUrl": null,
+      "options": [
+        "Baziktir",
+        "Asidiktir",
+        "Nötrdür",
+        "Mavi turnusolu değiştirmez"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-E-005",
+      "subTopic": "Kimyasal Türler",
+      "text": "$$\text{H}_2\text{O}$$ molekülünde hidrojen ve oksijen atomları arasındaki güçlü etkileşim türü hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "İyonik bağ",
+        "Polar kovalent bağ",
+        "Apolar kovalent bağ",
+        "Metalik bağ"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-E-006",
+      "subTopic": "Karışımlar",
+      "text": "Aşağıdakilerden hangisi homojen bir karışıma (çözeltiye) örnektir?",
+      "imageUrl": null,
+      "options": [
+        "Ayran",
+        "Sis",
+        "Tuzlu su",
+        "Zeytinyağlı su"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}
