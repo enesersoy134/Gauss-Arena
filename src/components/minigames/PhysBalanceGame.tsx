@@ -412,21 +412,20 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete, on
 
         {isBalanced ? (
           <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={handleNextOrFinish}
-              disabled={isGameFinished}
-              className="btn-primary py-2.5 px-6 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500 shrink-0"
-            >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>
-                {isGameFinished
-                  ? '✓ Tork Simülasyonu Tamamlandı!'
-                  : levelIdx < LEVELS.length - 1
-                  ? 'Harika! 2. Aşamaya Geç →'
-                  : '🎉 Dengeyi Onayla & Tamamla'}
-              </span>
-            </button>
-            {onNextSubject && (
+            {!isGameFinished && (
+              <button
+                onClick={handleNextOrFinish}
+                className="btn-primary py-2.5 px-6 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500 shrink-0"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>
+                  {levelIdx < LEVELS.length - 1
+                    ? 'Harika! 2. Aşamaya Geç →'
+                    : '🎉 Dengeyi Onayla & Tamamla'}
+                </span>
+              </button>
+            )}
+            {isGameFinished && onNextSubject && (
               <button
                 onClick={onNextSubject}
                 className="btn-primary py-2.5 px-5 text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500 shrink-0"
