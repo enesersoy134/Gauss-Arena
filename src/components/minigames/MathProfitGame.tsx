@@ -43,10 +43,10 @@ const EQUATION_STAGES: EquationStage[] = [
   {
     id: 'eq-1',
     badge: 'Denklem 1/3',
-    name: 'Standart Üretim Fonksiyonu',
+    name: 'Temel Üretim ve Maliyet Fonksiyonu',
     funcSymbol: 'G₁(x)',
     questionPrompt:
-      '5 kontrol kolunu (x₁–x₅) doğru kademelere (1–4) getirerek toplam kârı zirveye (110 Bin ₺) ulaştır.',
+      '5 fabrika kontrol ibresini (x₁–x₅) optimize ederek toplam kârı zirveye (110 Bin ₺) ulaştır.',
     fullEquationText: 'G₁(x) = 10x₁ + [30 - 4(x₂-3)²] + 2^(x₃) - 5(x₄-2)² + 24/x₅',
     maxScore: 110, // 40 + 30 + 16 + 0 + 24
     minScore: 12,  // 10 + 14 + 2 - 20 + 6
@@ -55,7 +55,7 @@ const EQUATION_STAGES: EquationStage[] = [
         id: 'x1',
         varName: 'x₁',
         leverNumber: 1,
-        title: 'Doğrusal Üretim',
+        title: 'Üretim Sayısı',
         funcType: 'f₁(x₁) = 10·x₁',
         formulaDisplay: '+ 10x₁',
         color: '#3B82F6',
@@ -65,13 +65,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 40,
         evaluate: (x) => 10 * x,
         behaviorTip:
-          'Pozitif eğimli doğrusal fonksiyon: Kolu sağa çevirdikçe grafikteki nokta sabit eğimle yukarı tırmanır (Maks: x₁=4 ➔ +40).',
+          'Üretim Sayısı (Doğrusal Fonksiyon): Kolu sağa çevirdikçe üretilen ürün sayısı artar ve her kademede +10k ₺ sabit kâr sağlar (Maks: x₁=4 ➔ +40k ₺).',
       },
       {
         id: 'x2',
         varName: 'x₂',
         leverNumber: 2,
-        title: 'Parabolik Verim',
+        title: 'Vardiya Verimliliği',
         funcType: 'f₂(x₂) = 30 - 4(x₂-3)²',
         formulaDisplay: '+ 30 - 4(x₂-3)²',
         color: '#A855F7',
@@ -81,13 +81,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 30,
         evaluate: (x) => 30 - 4 * Math.pow(x - 3, 2),
         behaviorTip:
-          'Tepe noktalı parabol: Nokta x₂=3 tepe noktasında zirveye (+30) ulaşır, x₂=4 yapılırsa simetrik olarak düşer.',
+          'Vardiya Verimliliği (Parabol Tepe Noktası): İdeal çalışma temposu x₂=3 seviyesinde kârı zirveye (+30k ₺) çıkarır. Aşırı veya eksik çalışma verimi düşürür.',
       },
       {
         id: 'x3',
         varName: 'x₃',
         leverNumber: 3,
-        title: 'Üstel Teknoloji',
+        title: 'Otomasyon Düzeyi',
         funcType: 'f₃(x₃) = 2^(x₃)',
         formulaDisplay: '+ 2^(x₃)',
         color: '#F14E13',
@@ -97,13 +97,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 16,
         evaluate: (x) => Math.pow(2, x),
         behaviorTip:
-          'Üstel büyüme fonksiyonu: Kolu sağa çevirdikçe grafikteki nokta katlanarak yükselir (Maks: x₃=4 ➔ +16).',
+          'Otomasyon Düzeyi (Üstel Büyüme): Robotik ve yazılım yatırımı arttıkça katma değer katlanarak (2^x) büyür (Maks: x₃=4 ➔ +16k ₺).',
       },
       {
         id: 'x4',
         varName: 'x₄',
         leverNumber: 4,
-        title: 'Isınma Kaybı',
+        title: 'Bakım Gideri',
         funcType: 'f₄(x₄) = -5(x₄-2)²',
         formulaDisplay: '- 5(x₄-2)²',
         color: '#EF4444',
@@ -113,13 +113,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 0,
         evaluate: (x) => -5 * Math.pow(x - 2, 2),
         behaviorTip:
-          'Negatif tam kare fonksiyonu: Nokta x₄=2 değerinde 0 tepe noktasına (sıfır kayıp) çıkar; uzaklaştıkça hızla düşer.',
+          'Bakım Gideri (Kaybı Sıfırlama): İdeal bakım kademesi x₄=2 olduğunda arıza ve aşınma maliyeti sıfırlanır (0 ₺). İhmal veya gereksiz masrafta kayıp artar.',
       },
       {
         id: 'x5',
         varName: 'x₅',
         leverNumber: 5,
-        title: 'Ters Orantı',
+        title: 'Hammadde Fire Oranı',
         funcType: 'f₅(x₅) = 24 / x₅',
         formulaDisplay: '+ 24/x₅',
         color: '#10B981',
@@ -129,7 +129,7 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 24,
         evaluate: (x) => 24 / x,
         behaviorTip:
-          'Ters orantı (hiperbolik) fonksiyon: x₅ paydada olduğu için kolu sola (x₅=1) çevirdikçe nokta en üste (+24) çıkar.',
+          'Hammadde Fire Oranı (Ters Orantı): Hata ve fire azaldıkça kâr fırlar; en düşük fire seviyesi olan x₅=1 konumunda +24k ₺ kazanç sağlanır.',
       },
     ],
   },
@@ -140,10 +140,10 @@ const EQUATION_STAGES: EquationStage[] = [
   {
     id: 'eq-2',
     badge: 'Denklem 2/3',
-    name: 'Kübik & Mutlak Değer Fonksiyonu',
+    name: 'Satış, Kalite ve Lojistik Fonksiyonu',
     funcSymbol: 'G₂(x)',
     questionPrompt:
-      'Kolları ayarlayarak mutlak değer kaybını sıfırla, kübik gücü maksimize et ve 160 Bin ₺ hedefine ulaş.',
+      'Kalite sapması ve teslimat süresini optimize et, satış hacmini zirveye taşıyarak 160 Bin ₺ hedefine ulaş.',
     fullEquationText: 'G₂(x) = [40 - 6(x₁-2)²] + x₂³ - 8|x₃-3| + 36/x₄ + (25 - 5x₅)',
     maxScore: 160, // 40 + 64 + 0 + 36 + 20
     minScore: 15,  // 16 + 1 - 16 + 9 + 5
@@ -152,7 +152,7 @@ const EQUATION_STAGES: EquationStage[] = [
         id: 'x1',
         varName: 'x₁',
         leverNumber: 1,
-        title: 'Karesel Rezonans',
+        title: 'Bant Hızı Verimi',
         funcType: 'f₁(x₁) = 40 - 6(x₁-2)²',
         formulaDisplay: '+ 40 - 6(x₁-2)²',
         color: '#3B82F6',
@@ -162,13 +162,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 40,
         evaluate: (x) => 40 - 6 * Math.pow(x - 2, 2),
         behaviorTip:
-          'Parabol tepe noktası (r=2, k=40): Kolu x₁=2 konumuna getirdiğinde parabol zirvesine (+40) ulaşır.',
+          'Bant Hızı Verimi (Parabol Tepe Noktası): Montaj hattının optimum çalışma hızı x₁=2 ayarında zirveye (+40k ₺) ulaşır; aşırı yavaşlık veya aşırı hız verimi bozar.',
       },
       {
         id: 'x2',
         varName: 'x₂',
         leverNumber: 2,
-        title: 'Kübik Güç',
+        title: 'Satış & Dağıtım Hacmi',
         funcType: 'f₂(x₂) = x₂³',
         formulaDisplay: '+ x₂³',
         color: '#A855F7',
@@ -178,13 +178,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 64,
         evaluate: (x) => Math.pow(x, 3),
         behaviorTip:
-          'Kübik polinom fonksiyonu (x³): Kolu sağa çevirdikçe değer 1 ➔ 8 ➔ 27 ➔ 64 şeklinde çok dik yükselir (Maks: x₂=4).',
+          'Satış & Dağıtım Hacmi (Kübik Getiri): Pazar payı büyüdükçe kâr çok dik bir şekilde (x³: 1 ➔ 8 ➔ 27 ➔ 64) katlanır (Maks: x₂=4 ➔ +64k ₺).',
       },
       {
         id: 'x3',
         varName: 'x₃',
         leverNumber: 3,
-        title: 'Mutlak Sapma',
+        title: 'Kalite Tolerans Sapması',
         funcType: 'f₃(x₃) = -8·|x₃ - 3|',
         formulaDisplay: '- 8|x₃-3|',
         color: '#F14E13',
@@ -194,13 +194,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 0,
         evaluate: (x) => -8 * Math.abs(x - 3),
         behaviorTip:
-          'Mutlak değer fonksiyonu: Ters V şeklindeki keskin grafiğin zirvesi |x₃-3|=0 olan x₃=3 noktasındadır (0 kayıp).',
+          'Kalite Tolerans Sapması (Mutlak Değer Kaybı): Hedef kalite standardı x₃=3 noktasında fire kaybı sıfırdır (0 ₺); standarttan her sapma -8k ₺ ceza maliyeti yazar.',
       },
       {
         id: 'x4',
         varName: 'x₄',
         leverNumber: 4,
-        title: 'Hiperbolik Akış',
+        title: 'Tedarik Teslimat Süresi',
         funcType: 'f₄(x₄) = 36 / x₄',
         formulaDisplay: '+ 36/x₄',
         color: '#EF4444',
@@ -210,13 +210,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 36,
         evaluate: (x) => 36 / x,
         behaviorTip:
-          'Rasyonel hiperbolik fonksiyon: Payda küçüldükçe kesir büyür; x₄=1 seçildiğinde grafik en yüksek noktaya (+36) çıkar.',
+          'Tedarik Teslimat Süresi (Ters Orantı): Müşteriye teslim süresi kısaldıkça (x₄=1 en hızlı) memnuniyet ve kazanç zirveye (+36k ₺) çıkar.',
       },
       {
         id: 'x5',
         varName: 'x₅',
         leverNumber: 5,
-        title: 'Azalan Doğrusal',
+        title: 'Enerji Tüketim Maliyeti',
         funcType: 'f₅(x₅) = 25 - 5x₅',
         formulaDisplay: '+ 25 - 5x₅',
         color: '#10B981',
@@ -226,7 +226,7 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 20,
         evaluate: (x) => 25 - 5 * x,
         behaviorTip:
-          'Negatif eğimli (-5) doğrusal fonksiyon: x₅ arttıkça gelir düşer, bu yüzden en sol kademe (x₅=1 ➔ +20) maksimumdur.',
+          'Enerji Tüketim Maliyeti (Azalan Doğrusal): Gereksiz tüketim ve harcamalar arttıkça kâr doğrudan erir; bu yüzden en tasarruflu kademe (x₅=1 ➔ +20k ₺) seçilmelidir.',
       },
     ],
   },
@@ -237,10 +237,10 @@ const EQUATION_STAGES: EquationStage[] = [
   {
     id: 'eq-3',
     badge: 'Denklem 3/3',
-    name: 'Kuantum Polinom & Üstel Fonksiyonu',
+    name: 'İnovasyon ve Ölçek Ekonomisi Fonksiyonu',
     funcSymbol: 'G₃(x)',
     questionPrompt:
-      'Parabol tepe noktalarını ve üstel artışı analiz ederek kârı maksimum seviyeye (176 Bin ₺) çıkar.',
+      'Ar-Ge yatırımı, ideal kapasite ve ölçek ekonomisi tasarrufunu dengeleyerek kârı maksimuma (176 Bin ₺) çıkar.',
     fullEquationText: 'G₃(x) = 3^(x₁) + [45 - 5(x₂-3)²] + (16x₃ - 4x₃²) - 10|x₄-1| + (3x₅² - 6x₅ + 10)',
     maxScore: 176, // 81 + 45 + 16 + 0 + 34
     minScore: 5,   // 3 + 25 + 0 - 30 + 7
@@ -249,7 +249,7 @@ const EQUATION_STAGES: EquationStage[] = [
         id: 'x1',
         varName: 'x₁',
         leverNumber: 1,
-        title: '3 Tabanlı Üstel',
+        title: 'Ar-Ge & İnovasyon Getirisi',
         funcType: 'f₁(x₁) = 3^(x₁)',
         formulaDisplay: '+ 3^(x₁)',
         color: '#3B82F6',
@@ -259,13 +259,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 81,
         evaluate: (x) => Math.pow(3, x),
         behaviorTip:
-          'Üstel fonksiyon (3^x): Her adımda 3 katına çıkar (3 ➔ 9 ➔ 27 ➔ 81). Maksimum için x₁=4 seçilmelidir.',
+          'Ar-Ge & İnovasyon (3 Tabanlı Üstel): Yüksek teknolojili patentli üretim kârı her adımda 3 katına çıkarır (3 ➔ 9 ➔ 27 ➔ 81). Maksimum kâr için x₁=4 seçilmelidir.',
       },
       {
         id: 'x2',
         varName: 'x₂',
         leverNumber: 2,
-        title: 'Simetrik Parabol',
+        title: 'Kapasite Kullanım Oranı',
         funcType: 'f₂(x₂) = 45 - 5(x₂-3)²',
         formulaDisplay: '+ 45 - 5(x₂-3)²',
         color: '#A855F7',
@@ -275,13 +275,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 45,
         evaluate: (x) => 45 - 5 * Math.pow(x - 3, 2),
         behaviorTip:
-          'Tepe noktası x₂=3 olan aşağı kolları bakan parabol: x₂=3 noktasında +45 maksimum değerini üretir.',
+          'Kapasite Kullanım Oranı (Simetrik Parabol): Tesisin optimum çalışma dengesi x₂=3 seviyesinde kârı maksimuma (+45k ₺) ulaştırır.',
       },
       {
         id: 'x3',
         varName: 'x₃',
         leverNumber: 3,
-        title: 'Açık Parabol Polinomu',
+        title: 'Pazarlama & Tanıtım Getirisi',
         funcType: 'f₃(x₃) = 16x₃ - 4x₃²',
         formulaDisplay: '+ 16x₃ - 4x₃²',
         color: '#F14E13',
@@ -291,13 +291,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 16,
         evaluate: (x) => 16 * x - 4 * Math.pow(x, 2),
         behaviorTip:
-          'İkinci dereceden polinom: Tepe noktası r = -b/(2a) = -16/(-8) = 2 olduğundan x₃=2 noktasında zirve (+16) yapar!',
+          'Pazarlama Getirisi (İkinci Derece Tepe Noktası): Doğru bütçelenmiş reklam yatırımı r = -b/(2a) = 2 ayarında en yüksek kâr dönüşümünü (+16k ₺ zirve) sağlar.',
       },
       {
         id: 'x4',
         varName: 'x₄',
         leverNumber: 4,
-        title: 'Tolerans Cezası',
+        title: 'Arıza & Hasar Gideri',
         funcType: 'f₄(x₄) = -10·|x₄ - 1|',
         formulaDisplay: '- 10|x₄-1|',
         color: '#EF4444',
@@ -307,13 +307,13 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 0,
         evaluate: (x) => -10 * Math.abs(x - 1),
         behaviorTip:
-          'Mutlak değer kayıp fonksiyonu: x₄=1 noktasında kayıp sıfırlanır (0); sağa gittikçe -10, -20, -30 ceza yazar.',
+          'Arıza & Hasar Maliyeti (Tolerans Kaybı): Sıfır hata ile üretim x₄=1 seviyesinde kayıpsızdır (0 ₺); sapma arttıkça -10k, -20k, -30k ceza kesilir.',
       },
       {
         id: 'x5',
         varName: 'x₅',
         leverNumber: 5,
-        title: 'Konveks Parabol',
+        title: 'Toplu Alım Tasarrufu',
         funcType: 'f₅(x₅) = 3x₅² - 6x₅ + 10',
         formulaDisplay: '+ 3x₅² - 6x₅ + 10',
         color: '#10B981',
@@ -323,7 +323,7 @@ const EQUATION_STAGES: EquationStage[] = [
         maxY: 34,
         evaluate: (x) => 3 * Math.pow(x, 2) - 6 * x + 10,
         behaviorTip:
-          'Kolları yukarı bakan parabol: x₅=1 dip noktasıdır (+7), kol sağa çevrildikçe eğri hızla yukarı kıvrılır (x₅=4 ➔ +34).',
+          'Toplu Alım Tasarrufu (Ölçek Ekonomisi): Sipariş hacmi büyüdükçe hammadde indirim avantajı parabolik olarak fırlar (x₅=4 ➔ +34k ₺).',
       },
     ],
   },

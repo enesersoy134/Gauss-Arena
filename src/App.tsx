@@ -880,9 +880,9 @@ export default function App() {
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <h3 className="font-poppins font-bold text-base text-white flex items-center gap-2">
                     <Swords className="w-4 h-4 text-[#F14E13]" />
-                    <span>1v1 Karşılaşma Seçenekleri</span>
+                    <span>Karşılaşma Seçenekleri</span>
                   </h3>
-                  {!isCompetitiveUnlocked && (
+                  {!isCompetitiveUnlocked && selectedMode !== 'practice' && (
                     <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
                       <Lock className="w-3 h-3" />
                       <span>Önce Mini Oyunu Tamamla</span>
@@ -895,7 +895,7 @@ export default function App() {
                   <label className="text-xs text-[#B5CBC8] font-semibold uppercase tracking-wider">
                     Oyun Modu
                   </label>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <button
                       onClick={() => setSelectedMode('ranked')}
                       className={`p-3 rounded-xl border text-left transition-all ${
@@ -919,8 +919,50 @@ export default function App() {
                       <div className="font-poppins font-bold text-xs sm:text-sm">🏆 Turnuva Maçı</div>
                       <div className="text-[11px] opacity-70 mt-0.5">Turnuva Puanı & Büyük Ödül</div>
                     </button>
+
+                    <button
+                      onClick={() => setSelectedMode('practice')}
+                      className={`p-3 rounded-xl border text-left transition-all ${
+                        selectedMode === 'practice'
+                          ? 'border-emerald-500 bg-emerald-500/15 text-white shadow-sm shadow-emerald-500/20'
+                          : 'border-white/10 bg-[#0F0510] text-[#B5CBC8] hover:border-white/20'
+                      }`}
+                    >
+                      <div className="font-poppins font-bold text-xs sm:text-sm text-emerald-400">🎯 Alıştırma Yap</div>
+                      <div className="text-[11px] opacity-70 mt-0.5">Tek Başına Soru Çöz & Pekiştir</div>
+                    </button>
                   </div>
                 </div>
+
+                {/* Alıştırma Soru Sayısı Seçimi */}
+                {selectedMode === 'practice' && (
+                  <div className="flex flex-col gap-1.5 animate-fade-in">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs text-[#B5CBC8] font-semibold uppercase tracking-wider">
+                        Alıştırma Soru Sayısı
+                      </label>
+                      <span className="text-[11px] font-mono text-emerald-400 font-bold">
+                        {practiceQuestionCount} Soru
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[5, 10, 15].map((cnt) => (
+                        <button
+                          key={cnt}
+                          type="button"
+                          onClick={() => setPracticeQuestionCount(cnt)}
+                          className={`py-2 px-3 rounded-xl border font-mono font-bold text-xs transition-all ${
+                            practiceQuestionCount === cnt
+                              ? 'border-emerald-500 bg-emerald-500/20 text-emerald-300 shadow-sm shadow-emerald-500/30'
+                              : 'border-white/10 bg-[#0F0510] text-[#B5CBC8] hover:border-white/20'
+                          }`}
+                        >
+                          {cnt} Soru
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Sınav Tipi (LGS, TYT, AYT) */}
                 <div className="flex flex-col gap-1.5">
@@ -1028,7 +1070,15 @@ export default function App() {
 
                 {/* Ana Katılım / Çıkış Butonu */}
                 <div className="pt-2">
-                  {isSelectedModeQueueing ? (
+                  {selectedMode === 'practice' ? (
+                    <button
+                      onClick={handleStartPracticeFromMatchmaking}
+                      className="w-full py-4 rounded-2xl text-white font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-2xl transition-all border border-white/20 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 shadow-emerald-600/30 hover:brightness-110 active:scale-[0.99]"
+                    >
+                      <Target className="w-5 h-5 text-emerald-200" />
+                      <span>🎯 ALIŞTIRMAYI BAŞLAT (TEK BAŞINA ÇÖZ)</span>
+                    </button>
+                  ) : isSelectedModeQueueing ? (
                     <button
                       onClick={leaveQueue}
                       className="w-full py-4 rounded-2xl bg-red-600/20 border-2 border-red-500/50 text-red-300 font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2 hover:bg-red-600/30 transition-all shadow-xl shadow-red-950/40"

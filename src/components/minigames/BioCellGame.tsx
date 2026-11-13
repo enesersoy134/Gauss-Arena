@@ -805,8 +805,8 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete, onNextSubj
                       <div className="font-poppins font-bold text-xs text-white truncate">
                         {slotOrg.name}
                       </div>
-                      <div className="text-[10px] text-emerald-300 font-mono leading-tight mt-0.5">
-                        📍 İğnelendi & Aktif
+                      <div className="text-[10px] text-emerald-300 font-mono leading-tight mt-0.5 truncate">
+                        {slotOrg.roleShort}
                       </div>
                     </div>
                   </>
