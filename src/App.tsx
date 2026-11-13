@@ -10,6 +10,9 @@ import AdminPanel from './components/admin/AdminPanel';
 import SmartboardScreen from './components/smartboard/SmartboardScreen';
 import KahootPlayerView from './components/smartboard/KahootPlayerView';
 import { soundEngine } from './utils/soundEngine';
+import DailyMiniGameModal, {
+  MiniGameSubjectId,
+} from './components/minigames/DailyMiniGameModal';
 import {
   Swords,
   Flame,
@@ -29,6 +32,9 @@ import {
   Target,
   Volume2,
   VolumeX,
+  Lock,
+  Unlock,
+  Gamepad2,
 } from 'lucide-react';
 
 type ActiveTab = 'matchmaking' | 'economy' | 'tournaments' | 'revision';
@@ -169,6 +175,34 @@ export default function App() {
   // Coin Dönüştürme State
   const [coinsToConvert, setCoinsToConvert] = useState<number>(100);
 
+  // Günlük Öğretici Mini Oyunlar & 1v1 Rekabetçi Mod Kilidi State
+  const [isCompetitiveUnlocked, setIsCompetitiveUnlocked] = useState<boolean>(false);
+  const [showMiniGameScreen, setShowMiniGameScreen] = useState<boolean>(true);
+  const [completedMiniGames, setCompletedMiniGames] = useState<MiniGameSubjectId[]>([]);
+
+  const handleCompleteMiniGame = useCallback((subjectId: MiniGameSubjectId) => {
+    setCompletedMiniGames((prev) => (prev.includes(subjectId) ? prev : [...prev, subjectId]));
+    setIsCompetitiveUnlocked(true);
+    showToast(
+      'Tebrikler! Günlük Öğrenme Görevini Tamamladın — 1v1 Rekabetçi Arena Açıldı!'
+    );
+  }, [showToast]);
+
+  const handleResetLockDemo = useCallback(() => {
+    setIsCompetitiveUnlocked(false);
+    setCompletedMiniGames([]);
+    setShowMiniGameScreen(true);
+    showToast('🔒 Rekabetçi mod kilidi demo başlangıç durumuna sıfırlandı.');
+  }, [showToast]);
+
+  const handleResetAllDemo = useCallback(async () => {
+    const res = await resetDemo();
+    setIsCompetitiveUnlocked(false);
+    setCompletedMiniGames([]);
+    setShowMiniGameScreen(true);
+    return res;
+  }, [resetDemo]);
+
   // =========================================================================
   // ROUTE GÖRÜNÜMLERİ
   // =========================================================================
@@ -215,7 +249,7 @@ export default function App() {
     );
   }
 
-  // 3. GELİŞTİRİCİ SORU TEST MODU (/admin için)
+  // 3. GELİŞTİRİCİ SORU TEST MODU (Forced Questions ile simülasyon - Admin panelinden test etme)
   if (forcedQuestions && forcedQuestions.length > 0) {
     return (
       <GameScreen
@@ -240,7 +274,7 @@ export default function App() {
         simulate15Matches={simulate15Matches}
         distributeTournamentRewards={distributeTournamentRewards}
         updatePlayerDemo={updatePlayerDemo}
-        resetDemo={resetDemo}
+        resetDemo={handleResetAllDemo}
         onNavigateToStudent={(playerId?: string) => {
           const targetUrl = playerId ? `/?player=${playerId}` : '/';
           navigateTo(targetUrl);
@@ -299,6 +333,13 @@ export default function App() {
   };
 
   const handleStartQueue = () => {
+    if (!isCompetitiveUnlocked) {
+      showToast(
+        '🔒 1v1 Rekabetçi Düello kilitli! Önce Günün Öğretici Mini Oyununu tamamlamalısın.'
+      );
+      setShowMiniGameScreen(true);
+      return;
+    }
     soundEngine.playClick();
     if (selectedSubjects.length === 0) {
       showToast('En az bir ders seçmelisiniz!');
@@ -448,8 +489,25 @@ export default function App() {
             </div>
           </div>
 
-          {/* Sağ: Gerçekçi Öğrenci Profil Hapı (Profile Pill) */}
+          {/* Sağ: Öğretici Mini Oyunlar Butonu + Gerçekçi Öğrenci Profil Hapı (Profile Pill) */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <button
+              onClick={() => setShowMiniGameScreen(true)}
+              className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl border text-[11px] sm:text-xs font-poppins font-bold flex items-center gap-1.5 transition-all shadow-sm ${
+                isCompetitiveUnlocked
+                  ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25'
+                  : 'bg-amber-500/20 border-amber-500/50 text-amber-300 hover:bg-amber-500/30 animate-pulse'
+              }`}
+              title="6 Branşta Oynarken Öğreten Günlük Mini Oyunlar"
+            >
+              <Gamepad2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="hidden md:inline">Öğretici Mini Oyunlar</span>
+              <span className="md:hidden">Mini Oyun</span>
+              <span className="font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-black/30">
+                {isCompetitiveUnlocked ? `🔓 ${completedMiniGames.length}/6` : '🔒 Kilitli'}
+              </span>
+            </button>
+
             <div className="flex items-center gap-2 sm:gap-3 bg-[#0F0510] border border-white/10 rounded-2xl px-2.5 sm:px-3.5 py-1 sm:py-1.5 shadow-sm">
               <img
                 src={currentPlayer.avatarUrl}
@@ -708,12 +766,87 @@ export default function App() {
                 )}
               </div>
 
+              {/* Günlük Öğretici Mini Oyun & Rekabetçi Kilit Kartı */}
+              <div
+                className={`game-card p-5 border flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                  isCompetitiveUnlocked
+                    ? 'border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 to-[#1A0E1C]'
+                    : 'border-amber-500/50 bg-gradient-to-r from-amber-950/40 to-[#1A0E1C]'
+                }`}
+              >
+                <div className="flex items-start sm:items-center gap-3.5">
+                  <div
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
+                      isCompetitiveUnlocked
+                        ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                        : 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+                    }`}
+                  >
+                    {isCompetitiveUnlocked ? (
+                      <Unlock className="w-6 h-6" />
+                    ) : (
+                      <Lock className="w-6 h-6" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="font-poppins font-bold text-sm sm:text-base text-white">
+                        {isCompetitiveUnlocked
+                          ? '🔓 1v1 Rekabetçi Arena Kilidi Açıldı!'
+                          : '🔒 1v1 Rekabetçi Mod Kilitli — Günlük Öğrenme Görevi'}
+                      </h3>
+                      <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-[#B5CBC8]">
+                        {completedMiniGames.length} / 6 Branş Deneyimlendi
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#B5CBC8] mt-1 leading-relaxed">
+                      {isCompetitiveUnlocked
+                        ? 'Günün öğretici simülasyonunu başarıyla tamamladın! Artık 1v1 Düelloya katılabilir veya 6 branşın (Biyoloji, Kimya, Fizik, Matematik, Geometri, Türkçe) tamamını deneyimleyebilirsin.'
+                        : '1v1 Rekabetçi Düello modunun kilidini açmak için günün Öğretici Mini Oyununu (Keşif & Simülasyon) tamamla. (Ekstra Coin/Momentum vermez, oynarken öğretir.)'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                  {isCompetitiveUnlocked && (
+                    <button
+                      onClick={handleResetLockDemo}
+                      className="px-3 py-2 rounded-xl border border-white/10 bg-[#0F0510] text-[11px] font-mono text-[#B5CBC8] hover:text-amber-300 hover:border-amber-500/40 transition-all"
+                      title="Jüri sunumu için kilidi başlangıç durumuna sıfırlar"
+                    >
+                      Kilidi Sıfırla
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setShowMiniGameScreen(true)}
+                    className={`btn-primary !py-2.5 !px-4 text-xs font-bold flex items-center gap-1.5 whitespace-nowrap ${
+                      isCompetitiveUnlocked ? '!bg-emerald-600 hover:!bg-emerald-500' : ''
+                    }`}
+                  >
+                    <Gamepad2 className="w-4 h-4" />
+                    <span>
+                      {isCompetitiveUnlocked
+                        ? '6 Branş Mini Oyunlar (Demo)'
+                        : 'Mini Oyunu Başlat & Kilidi Aç'}
+                    </span>
+                  </button>
+                </div>
+              </div>
+
               {/* Eşleştirme Formu (LGS, TYT, AYT ve Seviye Seçimi) */}
               <div className="game-card p-6 flex flex-col gap-5">
-                <h3 className="font-poppins font-bold text-base text-white flex items-center gap-2">
-                  <Swords className="w-4 h-4 text-[#F14E13]" />
-                  <span>1v1 Karşılaşma Seçenekleri</span>
-                </h3>
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <h3 className="font-poppins font-bold text-base text-white flex items-center gap-2">
+                    <Swords className="w-4 h-4 text-[#F14E13]" />
+                    <span>1v1 Karşılaşma Seçenekleri</span>
+                  </h3>
+                  {!isCompetitiveUnlocked && (
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
+                      <Lock className="w-3 h-3" />
+                      <span>Önce Mini Oyunu Tamamla</span>
+                    </span>
+                  )}
+                </div>
 
                 {/* Mod Seçimi */}
                 <div className="flex flex-col gap-1.5">
@@ -866,10 +999,23 @@ export default function App() {
                   ) : (
                     <button
                       onClick={handleStartQueue}
-                      className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 text-white font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-2xl shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99] transition-all border border-white/20"
+                      className={`w-full py-4 rounded-2xl text-white font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-2xl transition-all border border-white/20 ${
+                        !isCompetitiveUnlocked
+                          ? 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-500 shadow-amber-600/30 hover:brightness-110'
+                          : 'bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99]'
+                      }`}
                     >
-                      <Swords className="w-5 h-5 fill-current" />
-                      <span>⚔️ 1v1 RAKİP BUL & DÜELLOYU BAŞLAT</span>
+                      {!isCompetitiveUnlocked ? (
+                        <>
+                          <Lock className="w-5 h-5" />
+                          <span>🔒 Günlük Mini Oyunu Tamamla & 1v1 Kilidini Aç</span>
+                        </>
+                      ) : (
+                        <>
+                          <Swords className="w-5 h-5 fill-current" />
+                          <span>⚔️ 1v1 RAKİP BUL & DÜELLOYU BAŞLAT</span>
+                        </>
+                      )}
                     </button>
                   )}
                 </div>
@@ -1189,6 +1335,13 @@ export default function App() {
                   ) : (
                     <button
                       onClick={() => {
+                        if (!isCompetitiveUnlocked) {
+                          showToast(
+                            '🔒 Turnuva maçına katılmak için önce Günün Öğretici Mini Oyununu tamamlamalısın!'
+                          );
+                          setShowMiniGameScreen(true);
+                          return;
+                        }
                         setSelectedMode('tournament');
                         setSelectedTournamentId(t.id);
                         setSelectedExamType(t.examType as any);
@@ -1439,6 +1592,20 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Günlük Öğretici Mini Oyunlar Modalı (Keşif & Simülasyon — 6 Branş) */}
+      <DailyMiniGameModal
+        isOpen={showMiniGameScreen}
+        isCompetitiveUnlocked={isCompetitiveUnlocked}
+        completedMiniGames={completedMiniGames}
+        onCompleteMiniGame={handleCompleteMiniGame}
+        onProceedToArena={() => {
+          setShowMiniGameScreen(false);
+          setActiveTab('matchmaking');
+        }}
+        onClose={() => setShowMiniGameScreen(false)}
+        onResetLockDemo={handleResetLockDemo}
+      />
     </div>
   );
 }

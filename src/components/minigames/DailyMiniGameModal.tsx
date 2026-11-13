@@ -1,0 +1,237 @@
+import React, { useState } from 'react';
+import {
+  Lock,
+  Unlock,
+  Sparkles,
+  Swords,
+  CheckCircle2,
+  X,
+  RotateCcw,
+  Gamepad2,
+} from 'lucide-react';
+import BioCellGame from './BioCellGame';
+import ChemMoleculeGame from './ChemMoleculeGame';
+import PhysBalanceGame from './PhysBalanceGame';
+import MathProfitGame from './MathProfitGame';
+import GeoShapePuzzle from './GeoShapePuzzle';
+import TurkRapBattle from './TurkRapBattle';
+
+export type MiniGameSubjectId =
+  | 'biyoloji'
+  | 'kimya'
+  | 'fizik'
+  | 'matematik'
+  | 'geometri'
+  | 'turkce';
+
+export interface DailyMiniGameModalProps {
+  isOpen: boolean;
+  isCompetitiveUnlocked: boolean;
+  completedMiniGames: MiniGameSubjectId[];
+  initialSubject?: MiniGameSubjectId;
+  onCompleteMiniGame: (subjectId: MiniGameSubjectId) => void;
+  onProceedToArena: () => void;
+  onClose: () => void;
+  onResetLockDemo?: () => void;
+}
+
+interface SubjectMeta {
+  id: MiniGameSubjectId;
+  label: string;
+  shortTitle: string;
+  icon: string;
+}
+
+export const MINI_GAME_SUBJECTS: SubjectMeta[] = [
+  {
+    id: 'biyoloji',
+    label: 'Biyoloji',
+    shortTitle: 'Hücre & Organel',
+    icon: '🦠',
+  },
+  {
+    id: 'kimya',
+    label: 'Kimya',
+    shortTitle: '3 Formül Sentezi',
+    icon: '🧪',
+  },
+  {
+    id: 'fizik',
+    label: 'Fizik',
+    shortTitle: 'Tork & Denge',
+    icon: '⚖️',
+  },
+  {
+    id: 'matematik',
+    label: 'Matematik',
+    shortTitle: '5 Kollu Fabrika',
+    icon: '🏭',
+  },
+  {
+    id: 'geometri',
+    label: 'Geometri',
+    shortTitle: 'Açı Bulmacası',
+    icon: '📐',
+  },
+  {
+    id: 'turkce',
+    label: 'Türkçe',
+    shortTitle: 'Kibar Rap',
+    icon: '🎤',
+  },
+];
+
+export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
+  isOpen,
+  isCompetitiveUnlocked,
+  completedMiniGames,
+  initialSubject = 'fizik',
+  onCompleteMiniGame,
+  onProceedToArena,
+  onClose,
+  onResetLockDemo,
+}) => {
+  const [activeSubject, setActiveSubject] = useState<MiniGameSubjectId>(initialSubject);
+
+  if (!isOpen) return null;
+
+  const handleCompleteCurrent = () => {
+    onCompleteMiniGame(activeSubject);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+      <div className="w-full max-w-5xl bg-[#150A16] border-2 border-[#F14E13]/50 rounded-3xl shadow-2xl shadow-[#F14E13]/20 flex flex-col max-h-[95vh] overflow-hidden my-auto">
+        {/* ÜST BAR: Başlık, Kilit Rozeti & 6 Branş Seçici */}
+        <div className="bg-[#1A0E1C] border-b border-white/10 px-4 sm:px-6 py-3 flex flex-col gap-2.5 shrink-0">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#F14E13] to-amber-500 flex items-center justify-center shadow-md shrink-0">
+                <Gamepad2 className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h2 className="font-poppins font-black text-sm sm:text-base text-white">
+                  ÖĞRETİCİ MİNİ OYUNLAR
+                </h2>
+                {isCompetitiveUnlocked ? (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                    <Unlock className="w-3 h-3" />
+                    <span>1v1 Arena Açık ({completedMiniGames.length}/6)</span>
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                    <Lock className="w-3 h-3" />
+                    <span>1v1 Kilidini Açmak İçin 1 Oyun Tamamla</span>
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {onResetLockDemo && isCompetitiveUnlocked && (
+                <button
+                  onClick={onResetLockDemo}
+                  className="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/15 border border-white/10 text-[11px] font-mono text-[#B5CBC8] hover:text-red-300 flex items-center gap-1 transition-all"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span className="hidden sm:inline">Kilidi Sıfırla</span>
+                </button>
+              )}
+
+              {isCompetitiveUnlocked && (
+                <button
+                  onClick={onProceedToArena}
+                  className="btn-primary !py-1.5 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
+                >
+                  <Swords className="w-3.5 h-3.5" />
+                  <span>1v1 Arenaya Geç</span>
+                </button>
+              )}
+
+              <button
+                onClick={onClose}
+                className="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#B5CBC8] hover:text-white transition-all"
+                title="Kapat"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* 6 Branş Sekme Barı */}
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 pt-1">
+            {MINI_GAME_SUBJECTS.map((subj) => {
+              const isActive = activeSubject === subj.id;
+              const isDone = completedMiniGames.includes(subj.id);
+
+              return (
+                <button
+                  key={subj.id}
+                  onClick={() => setActiveSubject(subj.id)}
+                  className={`px-2.5 py-2 rounded-xl border text-left transition-all flex items-center justify-between gap-1.5 ${
+                    isActive
+                      ? 'bg-[#F14E13] border-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
+                      : isDone
+                      ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-200 hover:border-emerald-400'
+                      : 'bg-[#0F0510] border-white/10 text-[#B5CBC8] hover:border-white/25 hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span className="text-base shrink-0">{subj.icon}</span>
+                    <div className="min-w-0">
+                      <div className="font-poppins font-bold text-xs truncate">{subj.label}</div>
+                      <div
+                        className={`text-[10px] truncate ${
+                          isActive ? 'text-white/90' : 'text-[#B5CBC8]/75'
+                        }`}
+                      >
+                        {subj.shortTitle}
+                      </div>
+                    </div>
+                  </div>
+                  {isDone && (
+                    <CheckCircle2
+                      className={`w-3.5 h-3.5 shrink-0 ${
+                        isActive ? 'text-white' : 'text-emerald-400'
+                      }`}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ORTA ALAN: Aktif Mini Oyun Sahnesi */}
+        <div className="p-4 sm:p-5 overflow-y-auto flex-1 flex flex-col gap-3">
+          {isCompetitiveUnlocked && (
+            <div className="bg-emerald-500/15 border border-emerald-500/40 rounded-2xl px-4 py-2.5 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs text-emerald-200">
+                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>
+                  <strong className="text-white">1v1 Rekabetçi Arena Açıldı!</strong> Hemen maça geçebilir veya üstten diğer dersleri deneyebilirsin.
+                </span>
+              </div>
+              <button
+                onClick={onProceedToArena}
+                className="btn-primary !py-1.5 !px-3.5 text-xs font-bold shrink-0 !bg-emerald-600 hover:!bg-emerald-500 flex items-center gap-1"
+              >
+                <Swords className="w-3.5 h-3.5" />
+                <span>Düelloya Başla →</span>
+              </button>
+            </div>
+          )}
+
+          {activeSubject === 'biyoloji' && <BioCellGame onComplete={handleCompleteCurrent} />}
+          {activeSubject === 'kimya' && <ChemMoleculeGame onComplete={handleCompleteCurrent} />}
+          {activeSubject === 'fizik' && <PhysBalanceGame onComplete={handleCompleteCurrent} />}
+          {activeSubject === 'matematik' && <MathProfitGame onComplete={handleCompleteCurrent} />}
+          {activeSubject === 'geometri' && <GeoShapePuzzle onComplete={handleCompleteCurrent} />}
+          {activeSubject === 'turkce' && <TurkRapBattle onComplete={handleCompleteCurrent} />}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DailyMiniGameModal;
