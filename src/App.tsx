@@ -159,7 +159,9 @@ export default function App() {
   // Eşleştirme Formu Ayarları (LGS & Soru Seviyesi/Zorluk dahil)
   const [selectedExamType, setSelectedExamType] = useState<'LGS' | 'TYT' | 'AYT'>('TYT');
   const [selectedDifficultyMode, setSelectedDifficultyMode] = useState<'adaptive' | 'easy' | 'medium' | 'hard'>('adaptive');
-  const [selectedMode, setSelectedMode] = useState<'ranked' | 'tournament'>('ranked');
+  const [selectedMode, setSelectedMode] = useState<'ranked' | 'tournament' | 'practice'>('ranked');
+  const [practiceQuestionCount, setPracticeQuestionCount] = useState<number>(5);
+  const [isPracticeSession, setIsPracticeSession] = useState<boolean>(false);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>(['matematik', 'fizik', 'kimya']);
   const [selectedTournamentId, setSelectedTournamentId] = useState<string>('tour-tyt-1');
 
@@ -707,9 +709,6 @@ export default function App() {
                           {currentPlayer.bracket.tierName}
                         </span>
                       </div>
-                      <p className="text-xs text-[#B5CBC8] mt-0.5 font-mono">
-                        {currentPlayer.roleTag || 'Aktif Yarışmacı'}
-                      </p>
 
                       <div className="flex items-center gap-2.5 text-xs font-mono mt-2.5 flex-wrap">
                         <span className="text-[#F14E13] font-bold bg-[#F14E13]/10 px-2.5 py-1 rounded-xl border border-[#F14E13]/25">

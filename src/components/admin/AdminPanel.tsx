@@ -405,7 +405,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-1">
                             <h3 className="font-poppins font-bold text-sm text-white truncate" title={p.name}>
-                              {p.name}
+                              {p.name.split('(')[0].trim()}
                             </h3>
                             {isCurrentActive && (
                               <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#F14E13] text-white shrink-0">
@@ -413,11 +413,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               </span>
                             )}
                           </div>
-                          <p className="text-[11px] text-[#B5CBC8] font-mono mt-0.5 truncate">
-                            {p.roleTag || 'Standart Öğrenci'}
-                          </p>
 
-                          <div className="flex items-center gap-2 mt-2">
+                          <div className="flex items-center gap-2 mt-1.5">
                             <span
                               className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full"
                               style={{
