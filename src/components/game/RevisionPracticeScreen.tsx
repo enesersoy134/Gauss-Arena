@@ -24,6 +24,10 @@ import {
 export interface RevisionPracticeScreenProps {
   questions: Question[];
   topics: string[];
+  modeTitle?: string;
+  subtitle?: string;
+  exitLabel?: string;
+  rewardLabel?: string;
   onComplete: (stats: { solvedTopics: string[]; correctCount: number; totalCount: number }) => void;
   onExit: () => void;
 }
@@ -31,6 +35,10 @@ export interface RevisionPracticeScreenProps {
 export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
   questions: initialQuestions,
   topics,
+  modeTitle = '🎯 Eksik Konu Pekiştirme',
+  subtitle = 'BİREYSEL TELAFİ ANTRENMANI',
+  exitLabel = 'Antrenmandan Çık',
+  rewardLabel = '+30 Coin Telafi Ödülü',
   onComplete,
   onExit,
 }) => {
@@ -174,13 +182,15 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
 
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-300">
-                KAZANIM PEKİŞTİRME BAŞARILI
+                {modeTitle.includes('Alıştırma') ? 'ALIŞTIRMA BAŞARIYLA TAMAMLANDI' : 'KAZANIM PEKİŞTİRME BAŞARILI'}
               </span>
               <h1 className="text-2xl sm:text-3xl font-black font-poppins text-white mt-1">
-                🎉 Eksik Konu Antrenmanı Tamamlandı!
+                {modeTitle.includes('Alıştırma') ? '🎉 Bireysel Alıştırma Tamamlandı!' : '🎉 Eksik Konu Antrenmanı Tamamlandı!'}
               </h1>
               <p className="text-xs sm:text-sm text-[#B5CBC8] mt-2 max-w-md mx-auto leading-relaxed">
-                Yanlış yaptığınız soruların çözüm adımlarını bireysel hızınızda inceleyerek eksiklerinizi başarıyla telafi ettiniz.
+                {modeTitle.includes('Alıştırma')
+                  ? 'Seçtiğiniz ders ve zorluktaki soruları bireysel hızınızda çözerek pratik yaptınız.'
+                  : 'Yanlış yaptığınız soruların çözüm adımlarını bireysel hızınızda inceleyerek eksiklerinizi başarıyla telafi ettiniz.'}
               </p>
             </div>
 
@@ -199,7 +209,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
                 </span>
               </div>
               <div className="p-4 rounded-2xl bg-[#0F0510] border border-white/10 flex flex-col items-center">
-                <span className="text-[11px] font-mono text-zinc-400 uppercase">Pekiştirme</span>
+                <span className="text-[11px] font-mono text-zinc-400 uppercase">Başarı</span>
                 <span className="text-xl sm:text-2xl font-mono font-black text-amber-400 mt-1">
                   %{successRate}
                 </span>
@@ -210,7 +220,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
             {topics.length > 0 && (
               <div className="w-full text-left bg-[#0F0510] p-4 rounded-2xl border border-white/10 mt-1">
                 <span className="text-[11px] font-mono font-bold text-[#FF7A45] uppercase block mb-2">
-                  📚 Pekiştirilen Konular ({topics.length}):
+                  📚 Çözülen Konular ({topics.length}):
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {topics.map((t, idx) => (
@@ -234,10 +244,10 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
                 </div>
                 <div className="text-left">
                   <span className="font-poppins font-black text-sm sm:text-base text-amber-200 block">
-                    +30 Coin Telafi Ödülü
+                    {rewardLabel}
                   </span>
                   <span className="text-[11px] text-amber-300/80 font-mono">
-                    Eksiklik oranınız başarıyla düşürüldü
+                    {modeTitle.includes('Alıştırma') ? 'Çözülen sorular başarı havuzunuza eklendi' : 'Eksiklik oranınız başarıyla düşürüldü'}
                   </span>
                 </div>
               </div>
@@ -260,7 +270,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
               onClick={handleClaimReward}
               className="w-full sm:flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 text-white font-poppins font-black text-sm shadow-xl shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 border border-white/20"
             >
-              <span>✓ Ödülü Al ve Eksik Konularıma Dön</span>
+              <span>{modeTitle.includes('Alıştırma') ? '✓ Tamamla ve Menüye Dön' : '✓ Ödülü Al ve Eksik Konularıma Dön'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -314,14 +324,14 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-mono font-bold text-[#FF7A45] uppercase tracking-wider">
-                  BİREYSEL TELAFİ ANTRENMANI
+                  {subtitle}
                 </span>
                 <span className="px-2 py-0.5 rounded-lg bg-orange-500/20 text-amber-300 font-mono text-[10px] font-bold border border-orange-500/30">
                   Soru {currentIndex + 1} / {questions.length}
                 </span>
               </div>
               <h1 className="font-poppins font-black text-sm sm:text-base text-white">
-                🎯 Eksik Konu Pekiştirme
+                {modeTitle}
               </h1>
             </div>
           </div>
@@ -352,7 +362,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
               className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-zinc-300 hover:text-red-300 transition-all text-xs font-semibold flex items-center gap-1.5"
             >
               <Home className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Antrenmandan Çık</span>
+              <span className="hidden sm:inline">{exitLabel}</span>
             </button>
           </div>
         </div>

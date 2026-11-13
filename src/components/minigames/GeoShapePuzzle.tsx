@@ -21,7 +21,8 @@ const ANGLE_BLOCKS: AngleBlock[] = [
 ];
 
 export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNextSubject }) => {
-  const [selectedAngle, setSelectedAngle] = useState<AngleBlock['angle']>(60);
+  // Başlangıçta hiçbir açı seçili olmaz, oyuncu kendisi seçer
+  const [selectedAngle, setSelectedAngle] = useState<AngleBlock['angle'] | null>(null);
   const [solved, setSolved] = useState<{
     straight180: boolean;
     full360: boolean;
@@ -34,7 +35,7 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNe
 
   const [msg, setMsg] = useState<{ type: 'info' | 'error' | 'success'; text: string }>({
     type: 'info',
-    text: 'Alttan uygun açı dilimini seç ve yukarıdaki eksik geometrik şekle tıklayarak tamamla!',
+    text: 'Alttan bir açı dilimi seç ve yukarıdaki eksik geometrik şekle tıklayarak tamamla!',
   });
 
   const solvedCount = Object.values(solved).filter(Boolean).length;
@@ -47,6 +48,14 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNe
   ) => {
     if (solved[targetKey]) return;
 
+    if (selectedAngle === null) {
+      setMsg({
+        type: 'error',
+        text: `⚠️ Önce alttan yerleştirmek istediğin bir açı dilimini seçmelisin!`,
+      });
+      return;
+    }
+
     if (selectedAngle !== requiredAngle) {
       setMsg({
         type: 'error',
@@ -57,11 +66,8 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNe
 
     const nextSolved = { ...solved, [targetKey]: true };
     setSolved(nextSolved);
-
-    // Otomatik olarak sıradaki eksik açıyı seç
-    if (!nextSolved.straight180) setSelectedAngle(60);
-    else if (!nextSolved.full360) setSelectedAngle(90);
-    else if (!nextSolved.hexagon120) setSelectedAngle(120);
+    // Asla otomatik sıradaki açıyı seçme - sıfırla ki oyuncu kendisi seçsin
+    setSelectedAngle(null);
 
     const newCount = Object.values(nextSolved).filter(Boolean).length;
     if (newCount === 3) {
@@ -73,14 +79,14 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNe
     } else {
       setMsg({
         type: 'success',
-        text: `✅ Harika! ${requiredAngle}° dilim tam oturdu. Şimdi diğer şekli tamamla!`,
+        text: `✅ Harika! ${requiredAngle}° dilim tam oturdu. Şimdi alttan diğer şekil için bir açı dilimi seç!`,
       });
     }
   };
 
   const handleReset = () => {
     setSolved({ straight180: false, full360: false, hexagon120: false });
-    setSelectedAngle(60);
+    setSelectedAngle(null);
     setMsg({
       type: 'info',
       text: 'Bulmaca sıfırlandı. Alttan açı dilimini seçip eksik şekle tıkla!',
@@ -348,7 +354,13 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNe
             return (
               <button
                 key={b.angle}
-                onClick={() => setSelectedAngle(b.angle)}
+                onClick={() => {
+                  setSelectedAngle(b.angle);
+                  setMsg({
+                    type: 'info',
+                    text: `Seçildi: ${b.label} (${b.desc}). Şimdi yukarıdaki eksik geometrik şekle tıkla!`,
+                  });
+                }}
                 className={`px-4 py-2 rounded-xl font-mono font-bold text-xs flex items-center gap-2 border transition-all ${
                   isSel
                     ? 'scale-105 shadow-lg text-white'
