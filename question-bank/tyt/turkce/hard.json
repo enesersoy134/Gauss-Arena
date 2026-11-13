@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "turkce",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-TUR-H-001",
+      "subTopic": "Cümle Türleri",
+      "text": "\"Sanatçı, eserinde doğayı betimlerken okurun hayal gücüne de geniş bir alan bırakıyor.\" cümlesi yapıca nasıl bir cümledir?",
+      "imageUrl": null,
+      "options": [
+        "Basit cümle",
+        "Girişik birleşik cümle",
+        "Sıralı cümle",
+        "Bağlı cümle"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-H-002",
+      "subTopic": "Fiilde Çatı",
+      "text": "Aşağıdaki cümlelerin hangisinde yüklem edilgen çatılı bir fiildir?",
+      "imageUrl": null,
+      "options": [
+        "Çocuklar bahçede neşeyle koşuşturdu.",
+        "Sınav sonuçları dün akşam açıklandı.",
+        "Annem lezzetli bir kek yaptı.",
+        "Kuşlar sıcak ülkelere göç etti."
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-H-003",
+      "subTopic": "Yazım Kuralları - Birleşik Sözcükler",
+      "text": "Aşağıdaki birleşik sözcüklerden hangisinin yazımı yanlıştır?",
+      "imageUrl": null,
+      "options": [
+        "Başvuru",
+        "Öngörü",
+        "Farketmek",
+        "Vazgeçmek"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-H-004",
+      "subTopic": "Karma Dil Bilgisi",
+      "text": "\"Karanlık sokaklardan geçerken adımlarını hızlandırdı.\" cümlesinde aşağıdakilerden hangisi yoktur?",
+      "imageUrl": null,
+      "options": [
+        "Niteleme sıfatı",
+        "Zarf-fiil",
+        "Belirtili isim tamlaması",
+        "Belirtme durum eki"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-H-005",
+      "subTopic": "Noktalama İşaretleri",
+      "text": "Cümle içinde virgüllerle ayrılmış tür veya takımları birbirinden ayırmak için hangi noktalama işareti kullanılır?",
+      "imageUrl": null,
+      "options": [
+        "İki nokta",
+        "Noktalı virgül",
+        "Kısa çizgi",
+        "Üç nokta"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-H-006",
+      "subTopic": "Sözcük Türleri - Zamirler",
+      "text": "\"Bunu sana kim söylediyse doğruyu anlatmamış.\" cümlesinde kaç tane zamir (adıl) vardır?",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

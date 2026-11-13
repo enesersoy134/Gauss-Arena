@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "fizik",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-FIZ-H-001",
+      "subTopic": "Optik - Kırılma",
+      "text": "Kırıcılık indisi $$n_1 = 2$$ olan ortamdan $$n_2 = 1$$ olan ortama geçen ışın için sınır açısı kaç derecedir?",
+      "imageUrl": null,
+      "options": [
+        "30",
+        "37",
+        "45",
+        "60"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-FIZ-H-002",
+      "subTopic": "Sürtünmeli Hareket",
+      "text": "Yatay düzlemde $$5\\text{ kg}$$ kütleli cisme $$30\\text{ N}$$ yatay kuvvet uygulanıyor. Sürtünme katsayısı $$k = 0.2$$ olduğuna göre cismin ivmesi kaç $$\\text{m/s}^2$$'dir? ($$g = 10\\text{ m/s}^2$$)",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-H-003",
+      "subTopic": "Isı Alışverişi",
+      "text": "$$20^\\circ\\text{C}$$'deki $$100\\text{ g}$$ su ile $$80^\\circ\\text{C}$$'deki $$300\\text{ g}$$ su karıştırılırsa denge sıcaklığı kaç $$^\\circ\\text{C}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "50",
+        "60",
+        "65",
+        "70"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-H-004",
+      "subTopic": "Elektriksel Güç",
+      "text": "İç direnci önemsiz $$24\\text{ V}$$ üretece bağlı $$8\\,\\Omega$$ dirençte $$10\\text{ saniye}$$de açığa çıkan ısı enerjisi kaç $$\\text{Joule}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "360",
+        "480",
+        "720",
+        "960"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-H-005",
+      "subTopic": "Küresel Aynalar",
+      "text": "Odak uzaklığı $$f = 12\\text{ cm}$$ olan çukur aynanın önüne $$24\\text{ cm}$$ uzağa konulan cismin görüntüsü aynadan kaç $$\\text{cm}$$ uzakta oluşur?",
+      "imageUrl": null,
+      "options": [
+        "12",
+        "18",
+        "24",
+        "36"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-H-006",
+      "subTopic": "Basınç ve Kaldırma",
+      "text": "Özkütlesi $$0.6\\text{ g/cm}^3$$ olan katı bir cisim su ($$d = 1\\text{ g/cm}^3$$) içinde yüzerken hacminin yüzde kaçı suyun dışında kalır?",
+      "imageUrl": null,
+      "options": [
+        "20",
+        "30",
+        "40",
+        "60"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

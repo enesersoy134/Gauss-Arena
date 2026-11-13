@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "turkce",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-TUR-M-001",
+      "subTopic": "Geçiş Dönemi Eserleri",
+      "text": "Yusuf Has Hacib tarafından $$11.$$ yüzyılda kaleme alınan ve Türk edebiyatının ilk siyasetnamesi ile ilk mesnevisi kabul edilen eser hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Divanü Lügati't-Türk",
+        "Kutadgu Bilig",
+        "Atabetü'l-Hakayık",
+        "Divan-ı Hikmet"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-M-002",
+      "subTopic": "Halk Edebiyatı Temsilcileri",
+      "text": "\"Uzun ince bir yoldayım\" dizeleriyle tanınan, Cumhuriyet dönemi âşık tarzı halk şiirinin en önemli temsilcisi kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Karacaoğlan",
+        "Dadaloğlu",
+        "Âşık Veysel Şatıroğlu",
+        "Köroğlu"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-TUR-M-003",
+      "subTopic": "Servet-i Fünun Romanı",
+      "text": "Türk edebiyatında Batılı anlamda ilk modern roman sayılan \"Mai ve Siyah\" ile \"Aşk-ı Memnu\" eserlerinin yazarı kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Mehmet Rauf",
+        "Halit Ziya Uşaklıgil",
+        "Tevfik Fikret",
+        "Cenap Şahabettin"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-M-004",
+      "subTopic": "Cumhuriyet Dönemi Şiiri",
+      "text": "Orhan Veli Kanık, Melih Cevdet Anday ve Oktay Rifat'ın ölçü ve uyağı reddederek kurdukları şiir topluluğu hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Beş Hececiler",
+        "Garip (I. Yeni)",
+        "İkinci Yeni",
+        "Hisarcılar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-M-005",
+      "subTopic": "Edebi Akımlar",
+      "text": "Gözlem ve belgeye büyük önem veren, \"roman, uzun bir yol boyunca gezdirilen aynadır\" anlayışını benimseyen edebi akım hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Romantizm",
+        "Realizm",
+        "Sembolizm",
+        "Sürrealizm"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-M-006",
+      "subTopic": "Geleneksel Türk Tiyatrosu",
+      "text": "Kavuklu ve Pişekâr adlı başkahramanların yer aldığı, etrafı izleyicilerle çevrili bir alanda doğaçlama oynanan geleneksel tiyatro türü hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Karagöz",
+        "Orta Oyunu",
+        "Meddah",
+        "Köy Seyirlik Oyunu"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "kimya",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-KIM-E-001",
+      "subTopic": "Modern Atom Teorisi",
+      "text": "Baş kuantum sayısı $$n = 3$$ olan enerji düzeyinde bulunan $$p$$ alt kabuğunda en fazla kaç elektron bulunabilir?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "6",
+        "10",
+        "14"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-E-002",
+      "subTopic": "Gazlar",
+      "text": "Sabit sıcaklıkta ideal bir gazın hacmi yarıya indirilirse basıncı nasıl değişir?",
+      "imageUrl": null,
+      "options": [
+        "Yarıya iner",
+        "İki katına çıkar",
+        "Dört katına çıkar",
+        "Değişmez"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-E-003",
+      "subTopic": "Kimyasal Tepkimelerde Enerji",
+      "text": "Isı alarak gerçekleşen (endotermik) tepkimeler için entalpi değişimi $$\\Delta H$$'nin işareti nedir?",
+      "imageUrl": null,
+      "options": [
+        "$$\\Delta H > 0$$",
+        "$$\\Delta H < 0$$",
+        "$$\\Delta H = 0$$",
+        "Belirlenemez"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-KIM-E-004",
+      "subTopic": "Tepkime Hızı",
+      "text": "Bir kimyasal tepkimeye pozitif katalizör eklendiğinde aşağıdakilerden hangisi azalır?",
+      "imageUrl": null,
+      "options": [
+        "Tepkime entalpisi",
+        "Aktifleşme enerjisi",
+        "Ürün miktarı",
+        "Denge sabiti"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-E-005",
+      "subTopic": "Organik Kimyaya Giriş",
+      "text": "Doymuş hidrokarbonlar (alkanlar) sınıfının genel formülü aşağıdakilerden hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "$$\text{C}_n\text{H}_{2n-2}$$",
+        "$$\text{C}_n\text{H}_{2n}$$",
+        "$$\text{C}_n\text{H}_{2n+2}$$",
+        "$$\text{C}_n\text{H}_n$$"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-E-006",
+      "subTopic": "Elektrokimya",
+      "text": "Galvanik bir hücrede yükseltgenme yarı tepkimesi hangi elektrotta gerçekleşir?",
+      "imageUrl": null,
+      "options": [
+        "Katot",
+        "Anot",
+        "Tuz köprüsü",
+        "Dış devre"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "fizik",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-FIZ-H-001",
+      "subTopic": "Açısal Momentum",
+      "text": "Eylemsizlik momenti $$I = 4\\text{ kg}\\cdot\\text{m}^2$$ olan bir disk $$\\omega = 5\\text{ rad/s}$$ açısal hızla dönerken açısal momentumu kaç $$\\text{kg}\\cdot\\text{m}^2/\\text{s}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "15",
+        "20",
+        "25",
+        "40"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-H-002",
+      "subTopic": "Manyetik Kuvvet",
+      "text": "Büyüklüğü $$B = 4\\text{ T}$$ olan düzgün manyetik alana dik olarak yerleştirilen $$0.5\\text{ m}$$ uzunluğundaki telden $$3\\text{ A}$$ akım geçtiğinde tele etki eden manyetik kuvvet kaç $$\\text{N}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "6",
+        "9",
+        "12"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-H-003",
+      "subTopic": "İndüksiyon EMK",
+      "text": "Bir çerçeveden geçen manyetik akı $$0.2\\text{ saniye}$$ içinde $$0.8\\text{ Weber}$$ değiştiğine göre oluşan ortalama indüksiyon elektromotor kuvveti kaç $$\\text{Volt}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-H-004",
+      "subTopic": "Kepler ve Kütle Çekim",
+      "text": "Yeryüzünde ağırlığı $$360\\text{ N}$$ olan bir cismin, Dünya merkezinden $$3R$$ uzaklıktaki ($$R$$: Dünya yarıçapı) ağırlığı kaç $$\\text{N}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "30",
+        "40",
+        "60",
+        "90"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-H-005",
+      "subTopic": "De Broglie Dalga Boyu",
+      "text": "Çizgisel momentumu $$p$$ olan bir parçacığın hızı iki katına çıkarılırsa De Broglie dalga boyu nasıl değişir?",
+      "imageUrl": null,
+      "options": [
+        "İki katına çıkar",
+        "Yarıya iner",
+        "Dört katına çıkar",
+        "Değişmez"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-H-006",
+      "subTopic": "Eğik Düzlem Dinamiği",
+      "text": "Eğik açısı $$37^\\circ$$ olan sürtünmesiz eğik düzlem üzerindeki $$5\\text{ kg}$$ kütleli cismin ivmesi kaç $$\\text{m/s}^2$$ olur? ($$\\sin 37^\\circ = 0.6, g = 10\\text{ m/s}^2$$)",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

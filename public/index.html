@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İşler Kitabevi | 1v1 Soru Düellosu & Momentum Eşleştirme</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo">İ</div>
+      <div>
+        <h1>İşler Akademi 1v1 Düello</h1>
+        <p id="windowBadge" class="window-badge">Pencere 1 • Canlı Test İstemcisi</p>
+      </div>
+    </div>
+
+    <div class="player-selector-bar">
+      <label for="activePlayerSelect">Aktif Oyuncu:</label>
+      <select id="activePlayerSelect"></select>
+      <div id="activePlayerStats" class="player-stats-pills"></div>
+    </div>
+
+    <div class="topbar-actions">
+      <button id="openSecondWindowBtn" class="btn btn-accent" title="Bilgisayarda 2. farklı pencereyi açarak eşleşmeyi canlı test edin">
+        🗗 2. Test Penceresini Aç
+      </button>
+      <button id="resetDemoBtn" class="btn btn-outline" title="Tüm verileri ve soğuma sürelerini sıfırla">
+        ↺ Demoyu Sıfırla
+      </button>
+    </div>
+  </header>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" data-tab="duelTab">⚔️ 1v1 Düello & Momentum Eşleştirme</button>
+    <button class="tab-btn" data-tab="economyTab">🪙 Haftalık Coin & İşler Sadakat Puanı</button>
+    <button class="tab-btn" data-tab="tournamentTab">🏆 Haftalık Turnuvalar</button>
+  </nav>
+
+  <main class="container">
+    <!-- TAB 1: DUEL & MATCHMAKING -->
+    <section id="duelTab" class="tab-section active">
+      <div class="grid-two-col">
+        <!-- Left Column: Matchmaking Controls + Active Duel Arena -->
+        <div class="col-main">
+          <!-- Matchmaking Setup Card -->
+          <div id="matchmakingCard" class="card">
+            <div class="card-header">
+              <h2>Eşleştirme Kuyruğuna Gir</h2>
+              <span id="questionBankBadge" class="badge badge-info">144 Soru Hazır</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Oyun Modu</label>
+                <div class="segmented-control">
+                  <button type="button" class="seg-btn active" data-mode="ranked">Standart Rekabetçi</button>
+                  <button type="button" class="seg-btn" data-mode="tournament">Haftalık Turnuva Maçı</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Sınav Düzeyi (`examType`)</label>
+                <div class="segmented-control">
+                  <button type="button" class="seg-btn active" data-exam="TYT">TYT</button>
+                  <button type="button" class="seg-btn" data-exam="AYT">AYT</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="tournamentSelectRow" class="form-group hidden">
+              <label for="queueTournamentSelect">Turnuva Seçin</label>
+              <select id="queueTournamentSelect"></select>
+            </div>
+
+            <div class="form-group">
+              <label>Ders Seçimi (Birden Fazla Seçilebilir — Ortak Ders Kesişimiyle Eşleşir)</label>
+              <div class="subject-chips">
+                <label class="chip-checkbox"><input type="checkbox" value="matematik" checked /> <span>Matematik</span></label>
+                <label class="chip-checkbox"><input type="checkbox" value="fizik" checked /> <span>Fizik</span></label>
+                <label class="chip-checkbox"><input type="checkbox" value="kimya" /> <span>Kimya</span></label>
+                <label class="chip-checkbox"><input type="checkbox" value="turkce" /> <span>Türkçe / Edebiyat</span></label>
+              </div>
+            </div>
+
+            <div id="activeFormulaPreview" class="formula-box"></div>
+
+            <div id="queueErrorBox" class="alert alert-error hidden"></div>
+
+            <div class="queue-actions">
+              <button id="joinQueueBtn" class="btn btn-primary btn-lg">🚀 Eşleştir (Kuyruğa Gir)</button>
+              <button id="leaveQueueBtn" class="btn btn-danger btn-lg hidden">✖ Kuyruktan Çık</button>
+              <button id="fastForwardQueueBtn" class="btn btn-secondary" title="Kuyrukta geçen süreyi +5 saniye ileri sar (Genişleyen pencere ve 30sn Ghost testi için)">
+                ⏩ Kuyruk Süresini +5sn Hızlandır
+              </button>
+            </div>
+          </div>
+
+          <!-- Active 5-Question Duel Arena -->
+          <div id="duelArenaCard" class="card duel-card hidden">
+            <div class="duel-scoreboard">
+              <div class="duel-player" id="duelPlayerABox"></div>
+              <div class="duel-vs">
+                <div class="round-pill" id="duelRoundPill">SORU 1 / 5</div>
+                <div class="timer-circle" id="duelTimerDisplay">60s</div>
+                <div class="duel-meta-sub" id="duelDifficultyDist"></div>
+              </div>
+              <div class="duel-player" id="duelPlayerBBox"></div>
+            </div>
+
+            <div class="timer-bar-track">
+              <div id="duelTimerBar" class="timer-bar-fill"></div>
+            </div>
+
+            <div class="canvas-wrapper">
+              <canvas id="questionCanvas"></canvas>
+            </div>
+
+            <div id="optionsGrid" class="options-grid"></div>
+
+            <div id="roundResultBanner" class="round-banner hidden"></div>
+          </div>
+
+          <!-- Post-Match Result Summary Card -->
+          <div id="matchSummaryCard" class="card hidden"></div>
+        </div>
+
+        <!-- Right Column: Live Momentum & Expanding Queue Window Inspector -->
+        <div class="col-side">
+          <div class="card">
+            <div class="card-header">
+              <h2>🔍 Canlı Kuyruk & Momentum Müfettişi</h2>
+              <span class="badge badge-purple">Effective MMR</span>
+            </div>
+            <p class="muted-text">
+              Kuyruktaki oyuncuların gerçek ELO ($R$), Seri ($S$), Efektif MMR ($MMR_{eff}$) ve genişleyen zaman penceresi (0-5sn, 5-15sn, 15-30sn, 30sn Ghost) durumlarını canlı izleyin.
+            </p>
+
+            <div id="queueListContainer" class="queue-list"></div>
+
+            <h3 class="sub-heading">İkili Eşleşme Uygunluk Analizi</h3>
+            <div id="pairDiagnosticsContainer" class="diagnostics-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>🧪 Hızlı Senaryo & Oyuncu Düzenleyici</h2>
+            </div>
+            <p class="muted-text">Seçili oyuncunun ELO ve Seri ($S$) değerlerini anında değiştirerek Smurf veya Anti-Farming korumalarını test edin:</p>
+            <div class="quick-edit-row">
+              <div>
+                <label>Gerçek ELO ($R$)</label>
+                <input type="number" id="quickEloInput" step="10" min="800" max="2400" value="1200" />
+              </div>
+              <div>
+                <label>Seri Sayacı ($S$)</label>
+                <input type="number" id="quickStreakInput" step="1" min="-10" max="15" value="5" />
+              </div>
+              <button id="applyQuickEditBtn" class="btn btn-secondary">Uygula</button>
+            </div>
+            <div class="preset-buttons">
+              <button class="btn btn-xs" data-preset="smurf">🔥 Smurf (1200 ELO, S=+5 → 1331 MMR)</button>
+              <button class="btn btn-xs" data-preset="high">👑 Yüksek ELO (1620 ELO, S=+2)</button>
+              <button class="btn btn-xs" data-preset="cold">❄️ Soğuk Seri (1300 ELO, S=-4 → 1220 MMR)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: ECONOMY & ISLER LOYALTY POINTS -->
+    <section id="economyTab" class="tab-section">
+      <div class="grid-two-col">
+        <div class="card">
+          <div class="card-header">
+            <h2>📅 Haftalık ELO Ödül Dilimleri & Aktiflik Şartı</h2>
+            <span class="badge badge-info">Min. 15 Maç Kuralı</span>
+          </div>
+          <p class="muted-text">
+            Yüksek ELO'ya çıkıp hiç maç yapmadan bedava Coin toplanmasını (ELO park etme) önlemek için haftalık ödül en az <strong>15 maç tamamlama</strong> şartına bağlıdır.
+          </p>
+
+          <div id="weeklyActivityBox" class="activity-box"></div>
+
+          <div class="economy-actions">
+            <button id="claimWeeklyRewardBtn" class="btn btn-primary">🎁 Haftalık ELO Coin Ödülünü Al</button>
+            <button id="simulate15MatchesBtn" class="btn btn-secondary">⚡ Demo: Haftalık Maç Sayısını 15/15 Yap</button>
+          </div>
+          <div id="weeklyClaimFeedback" class="feedback-msg"></div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Lig Dilimi</th>
+                <th>ELO Aralığı</th>
+                <th>Haftalık Ödül</th>
+              </tr>
+            </thead>
+            <tbody id="bracketsTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>📚 Coin → İşler Sadakat Puanı Dönüştürücü</h2>
+            <span class="badge badge-success">10 Coin = 1 İşler Puanı (1 TL İndirim)</span>
+          </div>
+          <p class="muted-text">
+            Kazandığınız Coin'leri İşler Sadakat Puanına dönüştürerek İşler Kitabevi'nden kitap alışverişlerinde anında indirim kuponu oluşturabilirsiniz.
+          </p>
+
+          <div id="walletSummaryBox" class="wallet-grid"></div>
+
+          <div class="convert-form">
+            <label for="coinsToConvertInput">Dönüştürülecek Coin Miktarı (10'un katları):</label>
+            <div class="convert-input-row">
+              <input type="number" id="coinsToConvertInput" step="10" min="10" value="100" />
+              <button id="convertCoinsBtn" class="btn btn-accent">💳 İşler Puanına Dönüştür</button>
+            </div>
+          </div>
+          <div id="convertFeedback" class="feedback-msg"></div>
+
+          <h3 class="sub-heading">Oluşturulan Kitap İndirim Kuponlarım</h3>
+          <div id="couponsList" class="coupons-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: WEEKLY TOURNAMENTS -->
+    <section id="tournamentTab" class="tab-section">
+      <div class="card">
+        <div class="card-header">
+          <h2>🏆 Haftalık Turnuvalar & Sıralama Ödülleri</h2>
+          <span class="badge badge-purple">Turnuva İçi Momentum Eşleşmesi</span>
+        </div>
+        <p class="muted-text">
+          Turnuva katılımcıları kendi aralarında eşleşir. Her turnuva galibiyeti <strong>+30 Turnuva Puanı (+25 Coin)</strong>, beraberlik <strong>+15 Puan</strong>, katılım <strong>+5 Puan</strong> kazandırır.
+        </p>
+
+        <div id="tournamentsContainer" class="tournaments-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/canvasQuestion.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

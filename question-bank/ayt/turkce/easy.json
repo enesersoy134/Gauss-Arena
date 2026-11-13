@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "turkce",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-TUR-E-001",
+      "subTopic": "Söz Sanatları",
+      "text": "\"Güneş her sabah bize gülümseyerek doğardı.\" dizelerinde kullanılan söz sanatı hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Teşbih (Benzetme)",
+        "Teşhis (Kişileştirme)",
+        "Mübalağa (Abartma)",
+        "Tezat (Karşıtlık)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-E-002",
+      "subTopic": "Şiir Bilgisi",
+      "text": "Dörtlük nazım birimiyle ve $$11$$'li hece ölçüsüyle söylenen, aşk ve doğa temalı halk şiiri nazım biçimi hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Koşma",
+        "Semai",
+        "Varsağı",
+        "Destan"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-TUR-E-003",
+      "subTopic": "İslamiyet Öncesi Türk Edebiyatı",
+      "text": "İslamiyet öncesi Türk edebiyatında ölen bir kişinin arkasından duyulan acıyı anlatmak için söylenen şiirlere ne ad verilir?",
+      "imageUrl": null,
+      "options": [
+        "Koşuk",
+        "Sav",
+        "Sagu",
+        "Destan"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-TUR-E-004",
+      "subTopic": "Divan Edebiyatı",
+      "text": "Divan edebiyatında $$a-a, b-a, c-a...$$ uyak düzeniyle yazılan, $$5-15$$ beyitten oluşan ve aşk, şarap, güzellik konularını işleyen nazım biçimi hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Mesnevi",
+        "Gazel",
+        "Kaside",
+        "Rubai"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-E-005",
+      "subTopic": "Tanzimat Edebiyatı",
+      "text": "Türk edebiyatında ilk yerli roman kabul edilen \"Taaşşuk-ı Talat ve Fitnat\" adlı eserin yazarı kimdir?",
+      "imageUrl": null,
+      "options": [
+        "Namık Kemal",
+        "Şemsettin Sami",
+        "Ahmet Mithat Efendi",
+        "Recaizade Mahmut Ekrem"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-E-006",
+      "subTopic": "Millî Edebiyat",
+      "text": "Ömer Seyfettin, Ali Canip Yöntem ve Ziya Gökalp'in Selanik'te çıkardıkları ve \"Yeni Lisan\" makalesinin yayımlandığı dergi hangisidir?",
+      "imageUrl": null,
+      "options": [
+        "Servet-i Fünun",
+        "Genç Kalemler",
+        "Dergâh",
+        "Yedi Meşale"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

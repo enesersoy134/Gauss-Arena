@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "fizik",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-FIZ-E-001",
+      "subTopic": "Fizik Bilimine Giriş",
+      "text": "Aşağıdakilerden hangisi SI birim sisteminde temel bir büyüklüktür?",
+      "imageUrl": null,
+      "options": [
+        "Kuvvet",
+        "Hız",
+        "Kütle",
+        "Enerji"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-E-002",
+      "subTopic": "Madde ve Özellikleri",
+      "text": "Kütlesi $$120\\text{ g}$$, hacmi $$40\\text{ cm}^3$$ olan türdeş bir maddenin özkütlesi kaç $$\\text{g/cm}^3$$'tür?",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-FIZ-E-003",
+      "subTopic": "Isı ve Sıcaklık",
+      "text": "Saf suyun deniz seviyesinde donma sıcaklığı Kelvin ölçeğinde kaç $$\\text{K}$$ değerine karşılık gelir?",
+      "imageUrl": null,
+      "options": [
+        "0",
+        "100",
+        "273",
+        "373"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-E-004",
+      "subTopic": "Kuvvet ve Hareket",
+      "text": "Sürtünmesiz yatay düzlemde duran $$4\\text{ kg}$$ kütleli cisme $$20\\text{ N}$$ yatay kuvvet uygulanırsa ivmesi kaç $$\\text{m/s}^2$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-FIZ-E-005",
+      "subTopic": "İş Güç Enerji",
+      "text": "Yatay sürtünmesiz yolda $$15\\text{ N}$$ kuvvetle $$6\\text{ m}$$ çekilen cisim üzerinde yapılan iş kaç $$\\text{Joule}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "60",
+        "75",
+        "90",
+        "105"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-E-006",
+      "subTopic": "Elektrik Akımı",
+      "text": "Direnci $$6\\,\\Omega$$ olan bir iletkenden $$3\\text{ A}$$ akım geçtiğine göre uçları arasındaki potansiyel fark kaç $$\\text{Volt}$$ olur?",
+      "imageUrl": null,
+      "options": [
+        "9",
+        "12",
+        "18",
+        "24"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}
