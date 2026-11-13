@@ -808,15 +808,6 @@ export default function App() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-                  {isCompetitiveUnlocked && (
-                    <button
-                      onClick={handleResetLockDemo}
-                      className="px-3 py-2 rounded-xl border border-white/10 bg-[#0F0510] text-[11px] font-mono text-[#B5CBC8] hover:text-amber-300 hover:border-amber-500/40 transition-all"
-                      title="Jüri sunumu için kilidi başlangıç durumuna sıfırlar"
-                    >
-                      Kilidi Sıfırla
-                    </button>
-                  )}
                   <button
                     onClick={() => setShowMiniGameScreen(true)}
                     className={`btn-primary !py-2.5 !px-4 text-xs font-bold flex items-center gap-1.5 whitespace-nowrap ${
