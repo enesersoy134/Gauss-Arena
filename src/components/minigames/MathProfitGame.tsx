@@ -540,6 +540,7 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
                   ? 'border-emerald-500/50 bg-emerald-500/10'
                   : 'border-white/10 bg-black/40'
               }`}
+              title={`${tv.leverNumber}. İbre (${tv.title}): ${tv.funcType}`}
             >
               <span className="font-bold" style={{ color: tv.color }}>
                 {tv.formulaDisplay}
@@ -697,7 +698,7 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
         <div className="lg:col-span-6 bg-[#0F0510] border border-white/10 rounded-2xl p-3.5 flex flex-col justify-between">
           <div className="flex items-center justify-between text-xs font-mono mb-1">
             <span className="font-bold text-white">
-              🎯 2. Seçili Kolun Eğrisi:{' '}
+              🎯 2. {activeLeverObj.leverNumber}. İbre ({activeLeverObj.title}):{' '}
               <span style={{ color: activeLeverObj.color }}>{activeLeverObj.funcType}</span>
             </span>
             <span className="text-emerald-300 font-bold">
@@ -797,6 +798,19 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
             : 'bg-gradient-to-b from-[#1E1022] via-[#150A16] to-[#0F0510] border-orange-500/35'
         }`}
       >
+        {/* 5 İbrenin Genel Açıklama Başlığı */}
+        <div className="flex items-center justify-between pb-2 mb-3 border-b border-white/10 flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-orange-400 animate-pulse" />
+            <h4 className="font-poppins font-bold text-xs sm:text-sm text-white">
+              5 Fabrika Kontrol İbresi (Parametre Fonksiyonları)
+            </h4>
+          </div>
+          <span className="text-[11px] font-mono text-[#B5CBC8]">
+            Her ibre bir fonksiyonu temsil eder • İbreyi çevirmek için tıkla
+          </span>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
           {termValues.map((tv) => {
             const angleDeg = ANGLES_BY_X[tv.currentX];
@@ -818,7 +832,7 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
               <div
                 key={tv.id}
                 onClick={() => setActiveHintId(tv.id)}
-                className={`rounded-2xl border-2 p-2.5 flex flex-col items-center justify-between gap-1.5 cursor-pointer transition-all ${
+                className={`rounded-2xl border-2 p-2.5 flex flex-col items-center justify-between gap-2 cursor-pointer transition-all ${
                   tv.isOptimal
                     ? 'border-emerald-400 bg-emerald-500/15 shadow-lg shadow-emerald-500/10'
                     : activeHintId === tv.id
@@ -826,7 +840,20 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
                     : 'border-white/15 bg-[#0F0510]/90 hover:border-white/30'
                 }`}
               >
-                {/* Üst: Değişken ve Formül */}
+                {/* İbrenin Neyi İfade Ettiğini Açıklayan Başlık */}
+                <div className="w-full text-center pb-1.5 border-b border-white/10">
+                  <span className="text-[9px] font-mono font-bold uppercase text-[#B5CBC8] block tracking-wider">
+                    {tv.leverNumber}. İbre
+                  </span>
+                  <div className="font-poppins font-black text-xs text-white truncate mt-0.5" title={tv.title}>
+                    {tv.title}
+                  </div>
+                  <div className="text-[10px] font-mono font-semibold truncate mt-0.5" style={{ color: tv.color }}>
+                    {tv.funcType}
+                  </div>
+                </div>
+
+                {/* Değişken Durumu ve Katkı Değeri */}
                 <div className="text-center w-full">
                   <div className="flex items-center justify-between text-[10px] font-mono px-0.5">
                     <span className="font-bold text-white bg-white/10 px-1.5 py-0.2 rounded">
