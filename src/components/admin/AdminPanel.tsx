@@ -183,16 +183,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
               </div>
             </div>
 
-            <span
-              className={`flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full border shrink-0 ${
-                isConnected
-                  ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300'
-                  : 'bg-red-500/15 border-red-500/40 text-red-300'
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${isConnected ? 'bg-emerald-400 animate-ping' : 'bg-red-400'}`} />
-              <span>{isConnected ? 'Canlı Socket' : 'Bağlantı Kesildi'}</span>
-            </span>
+            {!isConnected && (
+              <span className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full border shrink-0 bg-red-500/15 border-red-500/40 text-red-300">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-400" />
+                <span>Bağlantı Kesildi</span>
+              </span>
+            )}
           </div>
 
           {/* Sağ: Hızlı Demo Aksiyonları (Yatay kaydırılabilir kompakt tek satır) */}
