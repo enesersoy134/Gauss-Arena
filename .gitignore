@@ -1,0 +1,10 @@
+# Şahsi çalışma ve not klasörü
+sahsi/
+
+# Bağımlılıklar ve Sistem Dosyaları
+node_modules/
+.env
+.env.local
+.DS_Store
+dist/
+build/
