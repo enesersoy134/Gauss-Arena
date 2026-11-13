@@ -996,7 +996,7 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
               </span>
             ) : (
               <span>
-                🔍 <strong className="text-white">{activeLeverObj.varName}:</strong>{' '}
+                🔍 <strong className="text-white">{activeLeverObj.leverNumber}. İbre ({activeLeverObj.title} - {activeLeverObj.varName}):</strong>{' '}
                 {activeLeverObj.behaviorTip}
               </span>
             )}
