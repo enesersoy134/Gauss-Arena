@@ -26,6 +26,30 @@ test('Server boots, serves /api/state with seeded players and question bank, and
     });
     const claimJson = await claimRes.json();
     assert.equal(claimJson.ok, true);
+
+    // POST /api/players/random testi
+    const randRes = await fetch(`${baseUrl}/api/players/random`, { method: 'POST' });
+    assert.equal(randRes.status, 200);
+    const randJson = await randRes.json();
+    assert.equal(randJson.ok, true);
+    assert.ok(randJson.player.id.startsWith('p_rand_'));
+    assert.ok(randJson.player.elo >= 1150 && randJson.player.elo <= 1350);
+    assert.equal(randJson.player.coins, 250);
+    assert.equal(randJson.player.islerPoints, 50);
+    assert.ok(Array.isArray(randJson.player.revisionDetails));
+    assert.ok(randJson.player.revisionDetails.length >= 1);
+
+    // POST /api/players/complete-revision-practice testi
+    const revPracticeRes = await fetch(`${baseUrl}/api/players/complete-revision-practice`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ playerId: randJson.player.id }),
+    });
+    const revPracticeJson = await revPracticeRes.json();
+    assert.equal(revPracticeJson.ok, true);
+    assert.equal(revPracticeJson.coinsAwarded, 30);
+    assert.equal(revPracticeJson.newCoins, 280); // 250 + 30
+    assert.equal(revPracticeJson.revisionTopics.length, 0);
   } finally {
     await close();
   }

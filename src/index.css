@@ -178,3 +178,82 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* 4.7 Hackathon Arena Özel Animasyonları */
+
+/* Son 5 Saniye Kritik Kırmızı Nabız */
+@keyframes vignettePulse {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.008);
+  }
+}
+.animate-vignette-pulse {
+  animation: vignettePulse 0.9s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Yanlış Cevap Sallantı (Screen / Card Shake) */
+@keyframes shakeScreen {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px) rotate(-0.5deg); }
+  40% { transform: translateX(6px) rotate(0.5deg); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.animate-shake {
+  animation: shakeScreen 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Doğru Cevap Şok Dalgası (Success Pop) */
+@keyframes correctPop {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.animate-correct-pop {
+  animation: correctPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* Alevli Seri (Streak on Fire) Ateş Parıltısı */
+@keyframes flameAura {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.6), 0 0 30px rgba(241, 78, 19, 0.4);
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.8));
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.9), 0 0 45px rgba(239, 68, 68, 0.6);
+    filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.9));
+  }
+}
+.animate-flame-aura {
+  animation: flameAura 1.2s ease-in-out infinite;
+}
+
+/* Podyum & Zafer Dönen Işık Hüzmeleri (Sunburst Rays) */
+@keyframes rotateSunburst {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-sunburst {
+  animation: rotateSunburst 20s linear infinite;
+}
+
+/* Kart Geçiş 3D Derinlik Efekti */
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.animate-card-slide {
+  animation: cardSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+

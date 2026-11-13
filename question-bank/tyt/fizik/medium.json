@@ -3,7 +3,7 @@
     "examType": "TYT",
     "subject": "fizik",
     "difficulty": "MEDIUM",
-    "defaultDurationMs": 18000
+    "defaultDurationMs": 20000
   },
   "questions": [
     {

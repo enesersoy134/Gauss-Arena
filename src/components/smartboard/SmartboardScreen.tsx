@@ -5,6 +5,8 @@ import { QuestionRenderer } from '../questions/QuestionRenderer';
 import { AnswerResult } from '../questions/questionProps';
 import { calculateQuestionScore, evaluateNumpadWinner } from '../../utils/scoring';
 import KahootHostView from './KahootHostView';
+import { soundEngine } from '../../utils/soundEngine';
+import { ConfettiCanvas } from '../effects/ConfettiCanvas';
 import {
   Swords,
   Flame,
@@ -57,26 +59,24 @@ interface RoundHistoryItem {
   };
 }
 
-// Web Audio API ses efektleri (opsiyonel bildirim sesleri)
+// Web Audio API ses efektleri (soundEngine entegrasyonu)
 function playTone(freq: number, type: OscillatorType, duration: number, isMuted: boolean) {
-  if (isMuted || typeof window === 'undefined') return;
+  if (isMuted) return;
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContextClass) return;
-    const ctx = new AudioContextClass();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.09, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
-  } catch {
-    // Ses desteği olmayan ortamlarda sessizce geç
-  }
+    if (freq >= 750) {
+      soundEngine.playCorrect();
+    } else if (freq <= 300) {
+      soundEngine.playWrong();
+    } else if (freq === 440 || freq === 520) {
+      soundEngine.playTick(true);
+    } else if (freq === 523) {
+      soundEngine.playLock();
+    } else if (freq === 587) {
+      soundEngine.playMatchFound();
+    } else {
+      soundEngine.playClick();
+    }
+  } catch {}
 }
 
 /**
@@ -85,22 +85,48 @@ function playTone(freq: number, type: OscillatorType, duration: number, isMuted:
 function pickSmartboardQuestions(
   pool: Question[],
   options: {
-    examType: 'TYT' | 'AYT' | 'Karma';
+    examType: 'LGS' | 'TYT' | 'AYT' | 'Karma';
+    difficulty: 'Adaptif' | 'Kolay' | 'Orta' | 'Zor';
     subject: string;
     questionCount: number;
   }
 ): Question[] {
   let candidates = [...pool];
 
-  // 1. Sınav Türü
+  // 1. Sınav Türü Filtresi
   if (options.examType !== 'Karma') {
-    const byExam = candidates.filter((q) => q.examType === options.examType);
+    const byExam = candidates.filter(
+      (q) => (q.examType || '').toUpperCase() === options.examType.toUpperCase()
+    );
     if (byExam.length >= options.questionCount) {
       candidates = byExam;
+    } else if (byExam.length > 0) {
+      const rest = candidates.filter(
+        (q) => (q.examType || '').toUpperCase() !== options.examType.toUpperCase()
+      );
+      candidates = [...byExam, ...rest];
     }
   }
 
-  // 2. Ders Filtresi
+  // 2. Zorluk Seviyesi Filtresi
+  if (options.difficulty !== 'Adaptif') {
+    const diffTarget = options.difficulty.toLowerCase();
+    const byDiff = candidates.filter((q) => {
+      const qDiff = String(q.difficulty || '').toLowerCase();
+      if (diffTarget === 'kolay') return qDiff === 'kolay' || qDiff === 'easy' || qDiff === '1';
+      if (diffTarget === 'orta') return qDiff === 'orta' || qDiff === 'medium' || qDiff === '2';
+      if (diffTarget === 'zor') return qDiff === 'zor' || qDiff === 'hard' || qDiff === '3';
+      return true;
+    });
+    if (byDiff.length >= options.questionCount) {
+      candidates = byDiff;
+    } else if (byDiff.length > 0) {
+      const rest = candidates.filter((q) => !byDiff.includes(q));
+      candidates = [...byDiff, ...rest];
+    }
+  }
+
+  // 3. Ders Filtresi
   if (options.subject !== 'all') {
     const bySubject = candidates.filter(
       (q) => q.subject.toLowerCase() === options.subject.toLowerCase()
@@ -115,7 +141,7 @@ function pickSmartboardQuestions(
     }
   }
 
-  // 3. Karıştır ve farklı soru tiplerini sıralamaya çalış
+  // 4. Karıştır ve farklı soru tiplerini sıralamaya çalış
   const shuffled = candidates.sort(() => Math.random() - 0.5);
   const selected: Question[] = [];
 
@@ -150,16 +176,41 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
   // Tahta Çalışma Modu (2 Takım Düello vs Canlı Sınıf QR Kahoot Modu)
   const [boardMode, setBoardMode] = useState<'duel' | 'kahoot'>('duel');
 
-  // Kurulum Ayarları
+  // Kurulum Ayarları (LGS ve Seviye Seçimi dahil)
   const [redTeamName, setRedTeamName] = useState<string>('Kırmızı Takım');
   const [blueTeamName, setBlueTeamName] = useState<string>('Mavi Takım');
-  const [selectedExamType, setSelectedExamType] = useState<'TYT' | 'AYT' | 'Karma'>('Karma');
+  const [selectedExamType, setSelectedExamType] = useState<'LGS' | 'TYT' | 'AYT' | 'Karma'>('Karma');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<'Adaptif' | 'Kolay' | 'Orta' | 'Zor'>('Adaptif');
   const [selectedSubject, setSelectedSubject] = useState<string>('all');
   const [questionCount, setQuestionCount] = useState<number>(5);
   const [questionMode, setQuestionMode] = useState<'interactive14' | 'mixed'>('interactive14');
 
+  // Kopya Önleme & Gizlilik Kalkanı State'i (Varsayılan Açık)
+  const [antiCheatMode, setAntiCheatMode] = useState<boolean>(true);
+
   // Ses & Tam Ekran
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(soundEngine.getMuted());
+  useEffect(() => {
+    return soundEngine.subscribe(() => {
+      setIsMuted(soundEngine.getMuted());
+    });
+  }, []);
+
+  // Akıllı Tahta Müzik Yönetimi
+  useEffect(() => {
+    if (phase === 'battle') {
+      soundEngine.startMusic('battle');
+    } else if (phase === 'setup' || phase === 'intermission') {
+      soundEngine.startMusic('lobby');
+    } else if (phase === 'finished') {
+      soundEngine.stopMusic();
+      soundEngine.playVictory();
+    }
+    return () => {
+      soundEngine.startMusic('lobby');
+    };
+  }, [phase]);
+
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   // Oyun Durumu
@@ -222,10 +273,38 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
   const currentQuestion: Question | undefined = questions[currentQuestionIndex];
   const timeLimit = currentQuestion?.timeLimitSeconds || 25;
 
+  // Sağ Takım (Mavi Takım) için kopya önleme şık karıştırması
+  // universal_choice sorularda şıkları ve doğru index'i ters çevir
+  const blueQuestion = useMemo<Question | undefined>(() => {
+    if (!currentQuestion) return undefined;
+    if (!antiCheatMode || currentQuestion.type !== 'universal_choice') {
+      return currentQuestion;
+    }
+
+    const p: any = currentQuestion.payload || {};
+    const origOptions: string[] = p.options || [];
+    if (origOptions.length <= 1) return currentQuestion;
+
+    const reversedOptions = [...origOptions].reverse();
+    const origCorrect = p.correctIndex ?? p.correctOptionIndex ?? 0;
+    const newCorrectIndex = origOptions.length - 1 - origCorrect;
+
+    return {
+      ...currentQuestion,
+      payload: {
+        ...p,
+        options: reversedOptions,
+        correctIndex: newCorrectIndex,
+        correctOptionIndex: newCorrectIndex,
+      },
+    };
+  }, [currentQuestion, antiCheatMode]);
+
   // Yeni Düelloyu Başlat
   const handleStartDuel = () => {
     const picked = pickSmartboardQuestions(ALL_INTERACTIVE_QUESTIONS, {
       examType: selectedExamType,
+      difficulty: selectedDifficulty,
       subject: selectedSubject,
       questionCount,
     });
@@ -279,17 +358,21 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timerIntervalRef.current);
+          soundEngine.resetTension();
           return 0;
         }
+        const nextTime = prev - 1;
+        soundEngine.setRemainingTime(nextTime, currentQuestion?.timeLimitSeconds ?? 25);
         if (prev <= 6) {
           playTone(440, 'sine', 0.08, isMuted);
         }
-        return prev - 1;
+        return nextTime;
       });
     }, 1000);
 
     return () => {
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+      soundEngine.resetTension();
     };
   }, [phase, currentQuestionIndex, isMuted]);
 
@@ -619,6 +702,17 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
 
           <div className="flex items-center gap-2">
             <button
+              onClick={() => {
+                soundEngine.toggleMute();
+                soundEngine.playClick();
+              }}
+              className="p-2 sm:px-3 sm:py-2 rounded-xl border border-white/10 bg-[#1A0E1C] hover:bg-white/10 text-zinc-300 flex items-center gap-1.5 text-xs font-semibold transition-all"
+              title={isMuted ? 'Sesi Aç' : 'Sesi Kapat'}
+            >
+              {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+              <span className="hidden sm:inline">{isMuted ? 'Sessiz' : 'Ses Açık'}</span>
+            </button>
+            <button
               onClick={toggleFullscreen}
               className="p-2 sm:px-3 sm:py-2 rounded-xl border border-white/10 bg-[#1A0E1C] hover:bg-white/10 text-zinc-300 flex items-center gap-1.5 text-xs font-semibold transition-all"
               title="Tam Ekran Aç/Kapat"
@@ -676,163 +770,185 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
             <main className="max-w-6xl mx-auto w-full py-6 flex flex-col gap-6">
               {/* Takım Kartları (Yan Yana Kırmızı vs Mavi) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            {/* Kırmızı Takım Kartı */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-red-950/50 via-[#1A0E1C] to-black/70 border-2 border-red-500/40 shadow-xl shadow-red-950/30 flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-red-500 animate-pulse" />
-                  <span className="font-poppins font-black text-lg text-red-400">
-                    🔴 SOL KANAT: 1. TAKIM
-                  </span>
+                {/* Kırmızı Takım Kartı */}
+                <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-red-950/50 via-[#1A0E1C] to-black/70 border-2 border-red-500/40 shadow-xl shadow-red-950/30 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-4 h-4 rounded-full bg-red-500 animate-pulse" />
+                      <span className="font-poppins font-black text-lg text-red-400">
+                        🔴 SOL KANAT: 1. TAKIM
+                      </span>
+                    </div>
+                    <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
+                      Sol Dokunmatik Alan
+                    </span>
+                  </div>
+                  <label className="text-xs font-semibold text-zinc-400">Takım Adı (Düzenlenebilir):</label>
+                  <input
+                    type="text"
+                    value={redTeamName}
+                    onChange={(e) => setRedTeamName(e.target.value)}
+                    maxLength={24}
+                    className="w-full px-4 py-3 rounded-2xl bg-[#0F0510] border border-red-500/40 text-white font-poppins font-bold text-lg focus:outline-none focus:border-red-400 transition-all"
+                    placeholder="Örn: Kırmızı Şimşekler"
+                  />
+                  <p className="text-xs text-zinc-400">
+                    Sol alt panelden yarışacak öğrenciler bu takımı temsil eder.
+                  </p>
                 </div>
-                <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
-                  Sol Dokunmatik Alan
-                </span>
-              </div>
-              <label className="text-xs font-semibold text-zinc-400">Takım Adı (Düzenlenebilir):</label>
-              <input
-                type="text"
-                value={redTeamName}
-                onChange={(e) => setRedTeamName(e.target.value)}
-                maxLength={24}
-                className="w-full px-4 py-3 rounded-2xl bg-[#0F0510] border border-red-500/40 text-white font-poppins font-bold text-lg focus:outline-none focus:border-red-400 transition-all"
-                placeholder="Örn: Kırmızı Şimşekler"
-              />
-              <p className="text-xs text-zinc-400">
-                Sol alt panelden yarışacak öğrenciler bu takımı temsil eder.
-              </p>
-            </div>
 
-            {/* Mavi Takım Kartı */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-950/50 via-[#1A0E1C] to-black/70 border-2 border-blue-500/40 shadow-xl shadow-blue-950/30 flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-blue-500 animate-pulse" />
-                  <span className="font-poppins font-black text-lg text-blue-400">
-                    🔵 SAĞ KANAT: 2. TAKIM
-                  </span>
+                {/* Mavi Takım Kartı */}
+                <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-950/50 via-[#1A0E1C] to-black/70 border-2 border-blue-500/40 shadow-xl shadow-blue-950/30 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-4 h-4 rounded-full bg-blue-500 animate-pulse" />
+                      <span className="font-poppins font-black text-lg text-blue-400">
+                        🔵 SAĞ KANAT: 2. TAKIM
+                      </span>
+                    </div>
+                    <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                      Sağ Dokunmatik Alan
+                    </span>
+                  </div>
+                  <label className="text-xs font-semibold text-zinc-400">Takım Adı (Düzenlenebilir):</label>
+                  <input
+                    type="text"
+                    value={blueTeamName}
+                    onChange={(e) => setBlueTeamName(e.target.value)}
+                    maxLength={24}
+                    className="w-full px-4 py-3 rounded-2xl bg-[#0F0510] border border-blue-500/40 text-white font-poppins font-bold text-lg focus:outline-none focus:border-blue-400 transition-all"
+                    placeholder="Örn: Mavi Fırtına"
+                  />
+                  <p className="text-xs text-zinc-400">
+                    Sağ alt panelden yarışacak öğrenciler bu takımı temsil eder.
+                  </p>
                 </div>
-                <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                  Sağ Dokunmatik Alan
-                </span>
               </div>
-              <label className="text-xs font-semibold text-zinc-400">Takım Adı (Düzenlenebilir):</label>
-              <input
-                type="text"
-                value={blueTeamName}
-                onChange={(e) => setBlueTeamName(e.target.value)}
-                maxLength={24}
-                className="w-full px-4 py-3 rounded-2xl bg-[#0F0510] border border-blue-500/40 text-white font-poppins font-bold text-lg focus:outline-none focus:border-blue-400 transition-all"
-                placeholder="Örn: Mavi Fırtına"
-              />
-              <p className="text-xs text-zinc-400">
-                Sağ alt panelden yarışacak öğrenciler bu takımı temsil eder.
-              </p>
-            </div>
-          </div>
 
-          {/* Karşılaşma Kuralları ve Seçimler */}
-          <div className="p-6 rounded-3xl bg-[#1A0E1C]/90 border border-white/10 shadow-lg flex flex-col gap-6">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {/* Sınav Türü */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
-                  Sınav Türü
-                </label>
-                <div className="grid grid-cols-3 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
-                  {(['TYT', 'AYT', 'Karma'] as const).map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => setSelectedExamType(t)}
-                      className={`py-2 rounded-xl text-xs font-bold transition-all ${
-                        selectedExamType === t
-                          ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
-                          : 'text-zinc-400 hover:text-white'
-                      }`}
+              {/* Karşılaşma Kuralları ve Seçimler (LGS & Seviye Seçimi Entegre) */}
+              <div className="p-6 rounded-3xl bg-[#1A0E1C]/90 border border-white/10 shadow-lg flex flex-col gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {/* Sınav Türü (LGS eklendi) */}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
+                      Sınav Kategorisi
+                    </label>
+                    <div className="grid grid-cols-4 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
+                      {(['LGS', 'TYT', 'AYT', 'Karma'] as const).map((t) => (
+                        <button
+                          key={t}
+                          onClick={() => setSelectedExamType(t)}
+                          className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                            selectedExamType === t
+                              ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
+                              : 'text-zinc-400 hover:text-white'
+                          }`}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Zorluk / Öğrenci Seviyesi Seçimi */}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
+                      Öğrenci Seviyesi / Zorluk
+                    </label>
+                    <div className="grid grid-cols-4 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
+                      {(['Adaptif', 'Kolay', 'Orta', 'Zor'] as const).map((d) => (
+                        <button
+                          key={d}
+                          onClick={() => setSelectedDifficulty(d)}
+                          className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                            selectedDifficulty === d
+                              ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
+                              : 'text-zinc-400 hover:text-white'
+                          }`}
+                        >
+                          {d}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Ders Seçimi */}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
+                      Ders Havuzu
+                    </label>
+                    <select
+                      value={selectedSubject}
+                      onChange={(e) => setSelectedSubject(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-2xl bg-[#0F0510] border border-white/10 text-white text-xs font-bold focus:outline-none focus:border-[#F14E13]"
                     >
-                      {t}
-                    </button>
-                  ))}
+                      <option value="all">Tüm Dersler (Karma Havuz)</option>
+                      <option value="matematik">Matematik</option>
+                      <option value="fizik">Fizik</option>
+                      <option value="kimya">Kimya</option>
+                      <option value="biyoloji">Biyoloji</option>
+                      <option value="turkce">Türkçe</option>
+                    </select>
+                  </div>
+
+                  {/* Soru Sayısı */}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
+                      Soru Sayısı
+                    </label>
+                    <div className="grid grid-cols-3 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
+                      {[5, 7, 10].map((n) => (
+                        <button
+                          key={n}
+                          onClick={() => setQuestionCount(n)}
+                          className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                            questionCount === n
+                              ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
+                              : 'text-zinc-400 hover:text-white'
+                          }`}
+                        >
+                          {n} Soru
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bilgilendirme Rozetleri */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/5 text-xs text-zinc-300">
+                  <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
+                    <Lock className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>
+                      <strong>Kopya Önleme:</strong> Hamlesini yapan takımın paneli gizlenir ve kilitlenir.
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
+                    <Flame className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>
+                      <strong>Hız & Seri Bonusu:</strong> Hızlı cevaplayanlar ekstra hız ve seri puanı kazanır.
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
+                    <Layers className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <span>
+                      <strong>14 İnteraktif Mekanik:</strong> Eşleştirme, sıralama, matris, numpad ve fazlası.
+                    </span>
+                  </div>
                 </div>
               </div>
+            </main>
 
-              {/* Ders Seçimi */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
-                  Ders Havuzu
-                </label>
-                <select
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-2xl bg-[#0F0510] border border-white/10 text-white text-xs font-bold focus:outline-none focus:border-[#F14E13]"
-                >
-                  <option value="all">Tüm Dersler (Karma Havuz)</option>
-                  <option value="matematik">Matematik</option>
-                  <option value="fizik">Fizik</option>
-                  <option value="kimya">Kimya</option>
-                  <option value="biyoloji">Biyoloji</option>
-                  <option value="turkce">Türkçe</option>
-                </select>
-              </div>
-
-              {/* Soru Sayısı */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
-                  Soru Sayısı
-                </label>
-                <div className="grid grid-cols-3 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
-                  {[5, 7, 10].map((n) => (
-                    <button
-                      key={n}
-                      onClick={() => setQuestionCount(n)}
-                      className={`py-2 rounded-xl text-xs font-bold transition-all ${
-                        questionCount === n
-                          ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
-                          : 'text-zinc-400 hover:text-white'
-                      }`}
-                    >
-                      {n} Soru
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Bilgilendirme Rozetleri */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/5 text-xs text-zinc-300">
-              <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
-                <Lock className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>
-                  <strong>Kopya Önleme:</strong> Hamlesini yapan takımın paneli gizlenir ve kilitlenir.
-                </span>
-              </div>
-              <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
-                <Flame className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>
-                  <strong>Hız & Seri Bonusu:</strong> Hızlı cevaplayanlar ekstra hız ve seri puanı kazanır.
-                </span>
-              </div>
-              <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/5">
-                <Layers className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>
-                  <strong>14 İnteraktif Mekanik:</strong> Eşleştirme, sıralama, matris, numpad ve fazlası.
-                </span>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        {/* Alt Büyük Başlat Butonu */}
-        <footer className="max-w-6xl mx-auto w-full pt-4">
-          <button
-            onClick={handleStartDuel}
-            className="w-full py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-red-600 text-white font-poppins font-black text-lg sm:text-xl shadow-2xl shadow-[#F14E13]/40 hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-3 tracking-wide border border-white/20"
-          >
-            <Play className="w-6 h-6 fill-white" />
-            <span>🖥️ AKILLI TAHTA DÜELLOSUNU BAŞLAT ({questionCount} SORU)</span>
-          </button>
-        </footer>
-        </>
+            {/* Alt Büyük Başlat Butonu */}
+            <footer className="max-w-6xl mx-auto w-full pt-4">
+              <button
+                onClick={handleStartDuel}
+                className="w-full py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-red-600 text-white font-poppins font-black text-lg sm:text-xl shadow-2xl shadow-[#F14E13]/40 hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-3 tracking-wide border border-white/20"
+              >
+                <Play className="w-6 h-6 fill-white" />
+                <span>🖥️ AKILLI TAHTA DÜELLOSUNU BAŞLAT ({questionCount} SORU)</span>
+              </button>
+            </footer>
+          </>
         )}
       </div>
     );
@@ -853,6 +969,9 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
 
     return (
       <div className="min-h-screen bg-[#110712] text-white flex flex-col justify-between p-4 sm:p-8 relative overflow-x-hidden font-sans">
+        {/* Akıllı Tahta Zafer Konfeti Efekti */}
+        <ConfettiCanvas active={true} durationMs={6000} />
+
         <div className="hero-button-blur -top-24 -left-24 opacity-35 pointer-events-none" />
         <div className="hero-button-blur -bottom-24 -right-24 opacity-30 pointer-events-none" />
 
@@ -870,13 +989,26 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
             </div>
           </div>
 
-          <button
-            onClick={toggleFullscreen}
-            className="p-2 sm:px-3 sm:py-2 rounded-xl border border-white/10 bg-[#1A0E1C] hover:bg-white/10 text-zinc-300 flex items-center gap-1.5 text-xs font-semibold"
-          >
-            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-            <span className="hidden sm:inline">{isFullscreen ? 'Normal' : 'Tam Ekran'}</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                soundEngine.toggleMute();
+                soundEngine.playClick();
+              }}
+              className="p-2 sm:px-3 sm:py-2 rounded-xl border border-white/10 bg-[#1A0E1C] hover:bg-white/10 text-zinc-300 flex items-center gap-1.5 text-xs font-semibold transition-all"
+              title={isMuted ? 'Sesi Aç' : 'Sesi Kapat'}
+            >
+              {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+              <span className="hidden sm:inline">{isMuted ? 'Sessiz' : 'Ses Açık'}</span>
+            </button>
+            <button
+              onClick={toggleFullscreen}
+              className="p-2 sm:px-3 sm:py-2 rounded-xl border border-white/10 bg-[#1A0E1C] hover:bg-white/10 text-zinc-300 flex items-center gap-1.5 text-xs font-semibold"
+            >
+              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+              <span className="hidden sm:inline">{isFullscreen ? 'Normal' : 'Tam Ekran'}</span>
+            </button>
+          </div>
         </header>
 
         {/* Şampiyonluk Kutusu */}
@@ -1016,6 +1148,9 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
 
     return (
       <div className="min-h-screen bg-[#110712] text-white flex flex-col justify-between p-4 sm:p-8 relative overflow-x-hidden font-sans">
+        {/* Akıllı Tahta Zafer Konfeti Efekti */}
+        <ConfettiCanvas active={true} durationMs={6000} />
+
         <div className="hero-button-blur -top-24 -left-24 opacity-35 pointer-events-none" />
         <div className="hero-button-blur -bottom-24 -right-24 opacity-30 pointer-events-none" />
 
@@ -1032,7 +1167,10 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setIsMuted(!isMuted)}
+              onClick={() => {
+                soundEngine.toggleMute();
+                soundEngine.playClick();
+              }}
               className="p-2 rounded-xl bg-[#1A0E1C] border border-white/10 text-zinc-300 hover:text-white"
               title={isMuted ? 'Sesi Aç' : 'Sesi Kapat'}
             >
@@ -1289,7 +1427,7 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
       <div className="hero-button-blur -bottom-24 -right-24 opacity-30 pointer-events-none" />
 
       {/* =========================================================================
-       * 1. ÜST HEADER: SKORLAR, ÇEKİŞME BARI, DAİRESEL GERİ SAYIM
+       * 1. ÜST HEADER: SKORLAR, ÇEKİŞME BARI, DAİRESEL GERİ SAYIM & KOPYA KORUMA BUTONU
        * ========================================================================= */}
       <header className="w-full max-w-7xl mx-auto bg-[rgba(26,14,28,0.95)] backdrop-blur-md border border-[rgba(241,78,19,0.25)] rounded-2xl p-2.5 sm:p-4 shadow-xl shadow-black/40 sticky top-1 z-30 mb-3">
         <div className="flex items-center justify-between gap-2 sm:gap-4 flex-nowrap">
@@ -1389,8 +1527,33 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
               <span className="font-poppins font-black text-sm sm:text-base text-white">🔵</span>
             </div>
 
-            {/* Kontrol Butonları */}
-            <div className="flex items-center gap-1 border-l border-white/10 pl-2">
+            {/* Kontrol Butonları & Kopya Koruması Aç/Kapat */}
+            <div className="flex items-center gap-1.5 border-l border-white/10 pl-2">
+              <button
+                onClick={() => setAntiCheatMode(!antiCheatMode)}
+                className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-xs font-mono font-bold flex items-center gap-1 transition-all border ${
+                  antiCheatMode
+                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-sm shadow-emerald-500/20'
+                    : 'bg-zinc-800 border-zinc-700 text-zinc-400'
+                }`}
+                title="Kopya Önleme Kalkanı ve Şık Karıştırma"
+              >
+                <Shield className="w-3.5 h-3.5" />
+                <span className="hidden xl:inline">
+                  {antiCheatMode ? '🕵️ Kopya Koruması: Açık' : 'Kopya Koruması: Kapalı'}
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  soundEngine.toggleMute();
+                  soundEngine.playClick();
+                }}
+                className="p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300"
+                title={isMuted ? 'Sesi Aç' : 'Sesi Kapat'}
+              >
+                {isMuted ? <VolumeX className="w-4 h-4 text-red-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+              </button>
               <button
                 onClick={toggleFullscreen}
                 className="p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300"
@@ -1408,6 +1571,15 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
             </div>
           </div>
         </div>
+
+        {/* Kopya Koruması Aktif Rozeti / Bilgilendirme */}
+        {antiCheatMode && (
+          <div className="w-full text-center py-0.5 mt-1 border-t border-white/5">
+            <span className="text-[10px] sm:text-[11px] font-mono text-emerald-400 font-semibold flex items-center justify-center gap-1.5">
+              <span>🕵️ Kopya Koruması: Bulanıklaştırma + Karışık Şıklar Aktif</span>
+            </span>
+          </div>
+        )}
       </header>
 
       {/* =========================================================================
@@ -1510,7 +1682,7 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
         {/* =====================================================================
          * SOL ALT PANEL: 🔴 KIRMIZI TAKIM CEVAPLAMA YERİ
          * ===================================================================== */}
-        <div className="border-2 border-red-500/40 bg-[#1A0E1C]/95 rounded-3xl p-3 sm:p-4 md:p-5 shadow-2xl shadow-red-950/30 flex flex-col justify-between transition-all overflow-x-hidden min-w-0 max-w-full">
+        <div className="border-2 border-red-500/40 bg-[#1A0E1C]/95 rounded-3xl p-3 sm:p-4 md:p-5 shadow-2xl shadow-red-950/30 flex flex-col justify-between transition-all overflow-x-hidden min-w-0 max-w-full relative">
           {/* Panel Header */}
           <div className="flex items-center justify-between gap-2 border-b border-red-500/25 pb-3 mb-3">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -1542,41 +1714,62 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
             </div>
           </div>
 
-          {/* Panel Body: Kopya Önleme Ekranı VEYA Bağımsız QuestionRenderer */}
-          <div className="flex-1 flex flex-col justify-center overflow-x-hidden min-w-0">
-            {redAnswered ? (
-              <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 bg-gradient-to-b from-red-950/40 via-[#1A0E1C] to-black/60 rounded-2xl border border-red-500/30 text-center animate-fade-in min-h-[260px]">
-                <div className="w-16 h-16 rounded-2xl bg-red-500/20 border-2 border-red-500/60 flex items-center justify-center mb-4 shadow-lg shadow-red-500/20">
-                  <Lock className="w-8 h-8 text-red-400" />
+          {/* Panel Body: QuestionRenderer ve Kopya Önleme Gizlilik Kalkanı */}
+          <div className="relative flex-1 flex flex-col justify-center overflow-hidden min-w-0 min-h-[260px]">
+            <div className="w-full overflow-x-hidden min-w-0">
+              <QuestionRenderer
+                key={`red-${currentQuestion.id}`}
+                question={currentQuestion}
+                onSubmit={handleRedSubmit}
+                disabled={redAnswered}
+              />
+            </div>
+
+            {/* CEVAPLANDIĞINDA: Gizlilik Kalkanı veya Kilit Ekranı */}
+            {redAnswered && (
+              antiCheatMode ? (
+                /* Buzlu Cam Gizlilik Kalkanı (backdrop-blur-xl) */
+                <div className="absolute inset-0 z-20 backdrop-blur-xl bg-[#0F0510]/90 rounded-2xl flex flex-col items-center justify-center p-4 text-center animate-fade-in shadow-2xl border border-red-500/30">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-red-500/20 border-2 border-red-500/60 flex items-center justify-center mb-3 shadow-lg shadow-red-500/30">
+                    <Lock className="w-7 h-7 sm:w-8 sm:h-8 text-red-400" />
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black font-poppins text-white mb-1.5 tracking-wide">
+                    🔒 CEVAP KİLİTLENDİ (GİZLİ MOD)
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-zinc-300 max-w-sm mb-3">
+                    Diğer takımın kopya çekmemesi için seçiminiz gizlendi. Sonuçlar iki takım da bitirdiğinde açılacak!
+                  </p>
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
+                    <span>🔵 {blueTeamName} cevabı bekleniyor...</span>
+                  </div>
                 </div>
-                <h3 className="text-base sm:text-lg font-black font-poppins text-white mb-1.5 tracking-wide">
-                  🔒 {redTeamName.toUpperCase()} HAMLESİNİ KİLİTLEDİ!
-                </h3>
-                <p className="text-xs sm:text-sm font-mono text-red-300/90 mb-3">
-                  Süre: {redTimeElapsedSec.toFixed(1)} sn {redPassed ? '• (Pas Geçildi)' : ''}
-                </p>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
-                  <span>🔵 {blueTeamName} cevabı bekleniyor...</span>
+              ) : (
+                /* Standart Kilit Ekranı */
+                <div className="absolute inset-0 z-20 bg-gradient-to-b from-red-950/70 via-[#1A0E1C]/90 to-black/90 rounded-2xl border border-red-500/30 flex flex-col items-center justify-center p-4 text-center animate-fade-in">
+                  <div className="w-14 h-14 rounded-2xl bg-red-500/20 border-2 border-red-500/60 flex items-center justify-center mb-3">
+                    <Lock className="w-7 h-7 text-red-400" />
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black font-poppins text-white mb-1 tracking-wide">
+                    🔒 {redTeamName.toUpperCase()} HAMLESİNİ KİLİTLEDİ!
+                  </h3>
+                  <p className="text-xs font-mono text-red-300/90 mb-2">
+                    Süre: {redTimeElapsedSec.toFixed(1)} sn {redPassed ? '• (Pas Geçildi)' : ''}
+                  </p>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
+                    <span>🔵 {blueTeamName} cevabı bekleniyor...</span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="w-full overflow-x-hidden min-w-0">
-                <QuestionRenderer
-                  key={`red-${currentQuestion.id}`}
-                  question={currentQuestion}
-                  onSubmit={handleRedSubmit}
-                  disabled={redAnswered}
-                />
-              </div>
+              )
             )}
           </div>
         </div>
 
         {/* =====================================================================
-         * SAĞ ALT PANEL: 🔵 MAVİ TAKIM CEVAPLAMA YERİ
+         * SAĞ ALT PANEL: 🔵 MAVİ TAKIM CEVAPLAMA YERİ (Karışık Şıklar & Gizlilik Kalkanı)
          * ===================================================================== */}
-        <div className="border-2 border-blue-500/40 bg-[#1A0E1C]/95 rounded-3xl p-3 sm:p-4 md:p-5 shadow-2xl shadow-blue-950/30 flex flex-col justify-between transition-all overflow-x-hidden min-w-0 max-w-full">
+        <div className="border-2 border-blue-500/40 bg-[#1A0E1C]/95 rounded-3xl p-3 sm:p-4 md:p-5 shadow-2xl shadow-blue-950/30 flex flex-col justify-between transition-all overflow-x-hidden min-w-0 max-w-full relative">
           {/* Panel Header */}
           <div className="flex items-center justify-between gap-2 border-b border-blue-500/25 pb-3 mb-3">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -1608,33 +1801,56 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
             </div>
           </div>
 
-          {/* Panel Body: Kopya Önleme Ekranı VEYA Bağımsız QuestionRenderer */}
-          <div className="flex-1 flex flex-col justify-center overflow-x-hidden min-w-0">
-            {blueAnswered ? (
-              <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 bg-gradient-to-b from-blue-950/40 via-[#1A0E1C] to-black/60 rounded-2xl border border-blue-500/30 text-center animate-fade-in min-h-[260px]">
-                <div className="w-16 h-16 rounded-2xl bg-blue-500/20 border-2 border-blue-500/60 flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20">
-                  <Lock className="w-8 h-8 text-blue-400" />
-                </div>
-                <h3 className="text-base sm:text-lg font-black font-poppins text-white mb-1.5 tracking-wide">
-                  🔒 {blueTeamName.toUpperCase()} HAMLESİNİ KİLİTLEDİ!
-                </h3>
-                <p className="text-xs sm:text-sm font-mono text-blue-300/90 mb-3">
-                  Süre: {blueTimeElapsedSec.toFixed(1)} sn {bluePassed ? '• (Pas Geçildi)' : ''}
-                </p>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
-                  <span>🔴 {redTeamName} cevabı bekleniyor...</span>
-                </div>
-              </div>
-            ) : (
-              <div className="w-full overflow-x-hidden min-w-0">
+          {/* Panel Body: QuestionRenderer ve Kopya Önleme Gizlilik Kalkanı */}
+          <div className="relative flex-1 flex flex-col justify-center overflow-hidden min-w-0 min-h-[260px]">
+            <div className="w-full overflow-x-hidden min-w-0">
+              {blueQuestion && (
                 <QuestionRenderer
-                  key={`blue-${currentQuestion.id}`}
-                  question={currentQuestion}
+                  key={`blue-${blueQuestion.id}`}
+                  question={blueQuestion}
                   onSubmit={handleBlueSubmit}
                   disabled={blueAnswered}
                 />
-              </div>
+              )}
+            </div>
+
+            {/* CEVAPLANDIĞINDA: Gizlilik Kalkanı veya Kilit Ekranı */}
+            {blueAnswered && (
+              antiCheatMode ? (
+                /* Buzlu Cam Gizlilik Kalkanı (backdrop-blur-xl) */
+                <div className="absolute inset-0 z-20 backdrop-blur-xl bg-[#0F0510]/90 rounded-2xl flex flex-col items-center justify-center p-4 text-center animate-fade-in shadow-2xl border border-blue-500/30">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-blue-500/20 border-2 border-blue-500/60 flex items-center justify-center mb-3 shadow-lg shadow-blue-500/30">
+                    <Lock className="w-7 h-7 sm:w-8 sm:h-8 text-blue-400" />
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black font-poppins text-white mb-1.5 tracking-wide">
+                    🔒 CEVAP KİLİTLENDİ (GİZLİ MOD)
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-zinc-300 max-w-sm mb-3">
+                    Diğer takımın kopya çekmemesi için seçiminiz gizlendi. Sonuçlar iki takım da bitirdiğinde açılacak!
+                  </p>
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
+                    <span>🔴 {redTeamName} cevabı bekleniyor...</span>
+                  </div>
+                </div>
+              ) : (
+                /* Standart Kilit Ekranı */
+                <div className="absolute inset-0 z-20 bg-gradient-to-b from-blue-950/70 via-[#1A0E1C]/90 to-black/90 rounded-2xl border border-blue-500/30 flex flex-col items-center justify-center p-4 text-center animate-fade-in">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-500/20 border-2 border-blue-500/60 flex items-center justify-center mb-3">
+                    <Lock className="w-7 h-7 text-blue-400" />
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black font-poppins text-white mb-1 tracking-wide">
+                    🔒 {blueTeamName.toUpperCase()} HAMLESİNİ KİLİTLEDİ!
+                  </h3>
+                  <p className="text-xs font-mono text-blue-300/90 mb-2">
+                    Süre: {blueTimeElapsedSec.toFixed(1)} sn {bluePassed ? '• (Pas Geçildi)' : ''}
+                  </p>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
+                    <span>🔴 {redTeamName} cevabı bekleniyor...</span>
+                  </div>
+                </div>
+              )
             )}
           </div>
         </div>

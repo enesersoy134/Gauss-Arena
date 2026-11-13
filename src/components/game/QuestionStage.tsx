@@ -17,7 +17,7 @@ export const QuestionStage: React.FC<QuestionStageProps> = ({
   const badgeLabel = `${question.subject.toUpperCase()} • ${question.topic}`;
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-6 flex flex-col gap-3 sm:gap-4">
+    <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-card-slide" key={question.id}>
       {/* Ana Soru Alanı Kartı (.game-card stili) */}
       <section className="game-card !p-3.5 sm:!p-6 md:!p-7 transition-all duration-300">
         {/* Üst Satır: Ders Rozeti ve Rakip Durumu */}

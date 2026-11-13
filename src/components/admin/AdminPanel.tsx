@@ -197,6 +197,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
           {/* Sağ: Hızlı Demo Aksiyonları (Yatay kaydırılabilir kompakt tek satır) */}
           <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0 flex-nowrap shrink-0">
+            {/* Rastgele Öğrenci Aç (/random) */}
+            <button
+              onClick={() => window.open('/random', '_blank')}
+              className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-orange-500/40 bg-orange-500/15 text-orange-300 hover:bg-orange-500/25 flex items-center gap-1.5 transition-all shadow-sm shadow-orange-500/10 shrink-0 whitespace-nowrap"
+              title="Yeni rastgele isim, ELO ve avatarla öğrenci hesabı açar (/random)"
+            >
+              <span className="text-sm">🎲</span>
+              <span className="sm:hidden">Rastgele</span>
+              <span className="hidden sm:inline">Rastgele Öğrenci Aç (/random)</span>
+            </button>
+
             {/* Akıllı Tahta Modu (/tahta) */}
             <button
               onClick={() => (onNavigateToSmartboard ? onNavigateToSmartboard() : onNavigateToStudent())}

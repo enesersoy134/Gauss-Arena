@@ -4,6 +4,7 @@ import { KahootRoomState, KahootPlayer } from '../../types/kahoot';
 import type { Question } from '../../types/game';
 import { QuestionRenderer } from '../questions/QuestionRenderer';
 import { AnswerResult } from '../questions/questionProps';
+import { soundEngine } from '../../utils/soundEngine';
 import {
   Smartphone,
   Sparkles,
@@ -125,15 +126,44 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
     }
   }, [room?.status, room?.currentQuestionIndex, room?.leaderboard, playerId]);
 
+  // Raunt Sonu (INTERMISSION) ve Oyun Bitişi (FINISHED) Sesleri
+  useEffect(() => {
+    if (!room) return;
+    if (room.status === 'INTERMISSION') {
+      const me = room.leaderboard?.find((p) => p.id === playerId);
+      if (me?.lastRoundCorrect) {
+        soundEngine.playCorrect();
+        if ((me?.streak || 0) > 1) {
+          soundEngine.playCombo(me.streak);
+        }
+      } else if ((me?.lastRoundPoints || 0) > 0) {
+        soundEngine.playPartial();
+      } else {
+        soundEngine.playWrong();
+      }
+    } else if (room.status === 'FINISHED') {
+      soundEngine.playVictory();
+    }
+  }, [room?.status, room?.currentQuestionIndex, room?.leaderboard, playerId]);
+
   // Canlı Soru Kalan Süre Sayacı
   useEffect(() => {
     if (!room || room.status !== 'QUESTION') return;
 
+    let lastSec = 30;
     const updateTimer = () => {
       const now = Date.now();
       const elapsed = Math.max(0, now - room.questionStartedAt);
       const remainingMs = Math.max(0, room.durationMs - elapsed);
-      setRemainingSec(Math.ceil(remainingMs / 1000));
+      const sec = Math.ceil(remainingMs / 1000);
+      setRemainingSec(sec);
+
+      if (sec !== lastSec) {
+        lastSec = sec;
+        if (sec <= 5 && sec > 0) {
+          soundEngine.playTick(true);
+        }
+      }
     };
 
     updateTimer();
@@ -144,6 +174,7 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
   // Katıl butonu aksiyonu
   const handleJoin = (e: React.FormEvent) => {
     e.preventDefault();
+    soundEngine.playClick();
     const cleanPin = pin.replace(/\s+/g, '').trim();
     const cleanName = playerName.trim();
 
@@ -167,6 +198,7 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
   // Öğrenci Soru Cevap Gönderimi
   const handleStudentSubmit = (result: AnswerResult) => {
     if (hasAnswered || !room || room.status !== 'QUESTION') return;
+    soundEngine.playLock();
     setHasAnswered(true);
     setMyAnswerResult(result);
 
@@ -180,6 +212,7 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
 
   // Soruyu Boş Bırak / Geç
   const handlePass = () => {
+    soundEngine.playClick();
     handleStudentSubmit({ isCorrect: false, accuracy: 0 });
   };
 

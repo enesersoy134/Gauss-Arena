@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PlayerInfo, Question, RoundResult } from '../../types/game';
 import { getRecommendationsForTopic, ResourceRecommendation } from '../../utils/resourceRecommendations';
 import { Trophy, RotateCcw, Check, X, Flame, Award, TrendingUp, TrendingDown, BookOpen, AlertTriangle } from 'lucide-react';
+import { ConfettiCanvas } from '../effects/ConfettiCanvas';
 
 export interface MatchEndScreenProps {
   player1: PlayerInfo;
@@ -106,9 +107,16 @@ export const MatchEndScreen: React.FC<MatchEndScreenProps> = ({
   }, [wrongRounds]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center gap-8 animate-fade-in">
+    <div className="w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center gap-8 animate-fade-in relative">
+      {/* Kazandıysa Konfeti Patlaması */}
+      {isWinner && <ConfettiCanvas active={true} durationMs={5000} />}
+
       {/* 1. ÜST: ZAFER / BOZGUN / BERABERE BAŞLIĞI */}
       <div className="text-center relative">
+        {/* Kazanan için dönen altın ışık hüzmesi (Sunburst Rays) */}
+        {isWinner && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-tr from-amber-500/20 via-orange-500/10 to-transparent pointer-events-none animate-sunburst blur-xl" />
+        )}
         <div className="hero-button-blur -top-12 left-1/2 -translate-x-1/2 opacity-40 pointer-events-none" />
 
         <div className="relative inline-flex items-center justify-center p-3 mb-3 rounded-full bg-[#1A0E1C] border border-[rgba(241,78,19,0.4)] shadow-xl">
@@ -200,7 +208,7 @@ export const MatchEndScreen: React.FC<MatchEndScreenProps> = ({
           <div className="text-right">
             <div className="text-xs text-[#B5CBC8]">Toplam Puan</div>
             <div className="font-mono font-black text-2xl sm:text-3xl text-[#F14E13]">
-              {player1TotalScore}
+              {Math.round(player1TotalScore)}
             </div>
           </div>
         </div>
@@ -232,7 +240,7 @@ export const MatchEndScreen: React.FC<MatchEndScreenProps> = ({
           <div className="text-right">
             <div className="text-xs text-[#B5CBC8]">Toplam Puan</div>
             <div className="font-mono font-black text-2xl sm:text-3xl text-[#3B82F6]">
-              {player2TotalScore}
+              {Math.round(player2TotalScore)}
             </div>
           </div>
         </div>

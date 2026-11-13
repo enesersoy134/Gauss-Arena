@@ -57,7 +57,7 @@ class DuelSession {
 
   getCurrentPublicState(now = Date.now()) {
     const q = this.getCurrentQuestion();
-    const durationMs = q ? q.durationMs || 60000 : 60000;
+    const durationMs = q ? (q.durationMs || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds ? q.interactiveQuestion.timeLimitSeconds * 1000 : 20000)) : 20000;
     const elapsedMs = Math.max(0, now - this.questionStartedAt);
     const remainingMs = Math.max(0, durationMs - elapsedMs);
 
@@ -113,7 +113,7 @@ class DuelSession {
       return acc;
     }, 0);
     const curr = this.currentAnswers.get(id);
-    return round2(histSum + (curr ? curr.score : 0));
+    return Math.round(histSum + (curr ? curr.score : 0));
   }
 
   getPlayerCorrectCount(playerId) {
@@ -143,7 +143,7 @@ class DuelSession {
     }
 
     const q = this.getCurrentQuestion();
-    const durationMs = q.durationMs || 60000;
+    const durationMs = q.durationMs || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds ? q.interactiveQuestion.timeLimitSeconds * 1000 : 20000);
     const elapsedMs = Math.max(0, now - this.questionStartedAt);
     const remainingMs = Math.max(0, Math.min(durationMs, durationMs - elapsedMs));
 
@@ -170,7 +170,7 @@ class DuelSession {
           ? Number(answerInput.selectedOptionIndex)
           : -1;
         const baseScore = calculateQuestionScore(isCorrect || accuracy > 0, remainingMs, durationMs);
-        score = round2(baseScore * (isCorrect ? 1 : accuracy));
+        score = Math.round(baseScore * (isCorrect ? 1 : accuracy));
       }
     } else {
       optIdx = answerInput === null || answerInput === undefined ? -1 : Number(answerInput);
@@ -203,11 +203,13 @@ class DuelSession {
   }
 
   forceQuestionTimeout(now = Date.now()) {
+    const q = this.getCurrentQuestion();
+    const durationMs = q ? (q.durationMs || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds ? q.interactiveQuestion.timeLimitSeconds * 1000 : 20000)) : 20000;
     if (!this.currentAnswers.has(this.playerA.id)) {
-      this.submitAnswer(this.playerA.id, this.currentQuestionIndex, { isCorrect: false, accuracy: 0, skipped: true }, this.questionStartedAt + 60000);
+      this.submitAnswer(this.playerA.id, this.currentQuestionIndex, { isCorrect: false, accuracy: 0, skipped: true }, this.questionStartedAt + durationMs);
     }
     if (!this.currentAnswers.has(this.playerB.id)) {
-      this.submitAnswer(this.playerB.id, this.currentQuestionIndex, { isCorrect: false, accuracy: 0, skipped: true }, this.questionStartedAt + 60000);
+      this.submitAnswer(this.playerB.id, this.currentQuestionIndex, { isCorrect: false, accuracy: 0, skipped: true }, this.questionStartedAt + durationMs);
     }
     return {
       roundResult: this.buildCurrentRoundResult(),
@@ -237,6 +239,8 @@ class DuelSession {
       subTopic: q.subTopic || (q.interactiveQuestion && q.interactiveQuestion.topic) || q.subject,
       text: q.text || (q.interactiveQuestion && q.interactiveQuestion.prompt) || '',
       correctOptionIndex: q.correctOptionIndex,
+      durationMs: q.durationMs || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds ? q.interactiveQuestion.timeLimitSeconds * 1000 : 20000),
+      timeLimitSeconds: q.timeLimitSeconds || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds ? q.interactiveQuestion.timeLimitSeconds : 20),
       interactiveQuestion: q.interactiveQuestion || null,
       explanation: q.explanation || (q.interactiveQuestion && q.interactiveQuestion.explanation) || null,
       answerA: ansA,

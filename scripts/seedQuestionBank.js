@@ -406,13 +406,14 @@ function seedAll() {
           fs.mkdirSync(path.dirname(filePath), { recursive: true });
         }
 
-        let defaultDurationMs = 60000;
+        const diffNorm = difficulty.toUpperCase();
+        let defaultDurationMs = diffNorm === 'EASY' ? 15000 : diffNorm === 'HARD' ? 25000 : 20000;
         if (fs.existsSync(filePath)) {
           const raw = fs.readFileSync(filePath, 'utf8').trim();
           if (raw.length > 0) {
             try {
               const parsed = JSON.parse(raw);
-              if (parsed.meta && parsed.meta.defaultDurationMs) {
+              if (parsed.meta && parsed.meta.defaultDurationMs && parsed.meta.defaultDurationMs < 60000) {
                 defaultDurationMs = parsed.meta.defaultDurationMs;
               }
             } catch {

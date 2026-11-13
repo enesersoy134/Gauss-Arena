@@ -99,15 +99,16 @@ function calculateMatchEloUpdate(playerA, playerB, outcomeA, K = 32) {
 
 /**
  * Question Score = isCorrect * (100 + 50 * (remainingMs / totalMs))
+ * Puanlar daima tam sayıya yuvarlanır (ondalıklı virgüllü gösterilmez)
  */
-function calculateQuestionScore(isCorrect, remainingMs, totalMs = 60000) {
+function calculateQuestionScore(isCorrect, remainingMs, totalMs = 20000) {
   if (!isCorrect) {
     return 0;
   }
-  const safeTotal = totalMs > 0 ? totalMs : 60000;
+  const safeTotal = totalMs > 0 ? totalMs : 20000;
   const clampedRemaining = Math.max(0, Math.min(safeTotal, Number(remainingMs) || 0));
   const score = 100 + 50 * (clampedRemaining / safeTotal);
-  return round2(score);
+  return Math.round(score);
 }
 
 module.exports = {

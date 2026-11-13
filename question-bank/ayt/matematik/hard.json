@@ -3,7 +3,7 @@
     "examType": "AYT",
     "subject": "matematik",
     "difficulty": "HARD",
-    "defaultDurationMs": 20000
+    "defaultDurationMs": 25000
   },
   "questions": [
     {

@@ -3,7 +3,7 @@
     "examType": "TYT",
     "subject": "turkce",
     "difficulty": "MEDIUM",
-    "defaultDurationMs": 60000
+    "defaultDurationMs": 20000
   },
   "questions": [
     {

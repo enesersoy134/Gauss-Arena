@@ -104,6 +104,7 @@ function createInitialPlayers() {
   return raw.map((p) => ({
     ...p,
     revisionTopics: [],
+    revisionDetails: [],
     effectiveMmr: calculateEffectiveMMR(p.elo, p.streak),
     bracket: getWeeklyBracket(p.elo),
   }));
@@ -384,22 +385,148 @@ class GameStore {
           failedAt: timestamp,
         });
       }
+
+      // revisionDetails güncellemesi (Yüzdesel eksik istatistiği)
+      player.revisionDetails = Array.isArray(player.revisionDetails) ? player.revisionDetails : [];
+      let det = player.revisionDetails.find(
+        (d) => d.topic.toLowerCase() === topic.toLowerCase() && d.subject === subject
+      );
+      if (!det) {
+        det = {
+          topic,
+          subject,
+          wrongCount: 0,
+          totalAttempts: 0,
+          errorRatePercent: 0,
+          failedQuestionIds: [],
+        };
+        player.revisionDetails.push(det);
+      }
+      det.wrongCount += 1;
+      det.totalAttempts += 1;
+      det.errorRatePercent = Math.round((det.wrongCount / Math.max(1, det.totalAttempts)) * 100);
+      const qId = round.externalId || (round.interactiveQuestion && round.interactiveQuestion.id);
+      if (qId && !det.failedQuestionIds.includes(qId)) {
+        det.failedQuestionIds.push(qId);
+      }
     }
 
     player.revisionTopics.sort((a, b) => b.mistakeCount - a.mistakeCount);
+    if (Array.isArray(player.revisionDetails)) {
+      player.revisionDetails.sort((a, b) => b.errorRatePercent - a.errorRatePercent);
+    }
   }
 
   markTopicReviewed(playerId, topic) {
     const p = this.getPlayer(playerId);
     if (!p) return { ok: false, reason: 'Oyuncu bulunamadı' };
     p.revisionTopics = Array.isArray(p.revisionTopics) ? p.revisionTopics : [];
+    p.revisionDetails = Array.isArray(p.revisionDetails) ? p.revisionDetails : [];
     if (!topic) {
       p.revisionTopics = [];
-      return { ok: true, revisionTopics: p.revisionTopics };
+      p.revisionDetails = [];
+      return { ok: true, revisionTopics: p.revisionTopics, revisionDetails: p.revisionDetails };
     }
     const normTopic = String(topic).trim().toLowerCase();
     p.revisionTopics = p.revisionTopics.filter((item) => item.topic.toLowerCase() !== normTopic);
-    return { ok: true, revisionTopics: p.revisionTopics };
+    p.revisionDetails = p.revisionDetails.filter((item) => item.topic.toLowerCase() !== normTopic);
+    return { ok: true, revisionTopics: p.revisionTopics, revisionDetails: p.revisionDetails };
+  }
+
+  completeRevisionPractice(playerId, solvedTopics = []) {
+    const p = this.getPlayer(playerId);
+    if (!p) return { ok: false, reason: 'Oyuncu bulunamadı' };
+    p.revisionTopics = Array.isArray(p.revisionTopics) ? p.revisionTopics : [];
+    p.revisionDetails = Array.isArray(p.revisionDetails) ? p.revisionDetails : [];
+
+    const solvedNorm = Array.isArray(solvedTopics)
+      ? solvedTopics.map((t) => String(t).trim().toLowerCase())
+      : [];
+
+    if (solvedNorm.length === 0) {
+      p.revisionTopics = [];
+      p.revisionDetails = [];
+    } else {
+      p.revisionTopics = p.revisionTopics.filter((item) => !solvedNorm.includes(item.topic.toLowerCase()));
+      p.revisionDetails = p.revisionDetails.filter((item) => !solvedNorm.includes(item.topic.toLowerCase()));
+    }
+
+    p.coins = (p.coins || 0) + 30; // +30 Coin ödülü
+    return {
+      ok: true,
+      coinsAwarded: 30,
+      newCoins: p.coins,
+      revisionTopics: p.revisionTopics,
+      revisionDetails: p.revisionDetails,
+    };
+  }
+
+  initDefaultRevisions() {
+    const defaultData = {
+      p1: {
+        topics: [
+          { topic: 'Türev ve Teğet Eğimi', subject: 'matematik', examType: 'AYT', mistakeCount: 3, failedIds: ['q_uc_test_001', 'q_pm_007'], attempts: 4 },
+          { topic: 'Dalgalar ve Ses', subject: 'fizik', examType: 'TYT', mistakeCount: 2, failedIds: ['q_uc_tf_002'], attempts: 4 },
+        ],
+      },
+      p2: {
+        topics: [
+          { topic: 'Kimyasal Tepkimeler ve Denge', subject: 'kimya', examType: 'TYT', mistakeCount: 3, failedIds: ['q_sb_018', 'q_tc_016'], attempts: 5 },
+          { topic: 'Üslü ve Köklü Sayılar', subject: 'matematik', examType: 'TYT', mistakeCount: 2, failedIds: ['q_uc_comp_003', 'q_nc_021'], attempts: 4 },
+        ],
+      },
+      p3: {
+        topics: [
+          { topic: 'Optik ve Kırılma', subject: 'fizik', examType: 'TYT', mistakeCount: 3, failedIds: ['q_pb_014', 'q_sl_020'], attempts: 4 },
+          { topic: 'Paragrafta Anlam', subject: 'turkce', examType: 'TYT', mistakeCount: 2, failedIds: ['q_mb_025', 'q_pm_023'], attempts: 5 },
+        ],
+      },
+      p4: {
+        topics: [
+          { topic: 'Elektrik ve Manyetizma', subject: 'fizik', examType: 'AYT', mistakeCount: 2, failedIds: ['q_uc_comp_032'], attempts: 6 },
+        ],
+      },
+      p5: {
+        topics: [
+          { topic: 'Hücre Organelleri', subject: 'biyoloji', examType: 'TYT', mistakeCount: 3, failedIds: ['q_hs_018', 'q_of_004'], attempts: 4 },
+        ],
+      },
+      p6: {
+        topics: [
+          { topic: 'Trigonometri', subject: 'matematik', examType: 'AYT', mistakeCount: 4, failedIds: ['q_uc_comp_003', 'q_nc_021'], attempts: 5 },
+        ],
+      },
+    };
+
+    const nowIso = new Date().toISOString();
+    for (const [pId, conf] of Object.entries(defaultData)) {
+      const p = this.getPlayer(pId);
+      if (!p) continue;
+      p.revisionTopics = conf.topics.map((t) => ({
+        topic: t.topic,
+        subject: t.subject,
+        examType: t.examType,
+        mistakeCount: t.mistakeCount,
+        lastMistakeAt: nowIso,
+        wrongQuestions: t.failedIds.map((id) => ({
+          externalId: id,
+          text: `${t.topic} Sorusu`,
+          explanation: '',
+          difficulty: 'MEDIUM',
+          failedCount: 1,
+          failedAt: nowIso,
+        })),
+        recommendedResources: getRecommendationsForTopic(t.subject, t.topic, t.examType),
+      }));
+      p.revisionDetails = conf.topics.map((t) => ({
+        topic: t.topic,
+        subject: t.subject,
+        wrongCount: t.mistakeCount,
+        totalAttempts: t.attempts,
+        errorRatePercent: Math.round((t.mistakeCount / t.attempts) * 100),
+        failedQuestionIds: t.failedIds,
+      }));
+    }
   }
 
   recordMatchOutcome(summary) {

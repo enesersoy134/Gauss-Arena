@@ -192,7 +192,7 @@ export const IntermissionScreen: React.FC<IntermissionScreenProps> = ({
               <span>{(roundResult.player1TimeMs / 1000).toFixed(1)} sn</span>
             </div>
             <div className="font-mono font-bold text-base text-[#22C55E]">
-              +{roundResult.player1Points} PUAN
+              +{Math.round(roundResult.player1Points)} PUAN
             </div>
           </div>
         </div>
@@ -244,7 +244,7 @@ export const IntermissionScreen: React.FC<IntermissionScreenProps> = ({
               <span>{(roundResult.player2TimeMs / 1000).toFixed(1)} sn</span>
             </div>
             <div className="font-mono font-bold text-base text-[#22C55E]">
-              +{roundResult.player2Points} PUAN
+              +{Math.round(roundResult.player2Points)} PUAN
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { BACKEND_GAME_DATA } from '../data/backendMockData';
-import { Question } from '../types/game';
+import { Question, RevisionDetail } from '../types/game';
 import { ResourceRecommendation } from '../utils/resourceRecommendations';
 
 export interface RevisionWrongQuestion {
@@ -43,6 +43,7 @@ export interface BackendPlayer {
   weeklyMatchesPlayed: number;
   weeklyRewardClaimed: boolean;
   revisionTopics?: RevisionTopicItem[];
+  revisionDetails?: RevisionDetail[];
   coupons: Array<{
     code: string;
     discountPercent: number;
@@ -373,6 +374,10 @@ export function useBackendGame() {
     const params = new URLSearchParams(window.location.search);
     const playerParam = params.get('player');
     if (playerParam) return playerParam;
+    try {
+      const stored = sessionStorage.getItem('isler_active_player_id');
+      if (stored) return stored;
+    } catch {}
     const win = params.get('window');
     return win === '2' ? 'p3' : 'p2';
   });
@@ -437,7 +442,42 @@ export function useBackendGame() {
   // Oyuncu değiştirme
   const selectPlayer = useCallback((newPlayerId: string) => {
     setCurrentPlayerIdState(newPlayerId);
+    if (typeof window !== 'undefined') {
+      try {
+        sessionStorage.setItem('isler_active_player_id', newPlayerId);
+      } catch {}
+    }
     socketRef.current.emit('player:select', { playerId: newPlayerId });
+  }, []);
+
+  // Dinamik Rastgele Yeni Öğrenci Hesabı Oluşturma (/random)
+  const createRandomPlayer = useCallback(async (): Promise<BackendPlayer | null> => {
+    try {
+      const res = await fetch('/api/players/random', { method: 'POST' });
+      const data = await res.json();
+      if (data && data.ok && data.player) {
+        selectPlayer(data.player.id);
+        return data.player;
+      }
+    } catch (err) {
+      console.error('createRandomPlayer error:', err);
+    }
+    return null;
+  }, [selectPlayer]);
+
+  // Yanlış Soruları Tekrar Çözme Antrenmanını Tamamlama (+30 Coin)
+  const completeRevisionPractice = useCallback(async (playerId: string, solvedTopics?: string[]) => {
+    try {
+      const res = await fetch('/api/players/complete-revision-practice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ playerId, solvedTopics }),
+      });
+      return await res.json();
+    } catch (err) {
+      console.error('completeRevisionPractice error:', err);
+      return { ok: false, reason: 'Bağlantı hatası' };
+    }
   }, []);
 
   useEffect(() => {
@@ -741,5 +781,7 @@ export function useBackendGame() {
     updatePlayerDemo,
     resetDemo,
     clearRevisionTopic,
+    createRandomPlayer,
+    completeRevisionPractice,
   };
 }

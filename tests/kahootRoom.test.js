@@ -217,6 +217,10 @@ test('Kahoot Room lifecycle: create, join, start, answer, intermission, next and
     hostSocket.emit('kahoot:nextQuestion', { pin });
     const finishedState = await finishedPromise;
     assert.equal(finishedState.status, 'FINISHED');
+    assert.ok(Array.isArray(finishedState.topicAnalytics), 'topicAnalytics dizi olarak dönmeli');
+    assert.ok(finishedState.topicAnalytics.length >= 1, 'En az 1 konu analitiği bulunmalı');
+    assert.ok(finishedState.topicAnalytics[0].totalAttempts > 0);
+    assert.ok(typeof finishedState.topicAnalytics[0].wrongPercent === 'number');
   } finally {
     hostSocket.disconnect();
     student1Socket.disconnect();

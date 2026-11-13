@@ -3,7 +3,7 @@
     "examType": "TYT",
     "subject": "kimya",
     "difficulty": "EASY",
-    "defaultDurationMs": 60000
+    "defaultDurationMs": 15000
   },
   "questions": [
     {

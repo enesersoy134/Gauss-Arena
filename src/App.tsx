@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useBackendGame } from './services/backendSocket';
 import { Question } from './types/game';
+import { ALL_INTERACTIVE_QUESTIONS } from './data/allInteractiveQuestions';
 import { getRecommendationsForTopic } from './utils/resourceRecommendations';
 import LiveDuelScreen from './components/game/LiveDuelScreen';
 import GameScreen from './components/game/GameScreen';
+import RevisionPracticeScreen from './components/game/RevisionPracticeScreen';
 import AdminPanel from './components/admin/AdminPanel';
 import SmartboardScreen from './components/smartboard/SmartboardScreen';
 import KahootPlayerView from './components/smartboard/KahootPlayerView';
+import { soundEngine } from './utils/soundEngine';
 import {
   Swords,
   Flame,
@@ -22,6 +25,10 @@ import {
   BookOpen,
   AlertTriangle,
   Compass,
+  Shuffle,
+  Target,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 
 type ActiveTab = 'matchmaking' | 'economy' | 'tournaments' | 'revision';
@@ -53,9 +60,11 @@ export default function App() {
     updatePlayerDemo,
     resetDemo,
     clearRevisionTopic,
+    createRandomPlayer,
+    completeRevisionPractice,
   } = useBackendGame();
 
-  // URL / Routing Yönetimi (Client-side /admin ve /)
+  // URL / Routing Yönetimi (Client-side /admin, /random, /tahta, /katil ve /)
   const [currentPath, setCurrentPath] = useState<string>(() => {
     if (typeof window === 'undefined') return '/';
     return window.location.pathname;
@@ -85,15 +94,65 @@ export default function App() {
     }
   }, [backendState.players, currentPlayerId, selectPlayer]);
 
+  // Bildirim Toast State
+  const [actionMessage, setActionMessage] = useState<string | null>(null);
+
+  const showToast = useCallback((msg: string) => {
+    setActionMessage(msg);
+    setTimeout(() => setActionMessage(null), 3500);
+  }, []);
+
+  // Faz 1: /random Route Desteği — Dinamik Rastgele Yeni Öğrenci Hesabı Oluşturma
+  const isCreatingRandomRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    if (currentPath.startsWith('/random') && !isCreatingRandomRef.current) {
+      isCreatingRandomRef.current = true;
+      (async () => {
+        try {
+          const newPlayer = await createRandomPlayer();
+          if (newPlayer && newPlayer.id) {
+            showToast(`🎲 Yeni öğrenci hesabınız açıldı: ${newPlayer.name} (${newPlayer.elo} ELO)`);
+            navigateTo(`/?player=${newPlayer.id}`);
+          } else {
+            showToast('Rastgele öğrenci oluşturulamadı, varsayılan hesaba yönlendiriliyorsunuz.');
+            navigateTo('/');
+          }
+        } catch (err) {
+          console.error('Random player creation failed', err);
+          navigateTo('/');
+        }
+      })();
+    }
+  }, [currentPath, createRandomPlayer, navigateTo, showToast]);
+
+  // Mute durumu dinleme
+  const [isSoundMuted, setIsSoundMuted] = useState<boolean>(soundEngine.getMuted());
+  useEffect(() => {
+    return soundEngine.subscribe(() => {
+      setIsSoundMuted(soundEngine.getMuted());
+    });
+  }, []);
+
+  // Geliştirici Soru Test Menüsü & Bireysel Eksik Konu Antrenmanı State
+  const [forcedQuestions, setForcedQuestions] = useState<Question[] | undefined>(undefined);
+  const [revisionPracticeQuestions, setRevisionPracticeQuestions] = useState<Question[] | null>(null);
+  const [revisionPracticeTopics, setRevisionPracticeTopics] = useState<string[]>([]);
+
+  // Lobi fon müziği yönetimi (Ana menüdeyken 'lobby' arpeji başlar)
+  useEffect(() => {
+    if (!activeDuel && !duelSummary && !forcedQuestions && !revisionPracticeQuestions && (currentPath === '/' || currentPath === '')) {
+      soundEngine.startMusic('lobby');
+    }
+  }, [activeDuel, duelSummary, forcedQuestions, revisionPracticeQuestions, currentPath]);
+
   // Sekme yönetimi
   const [activeTab, setActiveTab] = useState<ActiveTab>('matchmaking');
   const [revisionSubjectFilter, setRevisionSubjectFilter] = useState<string>('all');
 
-  // Geliştirici Soru Test Menüsü (AdminPanel veya test için)
-  const [forcedQuestions, setForcedQuestions] = useState<Question[] | undefined>(undefined);
-
-  // Eşleştirme Formu Ayarları
-  const [selectedExamType, setSelectedExamType] = useState<'TYT' | 'AYT'>('TYT');
+  // Eşleştirme Formu Ayarları (LGS & Soru Seviyesi/Zorluk dahil)
+  const [selectedExamType, setSelectedExamType] = useState<'LGS' | 'TYT' | 'AYT'>('TYT');
+  const [selectedDifficultyMode, setSelectedDifficultyMode] = useState<'adaptive' | 'easy' | 'medium' | 'hard'>('adaptive');
   const [selectedMode, setSelectedMode] = useState<'ranked' | 'tournament'>('ranked');
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>(['matematik', 'fizik', 'kimya']);
   const [selectedTournamentId, setSelectedTournamentId] = useState<string>('tour-tyt-1');
@@ -109,26 +168,67 @@ export default function App() {
 
   // Coin Dönüştürme State
   const [coinsToConvert, setCoinsToConvert] = useState<number>(100);
-  const [actionMessage, setActionMessage] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
-    setActionMessage(msg);
-    setTimeout(() => setActionMessage(null), 3500);
-  };
+  // =========================================================================
+  // ROUTE GÖRÜNÜMLERİ
+  // =========================================================================
 
-  // 1. GELİŞTİRİCİ SORU TEST MODU (Forced Questions ile simülasyon - Admin panelinden test etme)
+  // 1. /random YÜKLEME EKRANI
+  if (currentPath.startsWith('/random')) {
+    return (
+      <div className="min-h-screen bg-[#150A16] text-white flex flex-col items-center justify-center p-6 font-sans">
+        <div className="p-8 rounded-3xl bg-[#1A0E1C] border border-orange-500/40 shadow-2xl flex flex-col items-center gap-4 text-center max-w-md w-full animate-pulse">
+          <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-[#F14E13] to-amber-500 flex items-center justify-center text-3xl shadow-xl shadow-[#F14E13]/30">
+            🎲
+          </div>
+          <h2 className="text-xl font-black font-poppins text-white">
+            Rastgele Öğrenci Hesabı Oluşturuluyor...
+          </h2>
+          <p className="text-xs font-mono text-[#B5CBC8]">
+            Yeni profil, ELO ligi ve avatar atanıyor. Lütfen bekleyin...
+          </p>
+          <div className="w-8 h-8 rounded-full border-2 border-t-[#F14E13] border-white/10 animate-spin mt-2" />
+        </div>
+      </div>
+    );
+  }
+
+  // 2. BİREYSEL EKSİK KONU TELAFİ & PEKİŞTİRME ANTRENMANI
+  if (revisionPracticeQuestions && revisionPracticeQuestions.length > 0) {
+    return (
+      <RevisionPracticeScreen
+        questions={revisionPracticeQuestions}
+        topics={revisionPracticeTopics}
+        onComplete={async (stats) => {
+          await completeRevisionPractice(currentPlayerId, stats.solvedTopics);
+          showToast(
+            `🎉 Eksik konu telafi antrenmanını tamamladınız! +30 Coin kazandınız ve eksiklik yüzdeniz düştü! (${stats.correctCount}/${stats.totalCount} Doğru)`
+          );
+          setRevisionPracticeQuestions(null);
+          setRevisionPracticeTopics([]);
+        }}
+        onExit={() => {
+          setRevisionPracticeQuestions(null);
+          setRevisionPracticeTopics([]);
+        }}
+      />
+    );
+  }
+
+  // 3. GELİŞTİRİCİ SORU TEST MODU (/admin için)
   if (forcedQuestions && forcedQuestions.length > 0) {
     return (
       <GameScreen
         forcedQuestions={forcedQuestions}
         playerId={currentPlayerId}
-        onExit={() => setForcedQuestions(undefined)}
+        onExit={() => {
+          setForcedQuestions(undefined);
+        }}
       />
     );
   }
 
-  // 2. YÖNETİCİ & OPERATÖR PANELİ (/admin)
-  // Operatör admin panelindeyken arka planda öğrenciler yarışsa bile admin paneli bozulmamalı
+  // 3. YÖNETİCİ & OPERATÖR PANELİ (/admin)
   if (currentPath.startsWith('/admin')) {
     return (
       <AdminPanel
@@ -156,17 +256,17 @@ export default function App() {
     );
   }
 
-  // 3. CANLI SINIF YARIŞMASI ÖĞRENCİ TELEFON EKRANI (/katil)
+  // 4. CANLI SINIF YARIŞMASI ÖĞRENCİ TELEFON EKRANI (/katil)
   if (currentPath.startsWith('/katil')) {
     return <KahootPlayerView onExit={() => navigateTo('/')} />;
   }
 
-  // 4. AKILLI TAHTA MODU (/tahta veya /smartboard)
+  // 5. AKILLI TAHTA MODU (/tahta veya /smartboard)
   if (currentPath.startsWith('/tahta') || currentPath.startsWith('/smartboard')) {
     return <SmartboardScreen onExit={() => navigateTo('/')} />;
   }
 
-  // 5. CANLI SOCKET DÜELLO EKRANI (Yalnızca öğrenci arayüzünde aktif maç varsa)
+  // 6. CANLI SOCKET DÜELLO EKRANI
   if (activeDuel || duelSummary) {
     return (
       <LiveDuelScreen
@@ -182,7 +282,7 @@ export default function App() {
   }
 
   // =========================================================================
-  // 4. ÖĞRENCİ ARAYÜZÜ (/) - Temizlenmiş, profesyonel EdTech ekranı
+  // 7. ÖĞRENCİ ARAYÜZÜ (/) - EdTech Platformu
   // =========================================================================
   const allSubjects = [
     { id: 'matematik', label: 'Matematik' },
@@ -199,6 +299,7 @@ export default function App() {
   };
 
   const handleStartQueue = () => {
+    soundEngine.playClick();
     if (selectedSubjects.length === 0) {
       showToast('En az bir ders seçmelisiniz!');
       return;
@@ -208,29 +309,115 @@ export default function App() {
       subjects: selectedSubjects,
       mode: selectedMode,
       tournamentId: selectedMode === 'tournament' ? selectedTournamentId : null,
-    });
+      difficultyMode: selectedDifficultyMode,
+    } as any);
   };
 
   const handleConvertCoins = async () => {
+    soundEngine.playClick();
     if (coinsToConvert < 100) {
       showToast('En az 100 Coin dönüştürebilirsiniz!');
       return;
     }
     const res = await convertCoins(coinsToConvert, currentPlayerId);
     if (res?.ok) {
+      soundEngine.playCorrect();
       showToast(`Tebrikler! ${coinsToConvert} Coin karşılığında ${res.islerPointsAwarded} İşler Puanı ve indirim kuponu kazandınız!`);
     } else {
+      soundEngine.playWrong();
       showToast(res?.reason || 'Dönüştürme başarısız oldu.');
     }
   };
 
   const handleClaimWeekly = async () => {
+    soundEngine.playClick();
     const res = await claimWeeklyReward(currentPlayerId);
     if (res?.ok) {
+      soundEngine.playCorrect();
       showToast(`Tebrikler! ${res.rewardCoins} Coin haftalık lig ödülü hesabınıza eklendi!`);
     } else {
+      soundEngine.playWrong();
       showToast(res?.reason || 'Haftalık ödül henüz alınamaz.');
     }
+  };
+
+  // Faz 3: Eksik Konu Verilerini Hazırla (revisionDetails veya revisionTopics fallback)
+  const revisionItems =
+    currentPlayer.revisionDetails && currentPlayer.revisionDetails.length > 0
+      ? currentPlayer.revisionDetails
+      : (currentPlayer.revisionTopics || []).map((t) => {
+          const tot = Math.max(3, t.mistakeCount * 2);
+          const rate = Math.min(100, Math.round((t.mistakeCount / tot) * 100));
+          return {
+            topic: t.topic,
+            subject: t.subject,
+            examType: t.examType || 'TYT',
+            totalAttempts: tot,
+            wrongCount: t.mistakeCount,
+            errorRatePercent: rate,
+            failedQuestionIds: t.wrongQuestions.map((wq) => wq.externalId),
+            recommendedBooks: (t.recommendedResources || []).map((r) => `${r.bookTitle} (${r.publisher})`),
+            lastMistakeAt: t.lastMistakeAt,
+          };
+        });
+
+  // Ortalama hata yüzdesi
+  const avgErrorRate =
+    revisionItems.length > 0
+      ? Math.round(
+          revisionItems.reduce((acc, curr) => acc + (curr.errorRatePercent || 0), 0) /
+            revisionItems.length
+        )
+      : 0;
+
+  // Tüm Eksik Konuları Karışık Çöz
+  const handlePracticeAllRevision = () => {
+    if (revisionItems.length === 0) {
+      showToast('Tekrar edilecek eksik konunuz bulunmuyor!');
+      return;
+    }
+
+    const allFailedIds = new Set<string>();
+    const topicNames: string[] = [];
+
+    revisionItems.forEach((item) => {
+      topicNames.push(item.topic);
+      (item.failedQuestionIds || []).forEach((id) => allFailedIds.add(id));
+    });
+
+    let matchedQuestions = ALL_INTERACTIVE_QUESTIONS.filter((q) =>
+      allFailedIds.has(q.id) ||
+      topicNames.some(
+        (tn) =>
+          q.topic.toLowerCase().includes(tn.toLowerCase()) ||
+          tn.toLowerCase().includes(q.topic.toLowerCase())
+      )
+    );
+
+    if (matchedQuestions.length === 0) {
+      matchedQuestions = ALL_INTERACTIVE_QUESTIONS.slice(0, 5);
+    }
+
+    const shuffled = [...matchedQuestions].sort(() => Math.random() - 0.5);
+    setRevisionPracticeTopics(topicNames);
+    setRevisionPracticeQuestions(shuffled);
+  };
+
+  // Tekil Bir Eksik Konuyu Çöz
+  const handlePracticeSingleTopic = (topicName: string, failedIds?: string[]) => {
+    const idSet = new Set(failedIds || []);
+    let matched = ALL_INTERACTIVE_QUESTIONS.filter(
+      (q) =>
+        idSet.has(q.id) ||
+        q.topic.toLowerCase().includes(topicName.toLowerCase()) ||
+        topicName.toLowerCase().includes(q.topic.toLowerCase())
+    );
+    if (matched.length === 0) {
+      matched = ALL_INTERACTIVE_QUESTIONS.slice(0, 3);
+    }
+    const shuffled = [...matched].sort(() => Math.random() - 0.5);
+    setRevisionPracticeTopics([topicName]);
+    setRevisionPracticeQuestions(shuffled);
   };
 
   return (
@@ -240,7 +427,7 @@ export default function App() {
       <div className="hero-button-blur -bottom-24 -right-24 opacity-25 pointer-events-none" />
 
       {/* =========================================================================
-       * ÖĞRENCİ HEADER (Temiz, kurumsal, öğrenci odaklı)
+       * ÖĞRENCİ HEADER
        * ========================================================================= */}
       <header className="border-b border-[rgba(241,78,19,0.25)] bg-[rgba(26,14,28,0.92)] backdrop-blur-md sticky top-0 z-40 px-3 sm:px-6 py-2.5 sm:py-3.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4 flex-nowrap">
@@ -257,7 +444,7 @@ export default function App() {
                   <span className="text-[#F14E13] text-xs sm:text-sm font-bold">ARENA</span>
                 </h1>
               </div>
-              <p className="text-xs text-[#B5CBC8] hidden md:block">1v1 Bilgi Düelloları • TYT & AYT Sınav Hazırlığı</p>
+              <p className="text-xs text-[#B5CBC8] hidden md:block">1v1 Bilgi Düelloları • LGS, TYT & AYT Sınav Hazırlığı</p>
             </div>
           </div>
 
@@ -300,13 +487,32 @@ export default function App() {
                 </div>
               </div>
             </div>
+
+            {/* Ses & Müzik Aç / Kapat Butonu */}
+            <button
+              onClick={() => {
+                soundEngine.toggleMute();
+                soundEngine.playClick();
+              }}
+              className="p-2 sm:px-2.5 sm:py-2 rounded-2xl bg-[#0F0510] border border-white/10 hover:border-orange-500/40 text-zinc-300 hover:text-white transition-all shadow-sm shrink-0 flex items-center justify-center"
+              title={isSoundMuted ? 'Sesi Aç (Mute Kaldır)' : 'Sesi Kapat (Mute)'}
+            >
+              {isSoundMuted ? (
+                <VolumeX className="w-4 h-4 text-red-400" />
+              ) : (
+                <Volume2 className="w-4 h-4 text-emerald-400 animate-pulse" />
+              )}
+            </button>
           </div>
         </div>
 
-        {/* Öğrenci Sekme Barı (Mobil: 4 eşit sütunlu kompakt bar, Masaüstü: flex) */}
+        {/* Öğrenci Sekme Barı */}
         <div className="max-w-7xl mx-auto mt-2 sm:mt-3 grid grid-cols-4 gap-1 sm:flex sm:items-center sm:gap-2 border-t border-white/5 pt-2">
           <button
-            onClick={() => setActiveTab('matchmaking')}
+            onClick={() => {
+              setActiveTab('matchmaking');
+              soundEngine.playClick();
+            }}
             className={`px-1.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs md:text-sm font-poppins font-bold flex items-center justify-center gap-1 sm:gap-2 transition-all text-center ${
               activeTab === 'matchmaking'
                 ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
@@ -321,7 +527,10 @@ export default function App() {
           </button>
 
           <button
-            onClick={() => setActiveTab('economy')}
+            onClick={() => {
+              setActiveTab('economy');
+              soundEngine.playClick();
+            }}
             className={`px-1.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs md:text-sm font-poppins font-bold flex items-center justify-center gap-1 sm:gap-2 transition-all text-center ${
               activeTab === 'economy'
                 ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
@@ -335,7 +544,10 @@ export default function App() {
           </button>
 
           <button
-            onClick={() => setActiveTab('tournaments')}
+            onClick={() => {
+              setActiveTab('tournaments');
+              soundEngine.playClick();
+            }}
             className={`px-1.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs md:text-sm font-poppins font-bold flex items-center justify-center gap-1 sm:gap-2 transition-all text-center ${
               activeTab === 'tournaments'
                 ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
@@ -350,7 +562,10 @@ export default function App() {
           </button>
 
           <button
-            onClick={() => setActiveTab('revision')}
+            onClick={() => {
+              setActiveTab('revision');
+              soundEngine.playClick();
+            }}
             className={`px-1.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs md:text-sm font-poppins font-bold flex items-center justify-center gap-1 sm:gap-2 transition-all text-center ${
               activeTab === 'revision'
                 ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
@@ -359,9 +574,9 @@ export default function App() {
           >
             <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             <span className="sm:hidden">Tekrar</span>
-            <span className="hidden sm:inline md:hidden">Tekrar Listesi</span>
-            <span className="hidden md:inline">Tekrar Listesi & Kaynaklar</span>
-            {(currentPlayer.revisionTopics?.length || 0) > 0 && (
+            <span className="hidden sm:inline md:hidden">Eksik Konularım</span>
+            <span className="hidden md:inline">Eksik Konularım & Kaynaklar</span>
+            {revisionItems.length > 0 && (
               <span
                 className={`text-[9px] sm:text-[11px] font-mono font-bold px-1 sm:px-2 py-0.2 sm:py-0.5 rounded-full shrink-0 ${
                   activeTab === 'revision'
@@ -369,8 +584,8 @@ export default function App() {
                     : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
                 }`}
               >
-                <span className="sm:hidden">{(currentPlayer.revisionTopics?.length || 0)}</span>
-                <span className="hidden sm:inline">{(currentPlayer.revisionTopics?.length || 0)} Başlık</span>
+                <span className="sm:hidden">{revisionItems.length}</span>
+                <span className="hidden sm:inline">{revisionItems.length} Konu</span>
               </span>
             )}
           </button>
@@ -456,12 +671,12 @@ export default function App() {
                 </div>
 
                 {/* Pekiştirilemeyen Konu Başlıkları Hızlı Erişim Bandı */}
-                {currentPlayer.revisionTopics && currentPlayer.revisionTopics.length > 0 && (
+                {revisionItems.length > 0 && (
                   <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-2">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <span className="text-xs font-poppins font-bold text-amber-300 flex items-center gap-1.5">
                         <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Revize Edilmesi Gereken Konu Başlıkların ({currentPlayer.revisionTopics.length}):</span>
+                        <span>Revize Edilmesi Gereken Konu Başlıkların ({revisionItems.length}):</span>
                       </span>
                       <button
                         onClick={() => setActiveTab('revision')}
@@ -471,7 +686,7 @@ export default function App() {
                       </button>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      {currentPlayer.revisionTopics.map((rev) => (
+                      {revisionItems.slice(0, 4).map((rev) => (
                         <button
                           key={`${rev.subject}-${rev.topic}`}
                           onClick={() => {
@@ -485,7 +700,7 @@ export default function App() {
                           </span>
                           <span>{rev.topic}</span>
                           <span className="px-1.5 py-0.2 rounded bg-red-500/20 text-red-300 font-mono text-[10px] font-bold">
-                            {rev.mistakeCount}✗
+                            %{rev.errorRatePercent}
                           </span>
                         </button>
                       ))}
@@ -494,7 +709,7 @@ export default function App() {
                 )}
               </div>
 
-              {/* Eşleştirme Formu */}
+              {/* Eşleştirme Formu (LGS, TYT, AYT ve Seviye Seçimi) */}
               <div className="game-card p-6 flex flex-col gap-5">
                 <h3 className="font-poppins font-bold text-base text-white flex items-center gap-2">
                   <Swords className="w-4 h-4 text-[#F14E13]" />
@@ -533,32 +748,52 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Sınav Tipi */}
+                {/* Sınav Tipi (LGS, TYT, AYT) */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs text-[#B5CBC8] font-semibold uppercase tracking-wider">
                     Sınav Kategorisi
                   </label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      onClick={() => setSelectedExamType('TYT')}
-                      className={`py-2.5 px-4 rounded-xl border font-mono font-bold text-xs sm:text-sm transition-all ${
-                        selectedExamType === 'TYT'
-                          ? 'border-[#F14E13] bg-[#F14E13]/20 text-[#F14E13]'
-                          : 'border-white/10 bg-[#0F0510] text-[#B5CBC8]'
-                      }`}
-                    >
-                      TYT (Temel Yeterlilik)
-                    </button>
-                    <button
-                      onClick={() => setSelectedExamType('AYT')}
-                      className={`py-2.5 px-4 rounded-xl border font-mono font-bold text-xs sm:text-sm transition-all ${
-                        selectedExamType === 'AYT'
-                          ? 'border-[#F14E13] bg-[#F14E13]/20 text-[#F14E13]'
-                          : 'border-white/10 bg-[#0F0510] text-[#B5CBC8]'
-                      }`}
-                    >
-                      AYT (Alan Yeterlilik)
-                    </button>
+                  <div className="grid grid-cols-3 gap-2">
+                    {(['LGS', 'TYT', 'AYT'] as const).map((t) => (
+                      <button
+                        key={t}
+                        onClick={() => setSelectedExamType(t)}
+                        className={`py-2 px-3 rounded-xl border font-mono font-bold text-xs sm:text-sm transition-all ${
+                          selectedExamType === t
+                            ? 'border-[#F14E13] bg-[#F14E13]/20 text-[#F14E13] shadow-sm shadow-[#F14E13]/30'
+                            : 'border-white/10 bg-[#0F0510] text-[#B5CBC8] hover:border-white/20'
+                        }`}
+                      >
+                        {t === 'LGS' ? 'LGS (8. Sınıf)' : t === 'TYT' ? 'TYT (Temel)' : 'AYT (Alan)'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Soru Seviyesi / Zorluk Seçimi */}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs text-[#B5CBC8] font-semibold uppercase tracking-wider">
+                    Soru Seviyesi / Zorluk
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {[
+                      { id: 'adaptive', label: '🎯 Seviyeme Göre (Adaptif)' },
+                      { id: 'easy', label: '🟢 Kolay' },
+                      { id: 'medium', label: '🟡 Orta' },
+                      { id: 'hard', label: '🔴 Zor' },
+                    ].map((diff) => (
+                      <button
+                        key={diff.id}
+                        onClick={() => setSelectedDifficultyMode(diff.id as any)}
+                        className={`py-2 px-2.5 rounded-xl border text-[11px] sm:text-xs font-semibold transition-all text-center ${
+                          selectedDifficultyMode === diff.id
+                            ? 'border-[#F14E13] bg-[#F14E13]/20 text-white shadow-sm shadow-[#F14E13]/30'
+                            : 'border-white/10 bg-[#0F0510] text-[#B5CBC8] hover:border-white/20'
+                        }`}
+                      >
+                        {diff.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -618,185 +853,180 @@ export default function App() {
                 )}
 
                 {/* Ana Katılım / Çıkış Butonu */}
-                <div className="pt-2 flex flex-col gap-2">
-                  {/* Farklı bir mod sırasında bekliyorsa uyarı notu */}
-                  {isQueueing && !isSelectedModeQueueing && (
-                    <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0 text-amber-400" />
-                      <span>
-                        {myQueueEntry?.mode === 'tournament'
-                          ? 'ℹ️ Şu an Turnuva sırasında bekliyorsunuz. Dereceli maça katılırsanız turnuva sırasından çıkılır.'
-                          : 'ℹ️ Şu an Dereceli Lig sırasında bekliyorsunuz. Turnuva maçına katılırsanız dereceli sırasından çıkılır.'}
-                      </span>
-                    </div>
-                  )}
-
-                  {!isSelectedModeQueueing ? (
+                <div className="pt-2">
+                  {isSelectedModeQueueing ? (
                     <button
-                      onClick={handleStartQueue}
-                      className="btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#F14E13]/30"
+                      onClick={leaveQueue}
+                      className="w-full py-4 rounded-2xl bg-red-600/20 border-2 border-red-500/50 text-red-300 font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2 hover:bg-red-600/30 transition-all shadow-xl shadow-red-950/40"
                     >
-                      <Swords className="w-4 h-4" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-400 animate-ping shrink-0" />
                       <span>
-                        {selectedMode === 'tournament'
-                          ? isQueueing
-                            ? '🏆 Turnuva Maçı Ara (Dereceli Sırasından Geç)'
-                            : '🏆 Turnuva Maçı Ara'
-                          : isQueueing
-                          ? '⚔️ Dereceli 1v1 Düelloya Katıl (Turnuva Sırasından Geç)'
-                          : '⚔️ 1v1 Düelloya Katıl'}
+                        ⏳ Eşleşme Aranıyor ({Math.floor(myQueueEntry?.waitSeconds ?? 0)}s) — Sıradan Çık
                       </span>
                     </button>
                   ) : (
                     <button
-                      onClick={leaveQueue}
-                      className="w-full py-3.5 px-4 rounded-2xl bg-red-600/20 border border-red-500/40 text-red-300 hover:bg-red-600/30 font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
+                      onClick={handleStartQueue}
+                      className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 text-white font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-2xl shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99] transition-all border border-white/20"
                     >
-                      <span className="w-2.5 h-2.5 rounded-full bg-red-400 animate-ping" />
-                      <span>Kuyruktan Çık</span>
-                      <span className="font-mono text-xs opacity-80">
-                        ({Math.floor(myQueueEntry?.waitSeconds ?? 0)}s)
-                      </span>
+                      <Swords className="w-5 h-5 fill-current" />
+                      <span>⚔️ 1v1 RAKİP BUL & DÜELLOYU BAŞLAT</span>
                     </button>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* SAĞ KOLON: Öğrenci Rehberi & Canlı Eşleşme Radarı (5 Kolon) */}
+            {/* SAĞ KOLON: Canlı Eşleşme Radarı & Lig Sıralaması (5 Kolon) */}
             <div className="lg:col-span-5 flex flex-col gap-6">
-              {isSelectedModeQueueing && myQueueEntry ? (
-                /* Kuyrukta Bekleme Durumu (Radar Görseli) */
-                <div className="game-card p-6 border-amber-500/40 flex flex-col items-center text-center gap-4 animate-fade-in">
-                  <div className="relative w-28 h-28 flex items-center justify-center my-2">
-                    <span className="absolute w-28 h-28 rounded-full border border-orange-500/30 animate-ping" />
-                    <span className="absolute w-20 h-20 rounded-full border border-amber-500/40 animate-pulse" />
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F14E13] to-amber-500 flex items-center justify-center shadow-lg shadow-[#F14E13]/40">
-                      <Swords className="w-7 h-7 text-white" />
-                    </div>
+              {/* Canlı Eşleşme Kuyruğu Radarı */}
+              <div className="game-card p-6 flex flex-col gap-4 border-orange-500/30">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Compass className="w-4 h-4 text-[#F14E13]" />
+                    <h3 className="font-poppins font-bold text-sm text-white">Canlı Eşleşme Radarı</h3>
                   </div>
-
-                  <div>
-                    <div className="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono font-bold mb-1.5">
-                      {myQueueEntry.mode === 'tournament' ? '🏆 Turnuva Sırası' : '⚔️ Dereceli Lig Sırası'}
-                    </div>
-                    <h3 className="font-poppins font-bold text-lg text-white">
-                      Uygun Rakip Aranıyor...
-                    </h3>
-                    <p className="text-xs text-[#B5CBC8] mt-1">
-                      {myQueueEntry.examType} • {myQueueEntry.subjects.join(', ')} kategorisinde seviyenize uygun rakip aranıyor.
-                    </p>
-                  </div>
-
-                  <div className="bg-[#0F0510] w-full p-3.5 rounded-xl border border-white/10 flex items-center justify-between font-mono text-xs">
-                    <span className="text-[#B5CBC8] flex items-center gap-1.5">
-                      <Clock className="w-4 h-4 text-amber-400" />
-                      <span>Bekleme Süresi:</span>
-                    </span>
-                    <span className="text-amber-400 font-bold text-sm">
-                      {Math.floor(myQueueEntry?.waitSeconds ?? 0)} saniye
-                    </span>
-                  </div>
-
-                  <p className="text-[11px] text-zinc-500 leading-relaxed font-mono">
-                    Momentum eşleştirme motoru, adil bir karşılaşma için ELO ve kazanma serinizi eşzamanlı olarak değerlendirir.
-                  </p>
+                  <span className="text-[11px] font-mono text-emerald-400 font-semibold flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    <span>{backendState.queueSnapshot.length} Oyuncu Kuyrukta</span>
+                  </span>
                 </div>
-              ) : (
-                /* 1v1 Düello Nasıl Çalışır Bilgilendirme Kartı */
-                <div className="game-card p-6 border-orange-500/30 flex flex-col gap-4">
-                  <h3 className="font-poppins font-bold text-base text-white flex items-center gap-2">
-                    <Compass className="w-5 h-5 text-[#F14E13]" />
-                    <span>1v1 Düello Nasıl Çalışır?</span>
-                  </h3>
 
-                  <div className="flex flex-col gap-3 text-xs leading-relaxed text-[#B5CBC8]">
-                    <div className="p-3 rounded-xl bg-[#0F0510] border border-white/5 flex items-start gap-2.5">
-                      <Flame className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                      <div>
-                        <span className="font-bold text-white block">Momentum Eşleştirme (MMR<sub>eff</sub>):</span>
-                        Kazanma seriniz arttıkça efektif puanınız yükselir ve sistem size daha iddialı rakipler getirir.
-                      </div>
-                    </div>
-
-                    <div className="p-3 rounded-xl bg-[#0F0510] border border-white/5 flex items-start gap-2.5">
-                      <Clock className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                      <div>
-                        <span className="font-bold text-white block">Hız & Doğruluk:</span>
-                        Her rauntta soruya doğru ve olabildiğince hızlı cevap vererek puan kazanırsınız.
-                      </div>
-                    </div>
-
-                    <div className="p-3 rounded-xl bg-[#0F0510] border border-white/5 flex items-start gap-2.5">
-                      <ShoppingBag className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <div>
-                        <span className="font-bold text-white block">İşler Sadakat Puanı & İndirim:</span>
-                        Her galibiyetinizde Coin kazanın. Kazandığınız Coin'leri İşler Kitabevi indirim çekine dönüştürün!
-                      </div>
-                    </div>
+                {backendState.queueSnapshot.length === 0 ? (
+                  <div className="py-8 text-center text-xs text-[#B5CBC8]/70 font-mono bg-[#0F0510]/60 rounded-xl border border-white/5">
+                    Şu an kuyrukta bekleyen oyuncu yok.
+                    <br />
+                    Hemen sıraya girerek ilk eşleşmeyi başlatın!
                   </div>
+                ) : (
+                  <div className="flex flex-col gap-2 max-h-60 overflow-y-auto pr-1">
+                    {backendState.queueSnapshot.map((q) => {
+                      const isMe = q.playerId === currentPlayerId;
+                      return (
+                        <div
+                          key={q.playerId}
+                          className={`p-3 rounded-xl flex items-center justify-between text-xs transition-all ${
+                            isMe
+                              ? 'bg-[#F14E13]/20 border border-[#F14E13]/50 text-white shadow-sm'
+                              : 'bg-[#0F0510] border border-white/5 text-[#B5CBC8]'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
+                            <div>
+                              <span className="font-bold text-white">{q.name.split('(')[0].trim()}</span>
+                              <div className="text-[10px] font-mono opacity-80">
+                                {q.elo} ELO • {q.examType}
+                              </div>
+                            </div>
+                          </div>
+                          <span className="font-mono text-[11px] text-amber-300">
+                            {Math.floor(q.waitSeconds || 0)} sn
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
 
-                  {/* Haftalık Görev Durumu */}
-                  <div className="pt-2 border-t border-white/10 flex flex-col gap-2 font-mono text-xs">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[#B5CBC8]">Haftalık Lig İlerlemesi:</span>
-                      <span className="text-amber-400 font-bold">{currentPlayer.weeklyMatchesPlayed} / 15 Maç</span>
-                    </div>
-                    <div className="w-full bg-[#0F0510] h-2 rounded-full overflow-hidden border border-white/5">
+              {/* Haftalık ELO Sıralaması */}
+              <div className="game-card p-6 flex flex-col gap-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-4 h-4 text-amber-400" />
+                    <h3 className="font-poppins font-bold text-sm text-white">Haftalık Arena Liderleri</h3>
+                  </div>
+                  <span className="text-[11px] font-mono text-[#B5CBC8]">Top 5</span>
+                </div>
+
+                <div className="divide-y divide-white/5">
+                  {backendState.players.slice(0, 5).map((p, idx) => {
+                    const isMe = p.id === currentPlayerId;
+                    return (
                       <div
-                        className="h-full bg-gradient-to-r from-orange-500 to-amber-400"
-                        style={{ width: `${Math.min(100, (currentPlayer.weeklyMatchesPlayed / 15) * 100)}%` }}
-                      />
-                    </div>
-                  </div>
+                        key={p.id}
+                        className={`py-2.5 px-3 flex items-center justify-between text-xs rounded-xl transition-colors ${
+                          isMe ? 'bg-[#F14E13]/15 font-semibold text-white' : 'hover:bg-white/5 text-[#B5CBC8]'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono font-bold text-amber-400 text-sm">#{idx + 1}</span>
+                          <img
+                            src={p.avatarUrl}
+                            alt={p.name}
+                            className="w-7 h-7 rounded-lg border border-white/15 object-cover bg-black"
+                          />
+                          <span className="text-white font-medium">{p.name.split('(')[0].trim()}</span>
+                        </div>
+                        <div className="font-mono text-right">
+                          <span className="text-[#F14E13] font-bold">{p.elo} ELO</span>
+                          <span className="text-[10px] text-amber-400 ml-1.5">+{p.streak}🔥</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         )}
 
         {/* =========================================================================
-         * SEKME 2: HAFTALIK LİG & İŞLER SADAKAT MAĞAZASI (Temizlenmiş)
+         * SEKME 2: HAFTALIK LİG & SADAKAT MAĞAZASI
          * ========================================================================= */}
         {activeTab === 'economy' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* SOL: Haftalık 15 Maç & Lig Seviyesi (7 Kolon) */}
+            {/* SOL: Lig Durumu & Haftalık Ödül (7 Kolon) */}
             <div className="lg:col-span-7 flex flex-col gap-6">
-              {/* 15 Maç İlerleme Kartı */}
-              <div className="game-card p-6 flex flex-col gap-4 border-orange-500/30">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-poppins font-bold text-base text-white">
-                      Haftalık 15 Maç Görevi
-                    </h3>
-                    <p className="text-xs text-[#B5CBC8]">
-                      Her hafta lig ödülünü alabilmek için en az 15 maç tamamlanmalıdır.
-                    </p>
+              {/* Lig Kartı */}
+              <div className="game-card p-6 border-orange-500/30 flex flex-col gap-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold border"
+                      style={{
+                        backgroundColor: `${currentPlayer.bracket.badgeColor}22`,
+                        borderColor: currentPlayer.bracket.badgeColor,
+                        color: currentPlayer.bracket.badgeColor,
+                      }}
+                    >
+                      🏆
+                    </div>
+                    <div>
+                      <span className="text-xs text-[#B5CBC8] font-mono">GÜNCEL KADEME</span>
+                      <h2 className="text-xl font-bold font-poppins text-white">
+                        {currentPlayer.bracket.tierName}
+                      </h2>
+                    </div>
                   </div>
-                  <span className="font-mono font-bold text-lg text-[#F14E13]">
-                    {currentPlayer.weeklyMatchesPlayed} / 15
-                  </span>
+
+                  <div className="text-right">
+                    <span className="text-xs text-[#B5CBC8] font-mono">KADEME ARALIĞI</span>
+                    <div className="font-mono font-bold text-white text-sm">
+                      {currentPlayer.bracket.minElo} -{' '}
+                      {currentPlayer.bracket.maxElo === Infinity ? 'Üstü' : currentPlayer.bracket.maxElo} ELO
+                    </div>
+                  </div>
                 </div>
 
-                {/* İlerleme Barı */}
-                <div className="w-full bg-[#0F0510] h-3 rounded-full overflow-hidden border border-white/5 relative">
-                  <div
-                    className="h-full bg-gradient-to-r from-[#F14E13] to-amber-400 transition-all duration-500"
-                    style={{
-                      width: `${Math.min(100, (currentPlayer.weeklyMatchesPlayed / 15) * 100)}%`,
-                    }}
-                  />
-                </div>
+                <div className="flex items-center justify-between pt-2">
+                  <div>
+                    <span className="text-xs text-[#B5CBC8]">Bu Hafta Oynanan Maç:</span>
+                    <div className="font-mono font-bold text-white text-base">
+                      {currentPlayer.weeklyMatchesPlayed} / 3 (Ödül Eşiği)
+                    </div>
+                  </div>
 
-                {/* Ödülü Al Butonu */}
-                <div className="flex items-center gap-3 pt-1">
                   <button
                     onClick={handleClaimWeekly}
-                    disabled={currentPlayer.weeklyMatchesPlayed < 15 || currentPlayer.weeklyRewardClaimed}
-                    className={`btn-primary w-full py-2.5 px-4 text-xs font-bold ${
-                      currentPlayer.weeklyMatchesPlayed < 15 || currentPlayer.weeklyRewardClaimed
-                        ? 'opacity-40 cursor-not-allowed'
-                        : ''
+                    disabled={currentPlayer.weeklyRewardClaimed || currentPlayer.weeklyMatchesPlayed < 3}
+                    className={`py-2 px-4 rounded-xl text-xs font-bold transition-all shadow-md ${
+                      currentPlayer.weeklyRewardClaimed
+                        ? 'bg-zinc-800 text-zinc-500 border border-white/5 cursor-not-allowed'
+                        : currentPlayer.weeklyMatchesPlayed >= 3
+                        ? 'btn-primary'
+                        : 'bg-zinc-850 text-zinc-400 border border-white/10 cursor-not-allowed opacity-60'
                     }`}
                   >
                     {currentPlayer.weeklyRewardClaimed
@@ -929,7 +1159,7 @@ export default function App() {
         )}
 
         {/* =========================================================================
-         * SEKME 3: HAFTALIK TURNUVALAR (Temizlenmiş)
+         * SEKME 3: HAFTALIK TURNUVALAR
          * ========================================================================= */}
         {activeTab === 'tournaments' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -1010,13 +1240,13 @@ export default function App() {
                       onClick={() => {
                         setSelectedMode('tournament');
                         setSelectedTournamentId(t.id);
-                        setSelectedExamType(t.examType);
+                        setSelectedExamType(t.examType as any);
                         joinQueue({
                           examType: t.examType,
                           subjects: t.allowedSubjects,
                           mode: 'tournament',
                           tournamentId: t.id,
-                        });
+                        } as any);
                       }}
                       className="btn-primary flex-1 py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
                     >
@@ -1031,59 +1261,90 @@ export default function App() {
         )}
 
         {/* =========================================================================
-         * SEKME 4: REVİZE EDİLMESİ GEREKEN KONULAR (PEKİŞTİRİLEMEYEN BAŞLIKLAR)
+         * SEKME 4: FAZ 3 — EKSİK KONULARIM (YÜZDESEL GÖRÜNÜM & KARIŞIK ÇÖZ)
          * ========================================================================= */}
         {activeTab === 'revision' && (
-          <div className="flex flex-col gap-6">
-            {/* Üst Bilgi ve Konu Başlıkları Özeti */}
-            <div className="game-card p-6 border-amber-500/35 flex flex-col gap-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex flex-col gap-6 animate-fade-in font-sans">
+            {/* Üst Bilgi ve Yüzdesel Özet & "🔀 Yanlışlarımı Karışık Çöz" Barı */}
+            <div className="game-card p-6 border-amber-500/40 flex flex-col gap-5 bg-gradient-to-br from-[#1A0E1C] via-[#220E24] to-[#120713]">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/10 pb-4">
                 <div>
-                  <h2 className="font-poppins font-bold text-lg text-white flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-[#F14E13]" />
-                    <span>Revize Edilmesi Gereken Konular & Yanlış Yapılan Sorular</span>
-                  </h2>
-                  <p className="text-xs text-[#B5CBC8] mt-1">
-                    Düellolarda yanlış yanıtladığın sorular otomatik olarak ayırt edilir ve pekiştirmen gereken konu başlıkları altında toplanır.
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-6 h-6 text-[#F14E13]" />
+                    <h2 className="font-poppins font-black text-xl text-white">
+                      Eksik Konularım & Kazanım Analizi
+                    </h2>
+                  </div>
+                  <p className="text-xs text-[#B5CBC8] mt-1 max-w-xl leading-relaxed">
+                    Düellolarda yanlış yanıtladığın sorular konu bazında gruplanır ve eksiklik yüzdesi hesaplanır.
+                    Eksiklerini tamamladıkça yüzdeler düşer ve ekstra Coin kazanırsın!
                   </p>
                 </div>
 
-                {currentPlayer.revisionTopics && currentPlayer.revisionTopics.length > 0 && (
+                {/* Büyük ve Vurgulu: 🔀 Yanlışlarımı Karışık Çöz Butonu */}
+                <div className="flex items-center gap-3 flex-wrap">
                   <button
-                    onClick={async () => {
-                      await clearRevisionTopic(undefined, currentPlayerId);
-                      showToast('Tüm konu başlıkları pekiştirildi olarak işaretlendi!');
-                    }}
-                    className="shrink-0 text-xs font-mono px-3.5 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition-all"
+                    onClick={handlePracticeAllRevision}
+                    disabled={revisionItems.length === 0}
+                    className="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 hover:brightness-110 active:scale-[0.99] text-white font-poppins font-black text-sm flex items-center gap-2.5 shadow-xl shadow-[#F14E13]/30 border border-white/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    ✓ Tümünü Pekiştirildi İşaretle
+                    <Shuffle className="w-5 h-5 text-white" />
+                    <span>🔀 Yanlışlarımı Karışık Çöz</span>
                   </button>
-                )}
+
+                  {revisionItems.length > 0 && (
+                    <button
+                      onClick={async () => {
+                        await clearRevisionTopic(undefined, currentPlayerId);
+                        showToast('Tüm konu başlıkları pekiştirildi olarak işaretlendi!');
+                      }}
+                      className="text-xs font-mono px-3.5 py-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition-all"
+                    >
+                      ✓ Tümünü Temizle
+                    </button>
+                  )}
+                </div>
               </div>
 
-              {/* Pekiştirilemeyen Konu Başlıkları Etiket Bulutu */}
-              {currentPlayer.revisionTopics && currentPlayer.revisionTopics.length > 0 && (
-                <div className="bg-[#0F0510] p-4 rounded-xl border border-white/10 flex flex-col gap-2.5">
-                  <div className="text-xs font-mono uppercase tracking-wider text-amber-300 font-semibold">
-                    📌 Pekiştirilemeyen Konu Başlıkları ({currentPlayer.revisionTopics.length} Başlık):
+              {/* Yüzdesel Özet Göstergeleri */}
+              {revisionItems.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-4 rounded-2xl bg-[#0F0510] border border-white/10 flex items-center justify-between">
+                    <div>
+                      <span className="text-[11px] font-mono text-zinc-400 block mb-0.5">TOPLAM EKSİK KONU</span>
+                      <span className="text-2xl font-black font-poppins text-white">
+                        {revisionItems.length} Başlık
+                      </span>
+                    </div>
+                    <span className="text-2xl">📌</span>
                   </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {currentPlayer.revisionTopics.map((rev) => (
-                      <button
-                        key={`tag-${rev.subject}-${rev.topic}`}
-                        onClick={() => setRevisionSubjectFilter(rev.subject)}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-poppins font-semibold bg-amber-500/15 text-white border border-amber-500/35 hover:border-[#F14E13] transition-all"
+
+                  <div className="p-4 rounded-2xl bg-[#0F0510] border border-white/10 flex items-center justify-between">
+                    <div>
+                      <span className="text-[11px] font-mono text-zinc-400 block mb-0.5">ORTALAMA EKSİKLİK / HATA</span>
+                      <span
+                        className={`text-2xl font-black font-poppins ${
+                          avgErrorRate >= 65
+                            ? 'text-red-400'
+                            : avgErrorRate >= 35
+                            ? 'text-amber-400'
+                            : 'text-emerald-400'
+                        }`}
                       >
-                        <span className="uppercase font-mono text-[10px] text-[#F14E13] font-bold">
-                          {rev.subject}
-                        </span>
-                        <span>•</span>
-                        <span>{rev.topic}</span>
-                        <span className="px-1.5 py-0.5 rounded-full bg-red-500/25 text-red-300 font-mono text-[10px]">
-                          {rev.mistakeCount} hata
-                        </span>
-                      </button>
-                    ))}
+                        %{avgErrorRate}
+                      </span>
+                    </div>
+                    <span className="text-2xl">📊</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#0F0510] border border-white/10 flex items-center justify-between">
+                    <div>
+                      <span className="text-[11px] font-mono text-zinc-400 block mb-0.5">ÖDÜL TEŞVİKİ</span>
+                      <span className="text-sm font-bold font-mono text-amber-300">
+                        Tekrar Tamamla ➔ +30 Coin 🪙
+                      </span>
+                    </div>
+                    <span className="text-2xl">🎁</span>
                   </div>
                 </div>
               )}
@@ -1103,7 +1364,7 @@ export default function App() {
                     onClick={() => setRevisionSubjectFilter(sub.id)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
                       revisionSubjectFilter === sub.id
-                        ? 'bg-[#F14E13] text-white'
+                        ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
                         : 'bg-[#0F0510] text-[#B5CBC8] border border-white/10 hover:text-white'
                     }`}
                   >
@@ -1113,85 +1374,92 @@ export default function App() {
               </div>
             </div>
 
-            {/* Konu Kartları ve Yanlış Yapılan Sorular */}
-            {!currentPlayer.revisionTopics || currentPlayer.revisionTopics.length === 0 ? (
+            {/* Konu Kartları & Yüzdesel Hata Oranı Barları */}
+            {revisionItems.length === 0 ? (
               <div className="game-card p-10 text-center flex flex-col items-center gap-3 border-emerald-500/30">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
                   <Check className="w-6 h-6" />
                 </div>
                 <h3 className="font-poppins font-bold text-base text-white">
-                  Şu Anda Revize Edilmesi Gereken Konu Başlığı Yok!
+                  Şu Anda Revize Edilmesi Gereken Eksik Konunuz Yok!
                 </h3>
                 <p className="text-xs text-[#B5CBC8] max-w-md">
-                  1v1 Düellolarda yanlış yaptığın sorular otomatik olarak burada ilgili konu başlığı altında listelenir.
+                  1v1 Düellolarda yanlış yaptığınız sorular otomatik olarak analiz edilip bu ekrana konu başlığıyla birlikte yansıyacaktır.
                 </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {currentPlayer.revisionTopics
+                {revisionItems
                   .filter((rev) => revisionSubjectFilter === 'all' || rev.subject === revisionSubjectFilter)
-                  .map((rev) => (
-                    <div
-                      key={`card-${rev.subject}-${rev.topic}`}
-                      className="game-card p-5 border-amber-500/30 flex flex-col justify-between gap-4"
-                    >
-                      <div className="flex flex-col gap-3">
-                        {/* Konu Başlığı Üst Satırı */}
-                        <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#F14E13]/20 text-[#F14E13] border border-[#F14E13]/30">
-                                {rev.subject}
-                              </span>
-                              <span className="px-2 py-0.5 rounded text-[10px] font-mono text-[#B5CBC8] bg-white/5">
-                                {rev.examType}
-                              </span>
+                  .map((rev) => {
+                    // Yüzdelik renkleri: >= 65 kırmızı, 35-64 kehribar/sarı, < 35 yeşil
+                    const errRate = rev.errorRatePercent ?? 50;
+                    const barColor =
+                      errRate >= 65
+                        ? 'bg-gradient-to-r from-red-600 to-rose-600'
+                        : errRate >= 35
+                        ? 'bg-gradient-to-r from-amber-500 to-yellow-500'
+                        : 'bg-gradient-to-r from-emerald-500 to-teal-400';
+
+                    const badgeColor =
+                      errRate >= 65
+                        ? 'bg-red-500/20 text-red-300 border-red-500/40'
+                        : errRate >= 35
+                        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                        : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+
+                    const recs = getRecommendationsForTopic(rev.subject, rev.topic, (rev as any).examType || 'TYT');
+
+                    return (
+                      <div
+                        key={`card-${rev.subject}-${rev.topic}`}
+                        className="game-card p-5 border-amber-500/30 flex flex-col justify-between gap-4 shadow-xl"
+                      >
+                        <div className="flex flex-col gap-3">
+                          {/* Konu Başlığı Üst Satırı */}
+                          <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#F14E13]/20 text-[#F14E13] border border-[#F14E13]/30">
+                                  {rev.subject}
+                                </span>
+                                <span className="px-2 py-0.5 rounded text-[10px] font-mono text-[#B5CBC8] bg-white/5">
+                                  {(rev as any).examType || 'TYT'}
+                                </span>
+                              </div>
+                              <h3 className="font-poppins font-black text-base text-amber-300 mt-1.5">
+                                {rev.topic}
+                              </h3>
                             </div>
-                            <h3 className="font-poppins font-bold text-base text-amber-300 mt-1.5">
-                              {rev.topic}
-                            </h3>
+
+                            {/* Yüzdesel Hata Rozeti */}
+                            <span className={`px-2.5 py-1 rounded-xl font-mono text-xs font-bold border shrink-0 ${badgeColor}`}>
+                              %{errRate} Hata ({rev.wrongCount}/{rev.totalAttempts} Yanlış)
+                            </span>
                           </div>
 
-                          <span className="px-2.5 py-1 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 font-mono text-xs font-bold shrink-0">
-                            {rev.mistakeCount} Yanlış
-                          </span>
-                        </div>
-
-                        {/* Bu Konu Başlığı Altında Yanlış Yapılan Sorular */}
-                        <div className="flex flex-col gap-2.5 max-h-64 overflow-y-auto pr-1">
-                          {rev.wrongQuestions.map((wq) => (
-                            <div
-                              key={wq.externalId}
-                              className="p-3 rounded-xl bg-[#0F0510] border border-white/10 text-xs flex flex-col gap-1.5"
-                            >
-                              <div className="text-white font-medium leading-relaxed">
-                                <span className="text-red-400 font-mono font-bold mr-1.5">✗ Soru:</span>
-                                {wq.text}
-                              </div>
-                              {wq.explanation && (
-                                <div className="text-[11px] text-[#B5CBC8] leading-relaxed pt-1.5 border-t border-white/5">
-                                  <span className="text-emerald-400 font-semibold mr-1">💡 Çözüm:</span>
-                                  {wq.explanation}
-                                </div>
-                              )}
+                          {/* Yüzdesel İlerleme Çubuğu (Progress Bar) */}
+                          <div className="flex flex-col gap-1">
+                            <div className="flex justify-between text-[11px] font-mono text-zinc-400">
+                              <span>Eksiklik Düzeyi:</span>
+                              <span className="font-bold text-white">%{errRate}</span>
                             </div>
-                          ))}
-                        </div>
+                            <div className="w-full bg-zinc-900 h-2.5 rounded-full overflow-hidden border border-white/5">
+                              <div
+                                className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+                                style={{ width: `${Math.min(100, Math.max(8, errRate))}%` }}
+                              />
+                            </div>
+                          </div>
 
-                        {/* Bu Konu İçin Kaynak Önerileri */}
-                        {(() => {
-                          const recs =
-                            rev.recommendedResources && rev.recommendedResources.length > 0
-                              ? rev.recommendedResources
-                              : getRecommendationsForTopic(rev.subject, rev.topic, rev.examType);
-                          if (!recs || recs.length === 0) return null;
-                          return (
-                            <div className="pt-2.5 border-t border-amber-500/20 flex flex-col gap-2">
+                          {/* İşler Yayın Grubu Kaynak Önerileri */}
+                          {recs && recs.length > 0 && (
+                            <div className="pt-2 border-t border-white/5 flex flex-col gap-2">
                               <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-amber-300 uppercase tracking-wider">
                                 <BookOpen className="w-3.5 h-3.5 text-[#F14E13]" />
-                                <span>Önerilen Kaynak & Çalışma Rehberi:</span>
+                                <span>Önerilen İşler Yayını:</span>
                               </div>
-                              {recs.map((rec) => (
+                              {recs.slice(0, 1).map((rec) => (
                                 <div
                                   key={rec.id}
                                   className="p-3 rounded-xl bg-[#0F0510] border border-[#F14E13]/30 text-xs flex flex-col gap-1"
@@ -1199,48 +1467,44 @@ export default function App() {
                                   <div className="flex items-center justify-between gap-2 flex-wrap">
                                     <span className="font-poppins font-bold text-white">{rec.bookTitle}</span>
                                     <span className="px-2 py-0.5 rounded bg-[#F14E13]/20 text-[#F14E13] font-mono text-[10px] font-semibold">
-                                      {rec.publisher} • {rec.level}
+                                      {rec.publisher}
                                     </span>
                                   </div>
                                   <div className="text-[11px] text-amber-200/90 font-medium">
                                     📖 Bölüm: {rec.recommendedSection}
                                   </div>
                                   <div className="text-[11px] text-[#B5CBC8] leading-relaxed">
-                                    🎯 Tavsiye: {rec.studyTip}
+                                    🎯 {rec.studyTip}
                                   </div>
                                 </div>
                               ))}
                             </div>
-                          );
-                        })()}
-                      </div>
+                          )}
+                        </div>
 
-                      {/* Aksiyonlar: Bu Derste Pratik Yap / Pekiştirildi İşaretle */}
-                      <div className="flex items-center gap-2 pt-2 border-t border-white/5">
-                        <button
-                          onClick={() => {
-                            setSelectedSubjects([rev.subject]);
-                            setActiveTab('matchmaking');
-                            showToast(`${rev.topic} (${rev.subject.toUpperCase()}) pekiştirmesi için ders seçildi!`);
-                          }}
-                          className="btn-primary flex-1 py-2 px-3 text-xs font-bold flex items-center justify-center gap-1.5"
-                        >
-                          <Swords className="w-3.5 h-3.5" />
-                          <span>Bu Derste Düelloya Gir</span>
-                        </button>
+                        {/* Aksiyonlar: 🎯 Bu Konuyu Çöz & ✓ Pekiştirildi */}
+                        <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+                          <button
+                            onClick={() => handlePracticeSingleTopic(rev.topic, rev.failedQuestionIds)}
+                            className="btn-primary flex-1 py-2 px-3 text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#F14E13]/20"
+                          >
+                            <Target className="w-3.5 h-3.5" />
+                            <span>🎯 Bu Konuyu Çöz</span>
+                          </button>
 
-                        <button
-                          onClick={async () => {
-                            await clearRevisionTopic(rev.topic, currentPlayerId);
-                            showToast(`"${rev.topic}" konusu pekiştirildi olarak işaretlendi!`);
-                          }}
-                          className="px-3 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-all"
-                        >
-                          ✓ Pekiştirildi
-                        </button>
+                          <button
+                            onClick={async () => {
+                              await clearRevisionTopic(rev.topic, currentPlayerId);
+                              showToast(`"${rev.topic}" konusu pekiştirildi olarak işaretlendi!`);
+                            }}
+                            className="px-3 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-all shrink-0"
+                          >
+                            ✓ Tamamlandı
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
               </div>
             )}
           </div>

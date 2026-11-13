@@ -3,6 +3,9 @@ import { getBackendSocket } from '../../services/backendSocket';
 import { KahootRoomState, KahootPlayer } from '../../types/kahoot';
 import type { Question } from '../../types/game';
 import { QuestionRenderer } from '../questions/QuestionRenderer';
+import { getRecommendationsForTopic } from '../../utils/resourceRecommendations';
+import { soundEngine } from '../../utils/soundEngine';
+import { ConfettiCanvas } from '../effects/ConfettiCanvas';
 import {
   QrCode,
   Users,
@@ -22,32 +25,29 @@ import {
   VolumeX,
   HelpCircle,
   Check,
+  BookOpen,
 } from 'lucide-react';
 
 interface KahootHostViewProps {
   onBackToDuel?: () => void;
 }
 
-// Ses efektleri
+// Ses efektleri (soundEngine entegrasyonu)
 function playTone(freq: number, type: OscillatorType, duration: number, isMuted: boolean) {
-  if (isMuted || typeof window === 'undefined') return;
+  if (isMuted) return;
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContextClass) return;
-    const ctx = new AudioContextClass();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
-  } catch {
-    // Ses desteklenmiyorsa sessizce geç
-  }
+    if (freq >= 750) {
+      soundEngine.playCorrect();
+    } else if (freq <= 350) {
+      soundEngine.playWrong();
+    } else if (freq === 520 || freq === 600) {
+      soundEngine.playTick(true);
+    } else if (freq === 587) {
+      soundEngine.playMatchFound();
+    } else {
+      soundEngine.playClick();
+    }
+  } catch {}
 }
 
 // Tüm soru tiplerinin doğru cevabını net metin olarak özetleyen fonksiyon
@@ -181,10 +181,33 @@ function getCorrectAnswerSummary(q: Question | any): string | null {
 export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) => {
   const [room, setRoom] = useState<KahootRoomState | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+
+  // Ses Durumu Senkronizasyonu
+  const [isMuted, setIsMuted] = useState<boolean>(soundEngine.getMuted());
+  useEffect(() => {
+    return soundEngine.subscribe(() => {
+      setIsMuted(soundEngine.getMuted());
+    });
+  }, []);
+
+  // Sınıf Yarışması Arka Plan Müzik Yönetimi
+  useEffect(() => {
+    if (!room || room.status === 'LOBBY' || room.status === 'INTERMISSION') {
+      soundEngine.startMusic('lobby');
+    } else if (room.status === 'QUESTION') {
+      soundEngine.startMusic('battle');
+    } else if (room.status === 'FINISHED') {
+      soundEngine.stopMusic();
+      soundEngine.playVictory();
+    }
+    return () => {
+      soundEngine.startMusic('lobby');
+    };
+  }, [room?.status]);
 
   // Kurulum formu state
   const [examType, setExamType] = useState<string>('TYT');
+  const [difficultyMode, setDifficultyMode] = useState<'adaptive' | 'easy' | 'medium' | 'hard'>('adaptive');
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>(['matematik', 'fizik', 'kimya']);
   const [questionCount, setQuestionCount] = useState<number>(5);
 
@@ -226,6 +249,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
       const remainingMs = Math.max(0, room.durationMs - elapsed);
       const sec = Math.ceil(remainingMs / 1000);
       setRemainingSec(sec);
+      soundEngine.setRemainingTime(sec, Math.round(room.durationMs / 1000));
 
       if (sec <= 5 && sec > 0) {
         playTone(520, 'sine', 0.08, isMuted);
@@ -234,10 +258,13 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
 
     updateTimer();
     const timer = setInterval(updateTimer, 500);
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      soundEngine.resetTension();
+    };
   }, [room?.status, room?.questionStartedAt, room?.durationMs, isMuted]);
 
-  // Yeni oda oluştur
+  // Yeni oda oluştur (LGS ve difficultyMode dahil)
   const handleCreateRoom = () => {
     if (selectedSubjects.length === 0) {
       setErrorMessage('En az bir ders seçmelisiniz!');
@@ -247,6 +274,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
       examType,
       subjects: selectedSubjects,
       questionCount,
+      difficultyMode,
     });
     playTone(440, 'triangle', 0.2, isMuted);
   };
@@ -363,14 +391,14 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
             ekranına düşer ve tüm sınıf canlı liderlik tablosunda yarışır!
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
-            {/* Sınav Türü */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
+            {/* Sınav Türü (LGS eklendi) */}
             <div className="flex flex-col gap-2">
               <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
                 1. Sınav Kategorisi
               </label>
-              <div className="grid grid-cols-3 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
-                {(['TYT', 'AYT', 'KARMA'] as const).map((t) => (
+              <div className="grid grid-cols-4 gap-1 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
+                {(['LGS', 'TYT', 'AYT', 'KARMA'] as const).map((t) => (
                   <button
                     key={t}
                     onClick={() => setExamType(t)}
@@ -386,10 +414,37 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
               </div>
             </div>
 
+            {/* Öğrenci Seviyesi / Zorluk Seçimi */}
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
+                2. Öğrenci Seviyesi / Zorluk
+              </label>
+              <div className="grid grid-cols-4 gap-1 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
+                {[
+                  { id: 'adaptive', label: 'Adaptif' },
+                  { id: 'easy', label: 'Kolay' },
+                  { id: 'medium', label: 'Orta' },
+                  { id: 'hard', label: 'Zor' },
+                ].map((d) => (
+                  <button
+                    key={d.id}
+                    onClick={() => setDifficultyMode(d.id as any)}
+                    className={`py-2 rounded-xl text-xs font-bold transition-all ${
+                      difficultyMode === d.id
+                        ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
+                        : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    {d.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Soru Sayısı */}
             <div className="flex flex-col gap-2">
               <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
-                2. Soru Sayısı
+                3. Soru Sayısı
               </label>
               <div className="grid grid-cols-3 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
                 {[5, 7, 10].map((n) => (
@@ -407,21 +462,13 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
                 ))}
               </div>
             </div>
-
-            {/* Bilgilendirme Rozeti */}
-            <div className="flex flex-col gap-2 justify-center">
-              <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 shrink-0 text-emerald-400" />
-                <span>14 interaktif soru mekaniği otomatik olarak telefonlara aktarılır.</span>
-              </div>
-            </div>
           </div>
 
           {/* Ders Seçimi */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-poppins font-bold uppercase tracking-wider text-[#FF7A45]">
-                3. Soru Havuzuna Dahil Edilecek Dersler
+                4. Soru Havuzuna Dahil Edilecek Dersler
               </label>
               <span className="text-xs font-mono text-orange-400">
                 {selectedSubjects.length} Ders Seçili
@@ -495,7 +542,10 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setIsMuted(!isMuted)}
+              onClick={() => {
+                soundEngine.toggleMute();
+                soundEngine.playClick();
+              }}
               className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300"
               title={isMuted ? 'Sesi Aç' : 'Sesi Kapat'}
             >
@@ -955,7 +1005,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
   }
 
   // =========================================================================
-  // 5. FİNAL PODYUMU (status === 'FINISHED')
+  // 5. FİNAL PODYUMU & SINIF KONU ANALİZİ (status === 'FINISHED')
   // =========================================================================
   if (room.status === 'FINISHED') {
     const sorted = [...(room.leaderboard || [])].sort((a, b) => b.score - a.score);
@@ -963,10 +1013,22 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
     const second = sorted[1];
     const third = sorted[2];
 
+    const topicAnalytics: Array<{
+      topic: string;
+      subject: string;
+      totalAttempts: number;
+      wrongAttempts: number;
+      wrongPercent: number;
+    }> = (room as any).topicAnalytics || [];
+
     return (
-      <div className="flex flex-col gap-8 max-w-5xl mx-auto w-full py-4 animate-fade-in font-sans">
+      <div className="flex flex-col gap-8 max-w-5xl mx-auto w-full py-4 animate-fade-in font-sans relative">
+        {/* Tahta Podyumu Şampiyonluk Konfeti Patlaması */}
+        <ConfettiCanvas active={true} durationMs={6000} />
+
         {/* Üst Başlık */}
-        <div className="text-center flex flex-col items-center gap-2">
+        <div className="text-center flex flex-col items-center gap-2 relative">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-gradient-to-tr from-amber-500/25 via-yellow-500/10 to-transparent pointer-events-none animate-sunburst blur-2xl" />
           <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center shadow-2xl shadow-amber-500/30">
             <Trophy className="w-8 h-8 text-amber-400" />
           </div>
@@ -1051,6 +1113,102 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
             )}
           </div>
         </div>
+
+        {/* 📊 Sınıf Konu & Kazanım Analizi (En Çok Yanlış Yapılan Konular) */}
+        {topicAnalytics.length > 0 && (
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-[#1A0E1C] via-[#200F23] to-[#120713] border-2 border-orange-500/40 shadow-2xl flex flex-col gap-5 animate-scale-up">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3 flex-wrap gap-2">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-lg">
+                  📊
+                </div>
+                <div>
+                  <h3 className="font-poppins font-black text-base sm:text-lg text-white">
+                    Sınıf Konu & Kazanım Analizi (En Çok Yanlış Yapılan Konular)
+                  </h3>
+                  <p className="text-xs text-zinc-400 font-mono">
+                    Öğrencilerin zorlandığı konular ve İşler Yayın Grubu hedef kaynak önerileri
+                  </p>
+                </div>
+              </div>
+
+              <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                {topicAnalytics.length} Konu İncelendi
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3.5">
+              {topicAnalytics.map((item, idx) => {
+                const recs = getRecommendationsForTopic(item.subject, item.topic, room.examType);
+                const book = recs && recs.length > 0 ? recs[0] : null;
+
+                // Bar rengi belirleme: >= 60 kırmızı, 30-59 sarı/kehribar, < 30 yeşil
+                const barColorClass =
+                  item.wrongPercent >= 60
+                    ? 'bg-gradient-to-r from-red-600 to-rose-600'
+                    : item.wrongPercent >= 30
+                    ? 'bg-gradient-to-r from-amber-500 to-yellow-500'
+                    : 'bg-gradient-to-r from-emerald-500 to-teal-400';
+
+                const badgeColorClass =
+                  item.wrongPercent >= 60
+                    ? 'bg-red-500/20 text-red-300 border-red-500/40'
+                    : item.wrongPercent >= 30
+                    ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                    : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+
+                return (
+                  <div
+                    key={idx}
+                    className="p-4 rounded-2xl bg-[#0F0510] border border-white/10 hover:border-orange-500/30 transition-all flex flex-col gap-2.5 shadow-md"
+                  >
+                    {/* Üst Bilgi: Konu, Ders Rozeti ve Yanlış Oranı */}
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-0.5 rounded-lg bg-white/10 text-zinc-300 text-[11px] font-mono font-bold uppercase">
+                          {item.subject.toUpperCase()}
+                        </span>
+                        <span className="font-poppins font-bold text-sm sm:text-base text-white">
+                          {item.topic}
+                        </span>
+                      </div>
+
+                      <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-xl border ${badgeColorClass}`}>
+                        %{item.wrongPercent} Yanlış Oranı ({item.wrongAttempts} / {item.totalAttempts} Öğrenci)
+                      </span>
+                    </div>
+
+                    {/* Görsel Yüzdelik İlerleme Çubuğu */}
+                    <div className="w-full bg-zinc-900 h-2.5 rounded-full overflow-hidden border border-white/5">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${barColorClass}`}
+                        style={{ width: `${Math.min(100, Math.max(5, item.wrongPercent))}%` }}
+                      />
+                    </div>
+
+                    {/* Kitap / Kaynak Önerisi Rozeti */}
+                    {item.wrongPercent > 0 && book && (
+                      <div className="mt-1 p-2.5 rounded-xl bg-orange-950/30 border border-orange-500/30 flex items-center justify-between flex-wrap gap-2 text-xs">
+                        <div className="flex items-center gap-2 text-orange-200">
+                          <BookOpen className="w-4 h-4 text-orange-400 shrink-0" />
+                          <span>
+                            <strong>📚 Önerilen Sınıf Kaynağı:</strong> {book.bookTitle}{' '}
+                            <span className="text-orange-400 font-semibold">({book.publisher})</span>
+                          </span>
+                        </div>
+                        {book.recommendedSection && (
+                          <span className="text-zinc-400 font-mono text-[11px]">
+                            Bölüm: {book.recommendedSection}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Tüm Sınıf Sıralama Tablosu */}
         <div className="p-6 rounded-3xl bg-[#1A0E1C]/80 border border-white/10 shadow-xl flex flex-col gap-4">

@@ -7,7 +7,8 @@ const { Server } = require('socket.io');
 const { calculateEffectiveMMR } = require('./engine/eloMomentum');
 const { loadQuestionBank, selectMatchQuestions, getDifficultyDistribution } = require('./engine/questionBank');
 const { MatchmakingQueue } = require('./engine/matchmakingQueue');
-const { GameStore, WEEKLY_BRACKETS } = require('./engine/economyTournaments');
+const { GameStore, WEEKLY_BRACKETS, getWeeklyBracket } = require('./engine/economyTournaments');
+const { getRecommendationsForTopic } = require('./engine/resourceRecommendations');
 const { DuelSession } = require('./engine/duelSession');
 const { RAW_INTERACTIVE_QUESTIONS, normalizeInteractiveQuestion } = require('./engine/interactiveQuestionPool');
 
@@ -119,6 +120,19 @@ function getPublicRoomState(room) {
   const currentQuestion = room.questions[room.currentQuestionIndex] || null;
   const leaderboard = Array.from(room.players.values()).sort((a, b) => b.score - a.score);
 
+  let topicAnalytics = [];
+  if (room.topicStats && room.topicStats.size > 0) {
+    topicAnalytics = Array.from(room.topicStats.values())
+      .map((s) => ({
+        topic: s.topic,
+        subject: s.subject,
+        totalAttempts: s.totalAttempts,
+        wrongAttempts: s.wrongAttempts,
+        wrongPercent: Math.round((s.wrongAttempts / Math.max(1, s.totalAttempts)) * 100),
+      }))
+      .sort((a, b) => b.wrongPercent - a.wrongPercent);
+  }
+
   return {
     pin: room.pin,
     status: room.status,
@@ -132,6 +146,7 @@ function getPublicRoomState(room) {
     answeredCount: room.currentAnswers.size,
     totalPlayers: room.players.size,
     leaderboard,
+    topicAnalytics,
   };
 }
 
@@ -163,6 +178,7 @@ function createAppServer(listenPort = null) {
   const bankDir = path.join(__dirname, '..', 'question-bank');
   const questionBank = loadQuestionBank(bankDir);
   const store = new GameStore();
+  store.initDefaultRevisions();
   const queue = new MatchmakingQueue({ enableGhost: false });
 
   const activeDuels = new Map(); // matchId -> { session: DuelSession, advancing: boolean }
@@ -201,6 +217,42 @@ function createAppServer(listenPort = null) {
         player.streak = 0;
         player.wrongCount += 1;
       }
+    }
+
+    // QR Sınıf Yarışması Sonu Analitiği için konu başarı istatistiklerini güncelle
+    const q = room.questions[room.currentQuestionIndex];
+    if (q) {
+      room.topicStats = room.topicStats || new Map();
+      const topic = String(
+        q.topic || (q.interactiveQuestion && q.interactiveQuestion.topic) || q.subTopic || q.subject || 'Genel Konu'
+      ).trim();
+      const subject = String(
+        q.subject || (q.interactiveQuestion && q.interactiveQuestion.subject) || 'genel'
+      ).toLowerCase();
+      const key = `${subject}:${topic.toLowerCase()}`;
+
+      let stat = room.topicStats.get(key);
+      if (!stat) {
+        stat = {
+          topic,
+          subject,
+          totalAttempts: 0,
+          wrongAttempts: 0,
+        };
+        room.topicStats.set(key, stat);
+      }
+
+      const totalPlayersCount = Math.max(1, room.players.size);
+      stat.totalAttempts += totalPlayersCount;
+
+      let roundWrongCount = 0;
+      for (const player of room.players.values()) {
+        const ans = room.currentAnswers.get(player.id);
+        if (!ans || !ans.isCorrect) {
+          roundWrongCount += 1;
+        }
+      }
+      stat.wrongAttempts += roundWrongCount;
     }
 
     room.status = 'INTERMISSION';
@@ -282,6 +334,7 @@ function createAppServer(listenPort = null) {
       commonSubjects: matchInfo.commonSubjects,
       averageElo: avgElo,
       count: 5,
+      difficultyMode: matchInfo.difficultyMode || 'adaptive',
     });
 
     const duel = new DuelSession({
@@ -296,7 +349,7 @@ function createAppServer(listenPort = null) {
       diagnostics: {
         ...matchInfo.diagnostics,
         averageElo: Math.round(avgElo),
-        difficultyDistribution: getDifficultyDistribution(avgElo),
+        difficultyDistribution: getDifficultyDistribution(avgElo, matchInfo.difficultyMode || 'adaptive'),
       },
       startedAt: Date.now(),
     });
@@ -396,7 +449,7 @@ function createAppServer(listenPort = null) {
       const { session: duel } = entry;
       if (duel.status !== 'IN_PROGRESS' || entry.advancing) continue;
       const q = duel.getCurrentQuestion();
-      const durationMs = q ? q.durationMs || 60000 : 60000;
+      const durationMs = q ? (q.durationMs || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds ? q.interactiveQuestion.timeLimitSeconds * 1000 : 20000)) : 20000;
       if (now - duel.questionStartedAt >= durationMs) {
         entry.advancing = true;
         entry.readyPlayers = new Set();
@@ -416,9 +469,92 @@ function createAppServer(listenPort = null) {
     }
   }, 500);
 
+  const FIRST_NAMES = ['Bora', 'Defne', 'Kaan', 'Ece', 'Arda', 'Zehra', 'Emirhan', 'Nehir', 'Yiğit', 'Beren', 'Mertcan', 'Sude'];
+  const LAST_NAMES = ['Aydın', 'Yıldız', 'Demir', 'Korkmaz', 'Çelik', 'Şahin', 'Polat', 'Özkan', 'Aksoy', 'Kaya', 'Öz', 'Karaca'];
+
+  function createRandomPlayerEntity() {
+    const randomId = 'p_rand_' + Math.random().toString(36).slice(2, 8);
+    const rFirst = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+    const rLast = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
+    const num = Math.floor(100 + Math.random() * 900);
+    const fullName = `${rFirst} ${rLast} (Öğrenci #${num})`;
+    const randomElo = Math.floor(Math.random() * 201) + 1150; // 1150 - 1350
+
+    const newPlayer = {
+      id: randomId,
+      name: fullName,
+      roleTag: 'Yeni Yarışmacı',
+      avatarUrl: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(rFirst + randomId)}&backgroundColor=b6e3f4`,
+      elo: randomElo,
+      streak: 0,
+      coins: 250,
+      islerPoints: 50,
+      weeklyMatchesPlayed: 0,
+      weeklyRewardClaimed: false,
+      weeklyLeaguePoints: 120,
+      coupons: [],
+      revisionTopics: [
+        {
+          topic: 'Kimyasal Tepkimeler ve Denge',
+          subject: 'kimya',
+          examType: 'TYT',
+          mistakeCount: 3,
+          lastMistakeAt: new Date().toISOString(),
+          wrongQuestions: [],
+          recommendedResources: getRecommendationsForTopic('kimya', 'Kimyasal Tepkimeler ve Denge', 'TYT'),
+        },
+        {
+          topic: 'Üslü ve Köklü Sayılar',
+          subject: 'matematik',
+          examType: 'TYT',
+          mistakeCount: 2,
+          lastMistakeAt: new Date().toISOString(),
+          wrongQuestions: [],
+          recommendedResources: getRecommendationsForTopic('matematik', 'Üslü ve Köklü Sayılar', 'TYT'),
+        },
+      ],
+      revisionDetails: [
+        {
+          topic: 'Kimyasal Tepkimeler ve Denge',
+          subject: 'kimya',
+          wrongCount: 3,
+          totalAttempts: 5,
+          errorRatePercent: 60,
+          failedQuestionIds: ['q_sb_018', 'q_tc_016'],
+        },
+        {
+          topic: 'Üslü ve Köklü Sayılar',
+          subject: 'matematik',
+          wrongCount: 2,
+          totalAttempts: 4,
+          errorRatePercent: 50,
+          failedQuestionIds: ['q_uc_comp_003', 'q_nc_021'],
+        },
+      ],
+      effectiveMmr: calculateEffectiveMMR(randomElo, 0),
+      bracket: getWeeklyBracket(randomElo),
+    };
+
+    store.players.set(randomId, newPlayer);
+    return newPlayer;
+  }
+
   // REST API routes
   app.get('/api/state', (_req, res) => {
     res.json(buildFullState());
+  });
+
+  app.post('/api/players/random', (_req, res) => {
+    const player = createRandomPlayerEntity();
+    broadcastState();
+    res.json({ ok: true, player });
+  });
+
+  app.post('/api/players/complete-revision-practice', (req, res) => {
+    const { playerId, solvedTopics } = req.body || {};
+    const result = store.completeRevisionPractice(playerId, solvedTopics);
+    broadcastState();
+    res.json(result);
   });
 
   app.post('/api/economy/claim-weekly', (req, res) => {
@@ -516,7 +652,16 @@ function createAppServer(listenPort = null) {
       }
     });
 
-    socket.on('queue:join', ({ playerId, examType, subjects, mode, tournamentId }) => {
+    socket.on('player:createRandom', (_data, ack) => {
+      const player = createRandomPlayerEntity();
+      socketToPlayerId.set(socket.id, player.id);
+      broadcastState();
+      if (typeof ack === 'function') {
+        ack({ ok: true, player });
+      }
+    });
+
+    socket.on('queue:join', ({ playerId, examType, subjects, mode, tournamentId, difficultyMode }) => {
       if (!isAuthorizedSocketPlayer(socketToPlayerId, socket.id, playerId)) {
         socket.emit('queue:error', { message: 'Yetkisiz oyuncu oturumu.' });
         return;
@@ -546,6 +691,7 @@ function createAppServer(listenPort = null) {
         subjects,
         mode: mode || 'ranked',
         tournamentId: mode === 'tournament' ? tournamentId : null,
+        difficultyMode: difficultyMode || 'adaptive',
         enqueuedAt: Date.now(),
       });
       broadcastState();

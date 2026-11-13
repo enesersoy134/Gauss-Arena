@@ -127,7 +127,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
     topic: 'Temel Türev Alma Kuralları',
     type: 'pair_matching',
     difficulty: 'orta',
-    timeLimitSeconds: 30,
+    timeLimitSeconds: 25,
     points: 200,
     prompt: 'Sol sütundaki fonksiyonları sağ sütundaki birinci türevleriyle eşleştirin.',
     explanation: "(x³)' = 3x², (sin x)' = cos x, (ln x)' = 1/x, (eˣ)' = eˣ türev kurallarıdır.",
@@ -149,7 +149,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
     topic: 'Fiziksel Büyüklükler (Skaler vs Vektörel)',
     type: 'swipe_grouping',
     difficulty: 'kolay',
-    timeLimitSeconds: 25,
+    timeLimitSeconds: 20,
     points: 200,
     prompt: 'Gelen fiziksel büyüklükleri SOLA (Skaler) veya SAĞA (Vektörel) kaydırarak sınıflandır!',
     explanation: 'Yönü olan büyüklükler vektörel (Kuvvet, Yer Değiştirme, Hız); yönü olmayan sadece sayı ve birimle ifade edilenler skalerdir (Kütle, Sıcaklık, Enerji).',
@@ -431,7 +431,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
     topic: 'Cumhuriyet Dönemi Roman ve Yazar Eşleştirmesi',
     type: 'pair_matching',
     difficulty: 'orta',
-    timeLimitSeconds: 30,
+    timeLimitSeconds: 25,
     points: 200,
     prompt: 'Sol sütundaki başyapıt romanları sağ sütundaki yazarlarımızla eşleştirin.',
     explanation: 'Tutunamayanlar -> Oğuz Atay, Saatleri Ayarlama Enstitüsü -> Ahmet Hamdi Tanpınar, İnce Memed -> Yaşar Kemal, Kürk Mantolu Madonna -> Sabahattin Ali.',
@@ -718,11 +718,199 @@ const RAW_INTERACTIVE_QUESTIONS = [
       shuffleOptions: false,
     },
   },
+  {
+    id: 'q_lgs_033',
+    examType: 'LGS',
+    subject: 'matematik',
+    topic: 'Üslü İfadeler ve Bilimsel Gösterim',
+    type: 'numpad_closest',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 100,
+    prompt: '2⁵ · 5³ işleminin sonucu kaçtır?',
+    explanation: '2⁵ = 32 ve 5³ = 125\'tir. 32 · 125 = 4000 (veya 2² · (2·5)³ = 4 · 10³ = 4000) bulunur.',
+    payload: {
+      correctAnswer: 4000,
+      unit: '',
+      allowDecimals: false,
+      allowNegative: false,
+      min: 0,
+      max: 10000,
+    },
+  },
+  {
+    id: 'q_lgs_034',
+    examType: 'LGS',
+    subject: 'matematik',
+    topic: 'Karekök Tahmini',
+    type: 'slider',
+    difficulty: 'orta',
+    timeLimitSeconds: 20,
+    points: 100,
+    prompt: '√150 sayısı sayı doğrusunda hangi ondalıklı değere en yakındır? Sürgüyü ayarlayın.',
+    explanation: '12² = 144 ve 13² = 169\'dur. 150 sayısı 144\'e çok daha yakın olduğundan √150 ≈ 12.24\'tür (yaklaşık 12.2).',
+    payload: {
+      min: 10,
+      max: 15,
+      step: 0.1,
+      initialValue: 10,
+      unit: '',
+      targetValue: 12.2,
+      tolerance: 0.3,
+    },
+  },
+  {
+    id: 'q_lgs_035',
+    examType: 'LGS',
+    subject: 'fizik',
+    topic: 'Basınç (Katı ve Sıvı Basıncı)',
+    type: 'matrix_toggle',
+    difficulty: 'orta',
+    timeLimitSeconds: 25,
+    points: 120,
+    prompt: 'Katı ve sıvı basıncı özelliklerini tablodaki hücrelere dokunarak (✓ / ✗) doldurun:',
+    explanation: 'Katı basıncı yüzey alanı arttıkça azalır (ters orantı). Sıvı basıncı ise sıvının yoğunluğu ve derinliği arttıkça artar (P = h·d·g).',
+    payload: {
+      tablePrompt: 'Her hücreyi ✓ (Doğru) veya ✗ (Yanlış) olarak işaretleyin:',
+      rows: [
+        { id: 'r_kati', title: 'Katı Basıncı' },
+        { id: 'r_sivi', title: 'Sıvı Basıncı' },
+      ],
+      columns: [
+        { id: 'c_alan', title: 'Yüzey Alanı Büyürse Azalır' },
+        { id: 'c_derinlik', title: 'Derinlik Arttıkça Artar' },
+      ],
+      answers: [
+        { rowId: 'r_kati', colId: 'c_alan', expectedBool: true },
+        { rowId: 'r_kati', colId: 'c_derinlik', expectedBool: false },
+        { rowId: 'r_sivi', colId: 'c_alan', expectedBool: false },
+        { rowId: 'r_sivi', colId: 'c_derinlik', expectedBool: true },
+      ],
+    },
+  },
+  {
+    id: 'q_lgs_036',
+    examType: 'LGS',
+    subject: 'kimya',
+    topic: 'Asitler, Bazlar ve pH Ölçeği',
+    type: 'swipe_grouping',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 100,
+    prompt: 'Günlük hayattaki maddeleri Asit (pH < 7) ve Baz (pH > 7) özelliklerine göre kaydırarak gruplayın:',
+    explanation: 'Limon suyu ve sirke asidiktir (pH < 7). Sabunlu su ve çamaşır suyu baziktir (pH > 7).',
+    payload: {
+      leftCategory: { id: 'left', label: '⬅️ Asit (pH < 7)', colorHex: '#EF4444' },
+      rightCategory: { id: 'right', label: 'Baz (pH > 7) ➡️', colorHex: '#3B82F6' },
+      cards: [
+        { id: 'c1', text: 'Limon Suyu', correctCategory: 'left' },
+        { id: 'c2', text: 'Sabunlu Su', correctCategory: 'right' },
+        { id: 'c3', text: 'Sirke', correctCategory: 'left' },
+        { id: 'c4', text: 'Çamaşır Suyu', correctCategory: 'right' },
+      ],
+    },
+  },
+  {
+    id: 'q_lgs_037',
+    examType: 'LGS',
+    subject: 'biyoloji',
+    topic: 'DNA ve Genetik Kod',
+    type: 'ordering_and_formula',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 120,
+    prompt: 'Kalıtsal yapıları basitten karmaşığa (küçükten büyüğe) doğru sıralayın:',
+    explanation: 'Kalıtsal yapılar küçükten büyüğe: Organik Baz -> Nükleotid -> Gen -> DNA -> Kromozom (KediGen kuralı).',
+    payload: {
+      mode: 'sequence',
+      directionLabel: 'Basitten Karmaşığa (Küçükten Büyüğe)',
+      items: ['Kromozom', 'Gen', 'Organik Baz', 'DNA', 'Nükleotid'],
+      correctOrder: ['Organik Baz', 'Nükleotid', 'Gen', 'DNA', 'Kromozom'],
+    },
+  },
+  {
+    id: 'q_lgs_038',
+    examType: 'LGS',
+    subject: 'biyoloji',
+    topic: 'Mevsimlerin Oluşumu ve İklim',
+    type: 'universal_choice',
+    difficulty: 'kolay',
+    timeLimitSeconds: 15,
+    points: 80,
+    prompt: '21 Haziran tarihinde Güneş ışınları Yengeç Dönencesi\'ne dik gelir. Bu tarihte Kuzey Yarım Küre\'de hangi mevsim başlar?',
+    explanation: '21 Haziran Kuzey Yarım Küre için yaz gündönümüdür ve en uzun gündüz yaşanarak yaz mevsimi başlar.',
+    payload: {
+      variant: 'test',
+      optionCount: 4,
+      options: ['İlkbahar', 'Yaz', 'Sonbahar', 'Kış'],
+      correctIndex: 1,
+      shuffleOptions: false,
+    },
+  },
+  {
+    id: 'q_lgs_039',
+    examType: 'LGS',
+    subject: 'turkce',
+    topic: 'Fiilimsiler (Eylemsiler)',
+    type: 'pair_matching',
+    difficulty: 'orta',
+    timeLimitSeconds: 25,
+    points: 150,
+    prompt: 'Sol sütundaki altı çizili sözcükleri sağ sütundaki fiilimsi türleriyle eşleştirin.',
+    explanation: 'Kitap okumayı -> İsim-fiil (-ma), Yıkılası dünya -> Sıfat-fiil (-ası), Güneş doğarken -> Zarf-fiil (-ken).',
+    payload: {
+      leftColumnTitle: 'Cümle / İfade',
+      rightColumnTitle: 'Fiilimsi Türü',
+      pairs: [
+        { pairId: 'f_1', leftText: 'Kitap okumayı çok seviyor', rightText: 'İsim-fiil (-ma)' },
+        { pairId: 'f_2', leftText: 'Yıkılası dünyada gülmedi', rightText: 'Sıfat-fiil (-ası)' },
+        { pairId: 'f_3', leftText: 'Güneş doğarken yola çıktık', rightText: 'Zarf-fiil (-ken)' },
+      ],
+    },
+  },
+  {
+    id: 'q_lgs_040',
+    examType: 'LGS',
+    subject: 'matematik',
+    topic: 'Doğrusal Denklemler ve Eğim',
+    type: 'chain_conversion',
+    difficulty: 'orta',
+    timeLimitSeconds: 25,
+    points: 160,
+    prompt: '2y - 6x = 12 doğrusunun denklemini adım adım sadeleştirerek doğrunun eğimini bulun:',
+    explanation: '2y = 6x + 12 eşitliğinde her iki taraf 2\'ye bölünürse y = 3x + 6 elde edilir. Doğru denkleminde y yalnızken x\'in katsayısı eğim olduğundan m = 3\'tür.',
+    payload: {
+      startEntity: '2y - 6x = 12 Denklemi',
+      steps: [
+        {
+          stepNumber: 1,
+          arrowLabel: 'y\'yi yalnız bırak (2\'ye böl)',
+          correctValue: 'y = 3x + 6',
+        },
+        {
+          stepNumber: 2,
+          arrowLabel: 'x\'in katsayısı (Eğim m)',
+          correctValue: 'm = 3',
+        },
+      ],
+      poolOptions: [
+        'y = 3x + 6',
+        'm = 3',
+        'y = -3x + 6',
+        'm = -3',
+        'm = 6',
+      ],
+    },
+  },
 ];
 
 function normalizeInteractiveQuestion(q, examTypeOverride) {
   const examType = (examTypeOverride || q.examType || 'TYT').toUpperCase();
-  const diffNorm = q.difficulty === 'kolay' ? 'EASY' : q.difficulty === 'orta' ? 'MEDIUM' : 'HARD';
+  const diffNorm = (q.difficulty === 'kolay' || q.difficulty === 1)
+    ? 'EASY'
+    : (q.difficulty === 'zor' || q.difficulty === 3)
+    ? 'HARD'
+    : 'MEDIUM';
 
   let options = [];
   let correctOptionIndex = 0;
@@ -738,11 +926,14 @@ function normalizeInteractiveQuestion(q, examTypeOverride) {
     correctOptionIndex = 0;
   }
 
+  const difficultyNum = diffNorm === 'EASY' ? 1 : diffNorm === 'HARD' ? 3 : 2;
+
   return {
     externalId: q.id,
     examType,
     subject: q.subject.toLowerCase(),
     difficulty: diffNorm,
+    difficultyNumber: difficultyNum,
     subTopic: q.topic || '',
     text: q.prompt,
     explanation: q.explanation || '',
@@ -751,15 +942,22 @@ function normalizeInteractiveQuestion(q, examTypeOverride) {
     correctOptionIndex,
     durationMs: (q.timeLimitSeconds || 20) * 1000,
     rawDurationMs: (q.timeLimitSeconds || 20) * 1000,
-    interactiveQuestion: q,
+    interactiveQuestion: {
+      ...q,
+      difficulty: q.difficulty,
+      difficultyNumber: difficultyNum,
+    },
   };
 }
 
-// Hem TYT hem AYT maçlarında zengin interaktif soruların seçilebilmesi için
-// her soruyu kendi sınav türünde ve ortak havuzda normalize et:
+// LGS, TYT ve AYT maçlarında zengin interaktif soruların seçilebilmesi için normalize et:
 const INTERACTIVE_QUESTIONS = [
-  ...RAW_INTERACTIVE_QUESTIONS.map((q) => normalizeInteractiveQuestion(q, 'TYT')),
-  ...RAW_INTERACTIVE_QUESTIONS.map((q) => ({
+  // LGS soruları
+  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType === 'LGS').map((q) => normalizeInteractiveQuestion(q, 'LGS')),
+  // TYT soruları
+  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType !== 'LGS').map((q) => normalizeInteractiveQuestion(q, 'TYT')),
+  // AYT soruları
+  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType !== 'LGS').map((q) => ({
     ...normalizeInteractiveQuestion(q, 'AYT'),
     externalId: `${q.id}_ayt`,
   })),
