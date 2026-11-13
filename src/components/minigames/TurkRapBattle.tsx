@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, RotateCcw, ArrowRight } from 'lucide-react';
+import soundEngine from '../../utils/soundEngine';
 
 export interface TurkRapBattleProps {
   onComplete: () => void;
@@ -145,6 +146,11 @@ export const TurkRapBattle: React.FC<TurkRapBattleProps> = ({ onComplete, onNext
   const handleSelect = (opt: RapStageRound['options'][0]) => {
     if (isRoundCorrect || isFinished) return;
     setSelectedId(opt.id);
+    if (opt.isCorrect) {
+      soundEngine.playCorrect();
+    } else {
+      soundEngine.playWrong();
+    }
   };
 
   const handleNext = () => {
@@ -202,6 +208,58 @@ export const TurkRapBattle: React.FC<TurkRapBattleProps> = ({ onComplete, onNext
             &ldquo;{cur.rhymeSuffix}&rdquo;
           </div>
           <div className="text-[10px] font-mono text-zinc-400">Ses & Redif Uyumu</div>
+        </div>
+      </div>
+
+      {/* HİKAYE KARAKTERİ: FESTİVAL JÜRİSİ & SEYİRCİ TEPKİ BALONU */}
+      <div
+        className={`rounded-2xl border-2 p-3.5 flex items-center gap-3.5 transition-all duration-300 ${
+          chosenOpt && !chosenOpt.isCorrect
+            ? 'bg-red-950/60 border-red-400 shadow-lg shadow-red-500/20'
+            : isRoundCorrect || isFinished
+            ? 'bg-emerald-950/60 border-emerald-400 shadow-lg shadow-emerald-500/20'
+            : 'bg-[#170B19] border-pink-500/40'
+        }`}
+      >
+        <div
+          className={`w-13 h-13 p-2.5 rounded-2xl border-2 flex items-center justify-center text-2xl shrink-0 ${
+            chosenOpt && !chosenOpt.isCorrect
+              ? 'border-red-400 bg-red-500/20 animate-bounce'
+              : isRoundCorrect || isFinished
+              ? 'border-emerald-400 bg-emerald-500/20 scale-105'
+              : 'border-pink-400/50 bg-pink-500/15'
+          }`}
+        >
+          {chosenOpt && !chosenOpt.isCorrect ? '😬' : isRoundCorrect || isFinished ? '🔥' : '🎭'}
+        </div>
+
+        <div className="min-w-0 flex-1 text-xs leading-relaxed">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-poppins font-black text-white">
+              Festival Başjürisi Ozan Hoca
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-pink-200">
+              Canlı Kültür & Şiir Atışması • Tur {roundIdx + 1}/3
+            </span>
+          </div>
+          <p className="text-white/95 mt-0.5 font-medium">
+            {chosenOpt && !chosenOpt.isCorrect ? (
+              <span>
+                &ldquo;Eyvah! Seyirci buz kesti! Seçtiğin dize hem anlam bütünlüğünü bozdu hem de{' '}
+                <strong className="text-amber-300">{cur.rhymeSuffix}</strong> kafiyesini kaçırdı ({chosenOpt.shortReason}). Hemen başka dize dene!&rdquo;
+              </span>
+            ) : isRoundCorrect || isFinished ? (
+              <span>
+                &ldquo;Salon ayakta alkışlıyor! Hem <strong className="text-emerald-300">{cur.themeLabel}</strong> ana fikrini tamamladın hem de kusursuz uyak yakaladın ({chosenOpt?.shortReason})!&rdquo;
+              </span>
+            ) : (
+              <span>
+                &ldquo;Mikrofon sende! MC Bilgi ilk iki dizeyi söyledi; salonu coşturmak için hem{' '}
+                <strong className="text-pink-300">{cur.themeLabel}</strong> anlamını tamamlayan hem de{' '}
+                <strong className="text-amber-300">&lsquo;{cur.rhymeSuffix}&rsquo;</strong> uyağıyla biten dizeyi patlat!&rdquo;
+              </span>
+            )}
+          </p>
         </div>
       </div>
 

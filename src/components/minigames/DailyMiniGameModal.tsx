@@ -65,13 +65,13 @@ export const MINI_GAME_SUBJECTS: SubjectMeta[] = [
   {
     id: 'matematik',
     label: 'Matematik',
-    shortTitle: '5 Kollu Fabrika',
-    icon: '🏭',
+    shortTitle: 'Fonksiyon Zirvesi',
+    icon: '📈',
   },
   {
     id: 'geometri',
     label: 'Geometri',
-    shortTitle: 'Açı Bulmacası',
+    shortTitle: 'Köşegen & Üçgen',
     icon: '📐',
   },
   {

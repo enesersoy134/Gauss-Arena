@@ -173,7 +173,7 @@ export default function App() {
   );
 
   // Coin Dönüştürme State
-  const [coinsToConvert, setCoinsToConvert] = useState<number>(100);
+  const [coinsToConvert, setCoinsToConvert] = useState<number>(5000);
 
   // Günlük Öğretici Mini Oyunlar & 1v1 Rekabetçi Mod Kilidi State
   const [isCompetitiveUnlocked, setIsCompetitiveUnlocked] = useState<boolean>(false);
@@ -356,14 +356,15 @@ export default function App() {
 
   const handleConvertCoins = async () => {
     soundEngine.playClick();
-    if (coinsToConvert < 100) {
-      showToast('En az 100 Coin dönüştürebilirsiniz!');
+    if (coinsToConvert < 5000) {
+      showToast('En az 5000 Coin dönüştürebilirsiniz!');
       return;
     }
     const res = await convertCoins(coinsToConvert, currentPlayerId);
     if (res?.ok) {
       soundEngine.playCorrect();
-      showToast(`Tebrikler! ${coinsToConvert} Coin karşılığında ${res.islerPointsAwarded} İşler Puanı ve indirim kuponu kazandınız!`);
+      const awardedPoints = res.islerPointsAwarded ?? res.islerPointsAdded ?? Math.floor(coinsToConvert / 500);
+      showToast(`Tebrikler! ${coinsToConvert} Coin karşılığında ${awardedPoints} İşler Puanı ve indirim kuponu kazandınız!`);
     } else {
       soundEngine.playWrong();
       showToast(res?.reason || 'Dönüştürme başarısız oldu.');
@@ -534,8 +535,12 @@ export default function App() {
 
                 <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono mt-0.5 whitespace-nowrap">
                   <span className="text-[#F14E13] font-bold">{currentPlayer.elo} ELO</span>
-                  <span className="flex items-center gap-0.5 text-amber-400 font-semibold">
-                    <Flame className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400" />
+                  <span className={`flex items-center gap-0.5 font-semibold ${currentPlayer.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
+                    {currentPlayer.streak < 0 ? (
+                      <span>❄️</span>
+                    ) : (
+                      <Flame className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400" />
+                    )}
                     <span>{currentPlayer.streak > 0 ? `+${currentPlayer.streak}` : currentPlayer.streak}</span>
                   </span>
                   <span className="text-zinc-500">•</span>
@@ -718,8 +723,16 @@ export default function App() {
                         <span className="text-purple-400 font-bold bg-purple-500/10 px-2.5 py-1 rounded-xl border border-purple-500/25">
                           {currentPlayer.effectiveMmr} MMR<sub>eff</sub>
                         </span>
-                        <span className="flex items-center gap-1 text-amber-400 font-semibold bg-amber-500/10 px-2.5 py-1 rounded-xl border border-amber-500/25">
-                          <Flame className="w-3.5 h-3.5 fill-amber-400" />
+                        <span className={`flex items-center gap-1 font-semibold px-2.5 py-1 rounded-xl border ${
+                          currentPlayer.streak < 0
+                            ? 'text-sky-300 bg-sky-500/10 border-sky-500/25'
+                            : 'text-amber-400 bg-amber-500/10 border-amber-500/25'
+                        }`}>
+                          {currentPlayer.streak < 0 ? (
+                            <span>❄️</span>
+                          ) : (
+                            <Flame className="w-3.5 h-3.5 fill-amber-400" />
+                          )}
                           <span>{currentPlayer.streak > 0 ? `+${currentPlayer.streak}` : currentPlayer.streak} Seri</span>
                         </span>
                       </div>
@@ -739,7 +752,7 @@ export default function App() {
                         onClick={() => setActiveTab('revision')}
                         className="text-[11px] font-mono font-semibold text-[#F14E13] hover:underline"
                       >
-                        Tüm Yanlış Soruları & Çözümleri Gör →
+                        Tüm Yanlış Yaptığım Soruları & Çözümleri Gör →
                       </button>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap">
@@ -1049,7 +1062,9 @@ export default function App() {
                         </div>
                         <div className="font-mono text-right">
                           <span className="text-[#F14E13] font-bold">{p.elo} ELO</span>
-                          <span className="text-[10px] text-amber-400 ml-1.5">+{p.streak}🔥</span>
+                          <span className={`text-[10px] ml-1.5 ${p.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
+                            {p.streak > 0 ? `+${p.streak}🔥` : p.streak < 0 ? `${p.streak}❄️` : `${p.streak}🔥`}
+                          </span>
                         </div>
                       </div>
                     );
@@ -1179,15 +1194,15 @@ export default function App() {
                 <p className="text-xs text-[#B5CBC8] leading-relaxed">
                   Düellolardan kazandığınız Coin'leri, İşler Kitabevi şubelerinde geçerli indirim kuponlarına dönüştürün!
                   <br />
-                  <span className="font-mono text-amber-400 font-bold">100 Coin = 10 İşler Puanı (%10 İndirim)</span>
+                  <span className="font-mono text-amber-400 font-bold">5000 Coin = 10 İşler Puanı (%10 İndirim)</span>
                 </p>
 
                 <div className="flex items-center gap-2 bg-[#0F0510] p-3 rounded-xl border border-white/10">
                   <Coins className="w-5 h-5 text-amber-400 shrink-0" />
                   <input
                     type="number"
-                    step="50"
-                    min="100"
+                    step="500"
+                    min="5000"
                     max={currentPlayer.coins}
                     value={coinsToConvert}
                     onChange={(e) => setCoinsToConvert(Number(e.target.value))}
@@ -1201,11 +1216,11 @@ export default function App() {
 
                 <button
                   onClick={handleConvertCoins}
-                  disabled={currentPlayer.coins < 100}
+                  disabled={currentPlayer.coins < 5000}
                   className="btn-primary py-2.5 text-xs font-bold flex items-center justify-center gap-2"
                 >
                   <Tag className="w-4 h-4" />
-                  <span>Kupon Üret ({Math.floor(coinsToConvert / 10)} Puan)</span>
+                  <span>Kupon Üret ({Math.floor(coinsToConvert / 500)} Puan)</span>
                 </button>
               </div>
 

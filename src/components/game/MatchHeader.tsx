@@ -95,18 +95,26 @@ export const MatchHeader: React.FC<MatchHeaderProps> = ({
             <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono mt-0.5 whitespace-nowrap">
               <span className="text-[#F14E13] font-bold">{player1.elo} ELO</span>
               <span
-                className={`flex items-center gap-0.5 text-amber-400 font-semibold transition-all ${
-                  player1.streak >= 2
+                className={`flex items-center gap-0.5 font-semibold transition-all ${
+                  player1.streak < 0
+                    ? 'text-sky-400'
+                    : player1.streak >= 2
                     ? 'px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-red-500/30 border border-amber-400 text-amber-200 shadow-lg shadow-amber-500/50 ring-1 ring-amber-400/60 animate-flame-aura'
-                    : ''
+                    : 'text-amber-400'
                 }`}
               >
-                <Flame
-                  className={`w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400 ${
-                    player1.streak >= 2 ? 'animate-bounce' : ''
-                  }`}
-                />
-                {player1.streak >= 2 ? `🔥 ${player1.streak}x ALEV ALDI!` : player1.streak}
+                {player1.streak < 0 ? (
+                  <span>❄️ {player1.streak}</span>
+                ) : (
+                  <>
+                    <Flame
+                      className={`w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400 ${
+                        player1.streak >= 2 ? 'animate-bounce' : ''
+                      }`}
+                    />
+                    {player1.streak >= 2 ? `🔥 ${player1.streak}x ALEV ALDI!` : player1.streak}
+                  </>
+                )}
               </span>
             </div>
           </div>
@@ -164,14 +172,22 @@ export const MatchHeader: React.FC<MatchHeaderProps> = ({
             </div>
             <div className="flex items-center justify-end gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono mt-0.5 whitespace-nowrap">
               <span
-                className={`flex items-center gap-0.5 text-blue-400 font-semibold ${
-                  player2.streak >= 2
+                className={`flex items-center gap-0.5 font-semibold ${
+                  player2.streak < 0
+                    ? 'text-sky-400'
+                    : player2.streak >= 2
                     ? 'px-1.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-300'
-                    : ''
+                    : 'text-blue-400'
                 }`}
               >
-                <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-blue-400 text-blue-400" />
-                {player2.streak >= 2 ? `🔥 ${player2.streak}x` : player2.streak}
+                {player2.streak < 0 ? (
+                  <span>❄️ {player2.streak}</span>
+                ) : (
+                  <>
+                    <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-blue-400 text-blue-400" />
+                    {player2.streak >= 2 ? `🔥 ${player2.streak}x` : player2.streak}
+                  </>
+                )}
               </span>
               <span className="text-[#3B82F6] font-bold">{player2.elo} ELO</span>
             </div>

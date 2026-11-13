@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Scale,
   CheckCircle2,
   RotateCcw,
-  Sparkles,
   ArrowRight,
   HelpCircle,
 } from 'lucide-react';
+import soundEngine from '../../utils/soundEngine';
 
 export interface PhysBalanceGameProps {
   onComplete: () => void;
@@ -126,14 +125,35 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete, on
     if (isGameFinished) return;
     if (!selectedWeightId) return;
 
-    setPlacements((prev) => ({
-      ...prev,
+    const nextPlacements = {
+      ...placements,
       [selectedWeightId]: { side, distance },
-    }));
+    };
+    setPlacements(nextPlacements);
+
+    // Yeni yerleşimle denge sağlandı mı kontrol et
+    let nextL = 0;
+    let nextR = 0;
+    for (let d = 1; d <= 4; d++) {
+      (currentLevel.fixedLeft[d] || []).forEach((m) => (nextL += m * d));
+      (currentLevel.fixedRight[d] || []).forEach((m) => (nextR += m * d));
+    }
+    Object.entries(nextPlacements).forEach(([wId, pos]) => {
+      const wObj = currentLevel.availableWeights.find((w) => w.id === wId);
+      if (!wObj) return;
+      if (pos.side === 'left') nextL += wObj.mass * pos.distance;
+      else nextR += wObj.mass * pos.distance;
+    });
+
+    if (nextL > 0 && nextL === nextR) {
+      soundEngine.playCorrect();
+    } else {
+      soundEngine.playClick();
+    }
 
     // Otomatik olarak henüz yerleştirilmemiş bir sonraki kütleyi seç
     const nextUnplaced = currentLevel.availableWeights.find(
-      (w) => w.id !== selectedWeightId && !placements[w.id]
+      (w) => w.id !== selectedWeightId && !nextPlacements[w.id]
     );
     if (nextUnplaced) {
       setSelectedWeightId(nextUnplaced.id);
@@ -169,30 +189,65 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete, on
     setSelectedWeightId(currentLevel.availableWeights[0].id);
   };
 
+  const placedCount = Object.keys(placements).length;
+
   return (
-    <div className="flex flex-col gap-5">
-      {/* Üst Bilgi & Formül Özeti */}
-      <div className="bg-[#0F0510] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
+    <div className="flex flex-col gap-4">
+      {/* HİKAYE KARAKTERİ: KULE VİNCİ OPERATÖRÜ KADİR USTA */}
+      <div
+        className={`rounded-2xl border-2 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 transition-all duration-300 ${
+          isBalanced
+            ? 'bg-emerald-950/60 border-emerald-400 shadow-lg shadow-emerald-500/20'
+            : placedCount > 0
+            ? 'bg-amber-950/50 border-amber-400/70'
+            : 'bg-[#170B19] border-orange-500/40'
+        }`}
+      >
+        <div className="flex items-center gap-3.5">
           <div
-            className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border ${
+            className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center text-3xl shrink-0 transition-transform duration-300 ${
               isBalanced
-                ? 'bg-emerald-500/20 border-emerald-500/50'
-                : 'bg-amber-500/15 border-amber-500/40'
+                ? 'border-emerald-400 bg-emerald-500/20 scale-105'
+                : placedCount > 0
+                ? 'border-amber-400 bg-amber-500/20 animate-pulse'
+                : 'border-orange-400/50 bg-orange-500/15'
             }`}
           >
-            ⚖️
+            {isBalanced
+              ? '😎'
+              : placedCount === 0
+              ? '👷‍♂️'
+              : netTorque > 0
+              ? '😱'
+              : '😰'}
           </div>
-          <div>
+
+          <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-poppins font-bold text-sm sm:text-base text-white">
-                {currentLevel.title}
-              </h3>
-              <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                τ = F · d (Tork = Kuvvet × Kol)
+              <span className="font-poppins font-black text-xs sm:text-sm text-white">
+                Şantiye Şefi Kadir Usta
+              </span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-amber-200">
+                Kule Vinci Operatörü • Aşama {currentLevel.level}/2
+              </span>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                τ = F · d
               </span>
             </div>
-            <p className="text-xs text-[#B5CBC8] mt-0.5">{currentLevel.description}</p>
+
+            <p className="text-xs text-white/95 mt-1 leading-relaxed font-medium">
+              &ldquo;
+              {isBalanced
+                ? `Helal olsun mühendisim! Sol tork (${leftTorque} N·m) ile sağ tork (${rightTorque} N·m) milimetrik eşitlendi, kule vinci devrilmekten kurtuldu!`
+                : placedCount === 0
+                ? levelIdx === 0
+                  ? 'Şantiyede acil durum! Vincin sol kolunda 3d uzaklıkta 4 kg çelik yük asılı kaldı (τ_sol = 12 N·m). Vinç sola devrilmeden sağ kola karşı ağırlık yerleştir!'
+                  : 'Rüzgar şiddetlendi! Sol kolda iki ayrı yük var (Toplam τ_sol = 14 N·m). Elindeki ağırlıklarla sağ kolu tam 14 N·m torka eşitle!'
+                : netTorque < 0
+                ? `Dikkat! Hâlâ sol kol ağır basıyor (Sol: ${leftTorque} N·m > Sağ: ${rightTorque} N·m)! Kütleyi desteğe daha uzak bir bölmeye (3d/4d) taşı veya ek ağırlık koy!`
+                : `Eyvah, fazla kaçırdın! Şimdi de vinç sağa devrilecek (Sağ: ${rightTorque} N·m > Sol: ${leftTorque} N·m)! Ağırlığı desteğe daha yakın bir bölmeye çek!`}
+              &rdquo;
+            </p>
           </div>
         </div>
 
