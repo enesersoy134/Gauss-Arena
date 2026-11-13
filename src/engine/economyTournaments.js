@@ -1,4 +1,5 @@
 const { calculateEffectiveMMR } = require('./eloMomentum');
+const { getRecommendationsForTopic } = require('./resourceRecommendations');
 
 const WEEKLY_BRACKETS = [
   { tierName: 'Bronz Lig', minElo: 0, maxElo: 1199.9, weeklyCoins: 100, badgeColor: '#cd7f32' },
@@ -102,6 +103,7 @@ function createInitialPlayers() {
 
   return raw.map((p) => ({
     ...p,
+    revisionTopics: [],
     effectiveMmr: calculateEffectiveMMR(p.elo, p.streak),
     bracket: getWeeklyBracket(p.elo),
   }));
@@ -160,6 +162,7 @@ class GameStore {
 
   refreshPlayerComputed(player) {
     if (!player) return null;
+    player.elo = Math.round(Number(player.elo) || 1200);
     player.effectiveMmr = calculateEffectiveMMR(player.elo, player.streak);
     player.bracket = getWeeklyBracket(player.elo);
     return player;
@@ -320,6 +323,85 @@ class GameStore {
     };
   }
 
+  recordPlayerMistakes(player, roundHistory = [], isPlayerA = true, examType = 'TYT', completedAt = null) {
+    if (!player || !Array.isArray(roundHistory)) return;
+    player.revisionTopics = Array.isArray(player.revisionTopics) ? player.revisionTopics : [];
+    const timestamp = completedAt || new Date().toISOString();
+
+    for (const round of roundHistory) {
+      const ans = isPlayerA ? round.answerA : round.answerB;
+      if (!ans || ans.isCorrect) continue;
+
+      const subject = String(round.subject || (round.interactiveQuestion && round.interactiveQuestion.subject) || 'genel').toLowerCase();
+      const topic = String(
+        round.subTopic ||
+          (round.interactiveQuestion && round.interactiveQuestion.topic) ||
+          subject
+      ).trim();
+      const questionText =
+        round.text ||
+        (round.interactiveQuestion && round.interactiveQuestion.prompt) ||
+        round.externalId ||
+        'Soru';
+      const explanation =
+        round.explanation ||
+        (round.interactiveQuestion && round.interactiveQuestion.explanation) ||
+        null;
+
+      let topicEntry = player.revisionTopics.find(
+        (item) => item.topic.toLowerCase() === topic.toLowerCase() && item.subject === subject
+      );
+
+      if (!topicEntry) {
+        topicEntry = {
+          topic,
+          subject,
+          examType: examType || 'TYT',
+          mistakeCount: 0,
+          lastMistakeAt: timestamp,
+          wrongQuestions: [],
+          recommendedResources: getRecommendationsForTopic(subject, topic, examType || 'TYT'),
+        };
+        player.revisionTopics.push(topicEntry);
+      } else if (!Array.isArray(topicEntry.recommendedResources) || topicEntry.recommendedResources.length === 0) {
+        topicEntry.recommendedResources = getRecommendationsForTopic(subject, topic, examType || 'TYT');
+      }
+
+      topicEntry.mistakeCount += 1;
+      topicEntry.lastMistakeAt = timestamp;
+
+      const existingQ = topicEntry.wrongQuestions.find((wq) => wq.externalId === round.externalId);
+      if (existingQ) {
+        existingQ.failedCount = (existingQ.failedCount || 1) + 1;
+        existingQ.failedAt = timestamp;
+      } else {
+        topicEntry.wrongQuestions.unshift({
+          externalId: round.externalId,
+          text: questionText,
+          explanation,
+          difficulty: round.difficulty || 'MEDIUM',
+          failedCount: 1,
+          failedAt: timestamp,
+        });
+      }
+    }
+
+    player.revisionTopics.sort((a, b) => b.mistakeCount - a.mistakeCount);
+  }
+
+  markTopicReviewed(playerId, topic) {
+    const p = this.getPlayer(playerId);
+    if (!p) return { ok: false, reason: 'Oyuncu bulunamadı' };
+    p.revisionTopics = Array.isArray(p.revisionTopics) ? p.revisionTopics : [];
+    if (!topic) {
+      p.revisionTopics = [];
+      return { ok: true, revisionTopics: p.revisionTopics };
+    }
+    const normTopic = String(topic).trim().toLowerCase();
+    p.revisionTopics = p.revisionTopics.filter((item) => item.topic.toLowerCase() !== normTopic);
+    return { ok: true, revisionTopics: p.revisionTopics };
+  }
+
   recordMatchOutcome(summary) {
     const pA = this.getPlayer(summary.playerA.id);
     const pB = !summary.playerB.isGhost ? this.getPlayer(summary.playerB.id) : null;
@@ -329,6 +411,7 @@ class GameStore {
       pA.streak = summary.eloUpdate.newStreakA;
       pA.weeklyMatchesPlayed += 1;
       pA.coins += summary.coinsAwardedA || 0;
+      this.recordPlayerMistakes(pA, summary.roundHistory, true, summary.examType, summary.completedAt);
       this.refreshPlayerComputed(pA);
     }
 
@@ -337,6 +420,7 @@ class GameStore {
       pB.streak = summary.eloUpdate.newStreakB;
       pB.weeklyMatchesPlayed += 1;
       pB.coins += summary.coinsAwardedB || 0;
+      this.recordPlayerMistakes(pB, summary.roundHistory, false, summary.examType, summary.completedAt);
       this.refreshPlayerComputed(pB);
     }
 

@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "biyoloji",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-BIY-H-001",
+      "subTopic": "Kas Kasılması (Huxley Kayan İplikler)",
+      "text": "Çizgili bir kasın kasılması sırasında aşağıdakilerden hangisi gerçekleşmez?",
+      "explanation": "Miyozin ipliklerinin boyuna karşılık gelen A bandının boyu kasılma ve gevşeme sırasında değişmez.",
+      "imageUrl": null,
+      "options": [
+        "Z çizgileri birbirine yaklaşır",
+        "H bandı daralır ve kaybolur",
+        "A bandının boyu kısalır",
+        "I bandı daralır"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-BIY-H-002",
+      "subTopic": "Starling Hipotezi (Kılcal Damar Madde Alışverişi)",
+      "text": "Kılcal damar boyunca kan basıncı azalırken kanın osmotik basıncı sabit kalır. Kan basıncının osmotik basınçtan büyük olduğu atardamar ucunda hangi olay gerçekleşir?",
+      "explanation": "Atardamar ucunda kan basıncı (≈32 mmHg) > osmotik basınç (≈22 mmHg) olduğundan kandan doku sıvısına madde süzülmesi olur.",
+      "imageUrl": null,
+      "options": [
+        "Doku sıvısından kana geri emilim",
+        "Kandan doku sıvısına süzülme",
+        "Lenf akışının durması",
+        "Plazma proteinlerinin dışarı çıkması"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-003",
+      "subTopic": "Oksijenli Solunum Basamakları",
+      "text": "Oksijenli solunumda substrat düzeyinde fosforilasyon (SDF) hangi evrelerde gerçekleşir?",
+      "explanation": "Substrat düzeyinde fosforilasyon (SDF) sitoplazmada glikolizde ve mitokondri matriksinde Krebs döngüsünde görülür; ETS evresinde oksidatif fosforilasyon gerçekleşir.",
+      "imageUrl": null,
+      "options": [
+        "Yalnızca ETS",
+        "Glikoliz ve Krebs döngüsü",
+        "Yalnızca Krebs döngüsü",
+        "Glikoliz ve ETS"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-004",
+      "subTopic": "DNA Replikasyonu (Meselson-Stahl)",
+      "text": "Ağır azotlu (¹⁵N¹⁵N) bir DNA molekülü normal azotlu (¹⁴N) ortamda 3 kez eşlendiğinde oluşan DNA moleküllerinden kaç tanesi melez (¹⁵N¹⁴N) olur?",
+      "explanation": "Yarı korunumlu eşlenmede kaç kez eşlenirse eşlensin başlangıçtaki 2 ağır zincir korunduğu için her zaman 2 tane melez DNA oluşur (toplam 2³ = 8 DNA içinde 2 melez, 6 normal).",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "4",
+        "8"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-005",
+      "subTopic": "Fotosentez Evreleri (Calvin Döngüsü)",
+      "text": "Fotosentezin ışıktan bağımsız tepkimelerinde (Calvin döngüsünde) CO₂ molekülünün tutulmasını (karbon fiksasyonunu) katalizleyen enzim hangisidir?",
+      "explanation": "Ribuloz bisfosfat karboksilaz (Rubisco) enzimi Calvin döngüsünde CO₂ yakalanmasını sağlar.",
+      "imageUrl": null,
+      "options": [
+        "DNA polimeraz",
+        "Rubisco",
+        "Katalaz",
+        "Helikaz"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-006",
+      "subTopic": "Endokrin Geri Bildirim (Feedback)",
+      "text": "Hipofiz ön lobundan salgılanan ACTH hormonu aşağıdaki endokrin bezlerden hangisini uyarır?",
+      "explanation": "ACTH (Adrenokortikotropik hormon) böbrek üstü bezinin kabuk bölgesini uyararak kortizol ve aldosteron salgısını düzenler.",
+      "imageUrl": null,
+      "options": [
+        "Tiroid bezi",
+        "Böbrek üstü bezinin kabuk (korteks) bölgesi",
+        "Pankreas",
+        "Paratiroid bezi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-007",
+      "subTopic": "Solunum Gazlarının Taşınması (Bohr Etkisi)",
+      "text": "Doku kılcallarında CO₂ artışına bağlı olarak kan pH değerinin düşmesi sonucunda hemoglobinin oksijeni bırakma eğiliminin artmasına ne ad verilir?",
+      "explanation": "Düşük pH (yüksek CO₂) ortamında hemoglobinin oksijene ilgisinin azalarak dokulara O₂ bırakmasına Bohr etkisi denir.",
+      "imageUrl": null,
+      "options": [
+        "Starling etkisi",
+        "Bohr kayması (Bohr etkisi)",
+        "Haldane etkisi",
+        "Klor kayması"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-008",
+      "subTopic": "Bitkilerde Stoma Açılıp Kapanması",
+      "text": "Bekçi (kilit) hücrelerinde potasyum (K⁺) iyonlarının ve glikozun artmasıyla osmotik basıncın yükselmesi ve komşu epidermis hücrelerinden su çekilmesi sonucunda stoma nasıl tepki verir?",
+      "explanation": "Bekçi hücrelerine su girdiğinde turgor basıncı artar ve stoma açıklığı açılır.",
+      "imageUrl": null,
+      "options": [
+        "Stoma kapanır",
+        "Turgor basıncı artar ve stoma açılır",
+        "Terleme tamamen durur",
+        "Hücreler plazmolize uğrar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-009",
+      "subTopic": "İnsan Üreme Sistemi ve Menstrual Döngü",
+      "text": "Menstrual döngüde olgunlaşan folikülün yırtılarak yumurtanın fallopi tüpüne atılmasını (ovulasyonu) doğrudan sağlayan hipofiz hormonu hangisidir?",
+      "explanation": "LH hormonunun döngünün 14. gününde pik yapması ovulasyonu (yumurtlamayı) ve korpus luteum oluşumunu sağlar.",
+      "imageUrl": null,
+      "options": [
+        "FSH",
+        "LH (Lüteinleştirici Hormon)",
+        "Östrojen",
+        "Oksitosin"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-H-010",
+      "subTopic": "Biyoteknoloji ve Gen Mühendisliği",
+      "text": "Bir canlıdan alınan istenilen genin plazmit vektör yardımıyla başka bir canlıya (örneğin bakteriye) aktarılmasıyla elde edilen DNA molekülüne ne ad verilir?",
+      "explanation": "Farklı türlere ait DNA parçalarının birleştirilmesiyle oluşturulan yeni DNA molekülüne rekombinant DNA denir.",
+      "imageUrl": null,
+      "options": [
+        "Antikodon",
+        "Rekombinant DNA",
+        "Kromatin iplik",
+        "Okazaki parçası"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

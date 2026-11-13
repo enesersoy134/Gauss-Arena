@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "biyoloji",
+    "difficulty": "HARD",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-BIY-H-001",
+      "subTopic": "Eşeye Bağlı Kalıtım",
+      "text": "Renk körlüğü taşıyıcısı bir anne (XᴿXʳ) ile sağlıklı bir babanın (XᴿY) doğacak bir çocuğunun renk körü erkek (XʳY) olma olasılığı kaçtır?",
+      "explanation": "Olası genotipler: XᴿXᴿ, XᴿXʳ, XᴿY, XʳY. Renk körü erkek (XʳY) olma olasılığı 1/4 olur.",
+      "imageUrl": null,
+      "options": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "3/4"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-H-002",
+      "subTopic": "Dihibrit Çaprazlama",
+      "text": "Bağımsız genlere sahip AaBb genotipli bir birey kendiyle çaprazlandığında (AaBb × AaBb) çekinik fenotipli (aabb) birey oluşma olasılığı kaçtır?",
+      "explanation": "aa olasılığı 1/4, bb olasılığı 1/4 olduğundan aabb olma olasılığı (1/4) · (1/4) = 1/16 olur.",
+      "imageUrl": null,
+      "options": [
+        "1/4",
+        "1/8",
+        "1/16",
+        "3/16"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-BIY-H-003",
+      "subTopic": "Hücre Bölünmesi Hesaplamaları",
+      "text": "2n = 24 kromozomlu bir hayvan hücresi art arda 3 mitoz ve ardından 1 mayoz bölünme geçirirse oluşacak hücre sayısı ve kromozom sayısı kaç olur?",
+      "explanation": "3 mitoz sonunda 2³ = 8 hücre oluşur. Her biri mayoz geçirince 8 · 4 = 32 hücre oluşur ve kromozom sayısı yarıya inerek n = 12 olur.",
+      "imageUrl": null,
+      "options": [
+        "16 hücre, n = 12",
+        "32 hücre, n = 12",
+        "32 hücre, 2n = 24",
+        "8 hücre, n = 12"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-H-004",
+      "subTopic": "Turgor ve Osmotik Basınç",
+      "text": "Hipertonik (çok yoğun) tuzlu su ortamına bırakılan bir bitki hücresinin su kaybederek büzülmesi olayına ne ad verilir?",
+      "explanation": "Hipertonik ortamda su kaybeden hücrenin büzülmesine plazmoliz denir.",
+      "imageUrl": null,
+      "options": [
+        "Deplazmoliz",
+        "Plazmoliz",
+        "Hemoliz",
+        "Turgor"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-H-005",
+      "subTopic": "Besin Piramidi ve Enerji Akışı",
+      "text": "Bir besin piramidinde üretici basamağında 10000 J biyokütle enerjisi varsa, %10 yasasına göre üçüncül tüketiciye kaç Joule enerji aktarılır?",
+      "explanation": "Üretici (10000) → 1. tüketici (1000) → 2. tüketici (100) → 3. tüketici (10 J) enerji aktarılır.",
+      "imageUrl": null,
+      "options": [
+        "1000",
+        "100",
+        "10",
+        "1"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-BIY-H-006",
+      "subTopic": "Trigliserit Sentezi",
+      "text": "10 molekül nötral yağ (trigliserit) sentezi sırasında kaç molekül yağ asidi kullanılır ve kaç molekül su açığa çıkar?",
+      "explanation": "1 trigliserit için 1 gliserol + 3 yağ asidi → 1 trigliserit + 3 H₂O. 10 molekül için 30 yağ asidi ve 30 H₂O oluşur.",
+      "imageUrl": null,
+      "options": [
+        "10 yağ asidi, 10 su",
+        "30 yağ asidi, 30 su",
+        "30 yağ asidi, 10 su",
+        "20 yağ asidi, 30 su"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-H-007",
+      "subTopic": "Plastikler ve Lökoplast-Kloroplast",
+      "text": "Bitkilerde renksiz olan ve nişasta depolayan lökoplastlar uzun süre güneş ışığına maruz kaldığında hangi organele dönüşebilir?",
+      "explanation": "Plastitler birbirine dönüşebilir; ışık varlığında lökoplastlar kloroplasta dönüşebilir (örneğin patatesin yeşermesi).",
+      "imageUrl": null,
+      "options": [
+        "Mitokondri",
+        "Kloroplast",
+        "Peroksizom",
+        "Sentrozom"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-H-008",
+      "subTopic": "Virüslerin Özellikleri",
+      "text": "Zorunlu hücre içi parazit olan virüslerle ilgili aşağıdakilerden hangisi yanlıştır?",
+      "explanation": "Antibiyotikler bakterilere etki eder; virüslerin metabolizması ve hücre zarı olmadığı için antibiyotiklerden etkilenmezler.",
+      "imageUrl": null,
+      "options": [
+        "Kristalleşebilirler",
+        "Antibiyotiklerden etkilenirler",
+        "Sadece DNA veya sadece RNA taşırlar",
+        "Enzim sistemleri olmadığından ATP üretemezler"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-H-009",
+      "subTopic": "Soyağacı Analizi",
+      "text": "Y kromozomunun X ile homolog olmayan bölgesinde taşınan bir özellik için aşağıdakilerden hangisi kesinlikle doğrudur?",
+      "explanation": "Y kromozomu babadan yalnızca erkek çocuklara aktarılır; dişilerde Y kromozomu bulunmaz.",
+      "imageUrl": null,
+      "options": [
+        "Anneden erkek çocuğa geçer",
+        "Yalnızca erkek bireylerde görülür ve babadan tüm erkek çocuklara geçer",
+        "Kız çocuklarda çekinik taşınır",
+        "Sadece homozigot durumda etkisini gösterir"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-H-010",
+      "subTopic": "Sera Etkisi ve Küresel Isınma",
+      "text": "Göllerde azot ve fosforlu atıkların aşırı artması sonucu alglerin kontrolsüz çoğalarak suyun alt katmanlarında oksijenin tükenmesine ne ad verilir?",
+      "explanation": "Su kaynaklarında besin tuzu artışıyla alg patlaması yaşanması olayına ötrofikasyon denir.",
+      "imageUrl": null,
+      "options": [
+        "Erozyon",
+        "Ötrofikasyon",
+        "Biyolojik birikim",
+        "Süksesyon"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

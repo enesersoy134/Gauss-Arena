@@ -41,7 +41,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
     const player1Info: PlayerInfo = {
       id: summaryMe.id,
       name: summaryMe.name,
-      elo: summaryMe.elo,
+      elo: Math.round(summaryMe.elo),
       streak: summaryMe.streak,
       avatarUrl: summaryMe.avatarUrl,
     };
@@ -49,7 +49,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
     const player2Info: PlayerInfo = {
       id: summaryOpp.id,
       name: summaryOpp.name,
-      elo: summaryOpp.elo,
+      elo: Math.round(summaryOpp.elo),
       streak: summaryOpp.streak,
       avatarUrl: summaryOpp.avatarUrl,
     };
@@ -61,12 +61,12 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
       const qItem: Question = rh.interactiveQuestion || {
         id: rh.externalId,
         subject: (rh.subject as any) || 'matematik',
-        topic: rh.subject,
+        topic: rh.subTopic || rh.subject,
         type: 'universal_choice',
         difficulty: 'orta',
         timeLimitSeconds: 60,
         points: 100,
-        prompt: rh.externalId,
+        prompt: rh.text || rh.externalId,
         explanation: rh.explanation || undefined,
         payload: {
           variant: 'test',
@@ -90,7 +90,7 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
     });
 
     const myCoinsAwarded = isPlayerA ? duelSummary.coinsAwardedA : duelSummary.coinsAwardedB;
-    const eloDelta = summaryMe.deltaElo || (summaryMe.newElo - summaryMe.elo);
+    const eloDelta = Math.round(summaryMe.deltaElo ?? (summaryMe.newElo - summaryMe.elo));
 
     return (
       <div className="min-h-screen bg-[#150A16] text-white flex flex-col justify-center py-6 px-4">

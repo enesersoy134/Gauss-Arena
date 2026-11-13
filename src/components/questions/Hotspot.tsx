@@ -14,14 +14,23 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
   const [imageError, setImageError] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
+  const promptLower = question.prompt.toLowerCase();
+  const isCellDiagram =
+    question.subject === 'biyoloji' ||
+    promptLower.includes('hücre') ||
+    promptLower.includes('golgi') ||
+    promptLower.includes('organel') ||
+    Boolean(imageUrl && imageUrl.includes('eukaryotic-cell'));
+
   // Parabol veya grafik sorusu mu? Veya resim yüklenemedi mi?
   const isMathGraph =
-    !imageUrl ||
-    imageUrl.trim() === '' ||
-    imageError ||
-    question.prompt.toLowerCase().includes('parabol') ||
-    question.prompt.toLowerCase().includes('grafik') ||
-    question.prompt.toLowerCase().includes('tepe noktası');
+    !isCellDiagram &&
+    (!imageUrl ||
+      imageUrl.trim() === '' ||
+      imageError ||
+      promptLower.includes('parabol') ||
+      promptLower.includes('grafik') ||
+      promptLower.includes('tepe noktası'));
 
   const handleRegionClick = (regionId: string) => {
     if (disabled || isSubmitted) return;
@@ -40,8 +49,156 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
     <div className="w-full flex flex-col items-center gap-6 select-none font-sans">
       {/* 1. GÖRSEL / GRAFİK ALANI */}
       <div className="relative w-full max-w-4xl aspect-[16/10] max-h-[520px] rounded-2xl bg-isler-deep border-2 border-isler-primary/40 shadow-2xl overflow-hidden flex items-center justify-center">
-        {/* ARKA PLAN: GERÇEK RESİM VEYA SVG KOORDİNAT DÜZLEMİ */}
-        {!isMathGraph ? (
+        {/* ARKA PLAN: ÖKARYOT HÜCRE SVG, MATEMATİK PARABOL SVG VEYA HARİCİ GÖRSEL */}
+        {isCellDiagram ? (
+          <svg
+            viewBox="0 0 800 500"
+            className="w-full h-full select-none pointer-events-none"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <radialGradient id="cellBgGrad" cx="50%" cy="50%" r="70%">
+                <stop offset="0%" stopColor="#132238" />
+                <stop offset="100%" stopColor="#090D16" />
+              </radialGradient>
+              <radialGradient id="cytoplasmGrad" cx="48%" cy="50%" r="55%">
+                <stop offset="0%" stopColor="#1E3A5F" stopOpacity="0.85" />
+                <stop offset="70%" stopColor="#0F243C" stopOpacity="0.92" />
+                <stop offset="100%" stopColor="#0B192C" stopOpacity="0.98" />
+              </radialGradient>
+              <radialGradient id="nucleusGrad" cx="45%" cy="45%" r="55%">
+                <stop offset="0%" stopColor="#9333EA" />
+                <stop offset="70%" stopColor="#6B21A8" />
+                <stop offset="100%" stopColor="#3B0764" />
+              </radialGradient>
+              <radialGradient id="nucleolusGrad" cx="40%" cy="40%" r="60%">
+                <stop offset="0%" stopColor="#E9D5FF" />
+                <stop offset="50%" stopColor="#C084FC" />
+                <stop offset="100%" stopColor="#581C87" />
+              </radialGradient>
+              <linearGradient id="mitoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#F87171" />
+                <stop offset="100%" stopColor="#991B1B" />
+              </linearGradient>
+              <linearGradient id="golgiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FBBF24" />
+                <stop offset="100%" stopColor="#D97706" />
+              </linearGradient>
+              <radialGradient id="vacuoleGrad" cx="40%" cy="40%" r="60%">
+                <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.65" />
+                <stop offset="100%" stopColor="#0284C7" stopOpacity="0.35" />
+              </radialGradient>
+              <pattern id="bioGridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" strokeWidth="1" strokeOpacity="0.5" />
+              </pattern>
+            </defs>
+
+            <rect width="800" height="500" fill="url(#cellBgGrad)" />
+            <rect width="800" height="500" fill="url(#bioGridPattern)" />
+
+            {/* Başlık Etiketi */}
+            <rect x="24" y="20" width="235" height="34" rx="17" fill="#0F172A" stroke="#38BDF8" strokeWidth="1.5" strokeOpacity="0.6" />
+            <circle cx="44" cy="37" r="5" fill="#38BDF8" />
+            <text x="58" y="42" fill="#E2E8F0" fontFamily="sans-serif" fontSize="13" fontWeight="bold">
+              ÖKARYOT HÜCRE MODELİ
+            </text>
+
+            {/* Hücre Zarı (Dış ve İç Fosfolipit Çift Katmanı) */}
+            <path
+              d="M 400 52 C 585 48, 695 125, 702 252 C 708 378, 575 452, 398 450 C 218 448, 95 375, 98 248 C 101 120, 215 56, 400 52 Z"
+              fill="url(#cytoplasmGrad)"
+              stroke="#38BDF8"
+              strokeWidth="6"
+              strokeOpacity="0.85"
+            />
+            <path
+              d="M 400 62 C 575 58, 682 132, 688 252 C 694 370, 565 440, 398 438 C 228 436, 108 368, 110 248 C 112 128, 225 66, 400 62 Z"
+              fill="none"
+              stroke="#7DD3FC"
+              strokeWidth="2"
+              strokeDasharray="8 5"
+              strokeOpacity="0.6"
+            />
+
+            {/* Sitoplazma İçi Serbest Ribozom Tanecikleri */}
+            <g fill="#94A3B8" opacity="0.45">
+              <circle cx="170" cy="270" r="3" />
+              <circle cx="185" cy="282" r="2.5" />
+              <circle cx="290" cy="390" r="3" />
+              <circle cx="450" cy="395" r="3" />
+              <circle cx="610" cy="240" r="3" />
+              <circle cx="595" cy="255" r="2.5" />
+              <circle cx="330" cy="140" r="3" />
+              <circle cx="480" cy="120" r="2.5" />
+              <circle cx="620" cy="320" r="3" />
+            </g>
+
+            {/* Koful (Vacuole) */}
+            <g transform="translate(235, 345)">
+              <ellipse cx="0" cy="0" rx="46" ry="34" fill="url(#vacuoleGrad)" stroke="#38BDF8" strokeWidth="2.5" />
+              <ellipse cx="-12" cy="-8" rx="16" ry="8" fill="#E0F2FE" opacity="0.25" />
+            </g>
+
+            {/* Sentrozom */}
+            <g transform="translate(545, 155)" stroke="#34D399" strokeWidth="2" fill="#065F46" opacity="0.9">
+              <rect x="-22" y="-8" width="28" height="14" rx="4" transform="rotate(-25)" />
+              <rect x="-5" y="-15" width="14" height="28" rx="4" transform="rotate(35)" />
+              <line x1="-30" y1="0" x2="30" y2="0" stroke="#6EE7B7" strokeWidth="1" strokeDasharray="3 3" />
+              <line x1="0" y1="-30" x2="0" y2="30" stroke="#6EE7B7" strokeWidth="1" strokeDasharray="3 3" />
+            </g>
+
+            {/* Endoplazmik Retikulum (Granüllü ER) */}
+            <g fill="none" stroke="#818CF8" strokeWidth="7" strokeLinecap="round">
+              <path d="M 315 215 C 295 185, 330 155, 380 158 C 430 160, 460 185, 452 215" opacity="0.85" />
+              <path d="M 302 198 C 282 165, 325 135, 384 138 C 440 140, 475 170, 468 205" strokeWidth="5" opacity="0.7" />
+            </g>
+            <g fill="#E0E7FF">
+              <circle cx="315" cy="175" r="2.5" />
+              <circle cx="345" cy="158" r="2.5" />
+              <circle cx="380" cy="156" r="2.5" />
+              <circle cx="415" cy="162" r="2.5" />
+              <circle cx="445" cy="180" r="2.5" />
+            </g>
+
+            {/* 1. MİTOKONDRİ -> x=28% (224), y=38% (190) */}
+            <g transform="translate(224, 190) rotate(-18)">
+              <rect x="-58" y="-30" width="116" height="60" rx="30" fill="url(#mitoGrad)" stroke="#FCA5A5" strokeWidth="3" />
+              <path
+                d="M -44 0 L -32 -18 L -20 16 L -6 -18 L 8 16 L 22 -18 L 34 16 L 44 0"
+                fill="none"
+                stroke="#FEF2F2"
+                strokeWidth="3.5"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                opacity="0.9"
+              />
+              <rect x="-48" y="-22" width="96" height="44" rx="22" fill="none" stroke="#FEE2E2" strokeWidth="1.5" strokeOpacity="0.65" />
+            </g>
+
+            {/* 2. ÇEKİRDEK -> x=48% (384), y=50% (250) */}
+            <g transform="translate(384, 250)">
+              <circle cx="0" cy="0" r="66" fill="url(#nucleusGrad)" stroke="#D8B4FE" strokeWidth="4" strokeDasharray="18 5" />
+              <path d="M -38 -20 Q -15 -45 20 -25 T 35 15 T -10 42 T -42 10" fill="none" stroke="#E9D5FF" strokeWidth="1.8" opacity="0.55" />
+              <path d="M -25 30 Q 10 45 32 5 T 5 -38 T -35 -5" fill="none" stroke="#F3E8FF" strokeWidth="1.5" opacity="0.45" />
+              <circle cx="-10" cy="-6" r="22" fill="url(#nucleolusGrad)" stroke="#F3E8FF" strokeWidth="1.5" />
+            </g>
+
+            {/* 3. GOLGİ CİSİMCİĞİ -> x=65% (520), y=62% (310) */}
+            <g transform="translate(520, 310)">
+              <circle cx="0" cy="0" r="56" fill="#F59E0B" opacity="0.14" />
+              <path d="M -38 -30 Q 0 -18 38 -30" fill="none" stroke="url(#golgiGrad)" strokeWidth="9" strokeLinecap="round" />
+              <path d="M -46 -15 Q 0 -2 46 -15" fill="none" stroke="#FBBF24" strokeWidth="10" strokeLinecap="round" />
+              <path d="M -52 2 Q 0 16 52 2" fill="none" stroke="url(#golgiGrad)" strokeWidth="11" strokeLinecap="round" />
+              <path d="M -44 19 Q 0 32 44 19" fill="none" stroke="#FBBF24" strokeWidth="10" strokeLinecap="round" />
+              <path d="M -32 35 Q 0 46 32 35" fill="none" stroke="url(#golgiGrad)" strokeWidth="8" strokeLinecap="round" />
+              <circle cx="-58" cy="-10" r="7" fill="#FDE68A" stroke="#D97706" strokeWidth="2" />
+              <circle cx="60" cy="-6" r="8" fill="#FBBF24" stroke="#B45309" strokeWidth="2" />
+              <circle cx="56" cy="18" r="6.5" fill="#FDE68A" stroke="#D97706" strokeWidth="2" />
+              <circle cx="-52" cy="24" r="6" fill="#FBBF24" stroke="#B45309" strokeWidth="2" />
+              <circle cx="42" cy="40" r="5.5" fill="#FDE68A" stroke="#D97706" strokeWidth="1.5" />
+            </g>
+          </svg>
+        ) : !isMathGraph ? (
           <img
             src={imageUrl}
             alt={imageAlt || 'Hotspot Hedef Görseli'}
@@ -160,7 +317,7 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
             <path
               d="M 160 50 Q 280 250 400 370 Q 520 250 640 50"
               fill="none"
-              stroke="#F14E13"
+              stroke="#f14e13dc"
               strokeWidth="5"
               strokeOpacity="0.2"
               filter="blur(4px)"

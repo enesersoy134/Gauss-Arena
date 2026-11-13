@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-TUR-M-001",
       "subTopic": "Geçiş Dönemi Eserleri",
-      "text": "Yusuf Has Hacib tarafından $$11.$$ yüzyılda kaleme alınan ve Türk edebiyatının ilk siyasetnamesi ile ilk mesnevisi kabul edilen eser hangisidir?",
+      "text": "Yusuf Has Hacib tarafından 11. yüzyılda kaleme alınan ve Türk edebiyatının ilk siyasetnamesi ile ilk mesnevisi kabul edilen eser hangisidir?",
+      "explanation": "Kutadgu Bilig (Mutluluk Veren Bilgi), Karahanlı döneminde Yusuf Has Hacib tarafından yazılmıştır.",
       "imageUrl": null,
       "options": [
         "Divanü Lügati't-Türk",
@@ -23,6 +24,7 @@
       "externalId": "AYT-TUR-M-002",
       "subTopic": "Halk Edebiyatı Temsilcileri",
       "text": "\"Uzun ince bir yoldayım\" dizeleriyle tanınan, Cumhuriyet dönemi âşık tarzı halk şiirinin en önemli temsilcisi kimdir?",
+      "explanation": "Âşık Veysel Şatıroğlu, \"Dostlar Beni Hatırlasın\" ve \"Uzun İnce Bir Yoldayım\" eserleriyle tanınır.",
       "imageUrl": null,
       "options": [
         "Karacaoğlan",
@@ -36,6 +38,7 @@
       "externalId": "AYT-TUR-M-003",
       "subTopic": "Servet-i Fünun Romanı",
       "text": "Türk edebiyatında Batılı anlamda ilk modern roman sayılan \"Mai ve Siyah\" ile \"Aşk-ı Memnu\" eserlerinin yazarı kimdir?",
+      "explanation": "Servet-i Fünun nesrinin usta ismi Halit Ziya Uşaklıgil, Mai ve Siyah ile Aşk-ı Memnu yazarımızdır.",
       "imageUrl": null,
       "options": [
         "Mehmet Rauf",
@@ -49,6 +52,7 @@
       "externalId": "AYT-TUR-M-004",
       "subTopic": "Cumhuriyet Dönemi Şiiri",
       "text": "Orhan Veli Kanık, Melih Cevdet Anday ve Oktay Rifat'ın ölçü ve uyağı reddederek kurdukları şiir topluluğu hangisidir?",
+      "explanation": "1941 yılında yayımladıkları Garip önsözüyle sıradan insanı ve serbest şiiri savunan topluluk Garip (I. Yeni) hareketidir.",
       "imageUrl": null,
       "options": [
         "Beş Hececiler",
@@ -62,6 +66,7 @@
       "externalId": "AYT-TUR-M-005",
       "subTopic": "Edebi Akımlar",
       "text": "Gözlem ve belgeye büyük önem veren, \"roman, uzun bir yol boyunca gezdirilen aynadır\" anlayışını benimseyen edebi akım hangisidir?",
+      "explanation": "Stendhal'ın \"yol boyunca gezdirilen ayna\" sözüyle özetlenen gerçekçilik akımı Realizmdir.",
       "imageUrl": null,
       "options": [
         "Romantizm",
@@ -75,12 +80,69 @@
       "externalId": "AYT-TUR-M-006",
       "subTopic": "Geleneksel Türk Tiyatrosu",
       "text": "Kavuklu ve Pişekâr adlı başkahramanların yer aldığı, etrafı izleyicilerle çevrili bir alanda doğaçlama oynanan geleneksel tiyatro türü hangisidir?",
+      "explanation": "Palanga adı verilen meydanda Kavuklu ve Pişekâr ekseninde oynanan oyun Orta Oyunudur.",
       "imageUrl": null,
       "options": [
         "Karagöz",
         "Orta Oyunu",
         "Meddah",
         "Köy Seyirlik Oyunu"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-M-007",
+      "subTopic": "Beş Hececiler",
+      "text": "\"Han Duvarları\" ve \"Sanat\" şiirleriyle tanınan, Beş Hececiler topluluğunun en önemli şairi kimdir?",
+      "explanation": "Memleket edebiyatının öncülerinden Faruk Nafiz Çamlıbel, Han Duvarları ve Çoban Çeşmesi şiirlerinin şairidir.",
+      "imageUrl": null,
+      "options": [
+        "Faruk Nafiz Çamlıbel",
+        "Enis Behiç Koryürek",
+        "Orhan Seyfi Orhon",
+        "Halit Fahri Ozansoy"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-TUR-M-008",
+      "subTopic": "Millî Edebiyat Romanı",
+      "text": "\"Çalıkuşu\", \"Yaprak Dökümü\" ve \"Acımak\" romanlarıyla Anadolu insanını yalın bir dille anlatan yazarımız kimdir?",
+      "explanation": "Reşat Nuri Güntekin; Çalıkuşu, Yaprak Dökümü ve Yeşil Gece gibi eserlerin yazarıdır.",
+      "imageUrl": null,
+      "options": [
+        "Yakup Kadri Karaosmanoğlu",
+        "Reşat Nuri Güntekin",
+        "Halide Edip Adıvar",
+        "Refik Halit Karay"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-M-009",
+      "subTopic": "Servet-i Fünun Şiiri",
+      "text": "\"Sis\", \"Rübab-ı Şikeste\" ve çocuklar için yazdığı \"Şermin\" adlı eserleriyle tanınan Servet-i Fünun şairi kimdir?",
+      "explanation": "Servet-i Fünun dergisinin yayın yönetmeni ve topluluğun en güçlü şairi Tevfik Fikret'tir.",
+      "imageUrl": null,
+      "options": [
+        "Cenap Şahabettin",
+        "Tevfik Fikret",
+        "Süleyman Nazif",
+        "Hüseyin Cahit Yalçın"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-M-010",
+      "subTopic": "Türkçenin İlk Sözlüğü",
+      "text": "Kaşgarlı Mahmut tarafından Araplara Türkçeyi öğretmek amacıyla 11. yüzyılda yazılan ilk Türkçe sözlük ve dil bilgisi kitabı hangisidir?",
+      "explanation": "Divanü Lügati't-Türk, Türk dilinin ilk ansiklopedik sözlüğüdür.",
+      "imageUrl": null,
+      "options": [
+        "Muhakemetü'l-Lügateyn",
+        "Divanü Lügati't-Türk",
+        "Kodeks Kumanikus",
+        "Kutadgu Bilig"
       ],
       "correctOptionIndex": 1
     }

@@ -9,7 +9,8 @@
     {
       "externalId": "TYT-FIZ-M-001",
       "subTopic": "Doğrusal Hareket",
-      "text": "Durgun halden harekete geçen bir araç $$4\\text{ m/s}^2$$ sabit ivme ile $$5\\text{ saniye}$$ boyunca hızlanıyor. Bu süre sonunda aracın aldığı toplam yol kaç metredir?",
+      "text": "Durgun halden harekete geçen bir araç 4 m/s² sabit ivme ile 5 saniye boyunca hızlanıyor. Bu süre sonunda aracın aldığı toplam yol kaç metredir?",
+      "explanation": "x = (1/2) · a · t² = 0.5 · 4 · 25 = 50 metre yol alır.",
       "imageUrl": null,
       "options": [
         "20",
@@ -22,7 +23,8 @@
     {
       "externalId": "TYT-FIZ-M-002",
       "subTopic": "Basınç",
-      "text": "Özkütlesi $$2\\text{ g/cm}^3$$ olan sıvının $$5\\text{ m}$$ derinliğinde oluşturduğu sıvı basıncı kaç $$\\text{kPa}$$ olur? ($$g = 10\\text{ m/s}^2$$)",
+      "text": "Özkütlesi 2 g/cm³ olan sıvının 5 m derinliğinde oluşturduğu sıvı basıncı kaç kPa olur? (g = 10 m/s²)",
+      "explanation": "d = 2000 kg/m³. P = h · d · g = 5 · 2000 · 10 = 100000 Pa = 100 kPa bulunur.",
       "imageUrl": null,
       "options": [
         "50",
@@ -35,7 +37,8 @@
     {
       "externalId": "TYT-FIZ-M-003",
       "subTopic": "Kaldırma Kuvveti",
-      "text": "Hacmi $$400\\text{ cm}^3$$ olan bir cisim özkütlesi $$1\\text{ g/cm}^3$$ olan suya tamamen daldırıldığında cisme etki eden kaldırma kuvveti kaç $$\\text{N}$$ olur? ($$g = 10\\text{ m/s}^2$$)",
+      "text": "Hacmi 400 cm³ olan bir cisim özkütlesi 1 g/cm³ olan suya tamamen daldırıldığında cisme etki eden kaldırma kuvveti kaç N olur? (g = 10 m/s²)",
+      "explanation": "V = 0.0004 m³, d = 1000 kg/m³. Fk = Vb · ds · g = 0.0004 · 1000 · 10 = 4 N olur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -48,7 +51,8 @@
     {
       "externalId": "TYT-FIZ-M-004",
       "subTopic": "Enerji Korunumu",
-      "text": "Yerden $$20\\text{ m}$$ yükseklikten serbest bırakılan bir cisim yere kaç $$\\text{m/s}$$ hızla çarpar? ($$g = 10\\text{ m/s}^2$$, sürtünmeler önemsiz)",
+      "text": "Yerden 20 m yükseklikten serbest bırakılan bir cisim yere kaç m/s hızla çarpar? (g = 10 m/s², sürtünmeler önemsiz)",
+      "explanation": "m·g·h = (1/2)m·v² ⇒ v = √(2gh) = √(2 · 10 · 20) = 20 m/s bulunur.",
       "imageUrl": null,
       "options": [
         "10",
@@ -61,7 +65,8 @@
     {
       "externalId": "TYT-FIZ-M-005",
       "subTopic": "Elektrik Devreleri",
-      "text": "Birbirine paralel bağlı $$6\\,\\Omega$$ ve $$3\\,\\Omega$$'luk iki direncin eşdeğer direnci kaç $$\\Omega$$'dur?",
+      "text": "Birbirine paralel bağlı 6 Ω ve 3 Ω'luk iki direncin eşdeğer direnci kaç Ω'dur?",
+      "explanation": "Reş = (6 · 3) / (6 + 3) = 18 / 9 = 2 Ω bulunur.",
       "imageUrl": null,
       "options": [
         "1",
@@ -74,7 +79,8 @@
     {
       "externalId": "TYT-FIZ-M-006",
       "subTopic": "Dalgalar",
-      "text": "Yayılma hızı $$20\\text{ m/s}$$ ve frekansı $$4\\text{ Hz}$$ olan periyodik bir dalganın dalga boyu kaç metredir?",
+      "text": "Yayılma hızı 20 m/s ve frekansı 4 Hz olan periyodik bir dalganın dalga boyu kaç metredir?",
+      "explanation": "v = λ · f ⇒ 20 = λ · 4 ⇒ λ = 5 metre olur.",
       "imageUrl": null,
       "options": [
         "4",
@@ -83,6 +89,62 @@
         "10"
       ],
       "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-FIZ-M-007",
+      "subTopic": "Güç Kavramı",
+      "text": "600 Joule işi 12 saniyede yapan bir motorun mekanik gücü kaç Watt olur?",
+      "explanation": "P = W / t = 600 / 12 = 50 Watt bulunur.",
+      "imageUrl": null,
+      "options": [
+        "30",
+        "40",
+        "50",
+        "60"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-M-008",
+      "subTopic": "Düzlem Ayna",
+      "text": "Düzlem aynaya 1.5 m uzaklıkta duran bir gözlemcinin aynadaki görüntüsü ile kendisi arasındaki uzaklık kaç metredir?",
+      "explanation": "Düzlem aynada cisim ve görüntü aynaya eşit uzaklıktadır: 1.5 + 1.5 = 3.0 metre olur.",
+      "imageUrl": null,
+      "options": [
+        "1.5",
+        "2.0",
+        "3.0",
+        "4.5"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-FIZ-M-009",
+      "subTopic": "Adezyon ve Kohezyon",
+      "text": "Yağmur damlalarının küresel şekil almasını sağlayan temel kuvvet aşağıdakilerden hangisidir?",
+      "explanation": "Aynı cins su moleküllerinin birbirini çekmesi (kohezyon) damlanın küresel kalmasını sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Adezyon (Yapışma)",
+        "Kohezyon (Tutunma)",
+        "Sürtünme kuvveti",
+        "Arşimet kuvveti"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-FIZ-M-010",
+      "subTopic": "Katı Basıncı",
+      "text": "Ağırlığı 60 N ve taban alanı 0.03 m² olan dik prizmanın yatay zemine uyguladığı basınç kaç Pa olur?",
+      "explanation": "P = G / S = 60 / 0.03 = 2000 Pa bulunur.",
+      "imageUrl": null,
+      "options": [
+        "1000",
+        "1500",
+        "2000",
+        "3000"
+      ],
+      "correctOptionIndex": 2
     }
   ]
 }

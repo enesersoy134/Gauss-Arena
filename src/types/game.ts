@@ -3,7 +3,7 @@
  * Kaynak: soru_tasarimlari/soru_tipleri.md & sahsi/tasarim_dili.md
  */
 
-export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik';
+export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce';
 export type DifficultyLevel = 'kolay' | 'orta' | 'zor';
 
 export type QuestionType =

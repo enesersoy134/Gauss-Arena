@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "biyoloji",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-BIY-E-001",
+      "subTopic": "Sinir Sistemi",
+      "text": "İnsanda denge ve kas koordinasyonunu sağlayan arka beyin bölümü aşağıdakilerden hangisidir?",
+      "explanation": "Beyincik (hayat ağacı), iç kulaktaki yarım daire kanalları ve gözden gelen bilgilerle kas dengesini sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Talamus",
+        "Hipotalamus",
+        "Beyincik",
+        "Omurilik soğanı"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-BIY-E-002",
+      "subTopic": "Endokrin Sistem",
+      "text": "Kandaki glikoz düzeyi normalin üzerine çıktığında pankreasın Beta hücrelerinden salgılanarak kan şekerini düşüren hormon hangisidir?",
+      "explanation": "İnsülin glikozun hücrelere geçişini ve karaciğerde glikojen olarak depolanmasını sağlayarak kan şekerini düşürür.",
+      "imageUrl": null,
+      "options": [
+        "Glukagon",
+        "İnsülin",
+        "Adrenalin",
+        "Tiroksin"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-E-003",
+      "subTopic": "Dolaşım Sistemi",
+      "text": "İnsan kalbinde temiz (oksijence zengin) kanı tüm vücuda pompalayan kalp odacığı hangisidir?",
+      "explanation": "Sol karıncık kasıldığında temiz kan aort atardamarı ile tüm vücuda pompalanır.",
+      "imageUrl": null,
+      "options": [
+        "Sağ kulakçık",
+        "Sağ karıncık",
+        "Sol kulakçık",
+        "Sol karıncık"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "AYT-BIY-E-004",
+      "subTopic": "Solunum Sistemi",
+      "text": "İnsan akciğerlerinde gaz alışverişinin (O₂ ve CO₂ difüzyonunun) gerçekleştiği kılcal damarlarla çevrili hava keseciklerine ne ad verilir?",
+      "explanation": "Alveoller akciğerlerde solunum yüzeyini genişleten tek katlı yassı epitelden oluşmuş hava kesecikleridir.",
+      "imageUrl": null,
+      "options": [
+        "Bronş",
+        "Alveol",
+        "Trake",
+        "Diyafram"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-E-005",
+      "subTopic": "Üriner Sistem (Boşaltım)",
+      "text": "İnsan böbreğinin yapı ve görev birimi aşağıdakilerden hangisidir?",
+      "explanation": "Böbrekte süzülme, geri emilim ve salgılama olaylarını gerçekleştiren yapı birimi nefrondur.",
+      "imageUrl": null,
+      "options": [
+        "Nöron",
+        "Nefron",
+        "Alveol",
+        "Sarkomer"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-E-006",
+      "subTopic": "Genden Proteine",
+      "text": "DNA'daki genetik şifrenin mRNA molekülüne aktarılması (yazılması) olayına ne ad verilir?",
+      "explanation": "DNA üzerinden mRNA sentezlenmesi olayına transkripsiyon (yazılım) denir.",
+      "imageUrl": null,
+      "options": [
+        "Replikasyon",
+        "Transkripsiyon",
+        "Translasyon",
+        "Mutasyon"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-E-007",
+      "subTopic": "Fotosentez",
+      "text": "Yeşil bitkilerde fotosentezin ışığa bağımlı tepkimeleri kloroplastın hangi kısmında gerçekleşir?",
+      "explanation": "Klorofil pigmentleri tilakoit zarlarda (granumlarda) bulunduğundan ışığa bağımlı evre burada gerçekleşir.",
+      "imageUrl": null,
+      "options": [
+        "Stroma sıvısında",
+        "Tilakoit zarda (Grana)",
+        "Dış zarda",
+        "Sitoplazmada"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-E-008",
+      "subTopic": "Bitki Biyolojisi",
+      "text": "Bitkilerde kökten alınan su ve suda çözünmüş mineralleri yapraklara taşıyan iletim dokusu hangisidir?",
+      "explanation": "Ksilem (odun boruları) su ve mineralleri kökten üst organlara tek yönlü taşır.",
+      "imageUrl": null,
+      "options": [
+        "Floem (Soymuk borusu)",
+        "Ksilem (Odun borusu)",
+        "Kambiyum",
+        "Stoma"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-E-009",
+      "subTopic": "Duyu Organları",
+      "text": "İnsan gözünde fotoreseptörlerin (koni ve çomak hücrelerinin) bulunduğu ve görüntünün oluştuğu iç tabaka hangisidir?",
+      "explanation": "Fotoreseptörler ve sarı benek gözün en iç tabakası olan ağ tabakada (retinada) yer alır.",
+      "imageUrl": null,
+      "options": [
+        "Sert tabaka (Sklera)",
+        "Damar tabaka (Koroid)",
+        "Ağ tabaka (Retina)",
+        "Kornea"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-BIY-E-010",
+      "subTopic": "Destek ve Hareket Sistemi",
+      "text": "Çizgili kasların kasılma birimi olan iki Z çizgisi arasındaki bölgeye ne ad verilir?",
+      "explanation": "İki Z çizgisi arasında kalan aktin ve miyozin ipliklerinden oluşan kasılma birimine sarkomer denir.",
+      "imageUrl": null,
+      "options": [
+        "Sarkolemma",
+        "Sarkomer",
+        "Periost",
+        "Osteon"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

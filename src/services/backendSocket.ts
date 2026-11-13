@@ -2,6 +2,26 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { BACKEND_GAME_DATA } from '../data/backendMockData';
 import { Question } from '../types/game';
+import { ResourceRecommendation } from '../utils/resourceRecommendations';
+
+export interface RevisionWrongQuestion {
+  externalId: string;
+  text: string;
+  explanation?: string | null;
+  difficulty?: string;
+  failedCount?: number;
+  failedAt?: string;
+}
+
+export interface RevisionTopicItem {
+  topic: string;
+  subject: string;
+  examType: string;
+  mistakeCount: number;
+  lastMistakeAt: string;
+  wrongQuestions: RevisionWrongQuestion[];
+  recommendedResources?: ResourceRecommendation[];
+}
 
 export interface BackendPlayer {
   id: string;
@@ -22,6 +42,7 @@ export interface BackendPlayer {
   islerPoints: number;
   weeklyMatchesPlayed: number;
   weeklyRewardClaimed: boolean;
+  revisionTopics?: RevisionTopicItem[];
   coupons: Array<{
     code: string;
     discountPercent: number;
@@ -135,6 +156,8 @@ export interface DuelRoundHistoryItem {
   externalId: string;
   difficulty: string;
   subject: string;
+  subTopic?: string;
+  text?: string;
   correctOptionIndex: number;
   interactiveQuestion?: Question | null;
   explanation?: string | null;
@@ -664,6 +687,23 @@ export function useBackendGame() {
     }
   }, []);
 
+  const clearRevisionTopic = useCallback(
+    async (topic?: string, playerId: string = currentPlayerId) => {
+      try {
+        const res = await fetch('/api/revision/clear-topic', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ playerId, topic }),
+        });
+        return await res.json();
+      } catch (err) {
+        console.error('clearRevisionTopic failed', err);
+        return { ok: false };
+      }
+    },
+    [currentPlayerId]
+  );
+
   // Aktif oyuncu nesnesi
   const currentPlayer =
     backendState.players.find((p) => p.id === currentPlayerId) ||
@@ -700,5 +740,6 @@ export function useBackendGame() {
     distributeTournamentRewards,
     updatePlayerDemo,
     resetDemo,
+    clearRevisionTopic,
   };
 }

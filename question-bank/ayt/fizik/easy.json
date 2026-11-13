@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-FIZ-E-001",
       "subTopic": "Vektörler",
-      "text": "Aynı düzlemde aralarında $$90^\\circ$$ açı bulunan $$6\\text{ N}$$ ve $$8\\text{ N}$$ büyüklüğündeki iki kuvvetin bileşkesi kaç $$\\text{N}$$ olur?",
+      "text": "Aynı düzlemde aralarında 90° açı bulunan 6 N ve 8 N büyüklüğündeki iki kuvvetin bileşkesi kaç N olur?",
+      "explanation": "R = √(6² + 8²) = √100 = 10 N bulunur.",
       "imageUrl": null,
       "options": [
         "10",
@@ -22,7 +23,8 @@
     {
       "externalId": "AYT-FIZ-E-002",
       "subTopic": "İtme ve Momentum",
-      "text": "Kütlesi $$3\\text{ kg}$$ olan bir cisim $$8\\text{ m/s}$$ hızla hareket etmektedir. Cismin çizgisel momentumu kaç $$\\text{kg}\\cdot\\text{m/s}$$'dir?",
+      "text": "Kütlesi 3 kg olan bir cisim 8 m/s hızla hareket etmektedir. Cismin çizgisel momentumu kaç kg·m/s'dir?",
+      "explanation": "P = m · v = 3 · 8 = 24 kg·m/s bulunur.",
       "imageUrl": null,
       "options": [
         "16",
@@ -35,7 +37,8 @@
     {
       "externalId": "AYT-FIZ-E-003",
       "subTopic": "Tork ve Denge",
-      "text": "Dönme noktasına dik uzaklığı $$0.5\\text{ m}$$ olan noktaya uygulanan $$40\\text{ N}$$ kuvvetin oluşturduğu tork kaç $$\\text{N}\\cdot\\text{m}$$'dir?",
+      "text": "Dönme noktasına dik uzaklığı 0.5 m olan noktaya uygulanan 40 N kuvvetin oluşturduğu tork kaç N·m'dir?",
+      "explanation": "τ = F · d = 40 · 0.5 = 20 N·m olur.",
       "imageUrl": null,
       "options": [
         "10",
@@ -48,7 +51,8 @@
     {
       "externalId": "AYT-FIZ-E-004",
       "subTopic": "Çembersel Hareket",
-      "text": "Periyodu $$0.2\\text{ saniye}$$ olan düzgün çembersel hareket yapan bir cismin frekansı kaç $$\\text{s}^{-1}$$'dir?",
+      "text": "Periyodu 0.2 saniye olan düzgün çembersel hareket yapan bir cismin frekansı kaç s⁻¹'dir?",
+      "explanation": "f = 1 / T = 1 / 0.2 = 5 s⁻¹ bulunur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -61,7 +65,8 @@
     {
       "externalId": "AYT-FIZ-E-005",
       "subTopic": "Yay Enerjisi",
-      "text": "Yay sabiti $$k = 200\\text{ N/m}$$ olan bir yay $$0.2\\text{ m}$$ sıkıştırıldığında yayda depolanan esneklik potansiyel enerjisi kaç $$\\text{Joule}$$ olur?",
+      "text": "Yay sabiti k = 200 N/m olan bir yay 0.2 m sıkıştırıldığında yayda depolanan esneklik potansiyel enerjisi kaç Joule olur?",
+      "explanation": "Ep = (1/2) · k · x² = 0.5 · 200 · (0.04) = 4 Joule olur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -74,7 +79,8 @@
     {
       "externalId": "AYT-FIZ-E-006",
       "subTopic": "Transformatörler",
-      "text": "Giriş sarım sayısı $$100$$, çıkış sarım sayısı $$400$$ olan ideal bir transformatörün girişine $$50\\text{ V}$$ alternatif gerilim uygulanırsa çıkış gerilimi kaç $$\\text{V}$$ olur?",
+      "text": "Giriş sarım sayısı 100, çıkış sarım sayısı 400 olan ideal bir transformatörün girişine 50 V alternatif gerilim uygulanırsa çıkış gerilimi kaç V olur?",
+      "explanation": "V₂ / V₁ = N₂ / N₁ ⇒ V₂ = 50 · (400 / 100) = 200 V olur.",
       "imageUrl": null,
       "options": [
         "100",
@@ -83,6 +89,62 @@
         "250"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-E-007",
+      "subTopic": "Basit Makineler",
+      "text": "Kuvvet kazancı 4 olan sürtünmesiz bir makara sisteminde 120 N ağırlığındaki yükü dengelemek için kaç N kuvvet gerekir?",
+      "explanation": "Kuvvet kazancı = Yük / Kuvvet ⇒ 4 = 120 / F ⇒ F = 30 N bulunur.",
+      "imageUrl": null,
+      "options": [
+        "20",
+        "30",
+        "40",
+        "60"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-E-008",
+      "subTopic": "Elektriksel Kuvvet (Coulomb)",
+      "text": "İki noktasal yük arasındaki uzaklık yarıya indirilirse birbirlerine uyguladıkları elektriksel kuvvet kaç katına çıkar?",
+      "explanation": "F = k·q₁·q₂ / d² bağıntısına göre d yarıya inerse kuvvet 4 katına çıkar.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "8",
+        "16"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-E-009",
+      "subTopic": "Elektromanyetik Dalgalar",
+      "text": "Aşağıdakilerden hangisi bir elektromanyetik dalga değildir?",
+      "explanation": "Ses dalgaları mekanik dalgadır; yayılması için maddesel ortam gerekir.",
+      "imageUrl": null,
+      "options": [
+        "Radyo dalgaları",
+        "X-ışınları",
+        "Ses dalgaları",
+        "Gama ışınları"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-E-010",
+      "subTopic": "Atom Fiziği",
+      "text": "Temel haldeki bir atomun uyarılması sonucunda üst enerji düzeyine çıkan elektronun tekrar temel hale dönerken dışarıya yaydığı ışıma nedir?",
+      "explanation": "Uyarılmış elektron alt enerji seviyesine inerken enerji farkına eşit enerjili bir foton yayınlar.",
+      "imageUrl": null,
+      "options": [
+        "Alfa parçacığı",
+        "Foton",
+        "Nötron",
+        "Proton"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

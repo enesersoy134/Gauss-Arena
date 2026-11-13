@@ -224,6 +224,8 @@ class DuelSession {
       externalId: q.externalId,
       difficulty: q.difficulty,
       subject: q.subject,
+      subTopic: q.subTopic || (q.interactiveQuestion && q.interactiveQuestion.topic) || q.subject,
+      text: q.text || (q.interactiveQuestion && q.interactiveQuestion.prompt) || '',
       correctOptionIndex: q.correctOptionIndex,
       interactiveQuestion: q.interactiveQuestion || null,
       explanation: q.explanation || (q.interactiveQuestion && q.interactiveQuestion.explanation) || null,

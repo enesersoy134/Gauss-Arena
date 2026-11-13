@@ -10,6 +10,7 @@
       "externalId": "AYT-TUR-H-001",
       "subTopic": "Divan Edebiyatı Şairleri",
       "text": "16. yüzyıl Divan şairi olan, \"Su Kasidesi\" ve \"Leyla vü Mecnun\" mesnevisiyle tanınan büyük şairimiz kimdir?",
+      "explanation": "Fuzûlî, 16. yüzyılda Azeri Türkçesiyle yazdığı Su Kasidesi ve Leyla vü Mecnun mesnevisiyle ünlüdür.",
       "imageUrl": null,
       "options": [
         "Bâkî",
@@ -23,6 +24,7 @@
       "externalId": "AYT-TUR-H-002",
       "subTopic": "Tanzimat Tiyatrosu",
       "text": "Şinasi tarafından yazılan ve Türk edebiyatında Batılı anlamda ilk tiyatro eseri kabul edilen töre komedisi hangisidir?",
+      "explanation": "Şinasi'nin 1860 yılında yazdığı Şair Evlenmesi ilk yerli tiyatro eserimizdir.",
       "imageUrl": null,
       "options": [
         "Vatan yahut Silistre",
@@ -36,6 +38,7 @@
       "externalId": "AYT-TUR-H-003",
       "subTopic": "Cumhuriyet Dönemi Romanı",
       "text": "\"Saatleri Ayarlama Enstitüsü\" ve \"Huzur\" romanlarında Doğu-Batı çatışmasını, zaman ve musiki kavramlarını işleyen yazarımız kimdir?",
+      "explanation": "Ahmet Hamdi Tanpınar, Huzur ve Saatleri Ayarlama Enstitüsü romanlarının yazarıdır.",
       "imageUrl": null,
       "options": [
         "Peyami Safa",
@@ -49,6 +52,7 @@
       "externalId": "AYT-TUR-H-004",
       "subTopic": "Modernist Roman",
       "text": "Türk edebiyatında postmodernizmin öncüsü sayılan \"Tutunamayanlar\" ve \"Tehlikeli Oyunlar\" adlı eserlerin yazarı kimdir?",
+      "explanation": "Oğuz Atay, Tutunamayanlar ve Tehlikeli Oyunlar ile modernist/postmodernist Türk romanının zirvesidir.",
       "imageUrl": null,
       "options": [
         "Yaşar Kemal",
@@ -61,7 +65,8 @@
     {
       "externalId": "AYT-TUR-H-005",
       "subTopic": "Fecriati Topluluğu",
-      "text": "\"Sanat şahsi ve muhteremdir\" görüşünü savunan Fecriati topluluğunun en önemli şairi olup \"Merdiven\" ve \"Sessiz Gemi\" şiirleriyle?(Not: Sessiz Gemi Yahya Kemal, Merdiven ve Obeliks) \"Merdiven\" şiiriyle tanınan şair kimdir?",
+      "text": "\"Sanat şahsi ve muhteremdir\" görüşünü savunan Fecriati topluluğunun en önemli şairi olup \"Merdiven\" ve \"O Belde\" şiirleriyle tanınan şairimiz kimdir?",
+      "explanation": "Saf (öz) şiir ve sembolizm anlayışının temsilcisi Ahmet Haşim, Piyale ve Göl Saatleri kitaplarının şairidir.",
       "imageUrl": null,
       "options": [
         "Ahmet Haşim",
@@ -75,6 +80,7 @@
       "externalId": "AYT-TUR-H-006",
       "subTopic": "İkinci Yeni Şiiri",
       "text": "\"Üvercinka\" ve \"Göçebe\" adlı şiir kitaplarıyla İkinci Yeni hareketinin öncü isimlerinden olan şairimiz kimdir?",
+      "explanation": "Cemal Süreya; Üvercinka, Göçebe ve Sevda Sözleri eserleriyle İkinci Yeni şiirinin usta şairidir.",
       "imageUrl": null,
       "options": [
         "Cemal Süreya",
@@ -83,6 +89,62 @@
         "Ahmet Muhip Dıranas"
       ],
       "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-TUR-H-007",
+      "subTopic": "Toplumcu Gerçekçi Roman",
+      "text": "\"İnce Memed\", \"Yer Demir Gök Bakır\" ve \"Yılanı Öldürseler\" romanlarıyla Çukurova insanının yaşamını destansı bir dille anlatan yazarımız kimdir?",
+      "explanation": "Yaşar Kemal, Çukurova yöresini ve İnce Memed serisini edebiyatımıza kazandıran büyük ustamızdır.",
+      "imageUrl": null,
+      "options": [
+        "Kemal Tahir",
+        "Yaşar Kemal",
+        "Fakir Baykurt",
+        "Sabahattin Ali"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-H-008",
+      "subTopic": "Divan Edebiyatı - Sebk-i Hindi",
+      "text": "18. yüzyılda Divan şiirinin son büyük ustası kabul edilen ve \"Hüsn ü Aşk\" adlı alegorik mesneviyi yazan şair kimdir?",
+      "explanation": "Sebk-i Hindi akımının en önemli temsilcisi Şeyh Gâlip, Hüsn ü Aşk mesnevisinin yazarıdır.",
+      "imageUrl": null,
+      "options": [
+        "Nâbî",
+        "Şeyh Gâlip",
+        "Nef'î",
+        "Bâkî"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-H-009",
+      "subTopic": "Bireyin İç Dünyasını Esas Alan Roman",
+      "text": "\"Dokuzuncu Hariciye Koğuşu\", \"Fatih-Harbiye\" ve \"Yalnızız\" romanlarında psikolojik tahlillere geniş yer veren yazarımız kimdir?",
+      "explanation": "Psikolojik roman türünün usta kalemi Peyami Safa, Dokuzuncu Hariciye Koğuşu ve Fatih-Harbiye'nin yazarıdır.",
+      "imageUrl": null,
+      "options": [
+        "Peyami Safa",
+        "Tarık Buğra",
+        "Memduh Şevket Esendal",
+        "Sait Faik Abasıyanık"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-TUR-H-010",
+      "subTopic": "Öz (Saf) Şiir Anlayışı",
+      "text": "\"Kaldırımlar\", \"Çile\" ve \"Sakarya Türküsü\" şiirleriyle Cumhuriyet dönemi saf şiir ve mistik şiir anlayışının önde gelen şairi kimdir?",
+      "explanation": "Kaldırımlar Şairi olarak da anılan Necip Fazıl Kısakürek, Çile adlı kitabında tüm şiirlerini toplamıştır.",
+      "imageUrl": null,
+      "options": [
+        "Cahit Sıtkı Tarancı",
+        "Necip Fazıl Kısakürek",
+        "Ahmet Muhip Dıranas",
+        "Ziya Osman Saba"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

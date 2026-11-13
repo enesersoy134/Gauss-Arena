@@ -10,6 +10,7 @@
       "externalId": "TYT-KIM-M-001",
       "subTopic": "Periyodik Özellikler",
       "text": "Periyodik sistemde aynı periyotta soldan sağa doğru gidildikçe atom yarıçapı ve birinci iyonlaşma enerjisi genel olarak nasıl değişir?",
+      "explanation": "Soldan sağa çekirdek çekim gücü arttığından atom yarıçapı azalır, iyonlaşma enerjisi genel olarak artar.",
       "imageUrl": null,
       "options": [
         "Artar - Artar",
@@ -22,7 +23,8 @@
     {
       "externalId": "TYT-KIM-M-002",
       "subTopic": "Mol Kavramı",
-      "text": "Normal koşullarda (NK) $$11.2\\text{ litre}$$ hacim kaplayan $$\text{CH}_4$$ gazı kaç gramdır? ($$\text{C}=12, \text{H}=1$$)",
+      "text": "Normal koşullarda (NK) 11.2 litre hacim kaplayan CH₄ gazı kaç gramdır? (C=12, H=1)",
+      "explanation": "n = 11.2 / 22.4 = 0.5 mol. CH₄ mol kütlesi 16 g/mol olduğundan m = 0.5 · 16 = 8 gramdır.",
       "imageUrl": null,
       "options": [
         "4",
@@ -35,7 +37,8 @@
     {
       "externalId": "TYT-KIM-M-003",
       "subTopic": "Kimyasal Hesaplamalar",
-      "text": "$$0.5\\text{ mol } \text{C}_3\text{H}_8$$ gazı tamamen yakıldığında kaç mol $$\text{CO}_2$$ gazı oluşur?",
+      "text": "0.5 mol C₃H₈ gazı tamamen yakıldığında kaç mol CO₂ gazı oluşur?",
+      "explanation": "1 mol C₃H₈ yandığında 3 mol CO₂ oluşur; 0.5 mol yandığında 0.5 · 3 = 1.5 mol CO₂ oluşur.",
       "imageUrl": null,
       "options": [
         "1",
@@ -48,7 +51,8 @@
     {
       "externalId": "TYT-KIM-M-004",
       "subTopic": "Çözelti Derişimleri",
-      "text": "$$160\\text{ g}$$ suda $$40\\text{ g}$$ şeker çözünerek hazırlanan çözeltinin kütlece yüzde derişimi kaçtır?",
+      "text": "160 g suda 40 g şeker çözünerek hazırlanan çözeltinin kütlece yüzde derişimi kaçtır?",
+      "explanation": "Toplam çözelti = 160 + 40 = 200 g. Kütlece % = (40 / 200) · 100 = %20 olur.",
       "imageUrl": null,
       "options": [
         "15",
@@ -62,19 +66,21 @@
       "externalId": "TYT-KIM-M-005",
       "subTopic": "Zayıf Etkileşimler",
       "text": "Aşağıdaki moleküllerden hangisinin yoğun fazlarında moleküller arasında hidrojen bağı görülür?",
+      "explanation": "Hidrojenin F, O, N atomlarından birine bağlı olduğu NH₃ moleküllerinde hidrojen bağı bulunur.",
       "imageUrl": null,
       "options": [
-        "$$\text{CH}_4$$",
-        "$$\text{HCl}$$",
-        "$$\text{NH}_3$$",
-        "$$\text{CO}_2$$"
+        "CH₄",
+        "HCl",
+        "NH₃",
+        "CO₂"
       ],
       "correctOptionIndex": 2
     },
     {
       "externalId": "TYT-KIM-M-006",
       "subTopic": "Atomun Yapısı",
-      "text": "$$^{24}_{12}\text{Mg}^{2+}$$ iyonunun elektron sayısı kaçtır?",
+      "text": "²⁴₁₂Mg²⁺ iyonunun elektron sayısı kaçtır?",
+      "explanation": "Proton sayısı 12, yükü +2 olduğundan elektron sayısı 12 - 2 = 10 olur.",
       "imageUrl": null,
       "options": [
         "10",
@@ -83,6 +89,62 @@
         "24"
       ],
       "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-KIM-M-007",
+      "subTopic": "Ayırma Yöntemleri",
+      "text": "Kaynama noktaları birbirinden farklı olan alkol-su homojen sıvı karışımını bileşenlerine ayırmak için kullanılan en uygun yöntem hangisidir?",
+      "explanation": "Sıvı-sıvı homojen karışımlar kaynama noktası farkından yararlanılarak ayrımsal damıtma ile ayrılır.",
+      "imageUrl": null,
+      "options": [
+        "Ayırma hunisi",
+        "Ayrımsal damıtma",
+        "Süzme",
+        "Mıknatısla ayırma"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-M-008",
+      "subTopic": "Kütlenin Korunumu Yasası",
+      "text": "Kapalı bir kapta 12 g karbon (C) ile 32 g oksijen (O₂) artansız birleştiğinde kaç gram CO₂ gazı oluşur?",
+      "explanation": "Lavoisier Kütlenin Korunumu Yasasına göre 12 + 32 = 44 gram CO₂ oluşur.",
+      "imageUrl": null,
+      "options": [
+        "20",
+        "32",
+        "44",
+        "56"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-M-009",
+      "subTopic": "Katı Türleri",
+      "text": "Elmas ve grafit aşağıdaki katı türlerinden hangisine örnektir?",
+      "explanation": "Elmas ve grafit karbon atomlarının kovalent bağlarla oluşturduğu ağ örgülü kovalent katılardır.",
+      "imageUrl": null,
+      "options": [
+        "İyonik katı",
+        "Moleküler katı",
+        "Kovalent (Ağ örgülü) katı",
+        "Metalik katı"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-M-010",
+      "subTopic": "Sabun ve Deterjanlar",
+      "text": "Sabun molekülünün suyu seven (polar) baş kısmına ne ad verilir?",
+      "explanation": "Suyu seven polar kısma hidrofil, suyu sevmeyen apolar kuyruk kısmına hidrofob denir.",
+      "imageUrl": null,
+      "options": [
+        "Hidrofob kısım",
+        "Hidrofil kısım",
+        "Apolar kuyruk",
+        "Hidrokarbon zinciri"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

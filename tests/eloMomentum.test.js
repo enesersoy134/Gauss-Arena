@@ -14,14 +14,19 @@ test('calculateEffectiveMMR applies zero offset for |S| <= 2 and power offset fo
   assert.equal(calculateEffectiveMMR(1200, -2), 1200);
   const mmrPos5 = calculateEffectiveMMR(1200, 5);
   assert.ok(mmrPos5 >= 1330 && mmrPos5 <= 1332);
+  assert.equal(Number.isInteger(mmrPos5), true);
   const mmrNeg4 = calculateEffectiveMMR(1200, -4);
-  assert.equal(mmrNeg4, 1200 - Math.round(35 * Math.pow(2, 1.2) * 100) / 100);
+  assert.equal(mmrNeg4, Math.round(1200 - 35 * Math.pow(2, 1.2)));
 });
 
-test('calculateMatchEloUpdate accelerates smurfs and dampens farming when deltaR > 250', () => {
-  // Smurf (1200 ELO) beats 1350 ELO player -> gains > 22 ELO
+test('calculateMatchEloUpdate accelerates smurfs and dampens farming when deltaR > 250 with rounded integer ELO', () => {
+  // Smurf (1200 ELO) beats 1350 ELO player -> gains > 22 ELO (rounded integer)
   const smurfWin = calculateMatchEloUpdate({ elo: 1200, streak: 5 }, { elo: 1350, streak: 0 }, 'win');
   assert.ok(smurfWin.deltaA >= 22);
+  assert.equal(Number.isInteger(smurfWin.deltaA), true);
+  assert.equal(Number.isInteger(smurfWin.deltaB), true);
+  assert.equal(Number.isInteger(smurfWin.newEloA), true);
+  assert.equal(Number.isInteger(smurfWin.newEloB), true);
   assert.equal(smurfWin.newStreakA, 6);
 
   // High ELO (1600) beats Low ELO (1200) -> anti-farming caps gain to <= 1

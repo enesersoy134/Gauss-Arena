@@ -290,6 +290,22 @@ function createAppServer(listenPort = null) {
     res.json({ ok: true, player: p });
   });
 
+  app.post('/api/revision/clear-topic', (req, res) => {
+    const { playerId, topic } = req.body || {};
+    const result = store.markTopicReviewed(playerId, topic);
+    broadcastState();
+    res.json(result);
+  });
+
+  app.post('/api/revision/record-local', (req, res) => {
+    const { playerId, roundHistory, examType } = req.body || {};
+    const p = store.getPlayer(playerId);
+    if (!p) return res.status(404).json({ ok: false, reason: 'Oyuncu bulunamadı' });
+    store.recordPlayerMistakes(p, roundHistory, true, examType || 'TYT', new Date().toISOString());
+    broadcastState();
+    res.json({ ok: true, revisionTopics: p.revisionTopics });
+  });
+
   app.post('/api/demo/reset', (_req, res) => {
     store.reset();
     queue.entries.clear();

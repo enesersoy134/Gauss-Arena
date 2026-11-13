@@ -1,0 +1,237 @@
+{
+  "meta": {
+    "title": "İşler Yayın Grubu - Konu Bazlı Akıllı Kaynak Önerileri",
+    "version": "1.0.0",
+    "description": "Oyuncunun düellolarda yanlış yaptığı konu başlıklarına (subTopic / topic) göre önerilen kitap, fasikül ve çalışma rehberi."
+  },
+  "topicRecommendations": [
+    {
+      "id": "rec_mat_tyt_cebir",
+      "subject": "matematik",
+      "examType": "TYT",
+      "topicKeywords": ["denklem", "temel kavram", "rasyonel", "üslü", "köklü", "mutlak değer", "eşitsizlik", "çarpanlara ayırma", "bölünebilme", "ebob", "ekok", "sayı basamakları"],
+      "bookTitle": "Mikro Orijinal TYT Matematik Cebir Fasikülü & Bilgi Sarmal TYT Matematik Soru Bankası",
+      "publisher": "Orijinal Yayınları / Bilgi Sarmal",
+      "recommendedSection": "Ünite 1-4: Temel Cebir, Denklemler ve Üslü-Köklü İfadeler Oryantasyon Testleri",
+      "level": "Orta",
+      "studyTip": "İşlem ve parantez dağılma hatalarını önlemek için önce kazanım testlerini süre tutmadan çöz, ardından sarmal testlere geç."
+    },
+    {
+      "id": "rec_mat_tyt_problem",
+      "subject": "matematik",
+      "examType": "TYT",
+      "topicKeywords": ["problem", "oran", "orantı", "yüzde", "yaş", "hız", "işçi", "karışım", "kâr", "zarar", "veri", "istatistik"],
+      "bookTitle": "Apotemi Problemler Özel Konu Özeti ve Soru Fasikülü",
+      "publisher": "Apotemi Yayınları",
+      "recommendedSection": "Adım Adım Problemler: Oran-Orantı, Yaş, Hız ve Yüzde-Karışım Bölümleri",
+      "level": "Orta - İleri",
+      "studyTip": "Verilen sözel ifadeyi denkleme dönüştürürken değişkenleri tablo halinde yazarak çözmeyi alışkanlık haline getir."
+    },
+    {
+      "id": "rec_mat_tyt_fonk_pol_olasilik",
+      "subject": "matematik",
+      "examType": "TYT",
+      "topicKeywords": ["fonksiyon", "polinom", "küme", "mantık", "permütasyon", "kombinasyon", "olasılık", "üçgen", "çokgen", "dörtgen"],
+      "bookTitle": "Apotemi Fonksiyonlar Fasikülü & Orijinal TYT Matematik Soru Bankası",
+      "publisher": "Apotemi / Orijinal Yayınları",
+      "recommendedSection": "Fonksiyonlarda Bileşke-Ters ve Seçme-Olasılık Simülasyon Testleri",
+      "level": "Orta - İleri",
+      "studyTip": "Bileşke fonksiyon ve ters fonksiyon sorularında grafik okuma ve değer yerine koyma adımlarını tek tek kontrol et."
+    },
+    {
+      "id": "rec_mat_ayt_turev_integral",
+      "subject": "matematik",
+      "examType": "AYT",
+      "topicKeywords": ["türev", "teğet", "limit", "süreklilik", "integral", "alan", "maksimum", "minimum", "ekstremum"],
+      "bookTitle": "Apotemi Limit - Türev - İntegral Fasikül Seti",
+      "publisher": "Apotemi Yayınları",
+      "recommendedSection": "Türev Geometrik Yorum (Teğet Eğimi), Ekstremum Noktalar ve Belirli İntegralde Alan",
+      "level": "İleri",
+      "studyTip": "Teğet eğiminin birinci türeve (f'(x)) eşit olduğunu ve yerel ekstremumlarda f'(x) = 0 köklerinin işaret tablosunu çizmeyi unutma."
+    },
+    {
+      "id": "rec_mat_ayt_log_trigo_parabol",
+      "subject": "matematik",
+      "examType": "AYT",
+      "topicKeywords": ["logaritma", "dizi", "aritmetik", "geometrik", "trigonometri", "kosinüs", "parabol", "tepe noktası", "ikinci dereceden", "karmaşık", "binom", "analitik", "çember"],
+      "bookTitle": "Orijinal AYT Matematik Soru Bankası & Çap Trigonometri-Logaritma Fasikülü",
+      "publisher": "Orijinal Yayınları / Çap Yayınları",
+      "recommendedSection": "Parabol Tepe Noktası T(r,k), Logaritma Özellikleri ve Yarım Açı Formülleri",
+      "level": "Orta - İleri",
+      "studyTip": "Logaritma taban değiştirme ve toplamın çarpıma dönüşmesi (log(a·b) = log a + log b) kurallarını formül kartı yaparak tekrar et."
+    },
+    {
+      "id": "rec_fiz_tyt_mekanik_madde",
+      "subject": "fizik",
+      "examType": "TYT",
+      "topicKeywords": ["fizik bilimine", "skaler", "vektörel", "madde", "özkütle", "adezyon", "kohezyon", "kuvvet", "newton", "hareket", "sürtünme", "iş", "güç", "enerji", "basınç", "kaldırma", "ısı", "sıcaklık", "hal değişimi"],
+      "bookTitle": "Bilgi Sarmal TYT Fizik Soru Bankası & Çap TYT Fizik Konu Fasikülleri",
+      "publisher": "Bilgi Sarmal / Çap Yayınları",
+      "recommendedSection": "Kuvvet-Hareket (F = m·a), Basınç-Kaldırma Kuvveti ve Isı-Sıcaklık Etkinlikleri",
+      "level": "Orta",
+      "studyTip": "Birim dönüşümlerine (g/cm³ -> kg/m³, °C -> Kelvin) ve serbest cisim diyagramında sürtünme kuvvetinin yönüne dikkat et."
+    },
+    {
+      "id": "rec_fiz_tyt_elektrik_optik_dalga",
+      "subject": "fizik",
+      "examType": "TYT",
+      "topicKeywords": ["elektrik", "direnç", "elektrostatik", "manyetizma", "dalga", "ses", "yay", "optik", "kırılma", "ayna", "mercek", "aydınlanma"],
+      "bookTitle": "Aydın Yayınları TYT Fizik Ders İşleyiş Modülleri & Soru Bankası",
+      "publisher": "Aydın Yayınları",
+      "recommendedSection": "Elektrik Devrelerinde Eşdeğer Direnç, Dalgalar ve Geometrik Optik",
+      "level": "Orta",
+      "studyTip": "Paralel ve seri direnç bağlamalarında potansiyel fark dağılımını ve optikte özel ışın çizimlerini şema üzerinde çalış."
+    },
+    {
+      "id": "rec_fiz_ayt_mekanik_elektromanyetizma",
+      "subject": "fizik",
+      "examType": "AYT",
+      "topicKeywords": ["vektör", "bağıl", "atış", "itme", "momentum", "çarpışma", "tork", "denge", "kaldıraç", "makine", "çembersel", "merkezcil", "harmonik", "açısal", "kütle çekim", "kepler", "sığaç", "kondansatör", "manyetik", "indüksiyon", "transformatör", "alternatif akım", "coulomb", "paralel levha"],
+      "bookTitle": "Aydın Yayınları AYT Fizik Soru Bankası & Apotemi Modern Fizik / Mekanik Fasikülü",
+      "publisher": "Aydın Yayınları / Apotemi",
+      "recommendedSection": "Tork-Denge, İtme-Momentum, Çembersel Hareket ve Elektromanyetik İndüksiyon",
+      "level": "Orta - İleri",
+      "studyTip": "Tork sorularında dönme noktasına göre dik uzaklıkları, çarpışmalarda ise vektörel momentum korunumunu işaretleriyle yaz."
+    },
+    {
+      "id": "rec_fiz_ayt_modern_atom",
+      "subject": "fizik",
+      "examType": "AYT",
+      "topicKeywords": ["fotoelektrik", "compton", "de broglie", "foton", "elektromanyetik", "atom fiziği", "radyoaktivite", "girişim", "young"],
+      "bookTitle": "Apotemi Modern Fizik Konu Özeti ve Soru Fasikülü",
+      "publisher": "Apotemi Yayınları",
+      "recommendedSection": "Fotoelektrik Denklem (E_foton = E_bağlanma + E_kinetik) ve Dalga-Tanecik İkiliği",
+      "level": "İleri",
+      "studyTip": "Foton enerjisinin frekansla doğru, dalga boyuyla ters orantılı olduğunu (E = h·c / λ) karşılaştırma sorularında temel al."
+    },
+    {
+      "id": "rec_kim_tyt_atom_periyodik_bag",
+      "subject": "kimya",
+      "examType": "TYT",
+      "topicKeywords": ["kimya bilimi", "atom", "periyodik", "iyonlaşma", "element", "soygaz", "izotop", "türler", "kovalent", "iyonik", "hidrojen bağı", "zayıf etkileşim", "maddenin halleri", "katı", "buhar basıncı", "doğa", "güvenlik", "bileşik"],
+      "bookTitle": "Orbital Yayınları TYT Kimya Soru Bankası & Aydın TYT Kimya Modülleri",
+      "publisher": "Orbital Yayınları / Aydın Yayınları",
+      "recommendedSection": "Atom ve Periyodik Sistem, Periyodik Özelliklerin Değişimi ve Kimyasal Türler Arası Etkileşimler",
+      "level": "Başlangıç - Orta",
+      "studyTip": "Periyodik tabloda soldan sağa ve yukarıdan aşağıya yarıçap ile iyonlaşma enerjisi değişimini (3 aşağı 5 yukarı kuralını) tekrar et."
+    },
+    {
+      "id": "rec_kim_tyt_mol_hesaplama_asit",
+      "subject": "kimya",
+      "examType": "TYT",
+      "topicKeywords": ["mol", "kütle", "tepkime", "denkleştirme", "sınırlayıcı", "verim", "sabit oran", "katlı oran", "korunum", "karışım", "çözelti", "derişim", "koligatif", "ayırma", "asit", "baz", "sabun", "deterjan"],
+      "bookTitle": "Aydın Yayınları TYT Kimya Soru Bankası & Bilgi Sarmal TYT Kimya",
+      "publisher": "Aydın Yayınları / Bilgi Sarmal",
+      "recommendedSection": "Kimyanın Temel Kanunları, Mol Kavramı, Tepkime Denkleştirme ve Asitler-Bazlar",
+      "level": "Orta",
+      "studyTip": "Tepkime denkleştirirken önce karbon ve hidrojenleri, en son oksijen atomlarını denkleştir; sınırlayıcı bileşeni mol/katsayı oranından bul."
+    },
+    {
+      "id": "rec_kim_ayt_enerji_hiz_denge_elektro",
+      "subject": "kimya",
+      "examType": "AYT",
+      "topicKeywords": ["modern atom", "kuantum", "gaz", "molarite", "sıvı çözelti", "enerji", "endotermik", "ekzotermik", "entalpi", "hess", "hız", "denge", "le chatelier", "ph", "titrasyon", "çözünürlük", "kçç", "ortak iyon", "elektrokimya", "elektroliz", "faraday", "pil", "nernst", "yükseltgenme", "organik", "alkan", "alken", "hibritleşme", "allotrop", "izomer", "fonksiyonel", "ester"],
+      "bookTitle": "Orbital Yayınları AYT Kimya Soru Bankası & Aydın AYT Organik Kimya Fasikülü",
+      "publisher": "Orbital Yayınları / Aydın Yayınları",
+      "recommendedSection": "Kimyasal Tepkimelerde Enerji, Hız, Kimyasal Denge (Kc/Kçç) ve Elektrokimya",
+      "level": "Orta - İleri",
+      "studyTip": "Endotermik/ekzotermik olaylarda bağ kırılması ve bağ oluşumu yönlerini, elektrokimyada ise 'Kimya (Katotta İndirgenme - Anotta Yükseltgenme)' kodlamasını kullan."
+    },
+    {
+      "id": "rec_biy_tyt_hucre_organel_bolunme",
+      "subject": "biyoloji",
+      "examType": "TYT",
+      "topicKeywords": ["canlıların ortak", "inorganik", "organik", "karbonhidrat", "polisakkarit", "yağ", "trigliserit", "protein", "enzim", "vitamin", "nükleik", "dna", "rna", "hücre", "organel", "golgi", "mitokondri", "ribozom", "lizozom", "kloroplast", "zar", "madde geçiş", "osmoz", "plazmoliz", "turgor", "mitoz", "mayoz", "bölünme", "eşeysiz", "kalıtım", "kan grup", "eşeye bağlı", "soyağacı", "sınıflandırma", "bakteri", "omurgalı", "virüs", "ekosistem", "besin", "azot döngüsü", "ötrofikasyon"],
+      "bookTitle": "Biyotik Yayınları TYT Biyoloji Soru Bankası & Apotemi Sistemler / TYT Biyoloji Özeti",
+      "publisher": "Biyotik Yayınları / Apotemi",
+      "recommendedSection": "Hücre Organelleri ve Zarından Madde Geçişleri, Mitoz-Mayoz Evreleri ve Kalıtım",
+      "level": "Orta",
+      "studyTip": "Hücre şeması üzerinde Golgi (salgı/paketleme), Mitokondri (ATP) ve Lizozom (hücre içi sindirim) görevlerini görsel eşleştirmeyle tekrar et."
+    },
+    {
+      "id": "rec_biy_ayt_sistemler_enerji_gen",
+      "subject": "biyoloji",
+      "examType": "AYT",
+      "topicKeywords": ["sinir", "impuls", "endokrin", "hormon", "insülin", "duyu", "göz", "destek", "kas", "sarkomer", "sindirim", "dolaşım", "kalp", "starling", "bağışıklık", "solunum", "alveol", "bohr", "üriner", "böbrek", "nefron", "üreme", "menstrual", "genden proteine", "santral dogma", "transkripsiyon", "translasyon", "replikasyon", "biyoteknoloji", "fotosentez", "calvin", "kemosentez", "oksijenli solunum", "glikoliz", "krebs", "ets", "hücresel enerji", "bitki", "ksilem", "floem", "stoma", "popülasyon", "komünite", "ekoloji"],
+      "bookTitle": "Biyotik Yayınları AYT Biyoloji Soru Bankası & Apotemi İnsan Fizyolojisi (Sistemler) Fasikülü",
+      "publisher": "Biyotik Yayınları / Apotemi",
+      "recommendedSection": "İnsan Fizyolojisi (Endokrin, Dolaşım, Üriner), Genden Proteine ve Hücresel Solunum-Fotosentez",
+      "level": "Orta - İleri",
+      "studyTip": "Santral Dogma (DNA -> mRNA -> Protein) ve Oksijenli Solunum (Glikoliz -> Krebs -> ETS) basamaklarının gerçekleştiği hücresel bölgeleri tablo halinde özetle."
+    },
+    {
+      "id": "rec_tur_tyt_dilbilgisi_paragraf",
+      "subject": "turkce",
+      "examType": "TYT",
+      "topicKeywords": ["sözcükte anlam", "deyim", "atasözü", "terim", "cümlede anlam", "öznel", "nesnel", "paragraf", "düşünceyi geliştirme", "anlatım", "yazım", "birleşik", "noktalama", "ses", "ünlü", "ünsüz", "yapı", "ek", "sözcük türleri", "isim", "sıfat", "zamir", "zarf", "tamlama", "fiilimsi", "ek fiil", "çatı", "cümlenin ögeleri", "vurgu", "cümle türleri", "anlatım bozukluk"],
+      "bookTitle": "Hız ve Renk TYT Türkçe Soru Bankası & Bilgi Sarmal Dil Bilgisi Soru Bankası",
+      "publisher": "Hız ve Renk / Bilgi Sarmal",
+      "recommendedSection": "TDK Yazım Kuralları, Noktalama İşaretleri, Ses Olayları ve Cümlenin Ögeleri",
+      "level": "Orta",
+      "studyTip": "TDK Yazım Kılavuzundaki bitişik/ayrı yazılan birleşik kelimeleri (öngörü, başvuru, vazgeçmek / fark etmek, her şey) günlük 15 soruluk mini testlerle pekiştir."
+    },
+    {
+      "id": "rec_tur_ayt_edebiyat",
+      "subject": "turkce",
+      "examType": "AYT",
+      "topicKeywords": ["söz sanat", "şiir", "islamiyet öncesi", "destan", "dede korkut", "geçiş dönemi", "kutadgu", "divanü", "halk edebiyatı", "tasavvuf", "divan edebiyatı", "gazel", "fuzûlî", "şeyh gâlip", "tanzimat", "servet-i fünun", "fecriati", "millî edebiyat", "cumhuriyet", "roman", "yazar", "garip", "ikinci yeni", "beş hececiler", "edebi akım", "tiyatro", "orta oyunu"],
+      "bookTitle": "Bilgi Sarmal AYT Edebiyat Soru Bankası & Limit El Kitabı",
+      "publisher": "Bilgi Sarmal / İşler Yayın Grubu",
+      "recommendedSection": "Dönemlere Göre Yazar-Eser Eşleştirmeleri, Divan/Halk Şiiri ve Cumhuriyet Romanı",
+      "level": "Orta - İleri",
+      "studyTip": "Tanzimat, Servet-i Fünun ve Cumhuriyet dönemi başyapıt romanlarını (Tutunamayanlar, Huzur, İnce Memed, Mai ve Siyah) yazar-kahraman kartlarıyla eşleştirerek çalış."
+    }
+  ],
+  "defaultBySubject": {
+    "matematik": {
+      "id": "rec_default_mat",
+      "subject": "matematik",
+      "examType": "TYT/AYT",
+      "bookTitle": "Orijinal Yayınları TYT-AYT Matematik Soru Bankası",
+      "publisher": "Orijinal Yayınları",
+      "recommendedSection": "Kazanım Odaklı Sarı Testler ve ÖSYM Tarzı Mavi Testler",
+      "level": "Orta",
+      "studyTip": "Yanlış yaptığın konunun temel formüllerini gözden geçirip 1 sarı, 1 mavi test çözerek konuyu pekiştir."
+    },
+    "fizik": {
+      "id": "rec_default_fiz",
+      "subject": "fizik",
+      "examType": "TYT/AYT",
+      "bookTitle": "Bilgi Sarmal TYT-AYT Fizik Soru Bankası",
+      "publisher": "Bilgi Sarmal",
+      "recommendedSection": "Konu Kavrama ve Simülasyon Testleri",
+      "level": "Orta",
+      "studyTip": "Fiziksel büyüklüklerin birimlerini ve temel yasa bağıntılarını şema çizerek tekrar et."
+    },
+    "kimya": {
+      "id": "rec_default_kim",
+      "subject": "kimya",
+      "examType": "TYT/AYT",
+      "bookTitle": "Orbital Yayınları TYT-AYT Kimya Soru Bankası",
+      "publisher": "Orbital Yayınları",
+      "recommendedSection": "Bölüm Özeti ve Pekiştirme Testleri",
+      "level": "Orta",
+      "studyTip": "Tepkime denklemlerini ve periyodik eğilimleri konu özetinden tekrar ettikten sonra 2 test çöz."
+    },
+    "biyoloji": {
+      "id": "rec_default_biy",
+      "subject": "biyoloji",
+      "examType": "TYT/AYT",
+      "bookTitle": "Biyotik Yayınları TYT-AYT Biyoloji Soru Bankası",
+      "publisher": "Biyotik Yayınları",
+      "recommendedSection": "Konu Tarama ve Sentez Testleri",
+      "level": "Orta",
+      "studyTip": "Kavram haritaları ve organel/sistem şemaları üzerinden görsel tekrar yaparak test çöz."
+    },
+    "turkce": {
+      "id": "rec_default_tur",
+      "subject": "turkce",
+      "examType": "TYT/AYT",
+      "bookTitle": "Hız ve Renk Türkçe & Bilgi Sarmal Edebiyat Soru Bankası",
+      "publisher": "Hız ve Renk / Bilgi Sarmal",
+      "recommendedSection": "Dil Bilgisi Karma Testleri ve Yazar-Eser Tarama Bölümü",
+      "level": "Orta",
+      "studyTip": "Her gün düzenli 20 paragraf ve 1 dil bilgisi/edebiyat tarama testi çözerek hız kazan."
+    }
+  }
+}

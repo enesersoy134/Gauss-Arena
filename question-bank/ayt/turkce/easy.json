@@ -10,6 +10,7 @@
       "externalId": "AYT-TUR-E-001",
       "subTopic": "Söz Sanatları",
       "text": "\"Güneş her sabah bize gülümseyerek doğardı.\" dizelerinde kullanılan söz sanatı hangisidir?",
+      "explanation": "İnsana özgü \"gülümseme\" özelliği güneşe verilerek teşhis (kişileştirme) yapılmıştır.",
       "imageUrl": null,
       "options": [
         "Teşbih (Benzetme)",
@@ -22,7 +23,8 @@
     {
       "externalId": "AYT-TUR-E-002",
       "subTopic": "Şiir Bilgisi",
-      "text": "Dörtlük nazım birimiyle ve $$11$$'li hece ölçüsüyle söylenen, aşk ve doğa temalı halk şiiri nazım biçimi hangisidir?",
+      "text": "Dörtlük nazım birimiyle ve 11'li hece ölçüsüyle söylenen, aşk ve doğa temalı halk şiiri nazım biçimi hangisidir?",
+      "explanation": "11'li hece ölçüsüyle söylenen âşık edebiyatının en yaygın nazım biçimi koşmadır.",
       "imageUrl": null,
       "options": [
         "Koşma",
@@ -36,6 +38,7 @@
       "externalId": "AYT-TUR-E-003",
       "subTopic": "İslamiyet Öncesi Türk Edebiyatı",
       "text": "İslamiyet öncesi Türk edebiyatında ölen bir kişinin arkasından duyulan acıyı anlatmak için söylenen şiirlere ne ad verilir?",
+      "explanation": "Yuğ törenlerinde ölen kişinin ardından söylenen ağıtlara İslamiyet öncesinde sagu denir.",
       "imageUrl": null,
       "options": [
         "Koşuk",
@@ -48,7 +51,8 @@
     {
       "externalId": "AYT-TUR-E-004",
       "subTopic": "Divan Edebiyatı",
-      "text": "Divan edebiyatında $$a-a, b-a, c-a...$$ uyak düzeniyle yazılan, $$5-15$$ beyitten oluşan ve aşk, şarap, güzellik konularını işleyen nazım biçimi hangisidir?",
+      "text": "Divan edebiyatında a-a, b-a, c-a... uyak düzeniyle yazılan, 5-15 beyitten oluşan ve aşk, şarap, güzellik konularını işleyen nazım biçimi hangisidir?",
+      "explanation": "Aşk, kadın ve şarap temalı, 5-15 beyitlik nazım biçimi gazeldir.",
       "imageUrl": null,
       "options": [
         "Mesnevi",
@@ -62,6 +66,7 @@
       "externalId": "AYT-TUR-E-005",
       "subTopic": "Tanzimat Edebiyatı",
       "text": "Türk edebiyatında ilk yerli roman kabul edilen \"Taaşşuk-ı Talat ve Fitnat\" adlı eserin yazarı kimdir?",
+      "explanation": "Şemsettin Sami tarafından 1872 yılında yazılan Taaşşuk-ı Talat ve Fitnat ilk yerli romanımızdır.",
       "imageUrl": null,
       "options": [
         "Namık Kemal",
@@ -75,12 +80,69 @@
       "externalId": "AYT-TUR-E-006",
       "subTopic": "Millî Edebiyat",
       "text": "Ömer Seyfettin, Ali Canip Yöntem ve Ziya Gökalp'in Selanik'te çıkardıkları ve \"Yeni Lisan\" makalesinin yayımlandığı dergi hangisidir?",
+      "explanation": "1911 yılında Selanik'te çıkarılan Genç Kalemler dergisi Millî Edebiyat dönemini başlatmıştır.",
       "imageUrl": null,
       "options": [
         "Servet-i Fünun",
         "Genç Kalemler",
         "Dergâh",
         "Yedi Meşale"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-E-007",
+      "subTopic": "Şiir Türleri",
+      "text": "Yurt sevgisi, kahramanlık, yiğitlik ve savaş konularını coşkulu bir dille işleyen şiir türüne ne ad verilir?",
+      "explanation": "Kahramanlık ve yiğitlik temalı şiirlere epik (destansı) şiir denir.",
+      "imageUrl": null,
+      "options": [
+        "Lirik şiir",
+        "Epik şiir",
+        "Pastoral şiir",
+        "Didaktik şiir"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-E-008",
+      "subTopic": "Halk Hikâyeleri ve Destanlar",
+      "text": "Oğuz Türklerinin bilinen en eski epik-destansı hikâyelerini içeren ve 15. yüzyılda yazıya geçirilen başyapıt hangisidir?",
+      "explanation": "Destan geleneğinden halk hikâyeciliğine geçişin en önemli eseri Dede Korkut Hikâyeleridir.",
+      "imageUrl": null,
+      "options": [
+        "Manas Destanı",
+        "Dede Korkut Hikâyeleri",
+        "Kutadgu Bilig",
+        "Ergenekon Destanı"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-E-009",
+      "subTopic": "Tasavvuf Halk Edebiyatı",
+      "text": "13. yüzyılda Anadolu'da yaşayan, \"Risaletü'n-Nushiye\" adlı mesnevisi ve duru Türkçesiyle yazdığı ilahileriyle tanınan büyük mutasavvıf şair kimdir?",
+      "explanation": "Yunus Emre, ilahi nazım türünün ve Anadolu tasavvuf şiirinin en büyük temsilcisidir.",
+      "imageUrl": null,
+      "options": [
+        "Pir Sultan Abdal",
+        "Yunus Emre",
+        "Kaygusuz Abdal",
+        "Hacı Bayram Veli"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-TUR-E-010",
+      "subTopic": "Tanzimat İlkeleri",
+      "text": "Türk edebiyatında ilk edebi roman kabul edilen \"İntibah\" ve ilk tarihi roman olan \"Cezmi\" adlı eserlerin yazarı kimdir?",
+      "explanation": "Vatan şairi Namık Kemal, İntibah ve Cezmi romanlarının yazarıdır.",
+      "imageUrl": null,
+      "options": [
+        "Ziya Paşa",
+        "Namık Kemal",
+        "Şinasi",
+        "Sami Paşazade Sezai"
       ],
       "correctOptionIndex": 1
     }

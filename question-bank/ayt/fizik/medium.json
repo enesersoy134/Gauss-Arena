@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-FIZ-M-001",
       "subTopic": "Eğik Atış",
-      "text": "Hava direncinin önemsiz olduğu ortamda düşey yukarı $$30\\text{ m/s}$$ hızla atılan bir cismin çıkabileceği maksimum yükseklik kaç metredir? ($$g = 10\\text{ m/s}^2$$)",
+      "text": "Hava direncinin önemsiz olduğu ortamda düşey yukarı 30 m/s hızla atılan bir cismin çıkabileceği maksimum yükseklik kaç metredir? (g = 10 m/s²)",
+      "explanation": "h_max = v₀² / (2g) = 900 / 20 = 45 metre bulunur.",
       "imageUrl": null,
       "options": [
         "30",
@@ -22,7 +23,8 @@
     {
       "externalId": "AYT-FIZ-M-002",
       "subTopic": "Esnek Olmayan Çarpışma",
-      "text": "Sürtünmesiz yatay düzlemde $$10\\text{ m/s}$$ hızla giden $$2\\text{ kg}$$ kütleli cisim durmakta olan $$3\\text{ kg}$$ kütleli cisme çarparak kenetleniyor. Ortak kütlenin hızı kaç $$\\text{m/s}$$ olur?",
+      "text": "Sürtünmesiz yatay düzlemde 10 m/s hızla giden 2 kg kütleli cisim durmakta olan 3 kg kütleli cisme çarparak kenetleniyor. Ortak kütlenin hızı kaç m/s olur?",
+      "explanation": "Momentum korunumu: m₁·v₁ = (m₁ + m₂)·v_ort ⇒ 2·10 = 5·v_ort ⇒ v_ort = 4 m/s olur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -35,7 +37,8 @@
     {
       "externalId": "AYT-FIZ-M-003",
       "subTopic": "Merkezcil Kuvvet",
-      "text": "Yarıçapı $$2\\text{ m}$$ olan yatay sürtünmesiz yörüngede $$6\\text{ m/s}$$ çizgisel hızla dolanan $$3\\text{ kg}$$ kütleli cisme etki eden merkezcil kuvvet kaç $$\\text{N}$$ olur?",
+      "text": "Yarıçapı 2 m olan yatay sürtünmesiz yörüngede 6 m/s çizgisel hızla dolanan 3 kg kütleli cisme etki eden merkezcil kuvvet kaç N olur?",
+      "explanation": "Fm = m · v² / r = 3 · 36 / 2 = 54 N bulunur.",
       "imageUrl": null,
       "options": [
         "27",
@@ -48,7 +51,8 @@
     {
       "externalId": "AYT-FIZ-M-004",
       "subTopic": "Basit Harmonik Hareket",
-      "text": "Yay sabiti $$k = 100\\text{ N/m}$$ olan yayın ucuna $$4\\text{ kg}$$ kütleli cisim bağlanarak basit harmonik hareket yaptırılıyor. Hareketin periyodu kaç saniyedir? ($$\\pi = 3$$)",
+      "text": "Yay sabiti k = 100 N/m olan yayın ucuna 4 kg kütleli cisim bağlanarak basit harmonik hareket yaptırılıyor. Hareketin periyodu kaç saniyedir? (π = 3)",
+      "explanation": "T = 2π·√(m / k) = 2 · 3 · √(4 / 100) = 6 · (2 / 10) = 1.2 saniye olur.",
       "imageUrl": null,
       "options": [
         "0.6",
@@ -61,7 +65,8 @@
     {
       "externalId": "AYT-FIZ-M-005",
       "subTopic": "Sığaçlar (Kondansatörler)",
-      "text": "Sığası $$4\\text{ F}$$ olan bir kondansatör $$12\\text{ V}$$ gerilim altında yüklendiğinde depoladığı yük kaç $$\\text{Coulomb}$$ olur?",
+      "text": "Sığası 4 F olan bir kondansatör 12 V gerilim altında yüklendiğinde depoladığı yük kaç Coulomb olur?",
+      "explanation": "Q = C · V = 4 · 12 = 48 Coulomb bulunur.",
       "imageUrl": null,
       "options": [
         "24",
@@ -74,7 +79,8 @@
     {
       "externalId": "AYT-FIZ-M-006",
       "subTopic": "Fotoelektrik Olay",
-      "text": "Eşik enerjisi $$2.2\\text{ eV}$$ olan bir metale $$5.0\\text{ eV}$$ enerjili fotonlar düşürüldüğünde sökülen fotoelektronların maksimum kinetik enerjisi kaç $$\\text{eV}$$ olur?",
+      "text": "Eşik enerjisi 2.2 eV olan bir metale 5.0 eV enerjili fotonlar düşürüldüğünde sökülen fotoelektronların maksimum kinetik enerjisi kaç eV olur?",
+      "explanation": "E_k = E_foton - E_bağlanma = 5.0 - 2.2 = 2.8 eV bulunur.",
       "imageUrl": null,
       "options": [
         "1.8",
@@ -83,6 +89,62 @@
         "7.2"
       ],
       "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-M-007",
+      "subTopic": "Bağıl Hareket",
+      "text": "Doğu yönünde 20 m/s hızla giden K aracındaki gözlemci, Batı yönünde 15 m/s hızla giden L aracını hangi hızla gidiyormuş gibi görür?",
+      "explanation": "v_bağıl = v_L - v_K = (-15) - (+20) = -35 m/s (Batı yönünde 35 m/s).",
+      "imageUrl": null,
+      "options": [
+        "Batıya 5 m/s",
+        "Doğuya 35 m/s",
+        "Batıya 35 m/s",
+        "Doğuya 5 m/s"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-M-008",
+      "subTopic": "Yatay Atış",
+      "text": "Yerden 80 m yükseklikteki bir kuleden yatay 15 m/s hızla atılan bir cisim yatayda kaç metre uzağa düşer? (g = 10 m/s²)",
+      "explanation": "h = (1/2)gt² ⇒ 80 = 5t² ⇒ t = 4 s. Yatay menzil x = v₀ · t = 15 · 4 = 60 metre olur.",
+      "imageUrl": null,
+      "options": [
+        "45",
+        "60",
+        "75",
+        "90"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-M-009",
+      "subTopic": "Paralel Levhalar",
+      "text": "Aralarında 0.2 m uzaklık bulunan iki paralel levha arasına 40 V potansiyel fark uygulanırsa levhalar arasındaki düzgün elektrik alan kaç V/m olur?",
+      "explanation": "E = V / d = 40 / 0.2 = 200 V/m bulunur.",
+      "imageUrl": null,
+      "options": [
+        "80",
+        "100",
+        "200",
+        "400"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-M-010",
+      "subTopic": "Radyoaktivite",
+      "text": "Bir radyoaktif çekirdek alfa (α) bozunması geçirdiğinde kütle numarası ve atom numarası nasıl değişir?",
+      "explanation": "Alfa parçacığı (⁴₂He) yayınlandığında kütle numarası 4, atom numarası 2 azalır.",
+      "imageUrl": null,
+      "options": [
+        "Kütle 4 azalır, atom 2 azalır",
+        "Kütle 2 azalır, atom 4 azalır",
+        "Kütle değişmez, atom 1 artar",
+        "Kütle 4 artar, atom 2 artar"
+      ],
+      "correctOptionIndex": 0
     }
   ]
 }

@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-FIZ-H-001",
       "subTopic": "Açısal Momentum",
-      "text": "Eylemsizlik momenti $$I = 4\\text{ kg}\\cdot\\text{m}^2$$ olan bir disk $$\\omega = 5\\text{ rad/s}$$ açısal hızla dönerken açısal momentumu kaç $$\\text{kg}\\cdot\\text{m}^2/\\text{s}$$ olur?",
+      "text": "Eylemsizlik momenti I = 4 kg·m² olan bir disk ω = 5 rad/s açısal hızla dönerken açısal momentumu kaç kg·m²/s olur?",
+      "explanation": "L = I · ω = 4 · 5 = 20 kg·m²/s bulunur.",
       "imageUrl": null,
       "options": [
         "15",
@@ -22,7 +23,8 @@
     {
       "externalId": "AYT-FIZ-H-002",
       "subTopic": "Manyetik Kuvvet",
-      "text": "Büyüklüğü $$B = 4\\text{ T}$$ olan düzgün manyetik alana dik olarak yerleştirilen $$0.5\\text{ m}$$ uzunluğundaki telden $$3\\text{ A}$$ akım geçtiğinde tele etki eden manyetik kuvvet kaç $$\\text{N}$$ olur?",
+      "text": "Büyüklüğü B = 4 T olan düzgün manyetik alana dik olarak yerleştirilen 0.5 m uzunluğundaki telden 3 A akım geçtiğinde tele etki eden manyetik kuvvet kaç N olur?",
+      "explanation": "F = B · I · L = 4 · 3 · 0.5 = 6 N bulunur.",
       "imageUrl": null,
       "options": [
         "3",
@@ -35,7 +37,8 @@
     {
       "externalId": "AYT-FIZ-H-003",
       "subTopic": "İndüksiyon EMK",
-      "text": "Bir çerçeveden geçen manyetik akı $$0.2\\text{ saniye}$$ içinde $$0.8\\text{ Weber}$$ değiştiğine göre oluşan ortalama indüksiyon elektromotor kuvveti kaç $$\\text{Volt}$$ olur?",
+      "text": "Bir çerçeveden geçen manyetik akı 0.2 saniye içinde 0.8 Weber değiştiğine göre oluşan ortalama indüksiyon elektromotor kuvveti kaç Volt olur?",
+      "explanation": "ε = -ΔΦ / Δt ⇒ |ε| = 0.8 / 0.2 = 4 Volt bulunur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -48,7 +51,8 @@
     {
       "externalId": "AYT-FIZ-H-004",
       "subTopic": "Kepler ve Kütle Çekim",
-      "text": "Yeryüzünde ağırlığı $$360\\text{ N}$$ olan bir cismin, Dünya merkezinden $$3R$$ uzaklıktaki ($$R$$: Dünya yarıçapı) ağırlığı kaç $$\\text{N}$$ olur?",
+      "text": "Yeryüzünde ağırlığı 360 N olan bir cismin, Dünya merkezinden 3R uzaklıktaki (R: Dünya yarıçapı) ağırlığı kaç N olur?",
+      "explanation": "Çekim ivmesi uzaklığın karesiyle ters orantılıdır: 360 / 3² = 360 / 9 = 40 N olur.",
       "imageUrl": null,
       "options": [
         "30",
@@ -61,7 +65,8 @@
     {
       "externalId": "AYT-FIZ-H-005",
       "subTopic": "De Broglie Dalga Boyu",
-      "text": "Çizgisel momentumu $$p$$ olan bir parçacığın hızı iki katına çıkarılırsa De Broglie dalga boyu nasıl değişir?",
+      "text": "Çizgisel momentumu p olan bir parçacığın hızı iki katına çıkarılırsa De Broglie dalga boyu nasıl değişir?",
+      "explanation": "λ = h / (m·v) bağıntısına göre hız 2 katına çıkarsa dalga boyu yarıya iner.",
       "imageUrl": null,
       "options": [
         "İki katına çıkar",
@@ -74,7 +79,8 @@
     {
       "externalId": "AYT-FIZ-H-006",
       "subTopic": "Eğik Düzlem Dinamiği",
-      "text": "Eğik açısı $$37^\\circ$$ olan sürtünmesiz eğik düzlem üzerindeki $$5\\text{ kg}$$ kütleli cismin ivmesi kaç $$\\text{m/s}^2$$ olur? ($$\\sin 37^\\circ = 0.6, g = 10\\text{ m/s}^2$$)",
+      "text": "Eğik açısı 37° olan sürtünmesiz eğik düzlem üzerindeki 5 kg kütleli cismin ivmesi kaç m/s² olur? (sin 37° = 0.6, g = 10 m/s²)",
+      "explanation": "a = g · sin(37°) = 10 · 0.6 = 6 m/s² bulunur.",
       "imageUrl": null,
       "options": [
         "4",
@@ -83,6 +89,62 @@
         "8"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-FIZ-H-007",
+      "subTopic": "Compton Saçılması",
+      "text": "Compton olayında durgun elektrona çarparak saçılan fotonun enerjisi ve dalga boyu gelen fotona göre nasıl değişir?",
+      "explanation": "Foton enerjisinin bir kısmını elektrona aktardığı için enerjisi ve frekansı azalır, dalga boyu artar.",
+      "imageUrl": null,
+      "options": [
+        "Enerjisi azalır, dalga boyu artar",
+        "Enerjisi artar, dalga boyu azalır",
+        "İkisi de azalır",
+        "İkisi de değişmez"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-FIZ-H-008",
+      "subTopic": "Atwood Düzeneği (Makara Dinamiği)",
+      "text": "Sürtünmesiz makaraya bağlı 3 kg ve 2 kg kütleli iki cisim serbest bırakıldığında sistemin ivmesi kaç m/s² olur? (g = 10 m/s²)",
+      "explanation": "Fnet = (3 - 2)·10 = 10 N. Toplam kütle = 3 + 2 = 5 kg ⇒ a = 10 / 5 = 2 m/s² olur.",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-FIZ-H-009",
+      "subTopic": "Alternatif Akım ve Rezonans",
+      "text": "Bir RLC alternatif akım devresinde indüktif reaktans (X_L) ile kapasitif reaktans (X_C) birbirine eşit olduğunda devre hangi durumdadır ve empedans (Z) neye eşittir?",
+      "explanation": "X_L = X_C olduğunda devre rezonanstadır ve empedans minimum olup Z = R değerine eşittir.",
+      "imageUrl": null,
+      "options": [
+        "Rezonans durumu, Z = R",
+        "Kısa devre durumu, Z = 0",
+        "Yüksek empedans, Z = X_L + X_C",
+        "Akım sıfır olur"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-FIZ-H-010",
+      "subTopic": "Çift Yarıkta Girişim (Young Deney)",
+      "text": "Young çift yarık deneyinde kullanılan ışığın dalga boyu artırılırsa ekrandaki saçak genişliği (Δx) nasıl değişir?",
+      "explanation": "Δx = (L · λ) / (d · n) bağıntısına göre dalga boyu λ artarsa saçak genişliği Δx artar.",
+      "imageUrl": null,
+      "options": [
+        "Artar",
+        "Azalır",
+        "Değişmez",
+        "Önce azalır sonra sıfırlanır"
+      ],
+      "correctOptionIndex": 0
     }
   ]
 }

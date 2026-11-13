@@ -9,7 +9,8 @@
     {
       "externalId": "TYT-MAT-H-001",
       "subTopic": "Permütasyon - Kombinasyon",
-      "text": "$$6$$ doktor ve $$4$$ hemşire arasından içinde en az $$2$$ doktor bulunan $$3$$ kişilik bir sağlık ekibi kaç farklı şekilde seçilebilir?",
+      "text": "6 doktor ve 4 hemşire arasından içinde en az 2 doktor bulunan 3 kişilik bir sağlık ekibi kaç farklı şekilde seçilebilir?",
+      "explanation": "C(6,2)·C(4,1) + C(6,3)·C(4,0) = 15·4 + 20·1 = 60 + 20 = 80 farklı şekilde seçilir.",
       "imageUrl": null,
       "options": [
         "60",
@@ -22,20 +23,22 @@
     {
       "externalId": "TYT-MAT-H-002",
       "subTopic": "Olasılık",
-      "text": "İki zar aynı anda atıldığında üst yüze gelen sayıların toplamının $$8$$ olma olasılığı kaçtır?",
+      "text": "İki zar aynı anda atıldığında üst yüze gelen sayıların toplamının 8 olma olasılığı kaçtır?",
+      "explanation": "Toplamı 8 olan durumlar: (2,6), (3,5), (4,4), (5,3), (6,2) olmak üzere 5 tanedir. Olasılık 5/36 olur.",
       "imageUrl": null,
       "options": [
-        "$$\\frac{1}{9}$$",
-        "$$\\frac{5}{36}$$",
-        "$$\\frac{1}{6}$$",
-        "$$\\frac{7}{36}$$"
+        "1/9",
+        "5/36",
+        "1/6",
+        "7/36"
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "TYT-MAT-H-003",
       "subTopic": "Polinomlar",
-      "text": "$$P(x) = x^3 - ax^2 + 4x - 6$$ polinomunun $$(x - 2)$$ ile bölümünden kalan $$2$$ olduğuna göre $$a$$ kaçtır?",
+      "text": "P(x) = x³ - ax² + 4x - 6 polinomunun (x - 2) ile bölümünden kalan 2 olduğuna göre a kaçtır?",
+      "explanation": "P(2) = 2 ⇒ 8 - 4a + 8 - 6 = 2 ⇒ 10 - 4a = 2 ⇒ a = 2 bulunur.",
       "imageUrl": null,
       "options": [
         "1",
@@ -48,7 +51,8 @@
     {
       "externalId": "TYT-MAT-H-004",
       "subTopic": "Çarpanlara Ayırma",
-      "text": "$$x - y = 5$$ ve $$x \\cdot y = 6$$ olduğuna göre $$x^2 + y^2$$ ifadesinin değeri kaçtır?",
+      "text": "x - y = 5 ve x · y = 6 olduğuna göre x² + y² ifadesinin değeri kaçtır?",
+      "explanation": "x² + y² = (x - y)² + 2xy = 5² + 2(6) = 25 + 12 = 37 bulunur.",
       "imageUrl": null,
       "options": [
         "31",
@@ -61,7 +65,8 @@
     {
       "externalId": "TYT-MAT-H-005",
       "subTopic": "Bölünebilme Kuralları",
-      "text": "Dört basamaklı $$4a5b$$ sayısı $$15$$ ile tam bölünebildiğine göre $$a$$'nın alabileceği en büyük değer kaçtır?",
+      "text": "Dört basamaklı 4a5b sayısı 15 ile tam bölünebildiğine göre a'nın alabileceği en büyük değer kaçtır?",
+      "explanation": "15 ile bölünebilme için 3 ve 5 ile bölünmelidir. b = 0 veya b = 5 olur. b = 0 için 4 + a + 5 + 0 = 9 + a ⇒ a = 9 olabilir.",
       "imageUrl": null,
       "options": [
         "6",
@@ -74,7 +79,8 @@
     {
       "externalId": "TYT-MAT-H-006",
       "subTopic": "Karışım Problemleri",
-      "text": "Tuz oranı $$\\%20$$ olan $$40\\text{ litre}$$ tuzlu suya $$10\\text{ litre}$$ saf tuz eklenirse yeni karışımın tuz oranı yüzde kaç olur?",
+      "text": "Tuz oranı %20 olan 40 litre tuzlu suya 10 litre saf tuz eklenirse yeni karışımın tuz oranı yüzde kaç olur?",
+      "explanation": "Başlangıçta 40 · 0.20 = 8 L tuz vardır. 10 L tuz eklenince toplam tuz 18 L, toplam karışım 50 L olur: 18 / 50 = %36.",
       "imageUrl": null,
       "options": [
         "32",
@@ -83,6 +89,62 @@
         "44"
       ],
       "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-H-007",
+      "subTopic": "EBOB - EKOK",
+      "text": "Boyutları 24 cm ve 36 cm olan dikdörtgen şeklindeki bir karton, hiç parça artmayacak şekilde eş karelere bölünecektir. En az kaç kare elde edilir?",
+      "explanation": "EBOB(24, 36) = 12 cm. Kare sayısı = (24 / 12) · (36 / 12) = 2 · 3 = 6 olur.",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "6",
+        "8",
+        "12"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-H-008",
+      "subTopic": "Fonksiyonlarda Bileşke",
+      "text": "f(x) = 2x + 3 ve g(x) = x - 4 olduğuna göre (f ∘ g)(5) değeri kaçtır?",
+      "explanation": "g(5) = 5 - 4 = 1 ve f(g(5)) = f(1) = 2(1) + 3 = 5 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "5",
+        "7",
+        "9"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-H-009",
+      "subTopic": "Çokgenler ve Dörtgenler",
+      "text": "Bir dış açısının ölçüsü 24° olan düzgün çokgenin kenar sayısı kaçtır?",
+      "explanation": "Dış açılar toplamı 360° olduğundan kenar sayısı n = 360° / 24° = 15 olur.",
+      "imageUrl": null,
+      "options": [
+        "12",
+        "15",
+        "18",
+        "20"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-H-010",
+      "subTopic": "Kâr - Zarar Problemleri",
+      "text": "%20 zararla 160 TL fiyata satılan bir ürün, %30 kârla kaç TL fiyata satılır?",
+      "explanation": "Maliyet · 0.80 = 160 ⇒ Maliyet = 200 TL. %30 kârlı satış fiyatı = 200 · 1.30 = 260 TL olur.",
+      "imageUrl": null,
+      "options": [
+        "220",
+        "240",
+        "260",
+        "280"
+      ],
+      "correctOptionIndex": 2
     }
   ]
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PlayerInfo, Question, RoundResult } from '../../types/game';
-import { Trophy, RotateCcw, Check, X, Flame, Award, TrendingUp, TrendingDown } from 'lucide-react';
+import { getRecommendationsForTopic, ResourceRecommendation } from '../../utils/resourceRecommendations';
+import { Trophy, RotateCcw, Check, X, Flame, Award, TrendingUp, TrendingDown, BookOpen, AlertTriangle } from 'lucide-react';
 
 export interface MatchEndScreenProps {
   player1: PlayerInfo;
@@ -65,14 +66,44 @@ export const MatchEndScreen: React.FC<MatchEndScreenProps> = ({
   const isDraw = player1TotalScore === player2TotalScore;
   const isLoser = player1TotalScore < player2TotalScore;
 
-  // ELO Değişimi:
+  // ELO Değişimi (küsüratsız tam sayı yuvarlama):
   let eloDelta = 0;
-  if (isWinner) eloDelta = eloWinDelta;
-  else if (isLoser) eloDelta = eloLossDelta;
+  if (isWinner) eloDelta = Math.round(eloWinDelta);
+  else if (isLoser) eloDelta = Math.round(eloLossDelta);
 
-  const initialElo = player1.elo;
-  const finalElo = Math.max(0, initialElo + eloDelta);
+  const initialElo = Math.round(player1.elo);
+  const finalElo = Math.max(0, Math.round(initialElo + eloDelta));
   const animatedElo = useAnimatedNumber(finalElo, initialElo, 1400);
+
+  // Yanlış yapılan soruları ayırt et ve konu başlıkları (topic) altında grupla
+  const wrongRounds = roundResults.filter(({ result }) => !result.player1Correct);
+  const revisionTopicGroups = React.useMemo(() => {
+    const map = new Map<
+      string,
+      {
+        topic: string;
+        subject: string;
+        questions: Question[];
+        recommendedResources: ResourceRecommendation[];
+      }
+    >();
+    for (const { question } of wrongRounds) {
+      const topicTitle = (question.topic || question.subject || 'Genel Konu').trim();
+      const key = `${question.subject.toLowerCase()}__${topicTitle.toLowerCase()}`;
+      const existing = map.get(key);
+      if (existing) {
+        existing.questions.push(question);
+      } else {
+        map.set(key, {
+          topic: topicTitle,
+          subject: question.subject,
+          questions: [question],
+          recommendedResources: getRecommendationsForTopic(question.subject, topicTitle),
+        });
+      }
+    }
+    return Array.from(map.values());
+  }, [wrongRounds]);
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center gap-8 animate-fade-in">
@@ -274,7 +305,125 @@ export const MatchEndScreen: React.FC<MatchEndScreenProps> = ({
         </div>
       </div>
 
-      {/* 5. TEKRAR OYNA BUTONU */}
+      {/* 5. REVİZE EDİLMESİ GEREKEN KONULAR (PEKİŞTİRİLEMEYEN BAŞLIKLAR) */}
+      <div className="w-full bg-[#1A0E1C] border border-amber-500/35 rounded-2xl overflow-hidden shadow-xl">
+        <div className="bg-[#0F0510] px-5 py-3.5 border-b border-amber-500/20 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-amber-400" />
+            <span className="font-poppins font-bold text-xs sm:text-sm uppercase tracking-wider text-white">
+              Revize Edilmesi Gereken Konular (Pekiştirilemeyen Başlıklar)
+            </span>
+          </div>
+          <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+            {revisionTopicGroups.length} Konu Başlığı • {wrongRounds.length} Yanlış Soru
+          </span>
+        </div>
+
+        {revisionTopicGroups.length === 0 ? (
+          <div className="p-5 text-center text-xs sm:text-sm text-emerald-300 bg-emerald-500/5 font-medium">
+            🎉 Tebrikler! Bu karşılaşmadaki tüm soruları doğru yanıtladın; revize edilmesi gereken eksik konu başlığın bulunmuyor.
+          </div>
+        ) : (
+          <div className="p-5 flex flex-col gap-4">
+            {/* Hızlı Konu Başlığı Etiketleri */}
+            <div>
+              <div className="text-[11px] font-mono uppercase tracking-wider text-[#B5CBC8] mb-2">
+                Pekiştirilmesi Gereken Konu Başlıkları:
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                {revisionTopicGroups.map((group) => (
+                  <span
+                    key={`${group.subject}-${group.topic}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-poppins font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/35"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-[#F14E13]" />
+                    <span className="uppercase text-[10px] font-mono text-[#F14E13]">{group.subject}:</span>
+                    <span>{group.topic}</span>
+                    <span className="ml-1 px-1.5 py-0.2 rounded bg-black/40 font-mono text-[10px] text-amber-200">
+                      {group.questions.length} Soru
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Konu Başlığı Altında Yanlış Yapılan Soruların Detayı */}
+            <div className="grid grid-cols-1 gap-3">
+              {revisionTopicGroups.map((group) => (
+                <div
+                  key={`${group.subject}-${group.topic}-detail`}
+                  className="rounded-xl bg-[#0F0510] border border-white/10 p-4 flex flex-col gap-2.5"
+                >
+                  <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#F14E13]/20 text-[#F14E13] border border-[#F14E13]/30">
+                        {group.subject}
+                      </span>
+                      <h4 className="font-poppins font-bold text-sm text-amber-300">
+                        {group.topic}
+                      </h4>
+                    </div>
+                    <span className="text-[11px] font-mono text-red-400">
+                      {group.questions.length} Yanlış
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    {group.questions.map((q) => (
+                      <div
+                        key={q.id}
+                        className="text-xs bg-[#1A0E1C]/80 rounded-lg p-3 border border-red-500/20 flex flex-col gap-1"
+                      >
+                        <div className="text-white font-medium leading-relaxed">
+                          <span className="text-red-400 font-mono font-bold mr-1.5">✗ Soru:</span>
+                          {q.prompt}
+                        </div>
+                        {q.explanation && (
+                          <div className="text-[#B5CBC8] text-[11px] leading-relaxed mt-1 pt-1 border-t border-white/5">
+                            <span className="text-emerald-400 font-semibold mr-1">💡 Çözüm Notu:</span>
+                            {q.explanation}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bu Konu İçin Kaynak Önerileri (kaynak-onerileri.json) */}
+                  {group.recommendedResources && group.recommendedResources.length > 0 && (
+                    <div className="mt-1 pt-2.5 border-t border-amber-500/20 flex flex-col gap-2">
+                      <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-amber-300 uppercase tracking-wider">
+                        <BookOpen className="w-3.5 h-3.5 text-[#F14E13]" />
+                        <span>Önerilen Kaynak & Çalışma Rehberi:</span>
+                      </div>
+                      {group.recommendedResources.map((rec) => (
+                        <div
+                          key={rec.id}
+                          className="p-3 rounded-lg bg-[#1A0E1C] border border-[#F14E13]/30 text-xs flex flex-col gap-1"
+                        >
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
+                            <span className="font-poppins font-bold text-white">{rec.bookTitle}</span>
+                            <span className="px-2 py-0.5 rounded bg-[#F14E13]/20 text-[#F14E13] font-mono text-[10px] font-semibold">
+                              {rec.publisher} • {rec.level}
+                            </span>
+                          </div>
+                          <div className="text-[11px] text-amber-200/90 font-medium">
+                            📖 Bölüm: {rec.recommendedSection}
+                          </div>
+                          <div className="text-[11px] text-[#B5CBC8] leading-relaxed">
+                            🎯 Tavsiye: {rec.studyTip}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 6. TEKRAR OYNA BUTONU */}
       <button
         onClick={onRestart}
         className="btn-primary py-3.5 px-8 text-base font-bold shadow-xl shadow-[#F14E13]/40 flex items-center gap-2.5"

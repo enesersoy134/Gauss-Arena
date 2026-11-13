@@ -9,7 +9,8 @@
     {
       "externalId": "TYT-MAT-E-001",
       "subTopic": "Birinci Dereceden Denklemler",
-      "text": "$$3x - 7 = 14$$ olduğuna göre $$x$$ kaçtır?",
+      "text": "3x - 7 = 14 olduğuna göre x kaçtır?",
+      "explanation": "3x = 21 ⇒ x = 7 bulunur.",
       "imageUrl": null,
       "options": [
         "5",
@@ -22,7 +23,8 @@
     {
       "externalId": "TYT-MAT-E-002",
       "subTopic": "Temel Kavramlar",
-      "text": "Ardışık üç çift tam sayının toplamı $$42$$ olduğuna göre, bu sayıların en büyüğü kaçtır?",
+      "text": "Ardışık üç çift tam sayının toplamı 42 olduğuna göre, bu sayıların en büyüğü kaçtır?",
+      "explanation": "Ortanca sayı 42 / 3 = 14 olur. Sayılar 12, 14, 16 olduğundan en büyüğü 16 olur.",
       "imageUrl": null,
       "options": [
         "12",
@@ -35,33 +37,36 @@
     {
       "externalId": "TYT-MAT-E-003",
       "subTopic": "Rasyonel Sayılar",
-      "text": "$$\\frac{3}{4} + \\frac{5}{8}$$ işleminin sonucu kaçtır?",
+      "text": "3/4 + 5/8 işleminin sonucu kaçtır?",
+      "explanation": "Payda eşitlenirse 6/8 + 5/8 = 11/8 elde edilir.",
       "imageUrl": null,
       "options": [
-        "$$\\frac{7}{8}$$",
-        "$$\\frac{9}{8}$$",
-        "$$\\frac{11}{8}$$",
-        "$$\\frac{13}{8}$$"
+        "7/8",
+        "9/8",
+        "11/8",
+        "13/8"
       ],
       "correctOptionIndex": 2
     },
     {
       "externalId": "TYT-MAT-E-004",
       "subTopic": "Üslü Sayılar",
-      "text": "$$2^5 + 2^5$$ işleminin sonucu aşağıdakilerden hangisine eşittir?",
+      "text": "2⁵ + 2⁵ işleminin sonucu aşağıdakilerden hangisine eşittir?",
+      "explanation": "2 · 2⁵ = 2⁶ bulunur.",
       "imageUrl": null,
       "options": [
-        "$$2^6$$",
-        "$$2^{10}$$",
-        "$$4^5$$",
-        "$$2^7$$"
+        "2⁶",
+        "2¹⁰",
+        "4⁵",
+        "2⁷"
       ],
       "correctOptionIndex": 0
     },
     {
       "externalId": "TYT-MAT-E-005",
       "subTopic": "Oran Orantı",
-      "text": "$$\\frac{a}{b} = \\frac{3}{5}$$ ve $$a + b = 40$$ olduğuna göre $$b - a$$ kaçtır?",
+      "text": "a/b = 3/5 ve a + b = 40 olduğuna göre b - a kaçtır?",
+      "explanation": "3k + 5k = 40 ⇒ 8k = 40 ⇒ k = 5. b - a = 2k = 10 bulunur.",
       "imageUrl": null,
       "options": [
         "8",
@@ -74,7 +79,8 @@
     {
       "externalId": "TYT-MAT-E-006",
       "subTopic": "Yüzde Problemleri",
-      "text": "$$240$$ sayısının $$\\%25$$'i kaçtır?",
+      "text": "240 sayısının %25'i kaçtır?",
+      "explanation": "240 · (25 / 100) = 240 / 4 = 60 olur.",
       "imageUrl": null,
       "options": [
         "45",
@@ -83,6 +89,62 @@
         "75"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-E-007",
+      "subTopic": "Sayı Basamakları",
+      "text": "Rakamları birbirinden farklı üç basamaklı en küçük doğal sayı ile iki basamaklı en büyük doğal sayının toplamı kaçtır?",
+      "explanation": "Rakamları farklı üç basamaklı en küçük doğal sayı 102, iki basamaklı en büyük doğal sayı 99 olup toplamları 102 + 99 = 201 olur.",
+      "imageUrl": null,
+      "options": [
+        "199",
+        "200",
+        "201",
+        "211"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-E-008",
+      "subTopic": "Basit Eşitsizlikler",
+      "text": "2x - 5 < 9 eşitsizliğini sağlayan en büyük x tam sayısı kaçtır?",
+      "explanation": "2x < 14 ⇒ x < 7 olduğundan en büyük tam sayı 6 olur.",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-E-009",
+      "subTopic": "Sayı Problemleri",
+      "text": "Hangi sayının 4 katının 6 eksiği 30 eder?",
+      "explanation": "4x - 6 = 30 ⇒ 4x = 36 ⇒ x = 9 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-E-010",
+      "subTopic": "Üçgende Açılar",
+      "text": "Bir üçgenin iç açıları 2, 3 ve 4 sayılarıyla doğru orantılı olduğuna göre en küçük iç açısı kaç derecedir?",
+      "explanation": "2k + 3k + 4k = 180° ⇒ 9k = 180° ⇒ k = 20°. En küçük açı 2k = 40° olur.",
+      "imageUrl": null,
+      "options": [
+        "30",
+        "40",
+        "50",
+        "60"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

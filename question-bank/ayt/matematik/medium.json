@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-MAT-M-001",
       "subTopic": "Parabol",
-      "text": "$$f(x) = x^2 - 6x + 13$$ parabolünün tepe noktasının ordinatı ($$k$$ değeri) kaçtır?",
+      "text": "f(x) = x² - 6x + 13 parabolünün tepe noktasının ordinatı (k değeri) kaçtır?",
+      "explanation": "r = -(-6) / 2 = 3. k = f(3) = 9 - 18 + 13 = 4 bulunur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -22,12 +23,13 @@
     {
       "externalId": "AYT-MAT-M-002",
       "subTopic": "Logaritma Denklemleri",
-      "text": "$$\\log_3(x - 1) + \\log_3(x + 1) = 1$$ denklemini sağlayan pozitif $$x$$ değeri kaçtır?",
+      "text": "log₃(x - 1) + log₃(x + 1) = 1 denklemini sağlayan pozitif x değeri kaçtır?",
+      "explanation": "log₃(x² - 1) = 1 ⇒ x² - 1 = 3 ⇒ x² = 4 ⇒ x = 2 bulunur.",
       "imageUrl": null,
       "options": [
-        "$$\\sqrt{2}$$",
+        "√2",
         "2",
-        "$$\\sqrt{5}$$",
+        "√5",
         "3"
       ],
       "correctOptionIndex": 1
@@ -35,7 +37,8 @@
     {
       "externalId": "AYT-MAT-M-003",
       "subTopic": "Geometrik Dizi",
-      "text": "İlk terimi $$a_1 = 3$$ ve ortak çarpanı $$r = 2$$ olan pozitif terimli bir geometrik dizinin $$5.$$ terimi kaçtır?",
+      "text": "İlk terimi a₁ = 3 ve ortak çarpanı r = 2 olan pozitif terimli bir geometrik dizinin 5. terimi kaçtır?",
+      "explanation": "a₅ = a₁ · r⁴ = 3 · 2⁴ = 3 · 16 = 48 olur.",
       "imageUrl": null,
       "options": [
         "24",
@@ -48,20 +51,22 @@
     {
       "externalId": "AYT-MAT-M-004",
       "subTopic": "Trigonometrik Özdeşlikler",
-      "text": "$$0 < x < \\frac{\\pi}{2}$$ olmak üzere $$\\sin(x) = \\frac{3}{5}$$ ise $$\\sin(2x)$$ değeri kaçtır?",
+      "text": "0 < x < π/2 olmak üzere sin(x) = 3/5 ise sin(2x) değeri kaçtır?",
+      "explanation": "sin(x) = 3/5 ise cos(x) = 4/5 olur. sin(2x) = 2·sin(x)·cos(x) = 2 · (3/5) · (4/5) = 24/25 bulunur.",
       "imageUrl": null,
       "options": [
-        "$$\\frac{12}{25}$$",
-        "$$\\frac{18}{25}$$",
-        "$$\\frac{24}{25}$$",
-        "$$\\frac{4}{5}$$"
+        "12/25",
+        "18/25",
+        "24/25",
+        "4/5"
       ],
       "correctOptionIndex": 2
     },
     {
       "externalId": "AYT-MAT-M-005",
       "subTopic": "Türev - Teğet Denklemi",
-      "text": "$$f(x) = x^2 + 3x - 1$$ eğrisine $$x = 2$$ apsisli noktasından çizilen teğetin eğimi kaçtır?",
+      "text": "f(x) = x² + 3x - 1 eğrisine x = 2 apsisli noktasından çizilen teğetin eğimi kaçtır?",
+      "explanation": "f'(x) = 2x + 3 ⇒ m = f'(2) = 2(2) + 3 = 7 bulunur.",
       "imageUrl": null,
       "options": [
         "5",
@@ -74,7 +79,8 @@
     {
       "externalId": "AYT-MAT-M-006",
       "subTopic": "Belirsiz İntegral",
-      "text": "$$f'(x) = 6x^2 - 4x + 3$$ ve $$f(1) = 7$$ olduğuna göre $$f(2)$$ kaçtır?",
+      "text": "f'(x) = 6x² - 4x + 3 ve f(1) = 7 olduğuna göre f(2) kaçtır?",
+      "explanation": "f(x) = 2x³ - 2x² + 3x + c. f(1) = 3 + c = 7 ⇒ c = 4. f(2) = 16 - 8 + 6 + 4 = 18 bulunur.",
       "imageUrl": null,
       "options": [
         "14",
@@ -83,6 +89,62 @@
         "20"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-MAT-M-007",
+      "subTopic": "İkinci Dereceden Eşitsizlikler",
+      "text": "x² - 5x - 6 < 0 eşitsizliğini sağlayan kaç farklı x tam sayısı vardır?",
+      "explanation": "(x - 6)(x + 1) < 0 ⇒ -1 < x < 6 aralığında 0, 1, 2, 3, 4, 5 olmak üzere 6 tam sayı vardır.",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-M-008",
+      "subTopic": "Çemberin Analitik İncelenmesi",
+      "text": "Denklemi (x - 3)² + (y + 4)² = 25 olan çemberin merkezinin orijine olan uzaklığı kaç birimdir?",
+      "explanation": "Merkez M(3, -4) noktasının orijine uzaklığı √(3² + (-4)²) = 5 birimdir.",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "4",
+        "5",
+        "7"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-MAT-M-009",
+      "subTopic": "Bileşke Fonksiyon Türevi",
+      "text": "f(x) = x² + 1 ve g(x) = 3x - 2 olduğuna göre (f ∘ g)'(1) değeri kaçtır?",
+      "explanation": "(f ∘ g)'(1) = f'(g(1)) · g'(1). g(1) = 1, f'(x) = 2x ⇒ f'(1) = 2 ve g'(1) = 3 olduğundan 2 · 3 = 6 olur.",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "6",
+        "9",
+        "12"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-M-010",
+      "subTopic": "Kosinüs Teoremi",
+      "text": "Bir ABC üçgeninde |AB| = 5 cm, |AC| = 8 cm ve m(A) = 60° olduğuna göre |BC| kaç cm olur? (cos 60° = 1/2)",
+      "explanation": "|BC|² = 5² + 8² - 2·5·8·cos(60°) = 25 + 64 - 40 = 49 ⇒ |BC| = 7 cm bulunur.",
+      "imageUrl": null,
+      "options": [
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

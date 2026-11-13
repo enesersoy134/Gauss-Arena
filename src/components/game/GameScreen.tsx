@@ -16,6 +16,8 @@ export type GameState = 'playing' | 'intermission' | 'matchEnd';
 export interface GameScreenProps {
   /** Opsiyonel olarak belirli soruları zorunlu koşmak için (örn. Soru Test Menüsü) */
   forcedQuestions?: Question[];
+  /** Aktif oyuncu kimliği (yanlış yapılan soruları revize konularına kaydetmek için) */
+  playerId?: string;
   /** Maç bittiğinde veya lobiye dönmek istendiğinde */
   onExit?: () => void;
 }
@@ -61,6 +63,7 @@ function pickMatchQuestions(pool: Question[], count: number): Question[] {
 
 export const GameScreen: React.FC<GameScreenProps> = ({
   forcedQuestions,
+  playerId,
   onExit
 }) => {
   const { players, matchSettings, questionPool } = BACKEND_GAME_DATA;
@@ -323,6 +326,25 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       setCurrentQuestionIndex(prev => prev + 1);
       setGameState('playing');
     } else {
+      if (playerId) {
+        const mappedHistory = roundResultsHistory.map(({ question, result }, idx) => ({
+          questionIndex: idx,
+          externalId: question.id,
+          subject: question.subject,
+          subTopic: question.topic,
+          difficulty: question.difficulty.toUpperCase(),
+          text: question.prompt,
+          explanation: question.explanation || null,
+          interactiveQuestion: question,
+          answerA: { isCorrect: result.player1Correct, score: result.player1Points },
+          answerB: { isCorrect: result.player2Correct, score: result.player2Points },
+        }));
+        fetch('/api/revision/record-local', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ playerId, roundHistory: mappedHistory, examType: 'TYT' }),
+        }).catch(() => {});
+      }
       setGameState('matchEnd');
     }
   };

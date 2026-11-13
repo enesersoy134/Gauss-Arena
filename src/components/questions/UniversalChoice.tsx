@@ -21,7 +21,9 @@ export default function UniversalChoice({
     setSelectedOriginalIndex(null);
   }, [question.id]);
 
-  // Şıkları hazırla ve gerekirse karıştır
+  const optionsKey = (payload.options || []).join('\u0000');
+
+  // Şıkları hazırla ve gerekirse karıştır (socket state güncellemelerinde yeniden karışmasını önlemek için optionsKey kullanılır)
   const displayItems = useMemo<OptionItem[]>(() => {
     const raw: OptionItem[] = (payload.options || []).map((text, idx) => ({
       text,
@@ -38,7 +40,8 @@ export default function UniversalChoice({
       return shuffled;
     }
     return raw;
-  }, [question.id, payload.options, payload.shuffleOptions, payload.variant]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question.id, optionsKey, payload.shuffleOptions, payload.variant]);
 
   const handleSelect = (originalIndex: number) => {
     if (disabled || selectedOriginalIndex !== null) return;

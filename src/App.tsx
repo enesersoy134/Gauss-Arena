@@ -4,6 +4,7 @@ import {
 } from './services/backendSocket';
 import { BACKEND_GAME_DATA } from './data/backendMockData';
 import { Question } from './types/game';
+import { getRecommendationsForTopic } from './utils/resourceRecommendations';
 import LiveDuelScreen from './components/game/LiveDuelScreen';
 import GameScreen from './components/game/GameScreen';
 import {
@@ -23,9 +24,11 @@ import {
   Tag,
   Shield,
   Check,
+  BookOpen,
+  AlertTriangle,
 } from 'lucide-react';
 
-type ActiveTab = 'matchmaking' | 'economy' | 'tournaments';
+type ActiveTab = 'matchmaking' | 'economy' | 'tournaments' | 'revision';
 
 export default function App() {
   const {
@@ -54,15 +57,17 @@ export default function App() {
     distributeTournamentRewards,
     updatePlayerDemo,
     resetDemo,
+    clearRevisionTopic,
   } = useBackendGame();
 
   // Sekme yönetimi
   const [activeTab, setActiveTab] = useState<ActiveTab>('matchmaking');
+  const [revisionSubjectFilter, setRevisionSubjectFilter] = useState<string>('all');
 
   // Geliştirici Soru Test Menüsü (Local Simulation)
   const [forcedQuestions, setForcedQuestions] = useState<Question[] | undefined>(undefined);
   const [showDevMenu, setShowDevMenu] = useState<boolean>(false);
-  const [devSubjectFilter, setDevSubjectFilter] = useState<'all' | 'fizik' | 'kimya' | 'biyoloji' | 'matematik'>('all');
+  const [devSubjectFilter, setDevSubjectFilter] = useState<'all' | 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce'>('all');
 
   // Eşleştirme Formu Ayarları
   const [selectedExamType, setSelectedExamType] = useState<'TYT' | 'AYT'>('TYT');
@@ -104,6 +109,7 @@ export default function App() {
     return (
       <GameScreen
         forcedQuestions={forcedQuestions}
+        playerId={currentPlayerId}
         onExit={() => setForcedQuestions(undefined)}
       />
     );
@@ -323,6 +329,27 @@ export default function App() {
               ({backendState.tournaments.length} Aktif)
             </span>
           </button>
+
+          <button
+            onClick={() => setActiveTab('revision')}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-poppins font-bold flex items-center gap-2 transition-all ${
+              activeTab === 'revision'
+                ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
+                : 'bg-transparent text-[#B5CBC8] hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Revize Konularım</span>
+            <span
+              className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                (currentPlayer.revisionTopics?.length || 0) > 0
+                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                  : 'opacity-80'
+              }`}
+            >
+              {currentPlayer.revisionTopics?.length || 0} Başlık
+            </span>
+          </button>
         </div>
       </header>
 
@@ -411,6 +438,44 @@ export default function App() {
                     ✏️ ELO/Seri Değiştir
                   </button>
                 </div>
+
+                {/* Oyuncunun Pekiştiremediği Konu Başlıkları Hızlı Erişim Bandı */}
+                {currentPlayer.revisionTopics && currentPlayer.revisionTopics.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-2">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <span className="text-xs font-poppins font-bold text-amber-300 flex items-center gap-1.5">
+                        <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Revize Edilmesi Gereken Konu Başlıkların ({currentPlayer.revisionTopics.length}):</span>
+                      </span>
+                      <button
+                        onClick={() => setActiveTab('revision')}
+                        className="text-[11px] font-mono font-semibold text-[#F14E13] hover:underline"
+                      >
+                        Tüm Yanlış Soruları & Çözümleri Gör →
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {currentPlayer.revisionTopics.map((rev) => (
+                        <button
+                          key={`${rev.subject}-${rev.topic}`}
+                          onClick={() => {
+                            setRevisionSubjectFilter(rev.subject);
+                            setActiveTab('revision');
+                          }}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-medium bg-amber-500/10 border border-amber-500/30 text-amber-200 hover:border-[#F14E13] transition-all"
+                        >
+                          <span className="uppercase font-mono text-[10px] text-[#F14E13] font-bold">
+                            {rev.subject}:
+                          </span>
+                          <span>{rev.topic}</span>
+                          <span className="px-1.5 py-0.2 rounded bg-red-500/20 text-red-300 font-mono text-[10px] font-bold">
+                            {rev.mistakeCount}✗
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Eşleştirme Ayarları ve Kuyruk Butonları */}
@@ -979,6 +1044,222 @@ export default function App() {
             ))}
           </div>
         )}
+
+        {/* =========================================================================
+         * SEKME 4: REVİZE EDİLMESİ GEREKEN KONULAR (PEKİŞTİRİLEMEYEN BAŞLIKLAR)
+         * ========================================================================= */}
+        {activeTab === 'revision' && (
+          <div className="flex flex-col gap-6">
+            {/* Üst Bilgi ve Konu Başlıkları Özeti */}
+            <div className="game-card p-6 border-amber-500/35 flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h2 className="font-poppins font-bold text-lg text-white flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-[#F14E13]" />
+                    <span>Revize Edilmesi Gereken Konular & Yanlış Yapılan Sorular</span>
+                  </h2>
+                  <p className="text-xs text-[#B5CBC8] mt-1">
+                    Düellolarda ve soru testlerinde yanlış yanıtladığın sorular otomatik olarak ayırt edilir ve pekiştirmen gereken konu başlıkları altında toplanır.
+                  </p>
+                </div>
+
+                {currentPlayer.revisionTopics && currentPlayer.revisionTopics.length > 0 && (
+                  <button
+                    onClick={async () => {
+                      await clearRevisionTopic(undefined, currentPlayerId);
+                      showToast('Tüm konu başlıkları pekiştirildi olarak işaretlendi!');
+                    }}
+                    className="shrink-0 text-xs font-mono px-3.5 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition-all"
+                  >
+                    ✓ Tümünü Pekiştirildi İşaretle
+                  </button>
+                )}
+              </div>
+
+              {/* Pekiştirilemeyen Konu Başlıkları Etiket Bulutu */}
+              {currentPlayer.revisionTopics && currentPlayer.revisionTopics.length > 0 && (
+                <div className="bg-[#0F0510] p-4 rounded-xl border border-white/10 flex flex-col gap-2.5">
+                  <div className="text-xs font-mono uppercase tracking-wider text-amber-300 font-semibold">
+                    📌 Pekiştirilemeyen Konu Başlıkları ({currentPlayer.revisionTopics.length} Başlık):
+                  </div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {currentPlayer.revisionTopics.map((rev) => (
+                      <button
+                        key={`tag-${rev.subject}-${rev.topic}`}
+                        onClick={() => setRevisionSubjectFilter(rev.subject)}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-poppins font-semibold bg-amber-500/15 text-white border border-amber-500/35 hover:border-[#F14E13] transition-all"
+                      >
+                        <span className="uppercase font-mono text-[10px] text-[#F14E13] font-bold">
+                          {rev.subject}
+                        </span>
+                        <span>•</span>
+                        <span>{rev.topic}</span>
+                        <span className="px-1.5 py-0.5 rounded-full bg-red-500/25 text-red-300 font-mono text-[10px]">
+                          {rev.mistakeCount} hata
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Ders Filtreleri */}
+              <div className="flex items-center gap-2 flex-wrap pt-1">
+                {[
+                  { id: 'all', label: 'TÜM DERSLER' },
+                  { id: 'matematik', label: 'MATEMATİK' },
+                  { id: 'fizik', label: 'FİZİK' },
+                  { id: 'kimya', label: 'KİMYA' },
+                  { id: 'biyoloji', label: 'BİYOLOJİ' },
+                  { id: 'turkce', label: 'TÜRKÇE' },
+                ].map((sub) => (
+                  <button
+                    key={sub.id}
+                    onClick={() => setRevisionSubjectFilter(sub.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
+                      revisionSubjectFilter === sub.id
+                        ? 'bg-[#F14E13] text-white'
+                        : 'bg-[#0F0510] text-[#B5CBC8] border border-white/10 hover:text-white'
+                    }`}
+                  >
+                    {sub.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Konu Kartları ve Yanlış Yapılan Sorular */}
+            {!currentPlayer.revisionTopics || currentPlayer.revisionTopics.length === 0 ? (
+              <div className="game-card p-10 text-center flex flex-col items-center gap-3 border-emerald-500/30">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                  <Check className="w-6 h-6" />
+                </div>
+                <h3 className="font-poppins font-bold text-base text-white">
+                  Şu Anda Revize Edilmesi Gereken Konu Başlığı Yok!
+                </h3>
+                <p className="text-xs text-[#B5CBC8] max-w-md">
+                  1v1 Düellolarda veya Soru Test Menüsünde yanlış yaptığın sorular otomatik olarak burada ilgili konu başlığı altında listelenir.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {currentPlayer.revisionTopics
+                  .filter((rev) => revisionSubjectFilter === 'all' || rev.subject === revisionSubjectFilter)
+                  .map((rev) => (
+                    <div
+                      key={`card-${rev.subject}-${rev.topic}`}
+                      className="game-card p-5 border-amber-500/30 flex flex-col justify-between gap-4"
+                    >
+                      <div className="flex flex-col gap-3">
+                        {/* Konu Başlığı Üst Satırı */}
+                        <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#F14E13]/20 text-[#F14E13] border border-[#F14E13]/30">
+                                {rev.subject}
+                              </span>
+                              <span className="px-2 py-0.5 rounded text-[10px] font-mono text-[#B5CBC8] bg-white/5">
+                                {rev.examType}
+                              </span>
+                            </div>
+                            <h3 className="font-poppins font-bold text-base text-amber-300 mt-1.5">
+                              {rev.topic}
+                            </h3>
+                          </div>
+
+                          <span className="px-2.5 py-1 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 font-mono text-xs font-bold shrink-0">
+                            {rev.mistakeCount} Yanlış
+                          </span>
+                        </div>
+
+                        {/* Bu Konu Başlığı Altında Yanlış Yapılan Sorular */}
+                        <div className="flex flex-col gap-2.5 max-h-64 overflow-y-auto pr-1">
+                          {rev.wrongQuestions.map((wq) => (
+                            <div
+                              key={wq.externalId}
+                              className="p-3 rounded-xl bg-[#0F0510] border border-white/10 text-xs flex flex-col gap-1.5"
+                            >
+                              <div className="text-white font-medium leading-relaxed">
+                                <span className="text-red-400 font-mono font-bold mr-1.5">✗ Soru:</span>
+                                {wq.text}
+                              </div>
+                              {wq.explanation && (
+                                <div className="text-[11px] text-[#B5CBC8] leading-relaxed pt-1.5 border-t border-white/5">
+                                  <span className="text-emerald-400 font-semibold mr-1">💡 Çözüm:</span>
+                                  {wq.explanation}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Bu Konu İçin Kaynak Önerileri (kaynak-onerileri.json) */}
+                        {(() => {
+                          const recs =
+                            rev.recommendedResources && rev.recommendedResources.length > 0
+                              ? rev.recommendedResources
+                              : getRecommendationsForTopic(rev.subject, rev.topic, rev.examType);
+                          if (!recs || recs.length === 0) return null;
+                          return (
+                            <div className="pt-2.5 border-t border-amber-500/20 flex flex-col gap-2">
+                              <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-amber-300 uppercase tracking-wider">
+                                <BookOpen className="w-3.5 h-3.5 text-[#F14E13]" />
+                                <span>Önerilen Kaynak & Çalışma Rehberi:</span>
+                              </div>
+                              {recs.map((rec) => (
+                                <div
+                                  key={rec.id}
+                                  className="p-3 rounded-xl bg-[#0F0510] border border-[#F14E13]/30 text-xs flex flex-col gap-1"
+                                >
+                                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                                    <span className="font-poppins font-bold text-white">{rec.bookTitle}</span>
+                                    <span className="px-2 py-0.5 rounded bg-[#F14E13]/20 text-[#F14E13] font-mono text-[10px] font-semibold">
+                                      {rec.publisher} • {rec.level}
+                                    </span>
+                                  </div>
+                                  <div className="text-[11px] text-amber-200/90 font-medium">
+                                    📖 Bölüm: {rec.recommendedSection}
+                                  </div>
+                                  <div className="text-[11px] text-[#B5CBC8] leading-relaxed">
+                                    🎯 Tavsiye: {rec.studyTip}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })()}
+                      </div>
+
+                      {/* Aksiyonlar: Bu Derste Pratik Yap / Pekiştirildi İşaretle */}
+                      <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+                        <button
+                          onClick={() => {
+                            setSelectedSubjects([rev.subject]);
+                            setActiveTab('matchmaking');
+                            showToast(`${rev.topic} (${rev.subject.toUpperCase()}) pekiştirmesi için ders seçildi!`);
+                          }}
+                          className="btn-primary flex-1 py-2 px-3 text-xs font-bold flex items-center justify-center gap-1.5"
+                        >
+                          <Swords className="w-3.5 h-3.5" />
+                          <span>Bu Derste Düelloya Gir</span>
+                        </button>
+
+                        <button
+                          onClick={async () => {
+                            await clearRevisionTopic(rev.topic, currentPlayerId);
+                            showToast(`"${rev.topic}" konusu pekiştirildi olarak işaretlendi!`);
+                          }}
+                          className="px-3 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-all"
+                        >
+                          ✓ Pekiştirildi
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        )}
       </main>
 
       {/* =========================================================================
@@ -1042,7 +1323,7 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <Code2 className="w-5 h-5 text-[#F14E13]" />
                 <h3 className="font-poppins font-bold text-base text-white">
-                  Soru Test Menüsü (14 İnteraktif Soru Tipi • 18 Soru)
+                  Soru Test Menüsü (14 İnteraktif Soru Tipi • {BACKEND_GAME_DATA.questionPool.length} Soru)
                 </h3>
               </div>
               <button
@@ -1055,7 +1336,7 @@ export default function App() {
 
             {/* Ders Filtreleri */}
             <div className="flex items-center gap-2 flex-wrap">
-              {(['all', 'fizik', 'kimya', 'biyoloji', 'matematik'] as const).map((sub) => (
+              {(['all', 'fizik', 'kimya', 'biyoloji', 'matematik', 'turkce'] as const).map((sub) => (
                 <button
                   key={sub}
                   onClick={() => setDevSubjectFilter(sub)}

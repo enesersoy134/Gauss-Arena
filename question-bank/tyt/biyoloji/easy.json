@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "biyoloji",
+    "difficulty": "EASY",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-BIY-E-001",
+      "subTopic": "Canlıların Ortak Özellikleri",
+      "text": "Bütün canlı hücrelerde protein sentezinin gerçekleştiği zarsız organel aşağıdakilerden hangisidir?",
+      "explanation": "Ribozom hem prokaryot hem ökaryot tüm canlı hücrelerde bulunan evrensel zarsız organeldir.",
+      "imageUrl": null,
+      "options": [
+        "Mitokondri",
+        "Ribozom",
+        "Golgi cisimciği",
+        "Lizozom"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-E-002",
+      "subTopic": "İnorganik ve Organik Bileşikler",
+      "text": "İnsan vücudunda temel enerji kaynağı olarak ilk sırada kullanılan organik besin grubu hangisidir?",
+      "explanation": "Hücresel solunumda yıkımı en kolay olduğu için karbonhidratlar 1. sırada enerji verici olarak kullanılır.",
+      "imageUrl": null,
+      "options": [
+        "Proteinler",
+        "Yağlar",
+        "Karbonhidratlar",
+        "Vitaminler"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-BIY-E-003",
+      "subTopic": "Hücre Organelleri",
+      "text": "Ökaryot hücrelerde oksijenli solunum yaparak ATP üreten çift zarlı organel hangisidir?",
+      "explanation": "Mitokondri hücrenin enerji santralidir ve oksijenli solunumla ATP sentezler.",
+      "imageUrl": null,
+      "options": [
+        "Sentrozom",
+        "Mitokondri",
+        "Koful",
+        "Endoplazmik retikulum"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-E-004",
+      "subTopic": "Hücre Bölünmeleri",
+      "text": "Vücut (soma) hücrelerinde görülen ve kalıtsal çeşitlilik sağlamayan hücre bölünmesi çeşidi hangisidir?",
+      "explanation": "Mitoz bölünmede kromozom sayısı ve genetik yapı korunur; 2 özdeş hücre oluşur.",
+      "imageUrl": null,
+      "options": [
+        "Mayoz",
+        "Mitoz",
+        "Döllenme",
+        "Konjugasyon"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-E-005",
+      "subTopic": "Canlıların Sınıflandırılması",
+      "text": "Bakteriler ve arkeler hücre yapısına göre hangi canlı grubuna dahildir?",
+      "explanation": "Bakteri ve arkelerin zarlı çekirdeği ve zarlı organelleri yoktur; prokaryot hücre yapısına sahiptir.",
+      "imageUrl": null,
+      "options": [
+        "Ökaryot",
+        "Prokaryot",
+        "Çok hücreli",
+        "Omurgalı"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-E-006",
+      "subTopic": "Ekosistem Ekolojisi",
+      "text": "Besin zincirinin ilk basamağında (üretici basamağında) aşağıdaki canlılardan hangisi yer alır?",
+      "explanation": "Fotosentez veya kemosentez yapan ototrof (üretici) canlılar besin piramidinin en alt basamağındadır.",
+      "imageUrl": null,
+      "options": [
+        "Otçul hayvanlar",
+        "Yeşil bitkiler ve algler",
+        "Ayrıştırıcı mantarlar",
+        "Etçil hayvanlar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-E-007",
+      "subTopic": "Nükleik Asitler",
+      "text": "DNA molekülünde Adenin (A) organik bazının karşısına daima hangi baz gelir?",
+      "explanation": "DNA çift sarmalında Adenin ile Timin ikili, Guanin ile Sitozin üçlü zayıf hidrojen bağı kurar.",
+      "imageUrl": null,
+      "options": [
+        "Urasil (U)",
+        "Sitozin (C)",
+        "Guanin (G)",
+        "Timin (T)"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "TYT-BIY-E-008",
+      "subTopic": "Enzimler",
+      "text": "Biyolojik katalizör olan bileşik enzimlerin protein kısmına ne ad verilir?",
+      "explanation": "Bileşik (holo) enzimlerin protein kısmına apoenzim, yardımcı kısmına koenzim veya kofaktör denir.",
+      "imageUrl": null,
+      "options": [
+        "Apoenzim",
+        "Koenzim",
+        "Kofaktör",
+        "Substrat"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-BIY-E-009",
+      "subTopic": "Hücre Zarı",
+      "text": "Akıcı-mozaik zar modeline göre hücre zarının temel çatısını oluşturan çift katlı molekül hangisidir?",
+      "explanation": "Hücre zarının temel yapısını çift sıralı fosfolipit tabakası ve aralarına gömülü proteinler oluşturur.",
+      "imageUrl": null,
+      "options": [
+        "Selüloz",
+        "Fosfolipit",
+        "Nişasta",
+        "Glikojen"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-E-010",
+      "subTopic": "Kalıtım",
+      "text": "Bir karakter bakımından homozigot baskın (AA) ile homozigot çekinik (aa) iki bireyin çaprazlanmasından oluşan F₁ dölünün genotipi nedir?",
+      "explanation": "AA × aa çaprazlamasından oluşan tüm bireyler %100 heterozigot baskın (Aa) olur.",
+      "imageUrl": null,
+      "options": [
+        "%100 AA",
+        "%100 Aa",
+        "%50 AA, %50 aa",
+        "%100 aa"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

@@ -27,10 +27,13 @@ export default function PairMatching({
   const pairs = payload.pairs || [];
   const totalCount = pairs.length;
 
-  // Sol ve Sağ elemanları hazırla (Sağ sütun karıştırılır)
+  const pairsKey = pairs.map((p) => `${p.pairId}:${p.leftText}:${p.rightText}`).join('\u0000');
+
+  // Sol ve Sağ elemanları hazırla (Sağ sütun yalnızca soru ilk yüklendiğinde karıştırılır)
   const leftItems = useMemo(() => {
     return pairs.map((p) => ({ id: p.pairId, text: p.leftText }));
-  }, [pairs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question.id, pairsKey]);
 
   const rightItems = useMemo(() => {
     const raw = pairs.map((p) => ({ id: p.pairId, text: p.rightText }));
@@ -40,7 +43,8 @@ export default function PairMatching({
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
-  }, [question.id, pairs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question.id, pairsKey]);
 
   // Durumlar
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null);

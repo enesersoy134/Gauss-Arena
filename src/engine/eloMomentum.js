@@ -2,22 +2,20 @@ function round2(val) {
   return Math.round(val * 100) / 100;
 }
 
-function round1(val) {
-  return Math.round(val * 10) / 10;
-}
-
 /**
  * MMR_eff = R_mevcut + sgn(S) * alpha * (max(0, |S| - 2))^beta
+ * Küsürat yerine tam sayıya yuvarlanarak hesaplanır.
  */
 function calculateEffectiveMMR(realElo, streak = 0, alpha = 35, beta = 1.2) {
+  const baseElo = Math.round(Number(realElo) || 1200);
   const s = Number(streak) || 0;
   const absExcess = Math.max(0, Math.abs(s) - 2);
   if (absExcess === 0) {
-    return round2(realElo);
+    return baseElo;
   }
   const sign = Math.sign(s);
   const momentumOffset = sign * alpha * Math.pow(absExcess, beta);
-  return round2(realElo + momentumOffset);
+  return Math.round(baseElo + momentumOffset);
 }
 
 /**
@@ -45,8 +43,8 @@ function updateStreak(currentStreak = 0, outcome) {
  * Post-match ELO update using REAL ELO (R_A, R_B), with Anti-Farming dampening when |R_A - R_B| > 250.
  */
 function calculateMatchEloUpdate(playerA, playerB, outcomeA, K = 32) {
-  const eloA = Number(playerA.elo);
-  const eloB = Number(playerB.elo);
+  const eloA = Math.round(Number(playerA.elo) || 1200);
+  const eloB = Math.round(Number(playerB.elo) || 1200);
   const streakA = Number(playerA.streak) || 0;
   const streakB = Number(playerB.streak) || 0;
 
@@ -81,10 +79,10 @@ function calculateMatchEloUpdate(playerA, playerB, outcomeA, K = 32) {
     rawDeltaA = Math.max(rawDeltaA, -cap);
   }
 
-  const deltaA = round1(rawDeltaA);
-  const deltaB = round1(rawDeltaB);
-  const newEloA = round1(Math.max(100, eloA + deltaA));
-  const newEloB = round1(Math.max(100, eloB + deltaB));
+  const deltaA = Math.round(rawDeltaA);
+  const deltaB = Math.round(rawDeltaB);
+  const newEloA = Math.max(100, Math.round(eloA + deltaA));
+  const newEloB = Math.max(100, Math.round(eloB + deltaB));
 
   return {
     newEloA,

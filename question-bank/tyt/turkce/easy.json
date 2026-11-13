@@ -10,6 +10,7 @@
       "externalId": "TYT-TUR-E-001",
       "subTopic": "Sözcükte Anlam",
       "text": "\"Keskin\" sözcüğü aşağıdaki cümlelerin hangisinde mecaz anlamda kullanılmıştır?",
+      "explanation": "\"Keskin zekâ\" ifadesinde sözcük gerçek kesicilik anlamından uzaklaşarak \"kıvrak, güçlü\" mecaz anlamında kullanılmıştır.",
       "imageUrl": null,
       "options": [
         "Bıçağın keskin tarafına dikkat et.",
@@ -23,6 +24,7 @@
       "externalId": "TYT-TUR-E-002",
       "subTopic": "Yazım Kuralları",
       "text": "Aşağıdaki cümlelerin hangisinde \"de / da\" bağlacının yazımıyla ilgili bir yanlışlık yapılmıştır?",
+      "explanation": "\"Ahmet de\" bağlaç olduğu için ayrı yazılmalı ve benzeşmeye uğramamalıdır.",
       "imageUrl": null,
       "options": [
         "Sen de bizimle sinemaya gelecek misin?",
@@ -36,6 +38,7 @@
       "externalId": "TYT-TUR-E-003",
       "subTopic": "Noktalama İşaretleri",
       "text": "Tamamlanmış cümlelerin sonuna aşağıdaki noktalama işaretlerinden hangisi konur?",
+      "explanation": "Yüklemi bulunan ve yargısı tamamlanmış cümlelerin sonuna nokta konur.",
       "imageUrl": null,
       "options": [
         "Virgül",
@@ -49,6 +52,7 @@
       "externalId": "TYT-TUR-E-004",
       "subTopic": "Cümlede Anlam",
       "text": "Aşağıdaki cümlelerin hangisinde \"neden-sonuç\" ilişkisi vardır?",
+      "explanation": "Maçın ertelenmesinin gerçekleşmiş nedeni yağmurun şiddetli yağmasıdır (neden-sonuç).",
       "imageUrl": null,
       "options": [
         "Sınavı kazanmak için gece gündüz çalıştı.",
@@ -62,6 +66,7 @@
       "externalId": "TYT-TUR-E-005",
       "subTopic": "Sözcük Türleri",
       "text": "\"Hızlı tren istasyona zamanında ulaştı.\" cümlesinde \"hızlı\" sözcüğünün türü nedir?",
+      "explanation": "\"Tren\" ismini nitelediği için \"hızlı\" sözcüğü niteleme sıfatıdır.",
       "imageUrl": null,
       "options": [
         "İsim",
@@ -75,12 +80,69 @@
       "externalId": "TYT-TUR-E-006",
       "subTopic": "Ses Bilgisi",
       "text": "Aşağıdaki sözcüklerin hangisinde ünlü düşmesi vardır?",
+      "explanation": "Ağız + ı → ağzı sözcüğünde ikinci hecedeki dar ünlü düşmüştür.",
       "imageUrl": null,
       "options": [
         "Kitapçı",
         "Ağzı",
         "Güzellik",
         "Yolculuk"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-E-007",
+      "subTopic": "Deyimler ve Atasözleri",
+      "text": "\"Çok sevinmek, mutluluktan yerinde duramamak\" anlamına gelen deyim aşağıdakilerden hangisidir?",
+      "explanation": "\"Etekleri zil çalmak\" çok sevinmek anlamında kullanılan bir deyimdir.",
+      "imageUrl": null,
+      "options": [
+        "Burnunda tütmek",
+        "Etekleri zil çalmak",
+        "Gözden düşmek",
+        "Kulak kabartmak"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-E-008",
+      "subTopic": "Cümlede Anlam - Öznel/Nesnel",
+      "text": "Aşağıdaki cümlelerden hangisi kanıtlanabilirlik açısından nesnel bir yargı içerir?",
+      "explanation": "Kitabın bölüm ve sayfa sayısı kişiden kişiye değişmeyen, kanıtlanabilir nesnel bir bilgidir.",
+      "imageUrl": null,
+      "options": [
+        "İstanbul dünyanın en etkileyici şehridir.",
+        "Roman üç bölüm ve 240 sayfadan oluşuyor.",
+        "Şairin son şiiri oldukça duygusaldı.",
+        "Bu film izlediğim en sürükleyici yapımdı."
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-E-009",
+      "subTopic": "Sözcükte Anlam - Terim Anlam",
+      "text": "Aşağıdaki cümlelerin hangisinde \"perde\" sözcüğü tiyatro terimi olarak kullanılmıştır?",
+      "explanation": "Tiyatro eserinin bölümlerinden her birine \"perde\" denir ve terim anlamlıdır.",
+      "imageUrl": null,
+      "options": [
+        "Güneşliği çekip perdeleri kapattı.",
+        "Oyunun ikinci perdesi büyük alkış aldı.",
+        "Gözündeki perde kalkınca gerçeği gördü.",
+        "Kazların ayakları perdeli yapıdadır."
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-E-010",
+      "subTopic": "Yazım Kuralları - \"ki\"nin Yazımı",
+      "text": "Aşağıdaki sözcüklerden hangisinde kalıplaşmış \"ki\" bağlacının yazımı doğrudur?",
+      "explanation": "SOMBAHÇEM kodlamasındaki \"sanki, oysaki, mademki, belki, halbuki, çünkü, eğerki, meğerki\" bitişik yazılır.",
+      "imageUrl": null,
+      "options": [
+        "Halbu ki",
+        "Sanki",
+        "Madem ki",
+        "Oysa ki"
       ],
       "correctOptionIndex": 1
     }

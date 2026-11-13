@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "TYT",
+    "subject": "biyoloji",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "TYT-BIY-M-001",
+      "subTopic": "Madde Geçişleri",
+      "text": "Suyun yarı geçirgen zardan çok yoğun olduğu ortamdan az yoğun olduğu ortama ATP harcanmadan geçişine ne ad verilir?",
+      "explanation": "Suyun seçici geçirgen zardan difüzyonuna osmoz denir ve pasif bir olaydır (ATP harcanmaz).",
+      "imageUrl": null,
+      "options": [
+        "Aktif taşıma",
+        "Osmoz",
+        "Endositoz",
+        "Ekzositoz"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-002",
+      "subTopic": "Polisakkaritler",
+      "text": "Böceklerin dış iskeletinde ve mantarların hücre duvarında bulunan azotlu yapısal polisakkarit hangisidir?",
+      "explanation": "Kitin yapısında azot (N) bulunduran yapısal bir polisakkarittir.",
+      "imageUrl": null,
+      "options": [
+        "Selüloz",
+        "Kitin",
+        "Nişasta",
+        "Glikojen"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-003",
+      "subTopic": "Mayoz Bölünme",
+      "text": "Mayoz bölünmede homolog kromozomlar arasında parça değişimi (krossing-over) hangi evrede gerçekleşir?",
+      "explanation": "Tetrat, sinapsis ve krossing-over olayları Mayoz I evresinin Profaz I aşamasında gerçekleşir.",
+      "imageUrl": null,
+      "options": [
+        "Profaz I",
+        "Metafaz I",
+        "Anafaz I",
+        "Profaz II"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-BIY-M-004",
+      "subTopic": "Kan Grupları Kalıtımı",
+      "text": "Anne A0, baba B0 genotipli olduğunda doğacak çocukların 0 (sıfır) kan gruplu olma olasılığı kaçtır?",
+      "explanation": "A0 × B0 çaprazlamasında AB, A0, B0, 00 genotipleri eşit (1/4) olasılıkla oluşur.",
+      "imageUrl": null,
+      "options": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "3/4"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-005",
+      "subTopic": "Organeller ve Görevleri",
+      "text": "Hücre içi sindirim enzimlerini taşıyan ve yaşlanmış organellerin parçalanmasını (otofaji) sağlayan organel hangisidir?",
+      "explanation": "Lizozom hidrolitik sindirim enzimleri içerir ve hücre içi sindirimden sorumludur.",
+      "imageUrl": null,
+      "options": [
+        "Peroksizom",
+        "Lizozom",
+        "Golgi cisimciği",
+        "Sentrozom"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-006",
+      "subTopic": "Omurgalılar",
+      "text": "Olgunlaşmış alyuvarları çekirdeksiz olan, akciğerlerinde alveol bulunan ve yavrularını sütle besleyen omurgalı sınıfı hangisidir?",
+      "explanation": "Alveollü akciğer, çekirdeksiz olgun alyuvar ve süt bezleri yalnızca memelilere özgüdür.",
+      "imageUrl": null,
+      "options": [
+        "Kuşlar",
+        "Memeliler",
+        "Sürüngenler",
+        "İki yaşamlılar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-007",
+      "subTopic": "Azot Döngüsü",
+      "text": "Topraktaki amonyağın (NH₃) kemosentetik bakteriler tarafından bitkinin kullanabileceği nitrat (NO₃⁻) tuzlarına dönüştürülmesi olayına ne ad verilir?",
+      "explanation": "Nitrit ve nitrat bakterilerinin amonyağı nitrata yükseltgemesine nitrifikasyon denir.",
+      "imageUrl": null,
+      "options": [
+        "Denitrifikasyon",
+        "Nitrifikasyon",
+        "Çürüme (Pütrifikasyon)",
+        "Ötrofikasyon"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-008",
+      "subTopic": "Enzim Aktivitesi",
+      "text": "Yüksek sıcaklıkta (örneğin 60 °C üzerinde) enzimlerin üç boyutlu protein yapısının geri dönüşümsüz olarak bozulmasına ne ad verilir?",
+      "explanation": "Yüksek sıcaklık proteinlerin üç boyutlu yapısını bozar; bu olaya denatürasyon denir.",
+      "imageUrl": null,
+      "options": [
+        "İnhibisyon",
+        "Denatürasyon",
+        "Aktivasyon",
+        "Hidroliz"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-009",
+      "subTopic": "Eşeysiz Üreme",
+      "text": "Bira mayasında ana canlının vücudunda oluşan çıkıntının gelişerek yeni birey oluşturması hangi eşeysiz üreme çeşididir?",
+      "explanation": "Bira mayası ve hidra gibi canlılar tomurcuklanma ile eşeysiz ürer.",
+      "imageUrl": null,
+      "options": [
+        "Bölünerek üreme",
+        "Tomurcuklanma",
+        "Sporla üreme",
+        "Rejenerasyon"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-BIY-M-010",
+      "subTopic": "Vitaminler",
+      "text": "Aşağıdaki vitaminlerden hangisi yağda çözünen ve karaciğerde depolanabilen vitaminlerden biri değildir?",
+      "explanation": "A, D, E, K vitaminleri yağda çözünür; B ve C vitaminleri suda çözünür ve fazlası depolanmaz.",
+      "imageUrl": null,
+      "options": [
+        "A vitamini",
+        "C vitamini",
+        "D vitamini",
+        "K vitamini"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

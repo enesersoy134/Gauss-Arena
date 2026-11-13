@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-MAT-H-001",
       "subTopic": "Türev Uygulamaları",
-      "text": "$$f(x) = x^3 - 6x^2 + 9x + 2$$ fonksiyonunun yerel maksimum noktasının ordinatı ($$y$$ değeri) kaçtır?",
+      "text": "f(x) = x³ - 6x² + 9x + 2 fonksiyonunun yerel maksimum noktasının ordinatı (y değeri) kaçtır?",
+      "explanation": "f'(x) = 3x² - 12x + 9 = 3(x - 1)(x - 3) = 0. x = 1 yerel maksimum apsisidir: f(1) = 1 - 6 + 9 + 2 = 6 olur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -22,7 +23,8 @@
     {
       "externalId": "AYT-MAT-H-002",
       "subTopic": "Belirli İntegral",
-      "text": "$$\\int_{0}^{2} (3x^2 - 2x + 1)\\,dx$$ belirli integralinin değeri kaçtır?",
+      "text": "∫₀² (3x² - 2x + 1) dx belirli integralinin değeri kaçtır?",
+      "explanation": "[x³ - x² + x]₀² = (8 - 4 + 2) - 0 = 6 bulunur.",
       "imageUrl": null,
       "options": [
         "4",
@@ -36,11 +38,12 @@
     {
       "externalId": "AYT-MAT-H-003",
       "subTopic": "İntegralde Alan",
-      "text": "$$y = x^2$$ parabolü ile $$y = 4$$ doğrusu arasında kalan kapalı bölgenin alanı kaç birimkaredir?",
+      "text": "y = x² parabolü ile y = 4 doğrusu arasında kalan kapalı bölgenin alanı kaç birimkaredir?",
+      "explanation": "Kesim noktaları x = -2 ve x = 2. Alan = ∫₋₂² (4 - x²) dx = 2 · (8 - 8/3) = 32/3 birimkaredir.",
       "imageUrl": null,
       "options": [
-        "$$\\frac{16}{3}$$",
-        "$$\\frac{32}{3}$$",
+        "16/3",
+        "32/3",
         "12",
         "16"
       ],
@@ -49,7 +52,8 @@
     {
       "externalId": "AYT-MAT-H-004",
       "subTopic": "Limit ve Süreklilik",
-      "text": "$$\\lim_{x \\to 2} \\frac{x^3 - 8}{x^2 - 4}$$ limitinin değeri kaçtır?",
+      "text": "lim(x → 2) (x³ - 8) / (x² - 4) limitinin değeri kaçtır?",
+      "explanation": "(x - 2)(x² + 2x + 4) / [(x - 2)(x + 2)] sadeleşirse (4 + 4 + 4) / 4 = 12 / 4 = 3 bulunur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -62,7 +66,8 @@
     {
       "externalId": "AYT-MAT-H-005",
       "subTopic": "Maksimum Minimum Problemleri",
-      "text": "Toplamları $$20$$ olan iki pozitif gerçel sayının çarpımının alabileceği en büyük değer kaçtır?",
+      "text": "Toplamları 20 olan iki pozitif gerçel sayının çarpımının alabileceği en büyük değer kaçtır?",
+      "explanation": "P(x) = x(20 - x) = 20x - x² fonksiyonu x = 10 için maksimum değerini alır: 10 · 10 = 100.",
       "imageUrl": null,
       "options": [
         "64",
@@ -75,15 +80,72 @@
     {
       "externalId": "AYT-MAT-H-006",
       "subTopic": "Karmaşık Sayılar",
-      "text": "$$i^2 = -1$$ olmak üzere $$(1 + i)^6$$ ifadesinin eşiti aşağıdakilerden hangisidir?",
+      "text": "i² = -1 olmak üzere (1 + i)⁶ ifadesinin eşiti aşağıdakilerden hangisidir?",
+      "explanation": "(1 + i)² = 2i olduğundan (1 + i)⁶ = (2i)³ = 8i³ = -8i bulunur.",
       "imageUrl": null,
       "options": [
-        "$$-8i$$",
-        "$$8i$$",
-        "$$-8$$",
-        "$$8$$"
+        "-8i",
+        "8i",
+        "-8",
+        "8"
       ],
       "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-MAT-H-007",
+      "subTopic": "Binom Açılımı",
+      "text": "(2x - 1)⁵ ifadesinin açılımında x³ teriminin katsayısı kaçtır?",
+      "explanation": "C(5,2) · (2x)³ · (-1)² = 10 · 8x³ · 1 = 80x³ olduğundan katsayısı 80 olur.",
+      "imageUrl": null,
+      "options": [
+        "-80",
+        "-40",
+        "40",
+        "80"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "AYT-MAT-H-008",
+      "subTopic": "Logaritma Özellikleri",
+      "text": "ln(e⁴) + log₅(1/25) - log(1000) işleminin sonucu kaçtır?",
+      "explanation": "4 + (-2) - 3 = -1 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "-2",
+        "-1",
+        "0",
+        "1"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-H-009",
+      "subTopic": "Trigonometrik Denklemler",
+      "text": "[0, 2π) aralığında 2·cos(x) - 1 = 0 denkleminin kökler toplamı kaç radyandır?",
+      "explanation": "cos(x) = 1/2 ⇒ x₁ = π/3 ve x₂ = 5π/3. Toplamları π/3 + 5π/3 = 2π olur.",
+      "imageUrl": null,
+      "options": [
+        "π",
+        "3π/2",
+        "2π",
+        "5π/3"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-MAT-H-010",
+      "subTopic": "Değişken Değiştirme ile İntegral",
+      "text": "∫₀¹ 8x · (x² + 1)³ dx belirli integralinin değeri kaçtır?",
+      "explanation": "u = x² + 1 ve du = 2x dx dönüşümüyle ∫₁² 4u³ du = [u⁴]₁² = 2⁴ - 1⁴ = 16 - 1 = 15 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "12",
+        "15",
+        "16",
+        "20"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

@@ -2,6 +2,112 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { INTERACTIVE_QUESTIONS } = require('./interactiveQuestionPool');
 
+const SUPERSCRIPT_MAP = {
+  '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+  '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+  '+': '⁺', '-': '⁻', 'n': 'ⁿ', 'x': 'ˣ',
+};
+
+const SUBSCRIPT_MAP = {
+  '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄',
+  '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉',
+  '+': '₊', '-': '₋', 'n': 'ₙ',
+};
+
+function toSuperscript(str) {
+  const chars = [...String(str)];
+  if (chars.every((c) => SUPERSCRIPT_MAP[c])) {
+    return chars.map((c) => SUPERSCRIPT_MAP[c]).join('');
+  }
+  return `^(${str})`;
+}
+
+function toSubscript(str) {
+  const chars = [...String(str)];
+  if (chars.every((c) => SUBSCRIPT_MAP[c])) {
+    return chars.map((c) => SUBSCRIPT_MAP[c]).join('');
+  }
+  return str.length > 1 ? `(${str})` : str;
+}
+
+/**
+ * Normalizes raw LaTeX/escape sequences into clean, human-readable Unicode math/science notation.
+ */
+function formatQuestionText(input) {
+  if (typeof input !== 'string' || !input) return input;
+
+  let s = input;
+
+  // Fix accidental JS escape sequences (\t -> tab before ext{, \f -> form-feed before rac{)
+  s = s.replace(/\text\{/g, '\\text{');
+  s = s.replace(/\frac\{/g, '\\frac{');
+
+  // Remove $$ and $ math mode wrappers
+  s = s.replace(/\$\$/g, '');
+
+  // Clean \text{...} (including nested) AFTER replacing operators that may touch \text
+  s = s
+    .replace(/\\rightarrow|\\to\b/g, '→')
+    .replace(/\\cap\b/g, '∩')
+    .replace(/\\cup\b/g, '∪')
+    .replace(/\\cdot/g, '·')
+    .replace(/\\times/g, '×')
+    .replace(/\\Omega/g, 'Ω')
+    .replace(/\\Delta\s*/g, 'Δ')
+    .replace(/\\pi\b/g, 'π')
+    .replace(/\\omega\b/g, 'ω')
+    .replace(/\\sin\b/g, 'sin')
+    .replace(/\\cos\b/g, 'cos')
+    .replace(/\\tan\b/g, 'tan')
+    .replace(/\\log\b/g, 'log')
+    .replace(/\\%/g, '%')
+    .replace(/\\,/g, ' ');
+
+  for (let i = 0; i < 3; i++) {
+    s = s.replace(/\\text\{([^{}]*)\}/g, '$1');
+  }
+
+  // Handle degrees: ^\circ or ^{\circ}
+  s = s.replace(/\^\{\\circ\}|\^\\circ/g, '°');
+
+  // Handle \lim_{x \to a} and \int_{a}^{b}
+  s = s.replace(/\\lim_\{([^{}]*)\}/g, (_, sub) => {
+    const cleanSub = sub.replace(/\\to|\\rightarrow/g, '→').trim();
+    return `lim(${cleanSub})`;
+  });
+  s = s.replace(/\\int_\{([^{}]*)\}\^\{([^{}]*)\}/g, (_, lower, upper) => {
+    return `∫${toSubscript(lower)}${toSuperscript(upper)}`;
+  });
+
+  // Handle isotope/atomic notation and sub/superscripts BEFORE \frac so inner braces are resolved
+  s = s.replace(/\^\{([^{}]+)\}_\{([^{}]+)\}/g, (_, sup, sub) => `${toSuperscript(sup)}${toSubscript(sub)}`);
+  s = s.replace(/\^\{([^{}]+)\}/g, (_, sup) => toSuperscript(sup));
+  s = s.replace(/\^([0-9+\-n])/g, (_, sup) => toSuperscript(sup));
+  s = s.replace(/_\{([^{}]+)\}/g, (_, sub) => toSubscript(sub));
+  s = s.replace(/_([0-9n])/g, (_, sub) => toSubscript(sub));
+
+  // Handle \frac{a}{b} (up to 2 passes for nested)
+  for (let i = 0; i < 2; i++) {
+    s = s.replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g, (_, num, den) => {
+      const n = num.trim();
+      const d = den.trim();
+      const nWrap = /[+\-]/.test(n) && n.length > 2 ? `(${n})` : n;
+      const dWrap = /[+\-]/.test(d) && d.length > 2 ? `(${d})` : d;
+      return `${nWrap}/${dWrap}`;
+    });
+  }
+
+  // Handle \sqrt{...}
+  s = s.replace(/\\sqrt\{([^{}]*)\}/g, (_, inner) => {
+    const clean = inner.trim();
+    return /[+\-\s]/.test(clean) ? `√(${clean})` : `√${clean}`;
+  });
+
+  // Collapse multiple spaces
+  s = s.replace(/\s{2,}/g, ' ').trim();
+  return s;
+}
+
 /**
  * Loads all JSON files in question-bank/{tyt,ayt}/{subject}/{easy,medium,hard}.json
  * and enriches them with interactiveQuestion objects for QuestionRenderer.
@@ -44,20 +150,24 @@ function loadQuestionBank(baseDir) {
             const questions = Array.isArray(parsed.questions) ? parsed.questions : [];
 
             for (const q of questions) {
+              const cleanText = formatQuestionText(q.text);
+              const cleanOptions = (q.options || []).map((opt) => formatQuestionText(opt));
+              const cleanExplanation = q.explanation ? formatQuestionText(q.explanation) : null;
+
               const normalized = {
                 externalId: q.externalId,
                 examType,
                 subject,
                 difficulty,
                 subTopic: q.subTopic || '',
-                text: q.text,
+                text: cleanText,
                 imageUrl: q.imageUrl || null,
-                options: q.options || [],
+                options: cleanOptions,
                 correctOptionIndex: Number(q.correctOptionIndex),
                 // Spec: 60s (60000ms) duration per question
                 durationMs: 60000,
                 rawDurationMs: q.durationMs || meta.defaultDurationMs || 60000,
-                explanation: q.explanation || null,
+                explanation: cleanExplanation,
                 // Otomatik olarak QuestionRenderer uyumlu interactiveQuestion nesnesi ekle:
                 interactiveQuestion: {
                   id: q.externalId,
@@ -67,12 +177,12 @@ function loadQuestionBank(baseDir) {
                   difficulty: difficulty.toLowerCase() === 'easy' ? 'kolay' : difficulty.toLowerCase() === 'hard' ? 'zor' : 'orta',
                   timeLimitSeconds: Math.round((q.durationMs || 60000) / 1000),
                   points: 100,
-                  prompt: q.text,
-                  explanation: q.explanation || null,
+                  prompt: cleanText,
+                  explanation: cleanExplanation,
                   payload: {
                     variant: 'test',
-                    optionCount: (q.options || []).length,
-                    options: q.options || [],
+                    optionCount: cleanOptions.length,
+                    options: cleanOptions,
                     correctIndex: Number(q.correctOptionIndex),
                     shuffleOptions: false,
                   },
@@ -253,4 +363,5 @@ module.exports = {
   getDifficultyDistribution,
   selectMatchQuestions,
   isRichInteractive,
+  formatQuestionText,
 };

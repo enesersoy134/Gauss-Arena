@@ -9,7 +9,8 @@
     {
       "externalId": "TYT-KIM-H-001",
       "subTopic": "Sınırlayıcı Bileşen",
-      "text": "$$4\\text{ mol } \text{N}_2$$ ve $$6\\text{ mol } \text{H}_2$$ gazları $$\text{N}_2 + 3\text{H}_2 \\rightarrow 2\text{NH}_3$$ denklemine göre tam verimle tepkimeye girdiğinde kaç mol $$\text{NH}_3$$ oluşur?",
+      "text": "4 mol N₂ ve 6 mol H₂ gazları N₂ + 3H₂ → 2NH₃ denklemine göre tam verimle tepkimeye girdiğinde kaç mol NH₃ oluşur?",
+      "explanation": "H₂ sınırlayıcı bileşendir: 6 mol H₂ tamamen harcanırken 2 mol N₂ harcanır ve 4 mol NH₃ oluşur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -23,6 +24,7 @@
       "externalId": "TYT-KIM-H-002",
       "subTopic": "Koligatif Özellikler",
       "text": "Uçucu olmayan bir katının saf suda çözünmesiyle oluşan çözeltinin 1 atm basınçta kaynamaya başlama sıcaklığı ve donmaya başlama sıcaklığı saf suya göre nasıl değişir?",
+      "explanation": "Uçucu olmayan katı çözündüğünde kaynama noktası yükselir (ebüliyoskopi), donma noktası düşer (kriyoskopi).",
       "imageUrl": null,
       "options": [
         "Yükselir - Düşer",
@@ -35,7 +37,8 @@
     {
       "externalId": "TYT-KIM-H-003",
       "subTopic": "Sabit Oranlar Yasası",
-      "text": "$$\text{Fe}_2\text{O}_3$$ bileşiğinde kütlece birleşme oranı $$\frac{m_{\text{Fe}}}{m_{\text{O}}} = \frac{7}{3}$$ olduğuna göre $$21\\text{ g Fe}$$ ile yeterince oksijenin tepkimesinden kaç gram $$\text{Fe}_2\text{O}_3$$ oluşur?",
+      "text": "Fe₂O₃ bileşiğinde kütlece birleşme oranı m(Fe) / m(O) = 7/3 olduğuna göre 21 g Fe ile yeterince oksijenin tepkimesinden kaç gram Fe₂O₃ oluşur?",
+      "explanation": "7 g Fe ile 3 g O birleşip 10 g bileşik oluşturuyorsa, 3 katı olan 21 g Fe ile 9 g O birleşir ve 30 g Fe₂O₃ oluşur.",
       "imageUrl": null,
       "options": [
         "24",
@@ -48,7 +51,8 @@
     {
       "externalId": "TYT-KIM-H-004",
       "subTopic": "Asit Baz Tepkimeleri",
-      "text": "$$2\\text{ mol } \text{H}_2\text{SO}_4$$ içeren sulu çözeltiyi tam nötralleştirmek için kaç mol $$\text{NaOH}$$ gerekir?",
+      "text": "2 mol H₂SO₄ içeren sulu çözeltiyi tam nötralleştirmek için kaç mol NaOH gerekir?",
+      "explanation": "2 mol H₂SO₄ ortama 4 mol H⁺ verir; tam nötralleşme için 4 mol OH⁻ yani 4 mol NaOH gerekir.",
       "imageUrl": null,
       "options": [
         "1",
@@ -61,7 +65,8 @@
     {
       "externalId": "TYT-KIM-H-005",
       "subTopic": "İzotop Atomlar",
-      "text": "Doğada $$^{35}\text{Cl}$$ izotopu $$\\%75$$, $$^{37}\text{Cl}$$ izotopu $$\\%25$$ oranında bulunduğuna göre klorun ortalama atom kütlesi kaç akb'dir?",
+      "text": "Doğada ³⁵Cl izotopu %75, ³⁷Cl izotopu %25 oranında bulunduğuna göre klorun ortalama atom kütlesi kaç akb'dir?",
+      "explanation": "Ortalama atom kütlesi = 35 · 0.75 + 37 · 0.25 = 26.25 + 9.25 = 35.5 akb olur.",
       "imageUrl": null,
       "options": [
         "35.2",
@@ -74,7 +79,8 @@
     {
       "externalId": "TYT-KIM-H-006",
       "subTopic": "Yüzde Verim",
-      "text": "$$\text{CaCO}_3(k) \\rightarrow \text{CaO}(k) + \text{CO}_2(g)$$ tepkimesine göre $$200\\text{ g } \text{CaCO}_3$$ $$\\%50$$ verimle ayrıştığında kaç mol $$\text{CO}_2$$ oluşur? ($$\text{CaCO}_3 = 100\\text{ g/mol}$$)",
+      "text": "CaCO₃(k) → CaO(k) + CO₂(g) tepkimesine göre 200 g CaCO₃ %50 verimle ayrıştığında kaç mol CO₂ oluşur? (CaCO₃ = 100 g/mol)",
+      "explanation": "200 g CaCO₃ = 2 mol. %50 verimle 1 mol CaCO₃ ayrışır ve 1 mol CO₂ oluşur.",
       "imageUrl": null,
       "options": [
         "0.5",
@@ -83,6 +89,62 @@
         "2"
       ],
       "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-H-007",
+      "subTopic": "Katlı Oranlar Yasası",
+      "text": "X₂Y₃ ve XYₙ bileşiklerinde aynı miktar X ile birleşen birinci bileşikteki Y kütlesinin ikinci bileşikteki Y kütlesine oranı 3/4 olduğuna göre n kaçtır?",
+      "explanation": "X sayılarını eşitlersek X₂Y₃ ve X₂Y₂ₙ olur. 3 / (2n) = 3 / 4 ⇒ 2n = 4 ⇒ n = 2 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-H-008",
+      "subTopic": "Metal - Asit Tepkimeleri",
+      "text": "Yarı soy bir metal olan bakır (Cu), aşağıdaki asitlerden hangisinin derişik sulu çözeltisiyle tepkimeye girerek SO₂ gazı açığa çıkarır?",
+      "explanation": "Yarı soy metaller (Cu, Hg, Ag) oksijensiz asitlerle tepkime vermez; derişik H₂SO₄ ile SO₂ gazı açığa çıkarır.",
+      "imageUrl": null,
+      "options": [
+        "HCl",
+        "H₂SO₄",
+        "CH₃COOH",
+        "HF"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-H-009",
+      "subTopic": " İyonlaşma Enerjisi Tablosu",
+      "text": "Baş grup elementi olan X atomunun ilk dört iyonlaşma enerjisi sırasıyla 176, 348, 1847 ve 2520 kJ/mol olduğuna göre X hangi grupta yer alır?",
+      "explanation": "İkinci ve üçüncü iyonlaşma enerjileri arasında yaklaşık 5.3 katlık sıçrama olduğundan değerlik elektron sayısı 2 (2A grubu) olur.",
+      "imageUrl": null,
+      "options": [
+        "1A",
+        "2A",
+        "3A",
+        "4A"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-H-010",
+      "subTopic": "Sıvıların Buhar Basıncı",
+      "text": "Ağzı açık bir kapta kaynamakta olan saf suyun buhar basıncı aşağıdakilerden hangisine eşittir?",
+      "explanation": "Kaynama anında sıvının buhar basıncı bulunduğu ortamdaki dış (açık hava) basıncına eşittir.",
+      "imageUrl": null,
+      "options": [
+        "Dış (Açık hava) basıncına",
+        "Sıfıra",
+        "Sıvı kütlesine",
+        "Kabın hacmine"
+      ],
+      "correctOptionIndex": 0
     }
   ]
 }

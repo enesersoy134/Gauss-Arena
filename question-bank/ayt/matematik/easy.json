@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-MAT-E-001",
       "subTopic": "İkinci Dereceden Denklemler",
-      "text": "$$x^2 - 7x + 12 = 0$$ denkleminin kökler toplamı kaçtır?",
+      "text": "x² - 7x + 12 = 0 denkleminin kökler toplamı kaçtır?",
+      "explanation": "x₁ + x₂ = -b / a = -(-7) / 1 = 7 bulunur.",
       "imageUrl": null,
       "options": [
         "5",
@@ -22,7 +23,8 @@
     {
       "externalId": "AYT-MAT-E-002",
       "subTopic": "Logaritma",
-      "text": "$$\\log_2(32) + \\log_3(27)$$ işleminin sonucu kaçtır?",
+      "text": "log₂(32) + log₃(27) işleminin sonucu kaçtır?",
+      "explanation": "log₂(2⁵) + log₃(3³) = 5 + 3 = 8 bulunur.",
       "imageUrl": null,
       "options": [
         "6",
@@ -35,7 +37,8 @@
     {
       "externalId": "AYT-MAT-E-003",
       "subTopic": "Diziler",
-      "text": "Genel terimi $$a_n = 3n + 2$$ olan bir dizinin ilk $$4$$ teriminin toplamı kaçtır?",
+      "text": "Genel terimi aₙ = 3n + 2 olan bir dizinin ilk 4 teriminin toplamı kaçtır?",
+      "explanation": "a₁ = 5, a₂ = 8, a₃ = 11, a₄ = 14 olup toplamları 5 + 8 + 11 + 14 = 38 olur.",
       "imageUrl": null,
       "options": [
         "34",
@@ -48,7 +51,8 @@
     {
       "externalId": "AYT-MAT-E-004",
       "subTopic": "Trigonometri",
-      "text": "$$\\sin^2(35^\\circ) + \\cos^2(35^\\circ) + \\tan(45^\\circ)$$ işleminin sonucu kaçtır?",
+      "text": "sin²(35°) + cos²(35°) + tan(45°) işleminin sonucu kaçtır?",
+      "explanation": "sin²(35°) + cos²(35°) = 1 ve tan(45°) = 1 olduğundan 1 + 1 = 2 bulunur.",
       "imageUrl": null,
       "options": [
         "0",
@@ -61,7 +65,8 @@
     {
       "externalId": "AYT-MAT-E-005",
       "subTopic": "Limit",
-      "text": "$$\\lim_{x \\to 3} (x^2 - 2x + 5)$$ limitinin değeri kaçtır?",
+      "text": "lim(x → 3) (x² - 2x + 5) limitinin değeri kaçtır?",
+      "explanation": "Polinom fonksiyonlarda x = 3 yerine yazılırsa 3² - 2(3) + 5 = 9 - 6 + 5 = 8 bulunur.",
       "imageUrl": null,
       "options": [
         "6",
@@ -74,7 +79,8 @@
     {
       "externalId": "AYT-MAT-E-006",
       "subTopic": "Türev Alma Kuralları",
-      "text": "$$f(x) = 4x^3 - 5x + 7$$ fonksiyonunun $$x = 1$$ noktasındaki türevi $$f'(1)$$ kaçtır?",
+      "text": "f(x) = 4x³ - 5x + 7 fonksiyonunun x = 1 noktasındaki türevi f'(1) kaçtır?",
+      "explanation": "f'(x) = 12x² - 5 ⇒ f'(1) = 12(1) - 5 = 7 bulunur.",
       "imageUrl": null,
       "options": [
         "5",
@@ -83,6 +89,62 @@
         "12"
       ],
       "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-E-007",
+      "subTopic": "Karmaşık Sayılar",
+      "text": "i² = -1 olmak üzere √(-16) + √(-9) işleminin sonucu aşağıdakilerden hangisidir?",
+      "explanation": "√(-16) = 4i ve √(-9) = 3i olduğundan toplamları 4i + 3i = 7i olur.",
+      "imageUrl": null,
+      "options": [
+        "5i",
+        "7i",
+        "-7",
+        "-25i"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-E-008",
+      "subTopic": "Analitik Geometri - Eğim",
+      "text": "Analitik düzlemde A(1, 2) ve B(4, 11) noktalarından geçen doğrunun eğimi kaçtır?",
+      "explanation": "m = (y₂ - y₁) / (x₂ - x₁) = (11 - 2) / (4 - 1) = 9 / 3 = 3 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-E-009",
+      "subTopic": "Aritmetik Dizi",
+      "text": "İlk terimi a₁ = 4 ve ortak farkı d = 5 olan bir aritmetik dizinin 7. terimi (a₇) kaçtır?",
+      "explanation": "a₇ = a₁ + 6d = 4 + 6(5) = 34 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "29",
+        "34",
+        "39",
+        "44"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-MAT-E-010",
+      "subTopic": "Trigonometri - Esas Ölçü",
+      "text": "Ölçüsü 780° olan açının esas ölçüsü kaç derecedir?",
+      "explanation": "780 = 2 · 360 + 60 olduğundan esas ölçüsü 60° olur.",
+      "imageUrl": null,
+      "options": [
+        "30",
+        "45",
+        "60",
+        "120"
+      ],
+      "correctOptionIndex": 2
     }
   ]
 }

@@ -10,6 +10,7 @@
       "externalId": "TYT-TUR-M-001",
       "subTopic": "Cümlenin Ögeleri",
       "text": "\"Genç yazar, son romanında çocukluk yıllarını içtenlikle anlatmış.\" cümlesinin nesnesi aşağıdakilerden hangisidir?",
+      "explanation": "Neyi anlatmış? → \"çocukluk yıllarını\" belirtili nesnedir.",
       "imageUrl": null,
       "options": [
         "Genç yazar",
@@ -23,6 +24,7 @@
       "externalId": "TYT-TUR-M-002",
       "subTopic": "Fiilimsiler",
       "text": "Aşağıdaki cümlelerin hangisinde sıfat-fiil (ortaç) kullanılmıştır?",
+      "explanation": "\"Okunacak kitaplar\" tamlamasında \"-acak\" eki sıfat-fiil (ortaç) ekidir.",
       "imageUrl": null,
       "options": [
         "Koşarak yanımıza geldi.",
@@ -36,6 +38,7 @@
       "externalId": "TYT-TUR-M-003",
       "subTopic": "Paragrafta Ana Düşünce",
       "text": "Bir yazarın eserinin kalıcı olmasını sağlayan temel unsur, kendi çağının sorunlarını anlatırken tüm insanlığın ortak duygularına dokunabilmesidir. Bu cümlede vurgulanan kavram hangisidir?",
+      "explanation": "Tüm insanlığın ortak duygularına seslenebilmek \"evrensellik\" ilkesidir.",
       "imageUrl": null,
       "options": [
         "Özgünlük",
@@ -49,6 +52,7 @@
       "externalId": "TYT-TUR-M-004",
       "subTopic": "Ses Olayları",
       "text": "\"Kayıp etti\" birleşik fiili \"kaybetti\" şeklinde yazıldığında hangi iki ses olayı bir arada görülür?",
+      "explanation": "Kayıp → kayb- olurken \"ı\" ünlüsü düşmüş (ünlü düşmesi) ve \"p\" ünsüzü \"b\"ye dönüşmüştür (ünsüz yumuşaması).",
       "imageUrl": null,
       "options": [
         "Ünsüz türemesi - Ünlü daralması",
@@ -62,6 +66,7 @@
       "externalId": "TYT-TUR-M-005",
       "subTopic": "Anlatım Bozuklukları",
       "text": "\"Şüphesiz bu sınavı kesinlikle kazanabilir.\" cümlesindeki anlatım bozukluğunun nedeni nedir?",
+      "explanation": "Kesinlik bildiren \"şüphesiz / kesinlikle\" ile olasılık bildiren \"kazanabilir\" bir arada kullanıldığı için anlamca çelişmektedir.",
       "imageUrl": null,
       "options": [
         "Özne-yüklem uyuşmazlığı",
@@ -75,6 +80,7 @@
       "externalId": "TYT-TUR-M-006",
       "subTopic": "Yapı Bilgisi",
       "text": "Aşağıdaki sözcüklerden hangisi hem yapım hem çekim eki almıştır?",
+      "explanation": "Kitap-lık (yapım eki) + -ımız (iyelik çekim eki) hem yapım hem çekim eki almıştır.",
       "imageUrl": null,
       "options": [
         "Evler",
@@ -83,6 +89,62 @@
         "Yollar"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-M-007",
+      "subTopic": "İsim Tamlamaları",
+      "text": "Aşağıdaki tamlamalardan hangisi belirtisiz isim tamlamasıdır?",
+      "explanation": "\"Bahçe duvarı\"nda tamlayan (bahçe) ek almamış, tamlanan (duvar-ı) iyelik eki almıştır (belirtisiz isim tamlaması).",
+      "imageUrl": null,
+      "options": [
+        "Okulun kapısı",
+        "Bahçe duvarı",
+        "Geniş sokak",
+        "Kırmızı kalem"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-M-008",
+      "subTopic": "Paragrafta Anlatım Teknikleri",
+      "text": "Bir yeri veya varlığı okuyucunun zihninde resmeder gibi görsel ayrıntılarla anlatma biçimine ne ad verilir?",
+      "explanation": "Sözcüklerle resim çizme sanatına betimleme (tasvir) denir.",
+      "imageUrl": null,
+      "options": [
+        "Tartışma",
+        "Açıklama",
+        "Betimleme (Tasvir)",
+        "Kanıtlama"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-M-009",
+      "subTopic": "Zarf (Belirteç)",
+      "text": "\"Akşamları sahilde yavaşça yürürdü.\" cümlesinde \"yavaşça\" sözcüğü hangi tür zarftır?",
+      "explanation": "\"Nasıl yürürdü?\" sorusuna yanıt verdiği için durum zarfıdır.",
+      "imageUrl": null,
+      "options": [
+        "Zaman zarfı",
+        "Durum zarfı",
+        "Miktar zarfı",
+        "Yer-yön zarfı"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-M-010",
+      "subTopic": "Ünsüz Benzeşmesi (Sertleşmesi)",
+      "text": "Aşağıdaki sözcüklerin hangisinde ünsüz benzeşmesi (sertleşmesi) vardır?",
+      "explanation": "Kitap + dan → kitaptan sözcüğünde \"p\" sert ünsüzü \"-dan\" ekini \"-tan\"a benzeştirmiştir.",
+      "imageUrl": null,
+      "options": [
+        "Ağaca",
+        "Kitaptan",
+        "Yüreği",
+        "Gönlü"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

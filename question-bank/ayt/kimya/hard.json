@@ -9,20 +9,22 @@
     {
       "externalId": "AYT-KIM-H-001",
       "subTopic": "Çözünürlük Dengesi (Kçç)",
-      "text": "Belirli bir sıcaklıkta $$\text{AgCl}$$ katısının saf sudaki çözünürlüğü $$10^{-5}\\text{ M}$$ olduğuna göre çözünürlük çarpımı $$K_{\\text{çç}}$$ kaçtır?",
+      "text": "Belirli bir sıcaklıkta AgCl katısının saf sudaki çözünürlüğü 10⁻⁵ M olduğuna göre çözünürlük çarpımı Kçç kaçtır?",
+      "explanation": "Kçç = [Ag⁺][Cl⁻] = (10⁻⁵) · (10⁻⁵) = 10⁻¹⁰ olur.",
       "imageUrl": null,
       "options": [
-        "$$10^{-5}$$",
-        "$$2 \\times 10^{-5}$$",
-        "$$10^{-10}$$",
-        "$$4 \\times 10^{-10}$$"
+        "10⁻⁵",
+        "2 × 10⁻⁵",
+        "10⁻¹⁰",
+        "4 × 10⁻¹⁰"
       ],
       "correctOptionIndex": 2
     },
     {
       "externalId": "AYT-KIM-H-002",
       "subTopic": "Faraday Elektroliz Yasası",
-      "text": "Erimiş $$\text{AlCl}_3$$ tuzu $$3\\text{ Faraday}$$ elektrik yükü ile elektroliz edildiğinde katotta kaç mol $$\text{Al}$$ metali toplanır? ($$\text{Al}^{3+}$$)",
+      "text": "Erimiş AlCl₃ tuzu 3 Faraday elektrik yükü ile elektroliz edildiğinde katotta kaç mol Al metali toplanır? (Al³⁺)",
+      "explanation": "Al³⁺ + 3e⁻ → Al(k) yarı tepkimesine göre 3 mol elektron (3 Faraday) 1 mol Al metali toplar.",
       "imageUrl": null,
       "options": [
         "0.5",
@@ -35,7 +37,8 @@
     {
       "externalId": "AYT-KIM-H-003",
       "subTopic": "Nernst Denklemi ve Pil Potansiyeli",
-      "text": "$$\text{Zn}(k) + \text{Cu}^{2+}(1\\text{ M}) \\rightarrow \text{Zn}^{2+}(1\\text{ M}) + \text{Cu}(k)$$ pilinde $$E^\\circ_{\\text{pil}} = 1.10\\text{ V}$$ olduğuna göre $$\text{Cu}^{2+}$$ derişimi artırılırsa pil potansiyeli nasıl değişir?",
+      "text": "Zn(k) + Cu²⁺(1 M) → Zn²⁺(1 M) + Cu(k) pilinde E°pil = 1.10 V olduğuna göre Cu²⁺ derişimi artırılırsa pil potansiyeli nasıl değişir?",
+      "explanation": "Girenlerdeki Cu²⁺ derişimi artırılırsa denge ürünlere kayar ve pil potansiyeli 1.10 V değerinin üzerine çıkar.",
       "imageUrl": null,
       "options": [
         "1.10 V'tan büyük olur",
@@ -48,7 +51,8 @@
     {
       "externalId": "AYT-KIM-H-004",
       "subTopic": "Hess Yasası",
-      "text": "$$\text{C}(k) + \text{O}_2(g) \\rightarrow \text{CO}_2(g)$$ tepkimesinin entalpisi $$\\Delta H = -390\\text{ kJ}$$ ise $$2\text{CO}_2(g) \\rightarrow 2\text{C}(k) + 2\text{O}_2(g)$$ tepkimesinin $$\\Delta H$$ değeri kaç $$\\text{kJ}$$ olur?",
+      "text": "C(k) + O₂(g) → CO₂(g) tepkimesinin entalpisi ΔH = -390 kJ ise 2CO₂(g) → 2C(k) + 2O₂(g) tepkimesinin ΔH değeri kaç kJ olur?",
+      "explanation": "Tepkime ters çevrilip 2 ile çarpıldığı için ΔH = -2 · (-390) = +780 kJ olur.",
       "imageUrl": null,
       "options": [
         "-780",
@@ -61,7 +65,8 @@
     {
       "externalId": "AYT-KIM-H-005",
       "subTopic": "Hız Denklemi Bulma",
-      "text": "Hız bağıntısı $$r = k \\cdot [A]^2 \\cdot [B]$$ olan bir tepkimede kabın hacmi sabit sıcaklıkta yarıya indirilirse tepkime hızı kaç katına çıkar?",
+      "text": "Hız bağıntısı r = k · [A]² · [B] olan bir tepkimede kabın hacmi sabit sıcaklıkta yarıya indirilirse tepkime hızı kaç katına çıkar?",
+      "explanation": "Hacim yarıya inerse tüm derişimler 2 katına çıkar: r_yeni = k · (2[A])² · (2[B]) = 8 · r olur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -75,12 +80,69 @@
       "externalId": "AYT-KIM-H-006",
       "subTopic": "Organik Fonksiyonel Gruplar",
       "text": "Bir karboksilik asit ile bir alkolün su açığa çıkararak birleşmesi tepkimesinden oluşan organik bileşik sınıfı hangisidir?",
+      "explanation": "Karboksilik asit + Alkol → Ester + H₂O (esterleşme tepkimesi).",
       "imageUrl": null,
       "options": [
         "Eter",
         "Ester",
         "Aldehit",
         "Keton"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-H-007",
+      "subTopic": "Zayıf Asit Dengesi (Ka)",
+      "text": "25 °C sıcaklıkta asitlik sabiti Ka = 10⁻⁵ olan 0.1 M monoprotik HA zayıf asit çözeltisinin pH değeri kaçtır?",
+      "explanation": "[H⁺] = √(Ka · Cₐ) = √(10⁻⁵ · 10⁻¹) = 10⁻³ M ⇒ pH = 3 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-H-008",
+      "subTopic": "Ortak İyon Etkisi",
+      "text": "Doygun AgCl sulu çözeltisine sabit sıcaklıkta bir miktar NaCl katısı eklenip çözülürse AgCl tuzunun çözünürlüğü ve Kçç değeri nasıl değişir?",
+      "explanation": "Ortak iyon (Cl⁻) çözünürlüğü azaltır; Kçç yalnızca sıcaklığa bağlı olduğundan değişmez.",
+      "imageUrl": null,
+      "options": [
+        "Çözünürlük azalır, Kçç değişmez",
+        "Çözünürlük artar, Kçç artar",
+        "İkisi de azalır",
+        "İkisi de değişmez"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-KIM-H-009",
+      "subTopic": "İzomerlik",
+      "text": "Kapalı formülleri aynı, fonksiyonel grupları farklı olan dimetil eter (CH₃-O-CH₃) ile etil alkol (C₂H₅OH) arasındaki izomerlik türü hangisidir?",
+      "explanation": "Aynı karbon sayılı monoalkoller ile eterler birbirinin fonksiyonel grup izomeridir.",
+      "imageUrl": null,
+      "options": [
+        "Zincir-dallanma izomerliği",
+        "Konum izomerliği",
+        "Fonksiyonel grup izomerliği",
+        "Geometrik (cis-trans) izomerlik"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-H-010",
+      "subTopic": "Tepkime Mekanizması ve Molekülerite",
+      "text": "Çok basamaklı (mekanizmalı) bir kimyasal tepkimenin genel hız bağıntısını hangi basamak belirler?",
+      "explanation": "Mekanizmalı tepkimelerde hız belirleyici basamak her zaman aktifleşme enerjisi en yüksek olan en yavaş basamaktır.",
+      "imageUrl": null,
+      "options": [
+        "En hızlı basamak",
+        "En yavaş basamak",
+        "Son basamak",
+        "Entalpisi en küçük basamak"
       ],
       "correctOptionIndex": 1
     }

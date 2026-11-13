@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-KIM-E-001",
       "subTopic": "Modern Atom Teorisi",
-      "text": "Baş kuantum sayısı $$n = 3$$ olan enerji düzeyinde bulunan $$p$$ alt kabuğunda en fazla kaç elektron bulunabilir?",
+      "text": "Baş kuantum sayısı n = 3 olan enerji düzeyinde bulunan p alt kabuğunda en fazla kaç elektron bulunabilir?",
+      "explanation": "p alt kabuğu 3 orbital içerir ve en fazla 3 · 2 = 6 elektron alabilir.",
       "imageUrl": null,
       "options": [
         "2",
@@ -23,6 +24,7 @@
       "externalId": "AYT-KIM-E-002",
       "subTopic": "Gazlar",
       "text": "Sabit sıcaklıkta ideal bir gazın hacmi yarıya indirilirse basıncı nasıl değişir?",
+      "explanation": "Boyle Yasasına göre (P₁·V₁ = P₂·V₂) hacim yarıya inerse basınç 2 katına çıkar.",
       "imageUrl": null,
       "options": [
         "Yarıya iner",
@@ -35,12 +37,13 @@
     {
       "externalId": "AYT-KIM-E-003",
       "subTopic": "Kimyasal Tepkimelerde Enerji",
-      "text": "Isı alarak gerçekleşen (endotermik) tepkimeler için entalpi değişimi $$\\Delta H$$'nin işareti nedir?",
+      "text": "Isı alarak gerçekleşen (endotermik) tepkimeler için entalpi değişimi ΔH'nin işareti nedir?",
+      "explanation": "Endotermik tepkimelerde ortamdan ısı alındığı için ΔH > 0 (pozitif) olur.",
       "imageUrl": null,
       "options": [
-        "$$\\Delta H > 0$$",
-        "$$\\Delta H < 0$$",
-        "$$\\Delta H = 0$$",
+        "ΔH > 0",
+        "ΔH < 0",
+        "ΔH = 0",
         "Belirlenemez"
       ],
       "correctOptionIndex": 0
@@ -49,6 +52,7 @@
       "externalId": "AYT-KIM-E-004",
       "subTopic": "Tepkime Hızı",
       "text": "Bir kimyasal tepkimeye pozitif katalizör eklendiğinde aşağıdakilerden hangisi azalır?",
+      "explanation": "Katalizör tepkimeye daha düşük enerjili bir mekanizma sağlayarak aktifleşme (eşik) enerjisini düşürür.",
       "imageUrl": null,
       "options": [
         "Tepkime entalpisi",
@@ -62,12 +66,13 @@
       "externalId": "AYT-KIM-E-005",
       "subTopic": "Organik Kimyaya Giriş",
       "text": "Doymuş hidrokarbonlar (alkanlar) sınıfının genel formülü aşağıdakilerden hangisidir?",
+      "explanation": "Açık zincirli alkanların genel formülü CₙH₂ₙ₊₂ şeklindedir.",
       "imageUrl": null,
       "options": [
-        "$$\text{C}_n\text{H}_{2n-2}$$",
-        "$$\text{C}_n\text{H}_{2n}$$",
-        "$$\text{C}_n\text{H}_{2n+2}$$",
-        "$$\text{C}_n\text{H}_n$$"
+        "CₙH₂ₙ₋₂",
+        "CₙH₂ₙ",
+        "CₙH₂ₙ₊₂",
+        "CₙHₙ"
       ],
       "correctOptionIndex": 2
     },
@@ -75,12 +80,69 @@
       "externalId": "AYT-KIM-E-006",
       "subTopic": "Elektrokimya",
       "text": "Galvanik bir hücrede yükseltgenme yarı tepkimesi hangi elektrotta gerçekleşir?",
+      "explanation": "Elektrokimyasal hücrelerde her zaman anotta yükseltgenme, katotta indirgenme gerçekleşir.",
       "imageUrl": null,
       "options": [
         "Katot",
         "Anot",
         "Tuz köprüsü",
         "Dış devre"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-E-007",
+      "subTopic": "Kuantum Sayıları",
+      "text": "Açısal momentum (ikincil) kuantum sayısı l = 0 olan orbital türü aşağıdakilerden hangisidir?",
+      "explanation": "l = 0 → s, l = 1 → p, l = 2 → d, l = 3 → f orbitalini temsil eder.",
+      "imageUrl": null,
+      "options": [
+        "s orbitali",
+        "p orbitali",
+        "d orbitali",
+        "f orbitali"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-KIM-E-008",
+      "subTopic": "Sıvı Çözeltiler",
+      "text": "1 kilogram çözücüde çözünmüş maddenin mol sayısını ifade eden derişim birimi hangisidir?",
+      "explanation": "Molalite (m) = Çözünen mol sayısı / Çözücü kütlesi (kg) olarak tanımlanır.",
+      "imageUrl": null,
+      "options": [
+        "Molarite",
+        "Molalite",
+        "Kütlece yüzde",
+        "Normalite"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-E-009",
+      "subTopic": "Karbon Allotropları",
+      "text": "Karbon atomlarının altıgen halkalar halinde tabakalar oluşturduğu ve elektriği ileten doğal allotropu hangisidir?",
+      "explanation": "Grafit, yapısındaki pi (π) elektronları sayesinde elektriği ileten doğal karbon allotropudur.",
+      "imageUrl": null,
+      "options": [
+        "Elmas",
+        "Grafit",
+        "Fulleren",
+        "Kuvars"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-E-010",
+      "subTopic": "Le Chatelier İlkesi",
+      "text": "Dengedeki bir kimyasal sisteme dışarıdan bir etki yapıldığında sistem bu etkiyi azaltacak yönde hareket eder. Bu ilke kime aittir?",
+      "explanation": "Kimyasal dengede dış etkilere karşı sistemin tepkisini açıklayan ilke Le Chatelier İlkesidir.",
+      "imageUrl": null,
+      "options": [
+        "Avogadro İlkesi",
+        "Le Chatelier İlkesi",
+        "Hund Kuralı",
+        "Pauli İlkesi"
       ],
       "correctOptionIndex": 1
     }

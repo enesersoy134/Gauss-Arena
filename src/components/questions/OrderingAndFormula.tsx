@@ -16,13 +16,16 @@ export default function OrderingAndFormula({
   const { payload } = question;
   const slotCount = payload.correctOrder?.length || payload.items?.length || 0;
 
+  const itemsKey = (payload.items || []).join('\u0000');
+
   // Başlangıç pool öğeleri
   const initialPool = useMemo<PoolItem[]>(() => {
     return (payload.items || []).map((text, idx) => ({
       id: `${idx}__${text}`,
       text,
     }));
-  }, [question.id, payload.items]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question.id, itemsKey]);
 
   // Yuvalardaki öğeler: uzunluğu slotCount olan dizi (null: boş yuva)
   const [slots, setSlots] = useState<(PoolItem | null)[]>(() => Array(slotCount).fill(null));

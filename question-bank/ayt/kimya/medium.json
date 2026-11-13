@@ -9,7 +9,8 @@
     {
       "externalId": "AYT-KIM-M-001",
       "subTopic": "Molarite",
-      "text": "$$0.4\\text{ mol NaOH}$$ katısı suda çözülerek toplam hacim $$200\\text{ mL}$$'ye tamamlanıyor. Çözeltinin molar derişimi kaç $$\\text{M}$$ olur?",
+      "text": "0.4 mol NaOH katısı suda çözülerek toplam hacim 200 mL'ye tamamlanıyor. Çözeltinin molar derişimi kaç M olur?",
+      "explanation": "M = n / V = 0.4 mol / 0.2 L = 2.0 M bulunur.",
       "imageUrl": null,
       "options": [
         "0.5",
@@ -22,7 +23,8 @@
     {
       "externalId": "AYT-KIM-M-002",
       "subTopic": "İdeal Gaz Denklemi",
-      "text": "$$0^\\circ\\text{C}$$ sıcaklıkta $$5.6\\text{ L}$$ sabit hacimli kapta bulunan $$0.5\\text{ mol}$$ ideal gazın basıncı kaç $$\\text{atm}$$ olur?",
+      "text": "0 °C sıcaklıkta 5.6 L sabit hacimli kapta bulunan 0.5 mol ideal gazın basıncı kaç atm olur?",
+      "explanation": "P · V = n · R · T ⇒ P · 5.6 = 0.5 · (22.4 / 273) · 273 ⇒ 5.6P = 11.2 ⇒ P = 2 atm olur.",
       "imageUrl": null,
       "options": [
         "1",
@@ -35,7 +37,8 @@
     {
       "externalId": "AYT-KIM-M-003",
       "subTopic": "Kimyasal Denge",
-      "text": "İleri yöndeki hız sabiti $$k_i = 0.6$$ ve geri yöndeki hız sabiti $$k_g = 0.15$$ olan tek basamaklı denge tepkimesinin denge sabiti $$K_c$$ kaçtır?",
+      "text": "İleri yöndeki hız sabiti kᵢ = 0.6 ve geri yöndeki hız sabiti k₉ = 0.15 olan tek basamaklı denge tepkimesinin denge sabiti Kc kaçtır?",
+      "explanation": "Kc = kᵢ / k₉ = 0.6 / 0.15 = 4 bulunur.",
       "imageUrl": null,
       "options": [
         "2",
@@ -48,7 +51,8 @@
     {
       "externalId": "AYT-KIM-M-004",
       "subTopic": "Sulu Çözeltilerde pH",
-      "text": "$$25^\\circ\\text{C}$$'de $$0.01\\text{ M HCl}$$ kuvvetli asit çözeltisinin $$\\text{pH}$$ değeri kaçtır?",
+      "text": "25 °C'de 0.01 M HCl kuvvetli asit çözeltisinin pH değeri kaçtır?",
+      "explanation": "[H⁺] = 10⁻² M ⇒ pH = -log(10⁻²) = 2 bulunur.",
       "imageUrl": null,
       "options": [
         "1",
@@ -61,7 +65,8 @@
     {
       "externalId": "AYT-KIM-M-005",
       "subTopic": "Yükseltgenme Basamakları",
-      "text": "$$\text{KMnO}_4$$ bileşiğinde $$\text{Mn}$$ (Mangan) elementinin yükseltgenme basamağı kaçtır? ($$\text{K}: +1, \text{O}: -2$$)",
+      "text": "KMnO₄ bileşiğinde Mn (Mangan) elementinin yükseltgenme basamağı kaçtır? (K: +1, O: -2)",
+      "explanation": "(+1) + Mn + 4(-2) = 0 ⇒ Mn - 7 = 0 ⇒ Mn = +7 bulunur.",
       "imageUrl": null,
       "options": [
         "+4",
@@ -74,15 +79,72 @@
     {
       "externalId": "AYT-KIM-M-006",
       "subTopic": "Hibritleşme",
-      "text": "Metan ($$\text{CH}_4$$) molekülündeki merkez karbon atomunun hibritleşme türü nedir?",
+      "text": "Metan (CH₄) molekülündeki merkez karbon atomunun hibritleşme türü nedir?",
+      "explanation": "CH₄ molekülünde karbon atomu 4 tekli (sigma) bağ yaptığı için sp³ hibritleşmesi yapar.",
       "imageUrl": null,
       "options": [
-        "$$sp$$",
-        "$$sp^2$$",
-        "$$sp^3$$",
-        "$$dsp^2$$"
+        "sp",
+        "sp²",
+        "sp³",
+        "dsp²"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-M-007",
+      "subTopic": "Gazların Difüzyon Hızı (Graham)",
+      "text": "Aynı sıcaklıkta He (M = 4 g/mol) gazının yayılma hızı, SO₂ (M = 64 g/mol) gazının yayılma hızının kaç katıdır?",
+      "explanation": "v(He) / v(SO₂) = √(64 / 4) = √16 = 4 katıdır.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "4",
+        "8",
+        "16"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-M-008",
+      "subTopic": "Standart Oluşum Entalpisi",
+      "text": "Standart koşullarda (25 °C, 1 atm) kararlı elementlerin standart molar oluşum entalpileri kaç kJ/mol kabul edilir?",
+      "explanation": "O₂(g), Fe(k), H₂(g) gibi elementlerin en kararlı hallerinin standart oluşum entalpisi 0 kabul edilir.",
+      "imageUrl": null,
+      "options": [
+        "-100",
+        "0",
+        "+1",
+        "+273"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-KIM-M-009",
+      "subTopic": "Nötralleşme Titrasyonu",
+      "text": "0.2 M 100 mL HCl çözeltisini tam nötralleştirmek için 0.1 M NaOH çözeltisinden kaç mL eklenmelidir?",
+      "explanation": "Mₐ·Vₐ·zₐ = M_b·V_b·z_b ⇒ 0.2 · 100 · 1 = 0.1 · V_b · 1 ⇒ V_b = 200 mL gerekir.",
+      "imageUrl": null,
+      "options": [
+        "100",
+        "150",
+        "200",
+        "400"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-KIM-M-010",
+      "subTopic": "Alkenler ve Katılma Tepkimeleri",
+      "text": "Yapısında en az bir tane karbon-karbon ikili bağı (C=C) bulunduran doymamış hidrokarbon sınıfı hangisidir?",
+      "explanation": "C=C ikili bağı taşıyan hidrokarbonlara alken (olefin) denir.",
+      "imageUrl": null,
+      "options": [
+        "Alkanlar",
+        "Alkenler (Olefinler)",
+        "Alkinler",
+        "Sikloalkanlar"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

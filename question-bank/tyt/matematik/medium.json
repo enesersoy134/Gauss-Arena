@@ -9,7 +9,8 @@
     {
       "externalId": "TYT-MAT-M-001",
       "subTopic": "Mutlak Değer",
-      "text": "$$|2x - 6| = 10$$ denklemini sağlayan $$x$$ değerlerinin çarpımı kaçtır?",
+      "text": "|2x - 6| = 10 denklemini sağlayan x değerlerinin çarpımı kaçtır?",
+      "explanation": "2x - 6 = 10 ⇒ x = 8 ve 2x - 6 = -10 ⇒ x = -2. Çarpımları 8 · (-2) = -16 olur.",
       "imageUrl": null,
       "options": [
         "-16",
@@ -22,20 +23,22 @@
     {
       "externalId": "TYT-MAT-M-002",
       "subTopic": "Köklü Sayılar",
-      "text": "$$\\sqrt{75} - \\sqrt{27} + \\sqrt{12}$$ işleminin sonucu kaçtır?",
+      "text": "√75 - √27 + √12 işleminin sonucu kaçtır?",
+      "explanation": "5√3 - 3√3 + 2√3 = 4√3 bulunur.",
       "imageUrl": null,
       "options": [
-        "$$2\\sqrt{3}$$",
-        "$$3\\sqrt{3}$$",
-        "$$4\\sqrt{3}$$",
-        "$$5\\sqrt{3}$$"
+        "2√3",
+        "3√3",
+        "4√3",
+        "5√3"
       ],
       "correctOptionIndex": 2
     },
     {
       "externalId": "TYT-MAT-M-003",
       "subTopic": "Yaş Problemleri",
-      "text": "Bir babanın yaşı oğlunun yaşının $$3$$ katıdır. $$6$$ yıl sonra yaşları toplamı $$60$$ olacağına göre oğul bugün kaç yaşındadır?",
+      "text": "Bir babanın yaşı oğlunun yaşının 3 katıdır. 6 yıl sonra yaşları toplamı 60 olacağına göre oğul bugün kaç yaşındadır?",
+      "explanation": "Bugünkü yaşları toplamı 60 - 12 = 48. x + 3x = 48 ⇒ 4x = 48 ⇒ x = 12 bulunur.",
       "imageUrl": null,
       "options": [
         "10",
@@ -48,7 +51,8 @@
     {
       "externalId": "TYT-MAT-M-004",
       "subTopic": "Kümeler",
-      "text": "$$s(A) = 12$$, $$s(B) = 9$$ ve $$s(A \\cap B) = 4$$ olduğuna göre $$s(A \\cup B)$$ kaçtır?",
+      "text": "s(A) = 12, s(B) = 9 ve s(A ∩ B) = 4 olduğuna göre s(A ∪ B) kaçtır?",
+      "explanation": "s(A ∪ B) = s(A) + s(B) - s(A ∩ B) = 12 + 9 - 4 = 17 olur.",
       "imageUrl": null,
       "options": [
         "15",
@@ -61,7 +65,8 @@
     {
       "externalId": "TYT-MAT-M-005",
       "subTopic": "Fonksiyonlar",
-      "text": "$$f(x) = 4x - 5$$ olduğuna göre $$f(3) + f^{-1}(7)$$ toplamı kaçtır?",
+      "text": "f(x) = 4x - 5 olduğuna göre f(3) + f⁻¹(7) toplamı kaçtır?",
+      "explanation": "f(3) = 4(3) - 5 = 7. 4x - 5 = 7 ⇒ x = 3 olduğundan f⁻¹(7) = 3. Toplamları 7 + 3 = 10 olur.",
       "imageUrl": null,
       "options": [
         "8",
@@ -74,7 +79,8 @@
     {
       "externalId": "TYT-MAT-M-006",
       "subTopic": "Hız Problemleri",
-      "text": "Aralarında $$360\\text{ km}$$ bulunan iki araç birbirine doğru $$50\\text{ km/s}$$ ve $$40\\text{ km/s}$$ hızlarla aynı anda hareket ederse kaç saat sonra karşılaşırlar?",
+      "text": "Aralarında 360 km bulunan iki araç birbirine doğru 50 km/s ve 40 km/s hızlarla aynı anda hareket ederse kaç saat sonra karşılaşırlar?",
+      "explanation": "t = 360 / (50 + 40) = 360 / 90 = 4 saat sonra karşılaşırlar.",
       "imageUrl": null,
       "options": [
         "3",
@@ -83,6 +89,62 @@
         "6"
       ],
       "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-M-007",
+      "subTopic": "İşçi Problemleri",
+      "text": "Bir işi Ali tek başına 12 günde, Veli tek başına 6 günde bitirebilmektedir. İkisi birlikte aynı işi kaç günde bitirirler?",
+      "explanation": "1/12 + 1/6 = 3/12 = 1/4 olduğundan birlikte 4 günde bitirirler.",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-MAT-M-008",
+      "subTopic": "Veri ve İstatistik",
+      "text": "4, 7, 10, 13, x veri grubunun aritmetik ortalaması 10 olduğuna göre x kaçtır?",
+      "explanation": "(4 + 7 + 10 + 13 + x) / 5 = 10 ⇒ 34 + x = 50 ⇒ x = 16 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "14",
+        "15",
+        "16",
+        "18"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-MAT-M-009",
+      "subTopic": "Mantık",
+      "text": "(p ∧ q) ≡ 1 ve (q ⇒ r) ≡ 0 olduğuna göre p, q, r önermelerinin doğruluk değerleri sırasıyla nedir?",
+      "explanation": "p ∧ q ≡ 1 ise p ≡ 1 ve q ≡ 1 olur. 1 ⇒ r ≡ 0 olması için r ≡ 0 olmalıdır.",
+      "imageUrl": null,
+      "options": [
+        "1, 1, 0",
+        "1, 0, 1",
+        "0, 1, 0",
+        "1, 1, 1"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "TYT-MAT-M-010",
+      "subTopic": "Dik Üçgen ve Pisagor",
+      "text": "Dik kenar uzunlukları 9 cm ve 12 cm olan bir dik üçgenin hipotenüs uzunluğu kaç cm olur?",
+      "explanation": "3-4-5 özel üçgeninin 3 katı olan 9-12-15 dik üçgeninden hipotenüs 15 cm bulunur.",
+      "imageUrl": null,
+      "options": [
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "correctOptionIndex": 2
     }
   ]
 }

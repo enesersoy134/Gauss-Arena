@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "AYT",
+    "subject": "biyoloji",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 60000
+  },
+  "questions": [
+    {
+      "externalId": "AYT-BIY-M-001",
+      "subTopic": "Sindirim Sistemi",
+      "text": "İnsanda proteinlerin kimyasal sindirimi hangi organda başlar ve hangi organda tamamlanır?",
+      "explanation": "Protein sindirimi midede pepsin enzimiyle başlar ve ince bağırsakta (tripsin, erepsin vb.) amino asitlere kadar tamamlanır.",
+      "imageUrl": null,
+      "options": [
+        "Ağızda başlar - Midede biter",
+        "Midede başlar - İnce bağırsakta biter",
+        "Ağızda başlar - İnce bağırsakta biter",
+        "İnce bağırsakta başlar - Kalın bağırsakta biter"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-M-002",
+      "subTopic": "Hücresel Solunum",
+      "text": "Glikoliz evresi tüm canlılarda hücrenin hangi bölümünde gerçekleşir?",
+      "explanation": "Glikoliz enzimleri tüm canlılarda ortak olup sitoplazmada bulunur.",
+      "imageUrl": null,
+      "options": [
+        "Mitokondri matriksi",
+        "Mitokondri kristası",
+        "Sitoplazma",
+        "Kloroplast stroması"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-BIY-M-003",
+      "subTopic": "Protein Sentezi ve Genetik Şifre",
+      "text": "Protein sentezini başlatan mRNA başlangıç kodonu ve şifrelediği amino asit hangisidir?",
+      "explanation": "AUG kodonu metiyonin amino asidini şifreleyen evrensel başlangıç kodonudur.",
+      "imageUrl": null,
+      "options": [
+        "UAA - Lösin",
+        "AUG - Metiyonin",
+        "UGA - Valin",
+        "UAG - Serin"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-M-004",
+      "subTopic": "Böbrek Fizyolojisi",
+      "text": "Sağlıklı bir insanın nefron kanallarında aşağıdaki maddelerden hangisinin %100 oranı geri emildiği için idrarda hiç bulunmaz?",
+      "explanation": "Sağlıklı bireylerde glikoz ve amino asitlerin tamamı proksimal tüpte aktif taşıma ile geri emilir.",
+      "imageUrl": null,
+      "options": [
+        "Üre",
+        "Su",
+        "Glikoz ve amino asitler",
+        "Sodyum iyonu"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-BIY-M-005",
+      "subTopic": "Bitkisel Hormonlar",
+      "text": "Bitkilerde meyvelerin olgunlaşmasını hızlandıran ve gaz halinde salgılanan tek bitkisel hormon hangisidir?",
+      "explanation": "Etilen gaz formundaki bitkisel hormondur ve nişastayı şekere dönüştürerek meyve olgunlaşmasını sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Oksin",
+        "Sitokinin",
+        "Etilen",
+        "Giberellin"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-BIY-M-006",
+      "subTopic": "Bağışıklık Sistemi",
+      "text": "Hastalık etkeni mikroorganizmayı bizzat geçirerek veya aşı olarak antikor üretilmesi ne tür bağışıklıktır?",
+      "explanation": "Bireyin kendi lenfositlerinin antijene karşı antikor ve hafıza hücresi üretmesi aktif bağışıklıktır.",
+      "imageUrl": null,
+      "options": [
+        "Pasif bağışıklık",
+        "Aktif bağışıklık",
+        "Doğal (Özgül olmayan) bağışıklık",
+        "Serum bağışıklığı"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-M-007",
+      "subTopic": "Popülasyon Ekolojisi",
+      "text": "İki farklı türün aynı sınırlı besin kaynağı için mücadele etmesi hangi ekolojik ilişki türüdür?",
+      "explanation": "Her iki türün de olumsuz etkilendiği (-/-) kaynak paylaşımı mücadelesine rekabet denir.",
+      "imageUrl": null,
+      "options": [
+        "Mutualizm",
+        "Kommensalizm",
+        "Türler arası rekabet",
+        "Parazitlik"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "AYT-BIY-M-008",
+      "subTopic": "Kalbin Çalışma Mekanizması",
+      "text": "Kalbin sağ kulakçık duvarında bulunan ve kalp atışını başlatan doğal pil (uyarı merkezi) düğümü hangisidir?",
+      "explanation": "Kalp kasılma uyarısı sağ kulakçıktaki Sinoatriyal (SA) düğümde başlar.",
+      "imageUrl": null,
+      "options": [
+        "Sinoatriyal (SA) düğüm",
+        "Atriyoventriküler (AV) düğüm",
+        "His demetleri",
+        "Purkinje lifleri"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "AYT-BIY-M-009",
+      "subTopic": "Kemosentez",
+      "text": "Kemosentez yapan bir canlı için aşağıdakilerden hangisi kesinlikle doğrudur?",
+      "explanation": "Kemosentez yalnızca bazı bakteri ve arkeler (prokaryotlar) tarafından gerçekleştirilir; ışık gerekmez.",
+      "imageUrl": null,
+      "options": [
+        "Klorofil pigmenti taşır",
+        "Prokaryot hücre yapısına sahiptir",
+        "Sadece gündüz besin üretir",
+        "Işık enerjisini kullanır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "AYT-BIY-M-010",
+      "subTopic": "Sinir İmpulsu İletimi",
+      "text": "Bir nöronun aksonunda miyelin kılıf bulunması impuls iletim hızını nasıl etkiler?",
+      "explanation": "Miyelinli nöronlarda Ranvier boğumları arasında atlamalı iletim gerçekleştiği için impuls çok daha hızlı ilerler.",
+      "imageUrl": null,
+      "options": [
+        "Yavaşlatır",
+        "Atlamalı iletim sağlayarak hızlandırır",
+        "Değiştirmez",
+        "İletimi durdurur"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

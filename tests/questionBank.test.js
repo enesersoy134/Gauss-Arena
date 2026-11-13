@@ -56,3 +56,57 @@ test('selectMatchQuestions enriches questions with interactiveQuestion and suppo
   ).length;
   assert.ok(richCount >= 2, `En az 2 interaktif soru seçilmeli, bulunan: ${richCount}`);
 });
+
+test('all questions in questionBank have clean human-readable text without raw LaTeX or control characters', () => {
+  const bank = loadQuestionBank(bankDir);
+  const badPattern = /\$\$|\\frac|\\text|\\sqrt|\\circ|\\Omega|\\Delta|\\rightarrow|\\cap|\\cup|[\t\f]|ext\{|rac\{|\?\(Not:/;
+
+  for (const q of bank.allQuestions) {
+    assert.equal(
+      badPattern.test(q.text),
+      false,
+      `Soru metninde bozuk karakter/LaTeX bulundu (${q.externalId}): ${q.text}`
+    );
+    if (q.interactiveQuestion && q.interactiveQuestion.prompt) {
+      assert.equal(
+        badPattern.test(q.interactiveQuestion.prompt),
+        false,
+        `İnteraktif promptta bozuk karakter/LaTeX bulundu (${q.externalId}): ${q.interactiveQuestion.prompt}`
+      );
+    }
+    for (const opt of q.options || []) {
+      assert.equal(
+        badPattern.test(String(opt)),
+        false,
+        `Seçenekte bozuk karakter/LaTeX bulundu (${q.externalId}): ${opt}`
+      );
+    }
+  }
+});
+
+test('both TYT and AYT include expanded questions across all 5 subjects and q_hs_018 uses eukaryotic cell SVG', () => {
+  const bank = loadQuestionBank(bankDir);
+  const subjects = ['matematik', 'fizik', 'kimya', 'biyoloji', 'turkce'];
+
+  for (const examType of ['TYT', 'AYT']) {
+    for (const subj of subjects) {
+      assert.ok(bank.byExamSubjectDifficulty[examType][subj], `${examType} ${subj} havuzu bulunmalı`);
+      assert.ok(bank.byExamSubjectDifficulty[examType][subj].EASY.length >= 10, `${examType} ${subj} EASY >= 10 olmalı`);
+      assert.ok(bank.byExamSubjectDifficulty[examType][subj].MEDIUM.length >= 10, `${examType} ${subj} MEDIUM >= 10 olmalı`);
+      assert.ok(bank.byExamSubjectDifficulty[examType][subj].HARD.length >= 10, `${examType} ${subj} HARD >= 10 olmalı`);
+    }
+  }
+
+  const aytQuestions = selectMatchQuestions(bank, {
+    examType: 'AYT',
+    commonSubjects: ['biyoloji', 'matematik', 'turkce'],
+    averageElo: 1300,
+    count: 5,
+  });
+  assert.equal(aytQuestions.length, 5);
+
+  const golgiQ = bank.allQuestions.find((q) => q.externalId === 'q_hs_018');
+  assert.ok(golgiQ, 'Golgi hotspot sorusu (q_hs_018) bulunmalı');
+  assert.equal(golgiQ.interactiveQuestion.payload.imageUrl, '/eukaryotic-cell.svg');
+});
+

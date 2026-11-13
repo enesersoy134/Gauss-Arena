@@ -10,6 +10,7 @@
       "externalId": "TYT-TUR-H-001",
       "subTopic": "Cümle Türleri",
       "text": "\"Sanatçı, eserinde doğayı betimlerken okurun hayal gücüne de geniş bir alan bırakıyor.\" cümlesi yapıca nasıl bir cümledir?",
+      "explanation": "İçinde fiilimsi (\"betimlerken\" zarf-fiil) bulunan tek yüklemli cümleler girişik birleşik cümledir.",
       "imageUrl": null,
       "options": [
         "Basit cümle",
@@ -23,6 +24,7 @@
       "externalId": "TYT-TUR-H-002",
       "subTopic": "Fiilde Çatı",
       "text": "Aşağıdaki cümlelerin hangisinde yüklem edilgen çatılı bir fiildir?",
+      "explanation": "\"Açıklandı\" yükleminde işi yapan gerçek özne belli değildir; \"sınav sonuçları\" sözde öznedir (edilgen çatı).",
       "imageUrl": null,
       "options": [
         "Çocuklar bahçede neşeyle koşuşturdu.",
@@ -36,6 +38,7 @@
       "externalId": "TYT-TUR-H-003",
       "subTopic": "Yazım Kuralları - Birleşik Sözcükler",
       "text": "Aşağıdaki birleşik sözcüklerden hangisinin yazımı yanlıştır?",
+      "explanation": "Ses düşmesi veya türemesi olmayan yardımcı fiilli birleşik fiiller ayrı yazılır: \"fark etmek\" olmalıdır.",
       "imageUrl": null,
       "options": [
         "Başvuru",
@@ -49,6 +52,7 @@
       "externalId": "TYT-TUR-H-004",
       "subTopic": "Karma Dil Bilgisi",
       "text": "\"Karanlık sokaklardan geçerken adımlarını hızlandırdı.\" cümlesinde aşağıdakilerden hangisi yoktur?",
+      "explanation": "\"Karanlık sokaklar\" sıfat tamlamasıdır, \"geçerken\" zarf-fiildir, \"adımlarını\"nda ikinci -ı belirtme durum ekidir; belirtili isim tamlaması yoktur.",
       "imageUrl": null,
       "options": [
         "Niteleme sıfatı",
@@ -62,6 +66,7 @@
       "externalId": "TYT-TUR-H-005",
       "subTopic": "Noktalama İşaretleri",
       "text": "Cümle içinde virgüllerle ayrılmış tür veya takımları birbirinden ayırmak için hangi noktalama işareti kullanılır?",
+      "explanation": "Virgüllerle ayrılmış kümeleri birbirinden ayırmak için noktalı virgül (;) kullanılır.",
       "imageUrl": null,
       "options": [
         "İki nokta",
@@ -75,6 +80,7 @@
       "externalId": "TYT-TUR-H-006",
       "subTopic": "Sözcük Türleri - Zamirler",
       "text": "\"Bunu sana kim söylediyse doğruyu anlatmamış.\" cümlesinde kaç tane zamir (adıl) vardır?",
+      "explanation": "\"Bunu\" (işaret zamiri), \"sana\" (kişi zamiri) ve \"kim\" (soru zamiri) olmak üzere 3 zamir vardır.",
       "imageUrl": null,
       "options": [
         "1",
@@ -83,6 +89,62 @@
         "4"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-H-007",
+      "subTopic": "Ek Fiil (Ek Eylem)",
+      "text": "Aşağıdaki cümlelerin hangisinde ek fiil, basit zamanlı bir fiili birleşik zamanlı yapma göreviyle kullanılmıştır?",
+      "explanation": "\"Gider-di-k\" fiilinde geniş zamanın hikayesi (birleşik zaman) ek fiille kurulmuştur.",
+      "imageUrl": null,
+      "options": [
+        "Hava bugün oldukça soğuktu.",
+        "En sevdiği mevsim ilkbaharmış.",
+        "Çocukken her yaz köye giderdik.",
+        "Sınıfın en çalışkan öğrencisi odur."
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-H-008",
+      "subTopic": "Anlatım Bozuklukları - Dil Bilgisi",
+      "text": "\"Öğrencilere konuyu ayrıntılı anlattı ve soru çözdürdü.\" cümlesindeki öge eksikliği hangisidir?",
+      "explanation": "İlk cümledeki \"konuyu\" nesnesi ikinci yükleme uymaz; ikinci yüklemden önce \"onlara\" veya \"öğrencilere\" dolaylı tümleci ortaktır ancak \"konuyu\" nesnesi ortak olamaz (nesne/tümleç uyuşmazlığı).",
+      "imageUrl": null,
+      "options": [
+        "Özne eksikliği",
+        "Dolaylı tümleç eksikliği",
+        "Belirtili nesne eksikliği",
+        "Zarf tümleci eksikliği"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-TUR-H-009",
+      "subTopic": "Düşünceyi Geliştirme Yolları",
+      "text": "Bir yazarın kendi görüşünü desteklemek amacıyla alanında uzman bir kişinin sözünü tırnak içinde doğrudan aktarmasına ne ad verilir?",
+      "explanation": "Uzman bir kişinin adını ve sözünü doğrudan kullanmaya tanık gösterme denir.",
+      "imageUrl": null,
+      "options": [
+        "Örnekleme",
+        "Tanık gösterme (Alıntı yapma)",
+        "Karşılaştırma",
+        "Benzetme"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-TUR-H-010",
+      "subTopic": "Cümlenin Ögeleri - Vurgu",
+      "text": "Yüklemi fiil olan kurallı bir Türkçe cümlede vurgu hangi öge üzerindedir?",
+      "explanation": "Fiil cümlelerinde vurgu, yüklemden hemen önce gelen öge üzerindedir.",
+      "imageUrl": null,
+      "options": [
+        "Her zaman öznede",
+        "Yüklemden hemen önceki ögede",
+        "Cümlenin en başında",
+        "Yüklemden sonraki ögede"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }

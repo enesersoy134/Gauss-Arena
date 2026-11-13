@@ -1,11 +1,12 @@
 /**
- * 14 İnteraktif Soru Tipini (18 Zengin Soru) Temsil Eden Backend Havuzu
+ * 14 İnteraktif Soru Tipini (32 Zengin TYT & AYT Sorusu) Temsil Eden Backend Havuzu
  * Ortak Veri Kontratı: QuestionRenderer ve DuelSession ile %100 uyumlu
  */
 
 const RAW_INTERACTIVE_QUESTIONS = [
   {
     id: 'q_uc_test_001',
+    examType: 'AYT',
     subject: 'matematik',
     topic: 'Türev ve Teğet Eğimi',
     type: 'universal_choice',
@@ -24,6 +25,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_uc_tf_002',
+    examType: 'TYT',
     subject: 'fizik',
     topic: 'Dalgalar ve Ses',
     type: 'universal_choice',
@@ -42,6 +44,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_uc_comp_003',
+    examType: 'TYT',
     subject: 'matematik',
     topic: 'Trigonometrik Değerler',
     type: 'universal_choice',
@@ -64,6 +67,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_uc_odd_004',
+    examType: 'TYT',
     subject: 'kimya',
     topic: 'Periyodik Sistem ve Element Sınıfları',
     type: 'universal_choice',
@@ -82,6 +86,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_of_seq_005',
+    examType: 'TYT',
     subject: 'biyoloji',
     topic: 'Hücre Bölünmesi (Mitoz)',
     type: 'ordering_and_formula',
@@ -99,6 +104,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_of_form_006',
+    examType: 'TYT',
     subject: 'fizik',
     topic: "Newton'un Hareket Yasaları",
     type: 'ordering_and_formula',
@@ -116,6 +122,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_pm_007',
+    examType: 'AYT',
     subject: 'matematik',
     topic: 'Temel Türev Alma Kuralları',
     type: 'pair_matching',
@@ -137,6 +144,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_sw_008',
+    examType: 'TYT',
     subject: 'fizik',
     topic: 'Fiziksel Büyüklükler (Skaler vs Vektörel)',
     type: 'swipe_grouping',
@@ -160,6 +168,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_np_009',
+    examType: 'TYT',
     subject: 'kimya',
     topic: 'Mol Kavramı ve Bağıl Molekül Kütlesi',
     type: 'numpad_closest',
@@ -179,6 +188,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_mb_010',
+    examType: 'TYT',
     subject: 'biyoloji',
     topic: 'Hücre Zarından Madde Geçişleri',
     type: 'multi_select_bubble',
@@ -202,6 +212,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_sb_011',
+    examType: 'TYT',
     subject: 'kimya',
     topic: 'Kimyasal Tepkime Denkleştirme',
     type: 'stepper_balance',
@@ -223,6 +234,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_stb_012',
+    examType: 'TYT',
     subject: 'matematik',
     topic: 'Birinci Dereceden Denklemler',
     type: 'spot_the_bug',
@@ -244,6 +256,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_pc_013',
+    examType: 'TYT',
     subject: 'kimya',
     topic: 'Periyodik Sistem ve Elementler',
     type: 'progressive_clues',
@@ -266,6 +279,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_tc_014',
+    examType: 'TYT',
     subject: 'fizik',
     topic: 'Elektrik Akımı ve Direnç Bağlantıları',
     type: 'target_combination',
@@ -289,6 +303,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_cc_015',
+    examType: 'TYT',
     subject: 'biyoloji',
     topic: 'Hücresel Enerji Dönüşümleri',
     type: 'chain_conversion',
@@ -314,6 +329,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_mt_016',
+    examType: 'TYT',
     subject: 'biyoloji',
     topic: 'Hücre Bölünmeleri Karşılaştırması',
     type: 'matrix_toggle',
@@ -342,6 +358,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_sl_017',
+    examType: 'AYT',
     subject: 'fizik',
     topic: 'Tork ve Kaldıraç Dengesi',
     type: 'slider',
@@ -363,6 +380,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
   },
   {
     id: 'q_hs_018',
+    examType: 'TYT',
     subject: 'biyoloji',
     topic: 'Hücre Organelleri',
     type: 'hotspot',
@@ -370,21 +388,340 @@ const RAW_INTERACTIVE_QUESTIONS = [
     timeLimitSeconds: 15,
     points: 150,
     prompt: "Verilen ökaryot hücre modeli üzerinde 'Golgi Cisimciği'nin bulunduğu bölgeye dokunun!",
-    explanation: 'Golgi cisimciği üstü üste dizilmiş yassı keseciklerden oluşur; protein ve lipitlerin paketlenmesinden ve salgılanmasından sorumludur.',
+    explanation: 'Golgi cisimciği üst üste dizilmiş yassı keseciklerden (sisternalardan) oluşur; protein ve lipitlerin paketlenmesinden ve salgılanmasından sorumludur.',
     payload: {
-      imageUrl: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: '/eukaryotic-cell.svg',
       imageAlt: 'Ökaryot hücre şeması ve organelleri',
       regions: [
         { id: 'reg_nucleus', label: 'Çekirdek', xPercent: 48, yPercent: 50, radiusPercent: 12 },
         { id: 'reg_golgi', label: 'Golgi Cisimciği', xPercent: 65, yPercent: 62, radiusPercent: 8 },
         { id: 'reg_mito', label: 'Mitokondri', xPercent: 28, yPercent: 38, radiusPercent: 8 },
+        { id: 'reg_vacuole', label: 'Koful', xPercent: 29, yPercent: 69, radiusPercent: 8 },
       ],
       correctRegionId: 'reg_golgi',
     },
   },
+  {
+    id: 'q_hs_019',
+    examType: 'AYT',
+    subject: 'matematik',
+    topic: 'Parabol ve Tepe Noktası',
+    type: 'hotspot',
+    difficulty: 'orta',
+    timeLimitSeconds: 15,
+    points: 160,
+    prompt: 'Koordinat düzleminde verilen f(x) = x² - 4 parabolünün Tepe Noktasının (T) bulunduğu bölgeye dokunun!',
+    explanation: 'f(x) = x² - 4 parabolünün simetri ekseni r = 0 ve minimum değeri k = -4 olduğundan tepe noktası T(0, -4) noktasıdır.',
+    payload: {
+      imageUrl: '',
+      imageAlt: 'f(x) = x² - 4 parabol grafiği',
+      regions: [
+        { id: 'reg_vertex', label: 'T(0, -4)', xPercent: 50, yPercent: 74, radiusPercent: 8 },
+        { id: 'reg_root_left', label: 'Kök (-2, 0)', xPercent: 35, yPercent: 50, radiusPercent: 8 },
+        { id: 'reg_root_right', label: 'Kök (+2, 0)', xPercent: 65, yPercent: 50, radiusPercent: 8 },
+        { id: 'reg_origin', label: 'Orijin (0, 0)', xPercent: 50, yPercent: 50, radiusPercent: 8 },
+      ],
+      correctRegionId: 'reg_vertex',
+    },
+  },
+  {
+    id: 'q_pm_020',
+    examType: 'AYT',
+    subject: 'turkce',
+    topic: 'Cumhuriyet Dönemi Roman ve Yazar Eşleştirmesi',
+    type: 'pair_matching',
+    difficulty: 'orta',
+    timeLimitSeconds: 30,
+    points: 200,
+    prompt: 'Sol sütundaki başyapıt romanları sağ sütundaki yazarlarımızla eşleştirin.',
+    explanation: 'Tutunamayanlar -> Oğuz Atay, Saatleri Ayarlama Enstitüsü -> Ahmet Hamdi Tanpınar, İnce Memed -> Yaşar Kemal, Kürk Mantolu Madonna -> Sabahattin Ali.',
+    payload: {
+      leftColumnTitle: 'Roman',
+      rightColumnTitle: 'Yazar',
+      pairs: [
+        { pairId: 'lit_1', leftText: 'Tutunamayanlar', rightText: 'Oğuz Atay' },
+        { pairId: 'lit_2', leftText: 'Saatleri Ayarlama Enstitüsü', rightText: 'Ahmet Hamdi Tanpınar' },
+        { pairId: 'lit_3', leftText: 'İnce Memed', rightText: 'Yaşar Kemal' },
+        { pairId: 'lit_4', leftText: 'Kürk Mantolu Madonna', rightText: 'Sabahattin Ali' },
+      ],
+    },
+  },
+  {
+    id: 'q_sw_021',
+    examType: 'AYT',
+    subject: 'kimya',
+    topic: 'Kimyasal Tepkimelerde Enerji (Endotermik vs Ekzotermik)',
+    type: 'swipe_grouping',
+    difficulty: 'orta',
+    timeLimitSeconds: 25,
+    points: 200,
+    prompt: 'Verilen olayları SOLA (Endotermik / Isı Alan) veya SAĞA (Ekzotermik / Isı Veren) kaydırarak sınıflandırın!',
+    explanation: 'Erime, buharlaşma ve azot gazının yanması ısı alan (endotermik, ΔH > 0); doğalgazın yanması, nötralleşme ve donma ısı veren (ekzotermik, ΔH < 0) olaylardır.',
+    payload: {
+      leftCategory: { id: 'left', label: '⬅️ Endotermik (ΔH > 0)' },
+      rightCategory: { id: 'right', label: 'Ekzotermik (ΔH < 0) ➡️' },
+      cards: [
+        { id: 'e1', text: 'Buzun Erimesi', correctCategory: 'left' },
+        { id: 'e2', text: 'Doğalgazın Yanması', correctCategory: 'right' },
+        { id: 'e3', text: 'Suyun Buharlaşması', correctCategory: 'left' },
+        { id: 'e4', text: 'Asit-Baz Nötralleşmesi', correctCategory: 'right' },
+        { id: 'e5', text: 'Azot Gazının Yanması', correctCategory: 'left' },
+        { id: 'e6', text: 'Suyun Donması', correctCategory: 'right' },
+      ],
+    },
+  },
+  {
+    id: 'q_of_seq_022',
+    examType: 'AYT',
+    subject: 'biyoloji',
+    topic: 'Oksijenli Solunum Evreleri',
+    type: 'ordering_and_formula',
+    difficulty: 'zor',
+    timeLimitSeconds: 25,
+    points: 180,
+    prompt: 'Ökaryot bir hücrede glikozun oksijenli solunumla yıkım evrelerini gerçekleşme sırasına göre dizin.',
+    explanation: 'Oksijenli solunum sırasıyla: Glikoliz (Sitoplazma) -> Pirüvat Oksidasyonu -> Krebs Döngüsü (Matriks) -> ETS (Krista) aşamalarıyla gerçekleşir.',
+    payload: {
+      mode: 'sequence',
+      directionLabel: 'İlk Evreden -> Son Evreye',
+      items: ['Krebs Döngüsü', 'Glikoliz', 'ETS (Elektron Taşıma Sistemi)', 'Pirüvat Oksidasyonu'],
+      correctOrder: ['Glikoliz', 'Pirüvat Oksidasyonu', 'Krebs Döngüsü', 'ETS (Elektron Taşıma Sistemi)'],
+    },
+  },
+  {
+    id: 'q_of_form_023',
+    examType: 'AYT',
+    subject: 'fizik',
+    topic: 'İdeal Gaz ve Sığaç Formülü',
+    type: 'ordering_and_formula',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 150,
+    prompt: 'Bir kondansatörde (sığaçta) depolanan elektrik yükü formülünü blokları doğru sırayla yerleştirerek kurun:',
+    explanation: 'Kondansatörde depolanan yük, sığa ile gerilimin çarpımına eşittir: Q = C × V.',
+    payload: {
+      mode: 'formula_builder',
+      template: '[ ? ] = [ ? ] × [ ? ]',
+      items: ['C', 'Q', 'V', 'R', 'I'],
+      correctOrder: ['Q', 'C', 'V'],
+    },
+  },
+  {
+    id: 'q_np_024',
+    examType: 'AYT',
+    subject: 'matematik',
+    topic: 'Logaritma Hesaplama',
+    type: 'numpad_closest',
+    difficulty: 'kolay',
+    timeLimitSeconds: 18,
+    points: 150,
+    prompt: 'log₂(64) + log₃(81) + log₅(25) işleminin sonucu kaçtır?',
+    explanation: 'log₂(2⁶) = 6, log₃(3⁴) = 4 ve log₅(5²) = 2 olduğundan 6 + 4 + 2 = 12 bulunur.',
+    payload: {
+      correctAnswer: 12,
+      unit: '',
+      allowDecimals: false,
+      allowNegative: false,
+      min: 0,
+      max: 100,
+    },
+  },
+  {
+    id: 'q_mb_025',
+    examType: 'TYT',
+    subject: 'turkce',
+    topic: 'Yazım Kuralları (Birleşik Sözcükler)',
+    type: 'multi_select_bubble',
+    difficulty: 'orta',
+    timeLimitSeconds: 20,
+    points: 180,
+    prompt: 'TDK Yazım Kılavuzuna göre yazımı DOĞRU olan 3 sözcüğü seçerek baloncukları patlatın!',
+    explanation: 'Öngörü, Başvuru ve Vazgeçmek bitişik yazılır (doğru). "Her şey", "fark etmek" ve "ya da" ise ayrı yazılmalıdır.',
+    payload: {
+      instruction: 'Yazımı DOĞRU olan 3 sözcüğü seçin:',
+      minRequiredCorrect: 3,
+      items: [
+        { id: 'w1', text: 'Öngörü', isCorrect: true },
+        { id: 'w2', text: 'Herşey', isCorrect: false },
+        { id: 'w3', text: 'Başvuru', isCorrect: true },
+        { id: 'w4', text: 'Farketmek', isCorrect: false },
+        { id: 'w5', text: 'Vazgeçmek', isCorrect: true },
+        { id: 'w6', text: 'Yada', isCorrect: false },
+      ],
+    },
+  },
+  {
+    id: 'q_sb_026',
+    examType: 'AYT',
+    subject: 'kimya',
+    topic: 'Kimyasal Denge ve Amonyak Sentezi',
+    type: 'stepper_balance',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 170,
+    prompt: 'Haber-Bosch amonyak sentezi tepkimesini en küçük tam sayılarla denkleştirin:',
+    explanation: '1 N₂ + 3 H₂ → 2 NH₃ katsayılarıyla her iki tarafta 2 azot ve 6 hidrojen atomu eşitlenir.',
+    payload: {
+      equationTemplate: '[ {s1} ] N₂(g) + [ {s2} ] H₂(g) ⇌ [ {s3} ] NH₃(g)',
+      targetDescription: 'Azot (N) ve Hidrojen (H) atom sayılarını dengeleyin',
+      slots: [
+        { id: 's1', label: 'N₂', initialValue: 1, correctValue: 1, min: 1, max: 6 },
+        { id: 's2', label: 'H₂', initialValue: 1, correctValue: 3, min: 1, max: 6 },
+        { id: 's3', label: 'NH₃', initialValue: 1, correctValue: 2, min: 1, max: 6 },
+      ],
+    },
+  },
+  {
+    id: 'q_stb_027',
+    examType: 'AYT',
+    subject: 'matematik',
+    topic: 'Logaritma Denklemleri',
+    type: 'spot_the_bug',
+    difficulty: 'zor',
+    timeLimitSeconds: 22,
+    points: 180,
+    prompt: 'log₂(x) + log₂(x - 2) = 3 denklemini çözen öğrencinin yaptığı İLK HATALI adımı seçin:',
+    explanation: '1. Adımda aynı tabandaki logaritmaların toplamı çarpıma dönüşmeliydi: log₂(x · (x - 2)) = 3 olmalıydı, toplam olarak yazılması hatalıdır.',
+    payload: {
+      contextPrompt: 'Denklem: log₂(x) + log₂(x - 2) = 3',
+      displayLayout: 'vertical_steps',
+      blocks: [
+        { id: 'lb1', blockText: '1. Adım: log₂(x + x - 2) = 3', isBug: true, feedbackNote: 'Logaritma özelliği hatası: log₂(x · (x - 2)) = 3 olmalıydı!' },
+        { id: 'lb2', blockText: '2. Adım: 2x - 2 = 2³', isBug: false },
+        { id: 'lb3', blockText: '3. Adım: 2x = 10', isBug: false },
+        { id: 'lb4', blockText: '4. Adım: x = 5', isBug: false },
+      ],
+    },
+  },
+  {
+    id: 'q_pc_028',
+    examType: 'AYT',
+    subject: 'biyoloji',
+    topic: 'Endokrin Sistem ve Hormonlar',
+    type: 'progressive_clues',
+    difficulty: 'orta',
+    timeLimitSeconds: 20,
+    points: 400,
+    prompt: 'İpuçlarını takip ederek insan vücudundaki bu kritik hormonu en erken aşamada bulun!',
+    explanation: 'İnsülin hormonu pankreasın Langerhans adacıklarındaki Beta hücrelerinden salgılanır ve kan şekerini düşürür.',
+    payload: {
+      options: ['Glukagon', 'İnsülin', 'Adrenalin', 'Tiroksin'],
+      correctIndex: 1,
+      revealIntervalSeconds: 4,
+      clues: [
+        { stage: 1, secondsToReveal: 0, clueText: 'Peptit (protein) yapılı bir hormonum ve hedef hücre zarındaki reseptörlere bağlanırım.', pointsReward: 400 },
+        { stage: 2, secondsToReveal: 4, clueText: 'Pankreasın Langerhans adacıklarındaki Beta (β) hücrelerinden salgılanırım.', pointsReward: 300 },
+        { stage: 3, secondsToReveal: 8, clueText: 'Kandaki fazla glikozun çizgili kas ve karaciğerde glikojen olarak depolanmasını sağlarım.', pointsReward: 200 },
+        { stage: 4, secondsToReveal: 12, clueText: 'Eksikliğimde veya reseptör direncinde Diyabet (Şeker Hastalığı) ortaya çıkar.', pointsReward: 100 },
+      ],
+    },
+  },
+  {
+    id: 'q_tc_029',
+    examType: 'AYT',
+    subject: 'matematik',
+    topic: 'Trigonometrik Özdeşlikler',
+    type: 'target_combination',
+    difficulty: 'kolay',
+    timeLimitSeconds: 15,
+    points: 150,
+    prompt: 'Her x gerçel sayısı için toplamları daima 1 olan İKİ trigonometrik ifadeyi seçin:',
+    explanation: 'Temel Pisagor trigonometrik özdeşliğine göre sin²(x) + cos²(x) = 1 olur.',
+    payload: {
+      targetBadge: 'Hedef Toplam = 1',
+      ruleHint: 'Toplamları özdeş olarak 1 veren 2 ifadeyi seçin',
+      options: [
+        { id: 't1', label: 'sin²(x)' },
+        { id: 't2', label: 'tan²(x)' },
+        { id: 't3', label: 'cos²(x)' },
+        { id: 't4', label: 'sec²(x)' },
+        { id: 't5', label: '2·sin(x)' },
+      ],
+      correctPairIds: ['t1', 't3'],
+    },
+  },
+  {
+    id: 'q_cc_030',
+    examType: 'AYT',
+    subject: 'biyoloji',
+    topic: 'Santral Dogma (Genden Proteine)',
+    type: 'chain_conversion',
+    difficulty: 'orta',
+    timeLimitSeconds: 20,
+    points: 170,
+    prompt: "Hücrede genetik bilginin DNA'dan proteine aktarılma zincirini (Santral Dogma) tamamlayın:",
+    explanation: "DNA'daki şifre transkripsiyonla mRNA'ya yazılır, mRNA ise ribozomda translasyonla polipeptit (protein) zincirine dönüştürülür.",
+    payload: {
+      startEntity: 'DNA (Genetik Şifre)',
+      steps: [
+        { stepNumber: 1, arrowLabel: 'Transkripsiyon (Yazılım)', correctValue: 'mRNA (Elçi RNA)' },
+        { stepNumber: 2, arrowLabel: 'Translasyon (Ribozomda Okuma)', correctValue: 'Polipeptit (Protein)' },
+      ],
+      poolOptions: [
+        'mRNA (Elçi RNA)',
+        'Polipeptit (Protein)',
+        'Glikojen',
+        'Kolesterol',
+        'Kitin',
+      ],
+    },
+  },
+  {
+    id: 'q_mt_031',
+    examType: 'TYT',
+    subject: 'kimya',
+    topic: 'Asitler ve Bazlar Karşılaştırması',
+    type: 'matrix_toggle',
+    difficulty: 'kolay',
+    timeLimitSeconds: 22,
+    points: 180,
+    prompt: 'Oda koşullarındaki (25 °C) sulu asit ve baz çözeltileri için tabloyu (✓ / ✗) olarak doldurun:',
+    explanation: '25 °C sıcaklıkta asitlerin pH değeri 7\'den küçüktür (✓), bazların 7\'den büyüktür (✗). Her ikisinin sulu çözeltisi de iyon içerdiğinden elektrik akımını iletir (✓).',
+    payload: {
+      tablePrompt: 'Her hücreyi ✓ (Evet) veya ✗ (Hayır) olarak işaretleyin:',
+      rows: [
+        { id: 'r_asit', title: 'Asit Sulu Çözeltisi' },
+        { id: 'r_baz', title: 'Baz Sulu Çözeltisi' },
+      ],
+      columns: [
+        { id: 'c_ph7', title: "pH Değeri 7'den Küçüktür" },
+        { id: 'c_iletken', title: 'Elektrik Akımını İletir' },
+      ],
+      answers: [
+        { rowId: 'r_asit', colId: 'c_ph7', expectedBool: true },
+        { rowId: 'r_asit', colId: 'c_iletken', expectedBool: true },
+        { rowId: 'r_baz', colId: 'c_ph7', expectedBool: false },
+        { rowId: 'r_baz', colId: 'c_iletken', expectedBool: true },
+      ],
+    },
+  },
+  {
+    id: 'q_uc_comp_032',
+    examType: 'AYT',
+    subject: 'fizik',
+    topic: 'Elektromanyetik Dalgalar ve Foton Enerjisi',
+    type: 'universal_choice',
+    difficulty: 'zor',
+    timeLimitSeconds: 15,
+    points: 120,
+    prompt: 'Görünür ışık spektrumundaki iki fotonun enerjilerini karşılaştırarak doğru ilişkiyi seçin:',
+    explanation: 'Mavi ışığın frekansı kırmızı ışıktan daha büyüktür (dalga boyu daha küçüktür). E = h·f bağıntısına göre mavi fotonun enerjisi > kırmızı fotonun enerjisidir.',
+    payload: {
+      variant: 'comparison',
+      optionCount: 3,
+      comparisonItems: {
+        left: 'Mavi Işık Fotonunun Enerjisi',
+        right: 'Kırmızı Işık Fotonunun Enerjisi',
+      },
+      options: ['<', '=', '>'],
+      correctIndex: 2,
+      shuffleOptions: false,
+    },
+  },
 ];
 
-function normalizeInteractiveQuestion(q, examType = 'TYT') {
+function normalizeInteractiveQuestion(q, examTypeOverride) {
+  const examType = (examTypeOverride || q.examType || 'TYT').toUpperCase();
   const diffNorm = q.difficulty === 'kolay' ? 'EASY' : q.difficulty === 'orta' ? 'MEDIUM' : 'HARD';
 
   let options = [];
@@ -403,7 +740,7 @@ function normalizeInteractiveQuestion(q, examType = 'TYT') {
 
   return {
     externalId: q.id,
-    examType: examType.toUpperCase(),
+    examType,
     subject: q.subject.toLowerCase(),
     difficulty: diffNorm,
     subTopic: q.topic || '',
@@ -418,7 +755,15 @@ function normalizeInteractiveQuestion(q, examType = 'TYT') {
   };
 }
 
-const INTERACTIVE_QUESTIONS = RAW_INTERACTIVE_QUESTIONS.map(q => normalizeInteractiveQuestion(q, 'TYT'));
+// Hem TYT hem AYT maçlarında zengin interaktif soruların seçilebilmesi için
+// her soruyu kendi sınav türünde ve ortak havuzda normalize et:
+const INTERACTIVE_QUESTIONS = [
+  ...RAW_INTERACTIVE_QUESTIONS.map((q) => normalizeInteractiveQuestion(q, 'TYT')),
+  ...RAW_INTERACTIVE_QUESTIONS.map((q) => ({
+    ...normalizeInteractiveQuestion(q, 'AYT'),
+    externalId: `${q.id}_ayt`,
+  })),
+];
 
 module.exports = {
   RAW_INTERACTIVE_QUESTIONS,

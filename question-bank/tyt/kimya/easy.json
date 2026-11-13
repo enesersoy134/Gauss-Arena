@@ -9,7 +9,8 @@
     {
       "externalId": "TYT-KIM-E-001",
       "subTopic": "Kimya Bilimi",
-      "text": "Periyodik tabloda $$\text{Na}$$ sembolü ile gösterilen element aşağıdakilerden hangisidir?",
+      "text": "Periyodik tabloda Na sembolü ile gösterilen element aşağıdakilerden hangisidir?",
+      "explanation": "Na sembolü Sodyum (Natrium) elementine aittir.",
       "imageUrl": null,
       "options": [
         "Azot",
@@ -22,7 +23,8 @@
     {
       "externalId": "TYT-KIM-E-002",
       "subTopic": "Atom ve Periyodik Sistem",
-      "text": "Proton sayısı $$17$$, nötron sayısı $$18$$ olan klor atomunun kütle numarası kaçtır?",
+      "text": "Proton sayısı 17, nötron sayısı 18 olan klor atomunun kütle numarası kaçtır?",
+      "explanation": "Kütle numarası = Proton + Nötron = 17 + 18 = 35 olur.",
       "imageUrl": null,
       "options": [
         "17",
@@ -36,6 +38,7 @@
       "externalId": "TYT-KIM-E-003",
       "subTopic": "Maddenin Halleri",
       "text": "Maddenin katı halden doğrudan gaz haline geçmesi olayına ne ad verilir?",
+      "explanation": "Katı halden sıvılaşmadan doğrudan gaz haline geçişe süblimleşme denir.",
       "imageUrl": null,
       "options": [
         "Erime",
@@ -48,7 +51,8 @@
     {
       "externalId": "TYT-KIM-E-004",
       "subTopic": "Asitler ve Bazlar",
-      "text": "Oda koşullarında sulu çözeltisinin $$\\text{pH}$$ değeri $$7$$'den küçük olan maddeler için aşağıdakilerden hangisi doğrudur?",
+      "text": "Oda koşullarında sulu çözeltisinin pH değeri 7'den küçük olan maddeler için aşağıdakilerden hangisi doğrudur?",
+      "explanation": "25 °C sıcaklıkta pH < 7 olan çözeltiler asidiktir ve mavi turnusol kağıdını kırmızıya çevirir.",
       "imageUrl": null,
       "options": [
         "Baziktir",
@@ -61,7 +65,8 @@
     {
       "externalId": "TYT-KIM-E-005",
       "subTopic": "Kimyasal Türler",
-      "text": "$$\text{H}_2\text{O}$$ molekülünde hidrojen ve oksijen atomları arasındaki güçlü etkileşim türü hangisidir?",
+      "text": "H₂O molekülünde hidrojen ve oksijen atomları arasındaki güçlü etkileşim türü hangisidir?",
+      "explanation": "Farklı ametal atomları (H ve O) arasında elektron ortaklaşmasıyla polar kovalent bağ oluşur.",
       "imageUrl": null,
       "options": [
         "İyonik bağ",
@@ -75,6 +80,7 @@
       "externalId": "TYT-KIM-E-006",
       "subTopic": "Karışımlar",
       "text": "Aşağıdakilerden hangisi homojen bir karışıma (çözeltiye) örnektir?",
+      "explanation": "Tuzlu su her yerinde aynı özelliği gösteren homojen bir karışımdır (çözeltidir).",
       "imageUrl": null,
       "options": [
         "Ayran",
@@ -83,6 +89,62 @@
         "Zeytinyağlı su"
       ],
       "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-E-007",
+      "subTopic": "Kimya Güvenlik Sembolleri",
+      "text": "Üzerinde kuru kafa ve çapraz kemik piktogramı bulunan kimyasal madde şişesi hangi tehlikeyi ifade eder?",
+      "explanation": "Kuru kafa piktogramı maddenin toksik (zehirli) olduğunu gösterir.",
+      "imageUrl": null,
+      "options": [
+        "Yanıcı madde",
+        "Toksik (Zehirli) madde",
+        "Radyoaktif madde",
+        "Yakıcı madde"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-E-008",
+      "subTopic": "Doğa ve Kimya",
+      "text": "Suda kalsiyum (Ca²⁺) ve magnezyum (Mg²⁺) iyonlarının fazla miktarda bulunması suyun hangi özelliğini artırır?",
+      "explanation": "Ca²⁺ ve Mg²⁺ iyonları derişimi yüksek olan sulara sert su denir.",
+      "imageUrl": null,
+      "options": [
+        "Yumuşaklığını",
+        "Sertliğini",
+        "Asitliğini",
+        "Uçuculuğunu"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "TYT-KIM-E-009",
+      "subTopic": "Kimyasal Değişimler",
+      "text": "Aşağıdaki olaylardan hangisi kimyasal bir değişime örnektir?",
+      "explanation": "Demirin paslanması oksijenle gerçekleşen bir yanma (oksitlenme) tepkimesidir ve kimyasaldır.",
+      "imageUrl": null,
+      "options": [
+        "Buzun erimesi",
+        "Camın kırılması",
+        "Demirin paslanması",
+        "Şekerin suda çözünmesi"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "TYT-KIM-E-010",
+      "subTopic": "Bileşikler ve Yaygın Adları",
+      "text": "Formülü CaCO₃ olan bileşiğin yaygın adı aşağıdakilerden hangisidir?",
+      "explanation": "CaCO₃ (Kalsiyum karbonat) yaygın olarak kireç taşı olarak bilinir.",
+      "imageUrl": null,
+      "options": [
+        "Sönmemiş kireç",
+        "Kireç taşı",
+        "Yemek sodası",
+        "Sud kostik"
+      ],
+      "correctOptionIndex": 1
     }
   ]
 }
