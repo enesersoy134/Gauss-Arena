@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "matematik",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-MAT-E-001",
+      "subTopic": "Çarpanlar ve Katlar",
+      "text": "48 sayısının pozitif tam sayı bölenlerinden kaç tanesi tektir?",
+      "explanation": "48 = 2⁴ · 3¹. Tek bölenleri 1 ve 3 olmak üzere 2 tanedir.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-MAT-E-002",
+      "subTopic": "Üslü İfadeler",
+      "text": "5⁴ · 5⁻² işleminin sonucu kaçtır?",
+      "explanation": "Tabanlar aynıysa üsler toplanır: 5^(4 + (-2)) = 5² = 25 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "25",
+        "125",
+        "625"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-MAT-E-003",
+      "subTopic": "Kareköklü İfadeler",
+      "text": "√144 + √81 işleminin sonucu kaçtır?",
+      "explanation": "√144 = 12 ve √81 = 9 olduğundan 12 + 9 = 21 olur.",
+      "imageUrl": null,
+      "options": [
+        "19",
+        "21",
+        "23",
+        "25"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-MAT-E-004",
+      "subTopic": "Veri Analizi",
+      "text": "Bir daire grafiğinde 360° lik açının 90° si futbol oynayanları gösteriyorsa, futbol oynayanlar tüm grubun yüzde kaçıdır?",
+      "explanation": "90° / 360° = 1/4 = %25 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "%20",
+        "%25",
+        "%30",
+        "%40"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-MAT-E-005",
+      "subTopic": "Basit Olayların Olma Olasılığı",
+      "text": "1'den 10'a kadar (1 ve 10 dahil) numaralandırılmış kartlardan rastgele çekilen bir kartın asal sayı olma olasılığı kaçtır?",
+      "explanation": "Asal sayılar: 2, 3, 5, 7 (4 tane). Olasılık = 4/10 = 2/5 olur.",
+      "imageUrl": null,
+      "options": [
+        "2/5",
+        "1/2",
+        "3/10",
+        "3/5"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-MAT-E-006",
+      "subTopic": "Cebirsel İfadeler",
+      "text": "3(2x - 4) + 5 cebirsel ifadesinin en sade eşiti nedir?",
+      "explanation": "3·2x - 3·4 + 5 = 6x - 12 + 5 = 6x - 7 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "6x - 7",
+        "6x - 12",
+        "6x + 7",
+        "5x - 7"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-MAT-E-007",
+      "subTopic": "Birinci Dereceden Denklemler",
+      "text": "4x - 8 = 16 olduğuna göre x kaçtır?",
+      "explanation": "4x = 24 ⇒ x = 6 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-MAT-E-008",
+      "subTopic": "Koordinat Sistemi",
+      "text": "A(-3, 4) noktası koordinat sisteminde kaçıncı bölgededir?",
+      "explanation": "Apsisi negatif, ordinatı pozitif olan noktalar 2. bölgededir.",
+      "imageUrl": null,
+      "options": [
+        "1. Bölge",
+        "2. Bölge",
+        "3. Bölge",
+        "4. Bölge"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-MAT-E-009",
+      "subTopic": "Eğimsiz Doğrusal İlişkiler",
+      "text": "y = 3x doğrusunun eğimi kaçtır?",
+      "explanation": "y = mx biçimindeki doğrularda eğim m katsayısıdır, yani 3'tür.",
+      "imageUrl": null,
+      "options": [
+        "1/3",
+        "1",
+        "2",
+        "3"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-MAT-E-010",
+      "subTopic": "Eşitsizlikler",
+      "text": "x + 3 ≤ 8 eşitsizliğini sağlayan en büyük doğal sayı kaçtır?",
+      "explanation": "x ≤ 5 olduğundan en büyük doğal sayı 5 olur.",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

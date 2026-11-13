@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "biyoloji",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-BIY-M-001",
+      "subTopic": "Mendel Çaprazlaması (Aa × Aa)",
+      "text": "Melez sarı tohumlu iki bezelye (Aa × Aa) çaprazlandığında yeşil tohumlu (aa) bezelye oluşma olasılığı yüzde kaçtır?",
+      "explanation": "Aa × Aa çaprazlamasından AA, Aa, Aa, aa oluşur. Yeşil tohumlu olma ihtimali 1/4 = %25'tir.",
+      "imageUrl": null,
+      "options": [
+        "%25",
+        "%50",
+        "%75",
+        "%100"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-002",
+      "subTopic": "Besin Piramidinde Enerji Aktarımı",
+      "text": "Besin zincirinde üreticilerden tüketicilere doğru gidildikçe bir üst basamağa enerjinin yaklaşık yüzde kaçı aktarılır?",
+      "explanation": "%10 kuralına göre enerjinin yalnızca yaklaşık %10'u bir üst basamağa aktarılır, %90'ı ısı olarak kaybedilir.",
+      "imageUrl": null,
+      "options": [
+        "%1",
+        "%10",
+        "%50",
+        "%90"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-003",
+      "subTopic": "Doğal Seçilim Mekanizması",
+      "text": "Sanayi devrimi sonrasında ağaç gövdelerinin kararmasıyla koyu renkli güve kelebeklerinin hayatta kalıp beyazların avlanarak azalması neye örnektir?",
+      "explanation": "Çevre şartlarına uyum sağlayan bireylerin hayatta kalıp diğerlerinin elenmesi doğal seçilimdir.",
+      "imageUrl": null,
+      "options": [
+        "Yapay seçilim",
+        "Doğal seçilim",
+        "Modifikasyon",
+        "Kalıtsal olmayan varyasyon"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-004",
+      "subTopic": "DNA Replikasyonu (Eşlenme)",
+      "text": "Hücre bölünmesi öncesinde DNA'nın kendini eşlemesi sırasında sitoplazmadaki serbest nükleotid miktarı nasıl değişir?",
+      "explanation": "Çekirdekte yeni DNA zincirleri kurulurken sitoplazmadaki serbest nükleotidler çekirdeğe girer ve azalır.",
+      "imageUrl": null,
+      "options": [
+        "Sürekli artar",
+        "Sürekli azalır",
+        "Önce artar sonra azalır",
+        "Değişmez"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-005",
+      "subTopic": "Fotosentez Hızını Etkileyen Faktörler",
+      "text": "Fotosentez hızı ışığın dalga boyuna (rengine) göre değişir. Fotosentez en hızlı hangi ışık renklerinde gerçekleşir?",
+      "explanation": "Klorofil kırmızı ve mor ışığı en yüksek oranda soğurduğu için fotosentez bu ışıklarda en hızlıdır; yeşilde en yavaştır.",
+      "imageUrl": null,
+      "options": [
+        "Yalnızca yeşil ışıkta",
+        "Kırmızı ve mor ışıkta",
+        "Sarı ışıkta",
+        "Turuncu ışıkta"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-006",
+      "subTopic": "Biyolojik Birikim (Zehir Miktarı)",
+      "text": "Bir besin piramidinde üreticiden son tüketiciye doğru çıkıldıkça dokularda biriken zehirli madde miktarı nasıl değişir?",
+      "explanation": "Zehirli kimyasal maddeler üst basamaklara doğru birikerek çoğalır (Biyolojik Birikim artar).",
+      "imageUrl": null,
+      "options": [
+        "Sürekli azalır",
+        "Sürekli artar",
+        "Değişmez",
+        "Önce artar sonra azalır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-007",
+      "subTopic": "Fermantasyon Çeşitleri",
+      "text": "Yoğurt bakterilerinin ve yorulan insan çizgili kaslarının oksijensiz ortamda gerçekleştirdiği fermantasyon ürünü nedir?",
+      "explanation": "Çizgili kaslar ve yoğurt bakterileri laktik asit fermantasyonu yapar.",
+      "imageUrl": null,
+      "options": [
+        "Etil alkol",
+        "Laktik asit",
+        "Asetik asit",
+        "Glikoz"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-008",
+      "subTopic": "Cinsiyet Tayini",
+      "text": "İnsanlarda doğacak bir çocuğun erkek olma olasılığı yüzde kaçtır?",
+      "explanation": "Anne daima X kromozomu verir, babadan X veya Y gelme olasılığı %50'dir; çocuk %50 kız, %50 erkek olur.",
+      "imageUrl": null,
+      "options": [
+        "%25",
+        "%50",
+        "%75",
+        "%100"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-009",
+      "subTopic": "Ekolojik Ayak İzi",
+      "text": "Bireylerin ve toplumların tükettiği doğal kaynakların üretilmesi ve atıkların bertarafı için gereken biyolojik alana ne ad verilir?",
+      "explanation": "İnsan faaliyetlerinin doğada bıraktığı toplam yük ekolojik ayak izi kavramıyla ölçülür.",
+      "imageUrl": null,
+      "options": [
+        "Su ayak izi",
+        "Ekolojik ayak izi",
+        "Karbon dengesi",
+        "Biyokütle"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-M-010",
+      "subTopic": "Ayrıştırıcıların Ekosistemdeki Rolü",
+      "text": "Besin zincirinde ayrıştırıcıların (mantar ve bakteriler) yok olması ekosistemi nasıl etkiler?",
+      "explanation": "Ayrıştırıcılar organik atıkları inorganik minerallere dönüştürür; yokluklarında madde döngüsü kilitlenir.",
+      "imageUrl": null,
+      "options": [
+        "Madde döngüleri durur ve organik atıklar birikir",
+        "Üretici sayısı sonsuza kadar artar",
+        "Besin piramidi çöker ama döngü etkilenmez",
+        "Hiçbir canlı etkilenmez"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

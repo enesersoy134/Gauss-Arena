@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "turkce",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-TUR-M-001",
+      "subTopic": "İsim-Fiil Ekleri (Ma-ış-mak)",
+      "text": "Aşağıdaki cümlelerin hangisinde isim-fiil (mastar) kullanılmıştır?",
+      "explanation": "\"Okumak\" sözcüğündeki -mak eki isim-fiil ekidir.",
+      "imageUrl": null,
+      "options": [
+        "Gülerek yanıma geldi.",
+        "Kitap okumak ufku genişletir.",
+        "Koşan çocuk düştü.",
+        "Yarın erkenden yola çıkacağız."
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-002",
+      "subTopic": "Sıfat-Fiil (Ortaç)",
+      "text": "\"Dönülmez akşamın ufkundayız, vakit çok geç.\" dizesindeki sıfat-fiil hangisidir?",
+      "explanation": "\"Dönülmez akşam\" tamlamasında -mez eki almış \"dönülmez\" sözcüğü sıfat-fiildir.",
+      "imageUrl": null,
+      "options": [
+        "Dönülmez",
+        "Akşamın",
+        "Ufkundayız",
+        "Geç"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-M-003",
+      "subTopic": "Zarf-Fiil (Bağ-Fiil)",
+      "text": "Aşağıdaki cümlelerin hangisindeki zarf-fiil cümleye ZAMAN anlamı katmıştır?",
+      "explanation": "\"Çıkar çıkmaz\" (-r ... -mez) fiilimsisi \"Ne zaman geldi?\" sorusuna yanıt vererek zaman anlamı katar.",
+      "imageUrl": null,
+      "options": [
+        "Gülerek cevap verdi.",
+        "Soruları koşa koşa çözdü.",
+        "Okuldan çıkar çıkmaz eve geldi.",
+        "Ağlaya ağlaya anlattı."
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-M-004",
+      "subTopic": "Cümlenin Ögeleri (Nesne Bulma)",
+      "text": "\"Ali dün akşam güzel bir roman okudu.\" cümlesindeki belirtisiz nesne hangisidir?",
+      "explanation": "Yükleme sorulan \"Ali ne okudu?\" sorusunun cevabı \"güzel bir roman\" belirtisiz nesnedir.",
+      "imageUrl": null,
+      "options": [
+        "Dün akşam",
+        "Güzel bir roman",
+        "Ali",
+        "Okudu"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-005",
+      "subTopic": "Noktalı Virgül Kullanımı",
+      "text": "Ögeleri arasında virgül bulunan sıralı cümleleri birbirinden ayırmak için hangi noktalama işareti kullanılır?",
+      "explanation": "İçinde virgül bulunan sıralı cümleleri ayırmak için noktalı virgül (;) kullanılır.",
+      "imageUrl": null,
+      "options": [
+        "İki nokta",
+        "Noktalı virgül",
+        "Üç nokta",
+        "Kısa çizgi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-006",
+      "subTopic": "Yazım Kuralları (de / da Bağlacı)",
+      "text": "Aşağıdaki cümlelerin hangisinde \"de / da\" bağlacının yazımıyla ilgili bir YANLIŞLIK vardır?",
+      "explanation": "Doğru yazım \"O da gitti de gelmedi\" olup ayrı yazılmalıdır; ancak cümlede bitişik yazım hatası aranırsa kural gereği bağlaçlar ayrı yazılır.",
+      "imageUrl": null,
+      "options": [
+        "Sen de bizimle gel.",
+        "Evde kimse yoktu.",
+        "Kitapta güzel resimler var.",
+        "O da gitti de gelmedi."
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-TUR-M-007",
+      "subTopic": "Metin Türleri (Deneme - Makale)",
+      "text": "Yazarın kanıtlama amacı gütmeden, samimi bir dille, kendi kendisiyle konuşur gibi yazdığı düşünce yazısı hangisidir?",
+      "explanation": "Kanıtlama amacı gütmeyen, içtenlikle yazılan türe deneme denir; kanıtlama varsa makaledir.",
+      "imageUrl": null,
+      "options": [
+        "Makale",
+        "Deneme",
+        "Biyografi",
+        "Fıkra (Köşe Yazısı)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-008",
+      "subTopic": "Söz Sanatları (Kişileştirme)",
+      "text": "\"Rüzgâr dağların ardından şarkı söyleyerek geliyordu.\" cümlesindeki söz sanatı nedir?",
+      "explanation": "Şarkı söylemek insana ait bir özelliktir, rüzgâra aktarılarak kişileştirme yapılmıştır.",
+      "imageUrl": null,
+      "options": [
+        "Benzetme (Teşbih)",
+        "Kişileştirme (Teşhis)",
+        "Abartma (Mübalağa)",
+        "Tezat (Karşıtlık)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-009",
+      "subTopic": "Cümlede Anlam (Örtülü Anlam)",
+      "text": "\"Toplantıya Ahmet de katıldı.\" cümlesinden kesin olarak çıkarılabilecek örtülü anlam nedir?",
+      "explanation": "\"de\" bağlacı başkalarının da toplantıya katıldığını örtülü olarak ifade eder.",
+      "imageUrl": null,
+      "options": [
+        "Toplantıya sadece Ahmet katılmıştır",
+        "Ahmet toplantıyı yönetmiştir",
+        "Toplantıya Ahmet dışında başkaları da katılmıştır",
+        "Toplantı iptal edilmiştir"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-M-010",
+      "subTopic": "Fiilde Çatı (Geçişli - Geçişsiz)",
+      "text": "Aşağıdaki yüklemlerden hangisi nesne alabilen (GEÇİŞLİ) bir fiildir?",
+      "explanation": "\"Onu yazmak\" anlamlıdır ve nesne alabilir (geçişlidir); onu uyumak veya onu gülmek denemez.",
+      "imageUrl": null,
+      "options": [
+        "Uyumak",
+        "Gülmek",
+        "Yazmak",
+        "Oturmak"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

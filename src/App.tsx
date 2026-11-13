@@ -573,9 +573,8 @@ export default function App() {
             }`}
           >
             <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
-            <span className="sm:hidden">Tekrar</span>
-            <span className="hidden sm:inline md:hidden">Eksik Konularım</span>
-            <span className="hidden md:inline">Eksik Konularım & Kaynaklar</span>
+            <span className="sm:hidden">Eksikler</span>
+            <span>Eksik Konularım</span>
             {revisionItems.length > 0 && (
               <span
                 className={`text-[9px] sm:text-[11px] font-mono font-bold px-1 sm:px-2 py-0.2 sm:py-0.5 rounded-full shrink-0 ${
@@ -877,59 +876,8 @@ export default function App() {
               </div>
             </div>
 
-            {/* SAĞ KOLON: Canlı Eşleşme Radarı & Lig Sıralaması (5 Kolon) */}
+            {/* SAĞ KOLON: Haftalık Lig Sıralaması (5 Kolon) */}
             <div className="lg:col-span-5 flex flex-col gap-6">
-              {/* Canlı Eşleşme Kuyruğu Radarı */}
-              <div className="game-card p-6 flex flex-col gap-4 border-orange-500/30">
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                  <div className="flex items-center gap-2">
-                    <Compass className="w-4 h-4 text-[#F14E13]" />
-                    <h3 className="font-poppins font-bold text-sm text-white">Canlı Eşleşme Radarı</h3>
-                  </div>
-                  <span className="text-[11px] font-mono text-emerald-400 font-semibold flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                    <span>{backendState.queueSnapshot.length} Oyuncu Kuyrukta</span>
-                  </span>
-                </div>
-
-                {backendState.queueSnapshot.length === 0 ? (
-                  <div className="py-8 text-center text-xs text-[#B5CBC8]/70 font-mono bg-[#0F0510]/60 rounded-xl border border-white/5">
-                    Şu an kuyrukta bekleyen oyuncu yok.
-                    <br />
-                    Hemen sıraya girerek ilk eşleşmeyi başlatın!
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-2 max-h-60 overflow-y-auto pr-1">
-                    {backendState.queueSnapshot.map((q) => {
-                      const isMe = q.playerId === currentPlayerId;
-                      return (
-                        <div
-                          key={q.playerId}
-                          className={`p-3 rounded-xl flex items-center justify-between text-xs transition-all ${
-                            isMe
-                              ? 'bg-[#F14E13]/20 border border-[#F14E13]/50 text-white shadow-sm'
-                              : 'bg-[#0F0510] border border-white/5 text-[#B5CBC8]'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2.5">
-                            <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
-                            <div>
-                              <span className="font-bold text-white">{q.name.split('(')[0].trim()}</span>
-                              <div className="text-[10px] font-mono opacity-80">
-                                {q.elo} ELO • {q.examType}
-                              </div>
-                            </div>
-                          </div>
-                          <span className="font-mono text-[11px] text-amber-300">
-                            {Math.floor(q.waitSeconds || 0)} sn
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
               {/* Haftalık ELO Sıralaması */}
               <div className="game-card p-6 flex flex-col gap-4">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
@@ -941,7 +889,10 @@ export default function App() {
                 </div>
 
                 <div className="divide-y divide-white/5">
-                  {backendState.players.slice(0, 5).map((p, idx) => {
+                  {[...backendState.players]
+                    .sort((a, b) => b.elo - a.elo || b.streak - a.streak)
+                    .slice(0, 5)
+                    .map((p, idx) => {
                     const isMe = p.id === currentPlayerId;
                     return (
                       <div
@@ -1291,18 +1242,6 @@ export default function App() {
                     <Shuffle className="w-5 h-5 text-white" />
                     <span>🔀 Yanlışlarımı Karışık Çöz</span>
                   </button>
-
-                  {revisionItems.length > 0 && (
-                    <button
-                      onClick={async () => {
-                        await clearRevisionTopic(undefined, currentPlayerId);
-                        showToast('Tüm konu başlıkları pekiştirildi olarak işaretlendi!');
-                      }}
-                      className="text-xs font-mono px-3.5 py-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition-all"
-                    >
-                      ✓ Tümünü Temizle
-                    </button>
-                  )}
                 </div>
               </div>
 
@@ -1482,24 +1421,14 @@ export default function App() {
                           )}
                         </div>
 
-                        {/* Aksiyonlar: 🎯 Bu Konuyu Çöz & ✓ Pekiştirildi */}
+                        {/* Aksiyon: 🎯 Bu Konuyu Çöz */}
                         <div className="flex items-center gap-2 pt-2 border-t border-white/5">
                           <button
                             onClick={() => handlePracticeSingleTopic(rev.topic, rev.failedQuestionIds)}
-                            className="btn-primary flex-1 py-2 px-3 text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#F14E13]/20"
+                            className="btn-primary w-full py-2 px-3 text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#F14E13]/20"
                           >
                             <Target className="w-3.5 h-3.5" />
                             <span>🎯 Bu Konuyu Çöz</span>
-                          </button>
-
-                          <button
-                            onClick={async () => {
-                              await clearRevisionTopic(rev.topic, currentPlayerId);
-                              showToast(`"${rev.topic}" konusu pekiştirildi olarak işaretlendi!`);
-                            }}
-                            className="px-3 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-all shrink-0"
-                          >
-                            ✓ Tamamlandı
                           </button>
                         </div>
                       </div>

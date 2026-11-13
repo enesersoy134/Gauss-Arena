@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "turkce",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-TUR-H-001",
+      "subTopic": "Fiilimsi ve Kalıcı İsim Ayrımı",
+      "text": "\"Annem dolaptaki dolmayı ısıttı ve bize dondurma ikram etti.\" cümlesinde kaç tane kalıcı isim vardır?",
+      "explanation": "\"Dolma\" ve \"dondurma\" sözcükleri fiilimsi eklerini almalarına rağmen kalıcı bir varlığın adı olmuşlardır (2 tane).",
+      "imageUrl": null,
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Hiçbiri"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-H-002",
+      "subTopic": "Cümle Türleri (Yapısına Göre Cümleler)",
+      "text": "İçinde en az bir fiilimsi bulunan ve tek yüklemi olan cümlelere yapısına göre ne ad verilir?",
+      "explanation": "İçinde yan cümlecik (fiilimsi) bulunan ve tek yüklemli cümleler girişik birleşik cümledir.",
+      "imageUrl": null,
+      "options": [
+        "Basit cümle",
+        "Birleşik cümle (Fiilimsili)",
+        "Sıralı cümle",
+        "Bağlı cümle"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-H-003",
+      "subTopic": "Öge Vurgusu Kuralları",
+      "text": "Fiil cümlelerinde vurgu kural olarak yüklemden hemen önceki ögededir. \"Dün akşam Ankara'dan teyzem geldi.\" cümlesinde hangi öge vurgulanmıştır?",
+      "explanation": "Yüklemden hemen önce \"teyzem\" öznesi bulunduğu için vurgu öznededir.",
+      "imageUrl": null,
+      "options": [
+        "Yüklem",
+        "Özne (teyzem)",
+        "Dolaylı tümleç (Ankara'dan)",
+        "Zarf tümleci (Dün akşam)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-H-004",
+      "subTopic": "Yazım Kuralları (ki Bağlacı)",
+      "text": "Aşağıdaki cümlelerin hangisinde \"-ki\" nin yazımı YANLIŞTIR?",
+      "explanation": "\"Öyle bir insandı ki\" cümlesindeki ki ayrı bir sözcük olan bağlaçtır ve ayrı yazılmalıdır.",
+      "imageUrl": null,
+      "options": [
+        "Evdeki hesap çarşıya uymaz.",
+        "Duydum ki unutmuşsun beni.",
+        "Seninki yine derse geç kaldı.",
+        "Öyle bir insan diki herkes severdi."
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-TUR-H-005",
+      "subTopic": "Anlatım Bozuklukları",
+      "text": "\"Kardeşim hiç ders çalışmaz, sadece televizyon izlerdi.\" cümlesindeki anlatım bozukluğunun sebebi nedir?",
+      "explanation": "İlk cümle olumsuz (çalışmaz), ikinci cümle olumludur (izlerdi). \"Hiç\" zarfı olumlu cümleye bağlanamaz.",
+      "imageUrl": null,
+      "options": [
+        "Gereksiz sözcük kullanımı",
+        "Özne-yüklem uyuşmazlığı",
+        "Tümleç eksikliği",
+        "Sözcüğün yanlış yerde kullanımı"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-H-006",
+      "subTopic": "Fiilde Çatı (Etken - Edilgen)",
+      "text": "\"Okul bahçesindeki çöpler öğrenciler tarafından toplandı.\" cümlesindeki fiilin çatı özelliği nedir?",
+      "explanation": "-n eki almıştır, işi yapan gizlenmiştir veya \"tarafından\" ile verilmiştir (edilgendir) ve \"onu toplandı\" denemez (geçişsizdir).",
+      "imageUrl": null,
+      "options": [
+        "Etken - Geçişsiz",
+        "Edilgen - Geçişsiz",
+        "Dönüşlü - Geçişli",
+        "İşteş - Geçişsiz"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-H-007",
+      "subTopic": "Metin Türleri (Biyografi - Otobiyografi)",
+      "text": "Tanınmış bir kişinin kendi hayatını bizzat kendisinin kaleme aldığı metin türü hangisidir?",
+      "explanation": "Kişinin kendi yaşamını yazması otobiyografi (öz yaşam öyküsü), başkasının yazması biyografidir.",
+      "imageUrl": null,
+      "options": [
+        "Biyografi",
+        "Otobiyografi",
+        "Monografi",
+        "Hatıra (Anı)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-H-008",
+      "subTopic": "Mantık ve Muhakeme Çıkarımı",
+      "text": "A, B, C, D koşucularının yarıştığı bir yarışta A yarışı B'den önce, C'den sonra bitirmiştir. D ise sonuncu olmamıştır. Birinci kimdir?",
+      "explanation": "C > A > B sıralaması kesindir. Birinci sırada C yer alır.",
+      "imageUrl": null,
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-H-009",
+      "subTopic": "Paragrafta Anlatım Biçimleri",
+      "text": "Okuyucunun bir konudaki fikrini değiştirmek, kendi görüşünü kabul ettirmek amacıyla yazılan anlatım biçimi hangisidir?",
+      "explanation": "Fikir aşılama ve kanıları değiştirme gayesi taşıyan anlatım tartışmacı anlatımdır.",
+      "imageUrl": null,
+      "options": [
+        "Açıklama",
+        "Öyküleme",
+        "Tartışma",
+        "Betimleme"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-H-010",
+      "subTopic": "Ses Olayları (Ünlü Düşmesi ve Ünsüz Yumuşaması)",
+      "text": "\"Ağzındaki baklayı nihayet çıkardı.\" cümlesindeki altı çizili sözcükte (ağzındaki) hangi ses olayı vardır?",
+      "explanation": "\"Ağız\" sözcüğüne ünlüyle başlayan ek gelince ikinci hecedeki dar ünlü düşmüştür (ağzı).",
+      "imageUrl": null,
+      "options": [
+        "Ünsüz benzeşmesi",
+        "Ünlü düşmesi (ağız -> ağzı)",
+        "Ünlü daralması",
+        "Ünsüz türemesi"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

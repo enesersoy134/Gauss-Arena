@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "kimya",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-KIM-M-001",
+      "subTopic": "Atom Numarası ve Katman Dizilimi",
+      "text": "Nötr bir atomun elektron katman dizilimi 2 - 8 - 3 şeklindedir. Bu element periyodik tabloda nerededir?",
+      "explanation": "Katman sayısı periyodu (3 katman ⇒ 3. periyot), son katmandaki elektron grubu (3A) verir.",
+      "imageUrl": null,
+      "options": [
+        "2. periyot 3A",
+        "3. periyot 3A",
+        "3. periyot 8A",
+        "4. periyot 3A"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-002",
+      "subTopic": "Tepkime Grafiği ve Kütle Korunumu",
+      "text": "A + B → C tepkimesinde 12 gram A ile bir miktar B artansız tepkimeye girerek 40 gram C oluşturuyor. Tepkimeye giren B kaç gramdır?",
+      "explanation": "Kütlenin korunumuna göre mA + mB = mC ⇒ 12 + mB = 40 ⇒ mB = 28 gram bulunur.",
+      "imageUrl": null,
+      "options": [
+        "18",
+        "24",
+        "28",
+        "32"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-M-003",
+      "subTopic": "Asit ve Baz Nötralleşmesi",
+      "text": "Asit ve baz çözeltileri uygun oranlarda karıştırıldığında hangi iki madde oluşur?",
+      "explanation": "Asit + Baz → Tuz + Su (Nötralleşme tepkimesi).",
+      "imageUrl": null,
+      "options": [
+        "Tuz ve Su",
+        "Metal ve Gaz",
+        "Yalnız Tuz",
+        "Oksijen ve Asit"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-M-004",
+      "subTopic": "Metallerin Asitlerle Tepkimesi",
+      "text": "Çinko (Zn) metali hidroklorik asit (HCl) içine atıldığında hangi gaz açığa çıkar?",
+      "explanation": "Aktif metaller asitlerle tepkimeye girerek hidrojen gazı (H₂) açığa çıkarırlar.",
+      "imageUrl": null,
+      "options": [
+        "Oksijen (O₂)",
+        "Hidrojen (H₂)",
+        "Azot (N₂)",
+        "Karbondioksit (CO₂)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-005",
+      "subTopic": "Fiziksel Değişim Özellikleri",
+      "text": "Bir maddenin sadece dış görünüşünde meydana gelen, tanecik kimliğini değiştirmeyen olay hangisidir?",
+      "explanation": "Mumun erimesi bir hâl değişimidir ve fizikseldir; yanması ise kimyasaldır.",
+      "imageUrl": null,
+      "options": [
+        "Sütün ekşimesi",
+        "Elmanın çürümesi",
+        "Mumun erimesi",
+        "Kâğıdın yanması"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-M-006",
+      "subTopic": "Periyodik Tabloda Grup Benzerliği",
+      "text": "Periyodik tabloda aynı grupta (aynı düşey sütunda) bulunan elementler için hangisi GENELLİKLE doğrudur?",
+      "explanation": "Aynı gruptaki elementlerin son katman elektron sayıları aynı olduğundan benzer kimyasal özellik taşırlar.",
+      "imageUrl": null,
+      "options": [
+        "Benzer kimyasal özellik gösterirler",
+        "Aynı sayıda katmana sahiptirler",
+        "Atom numaraları ardışıktır",
+        "Farklı değerlik elektronuna sahiptirler"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-M-007",
+      "subTopic": "Soygazların Kararlılığı",
+      "text": "Soygazların (8A) bileşik oluşturmaya karşı isteksiz ve kararlı olmalarının temel sebebi nedir?",
+      "explanation": "Helyum son katmanında 2 elektronla dublet, diğer soygazlar 8 elektronla oktet kuralını tamamlamıştır.",
+      "imageUrl": null,
+      "options": [
+        "Metallerle komşu olmaları",
+        "Son katmanlarının tamamen dolu olması",
+        "Gözle görülemez olmaları",
+        "Gaz hâlde bulunmaları"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-008",
+      "subTopic": "Isı Alışverişi Hesaplama",
+      "text": "Kütlesi 100 g olan suyun sıcaklığını 20 °C'den 40 °C'ye çıkarmak için gereken ısı kaç kaloridir? (c_su = 1 cal/g°C)",
+      "explanation": "Q = m · c · ΔT = 100 · 1 · (40 - 20) = 2000 cal bulunur.",
+      "imageUrl": null,
+      "options": [
+        "1000",
+        "2000",
+        "3000",
+        "4000"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-009",
+      "subTopic": "İndikatörler (Belirteçler)",
+      "text": "Fenolftalein indikatörü bazik ortama damlatıldığında hangi renge dönüşür?",
+      "explanation": "Fenolftalein asidik ortamda renksizdir, bazik ortamda ise pembe/menekşe renk alır.",
+      "imageUrl": null,
+      "options": [
+        "Sarı",
+        "Renksiz kalır",
+        "Pembe / Menekşe",
+        "Mavi"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-M-010",
+      "subTopic": "Yarı Metaller",
+      "text": "Periyodik tabloda metaller ile ametaller arasında yer alan Bor (B) ve Silisyum (Si) hangi sınıfa aittir?",
+      "explanation": "Fiziksel olarak metallere, kimyasal olarak ametallere benzeyen bu elementler yarı metallerdir.",
+      "imageUrl": null,
+      "options": [
+        "Ametaller",
+        "Yarı metaller",
+        "Soygazlar",
+        "Alkali metaller"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

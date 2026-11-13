@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "kimya",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-KIM-H-001",
+      "subTopic": "Kimyasal Tepkime Grafiği Yorumu",
+      "text": "Bir kapta gerçekleşen tepkimede X ve Y maddelerinin kütlesi azalırken Z maddesinin kütlesi artmaktadır. Buna göre hangisi YANLIŞTIR?",
+      "explanation": "Kapalı kapta toplam kütle daima korunur, asla artmaz veya azalmaz.",
+      "imageUrl": null,
+      "options": [
+        "X ve Y tepkimeye girenlerdir",
+        "Z tepkime ürünüdür",
+        "Kaptaki toplam kütle zamanla artmıştır",
+        "Kaptaki atom sayısı korunmuştur"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-H-002",
+      "subTopic": "Hal Değişim Grafiği Analizi",
+      "text": "Saf bir katının ısınma grafiğinde sıcaklığın sabit kaldığı aralıklarda madde için hangisi doğrudur?",
+      "explanation": "Saf maddeler hâl değiştirirken sıcaklıkları sabit kalır; alınan ısı potansiyel enerjiye aktarılır.",
+      "imageUrl": null,
+      "options": [
+        "Isı almamaktadır",
+        "Hal değiştirmektedir",
+        "Kinetik enerjisi sürekli artmaktadır",
+        "Öz kütlesi artmaktadır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-H-003",
+      "subTopic": "Asit Yağmurlarının Zararları",
+      "text": "Aşağıdakilerden hangisi asit yağmurlarının doğrudan bir zararı DEĞİLDİR?",
+      "explanation": "Ozon tabakasını CFC (kloroflorokarbon) gazları deler; asit yağmurları ise mermer ve metalleri aşındırır.",
+      "imageUrl": null,
+      "options": [
+        "Tarihi mermer heykellerin aşınması",
+        "Toprağın mineral dengesini bozarak ağaçları kurutması",
+        "Ozon tabakasını delmesi",
+        "Göllerdeki canlı yaşamını yok etmesi"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-H-004",
+      "subTopic": "Buharlaşma ve Kaynama Karşılaştırması",
+      "text": "Buharlaşma ve kaynama olayları arasındaki farklarla ilgili hangisi DOĞRUDUR?",
+      "explanation": "Buharlaşma her sıcaklıkta ve sadece yüzeyde olur; kaynama belirli bir sıcaklıkta sıvının her yerinde kabarcıklarla gerçekleşir.",
+      "imageUrl": null,
+      "options": [
+        "Kaynama her sıcaklıkta olur",
+        "Buharlaşma sadece sıvının yüzeyinde gerçekleşir",
+        "Kaynama sırasında kabarcık oluşmaz",
+        "Buharlaşma belirli bir sıcaklıkta gerçekleşir"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-H-005",
+      "subTopic": "Periyodik Özelliklerin Değişimi",
+      "text": "Periyodik tabloda aynı periyotta soldan sağa doğru gidildikçe genellikle hangisi ARTAR?",
+      "explanation": "Soldan sağa atom numarası ve ametallik artar; atom yarıçapı ise küçülür.",
+      "imageUrl": null,
+      "options": [
+        "Atom yarıçapı",
+        "Metalik aktiflik",
+        "Ametalik özellik ve atom numarası",
+        "Katman sayısı"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-H-006",
+      "subTopic": "Erime Isısı Problemi",
+      "text": "0 °C'deki 50 gram buzu tamamen eritmek için kaç Joule ısı gerekir? (L_erime = 334 J/g)",
+      "explanation": "Q = m · Le = 50 · 334 = 16700 Joule bulunur.",
+      "imageUrl": null,
+      "options": [
+        "16700",
+        "18000",
+        "20000",
+        "25000"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-H-007",
+      "subTopic": "Tuz Ruhu ve Çamaşır Suyu Tehlikesi",
+      "text": "Tuz ruhu (HCl) ile çamaşır suyunun (NaClO) karıştırılması sonucu hangi zehirli gaz açığa çıkar?",
+      "explanation": "Tuz ruhu ile çamaşır suyu karıştırıldığında son derece zehirli ve boğucu klor gazı (Cl₂) açığa çıkar.",
+      "imageUrl": null,
+      "options": [
+        "Metan (CH₄)",
+        "Klor gazı (Cl₂)",
+        "Oksijen (O₂)",
+        "Helyum (He)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-H-008",
+      "subTopic": "Kimyasal Endüstri ve Türkiye",
+      "text": "Türkiye kimya endüstrisinde hammadde ihtiyacının yaklaşık yüzde kaçını ithalatla (dış alımla) karşılamaktadır?",
+      "explanation": "Türkiye kimya sektöründe hammadde bakımından yaklaşık %70 oranında dışa bağımlıdır.",
+      "imageUrl": null,
+      "options": [
+        "%20",
+        "%30",
+        "%50",
+        "%70"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-KIM-H-009",
+      "subTopic": "Maddenin Isı Kapasitesi",
+      "text": "Aynı miktarda ısı verilen eşit kütleli X ve Y sıvılarından X'in sıcaklığı 10 °C, Y'nin sıcaklığı 20 °C artıyor. Öz ısıları oranı c_X / c_Y kaçtır?",
+      "explanation": "Q = m·cX·10 = m·cY·20 ⇒ cX / cY = 20 / 10 = 2 olur.",
+      "imageUrl": null,
+      "options": [
+        "1/2",
+        "1",
+        "2",
+        "4"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-H-010",
+      "subTopic": "Asit ve Baz Çözeltilerinin Elektrik İletkenliği",
+      "text": "Saf su elektriği iletmezken içine tuz, asit veya baz eklendiğinde iletken hale gelmesinin sebebi nedir?",
+      "explanation": "Asit, baz ve tuzlar suda iyonlaşarak çözünür; serbest iyonlar elektrik akımını iletir.",
+      "imageUrl": null,
+      "options": [
+        "Sıvının ısınması",
+        "Ortama serbest hareket edebilen iyonların geçmesi",
+        "Moleküllerin hızlanması",
+        "pH değerinin 7 olması"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

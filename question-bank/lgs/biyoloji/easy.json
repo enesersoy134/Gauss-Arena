@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "biyoloji",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-BIY-E-001",
+      "subTopic": "DNA ve Genetik Kod",
+      "text": "Hücre çekirdeğinde bulunan genetik yapıların basitten karmaşığa (küçükten büyüğe) doğru sıralanışı nasıldır?",
+      "explanation": "Kedigeni kodlaması: Nükleotid < Gen < DNA < Kromozom şeklindedir.",
+      "imageUrl": null,
+      "options": [
+        "Nükleotid < Gen < DNA < Kromozom",
+        "Kromozom < DNA < Gen < Nükleotid",
+        "Gen < Nükleotid < DNA < Kromozom",
+        "Nükleotid < DNA < Gen < Kromozom"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-002",
+      "subTopic": "DNA Nükleotid Eşleşmesi",
+      "text": "DNA molekülünde Adenin (A) nükleotidinin karşısına daima hangi nükleotid gelir?",
+      "explanation": "DNA çift zincirinde Adenin karşısına Timin (A=T), Guanin karşısına Sitozin (G≡C) gelir.",
+      "imageUrl": null,
+      "options": [
+        "Guanin",
+        "Sitozin",
+        "Timin",
+        "Urasil"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-BIY-E-003",
+      "subTopic": "Fotosentez Temelleri",
+      "text": "Fotosentez olayının gerçekleşebilmesi için aşağıdakilerden hangisi GEREKLİ DEĞİLDİR?",
+      "explanation": "Oksijen fotosentezin girdisi değil, atmosfere verilen çıktısıdır (ürünüdür).",
+      "imageUrl": null,
+      "options": [
+        "Güneş ışığı",
+        "Klorofil",
+        "Karbondioksit ve su",
+        "Oksijen gazı"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-BIY-E-004",
+      "subTopic": "Besin Zinciri Üreticileri",
+      "text": "Bir besin zincirinin ilk basamağında daima hangi canlı grubu yer alır?",
+      "explanation": "Güneş enerjisini kimyasal bağ enerjisine çeviren üreticiler daima ilk basamaktadır.",
+      "imageUrl": null,
+      "options": [
+        "Otçullar",
+        "Etçiller",
+        "Üreticiler (Bitkiler)",
+        "Ayrıştırıcılar"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-BIY-E-005",
+      "subTopic": "Mendel Genetiği (Baskın Gen)",
+      "text": "Hem anne hem babadan aynı aleli alan (örn: AA veya aa) bireylere ne ad verilir?",
+      "explanation": "Aynı alelleri taşıyan genotipe homozigot (saf döl), farklı olanlara (Aa) heterozigot denir.",
+      "imageUrl": null,
+      "options": [
+        "Heterozigot (Melez)",
+        "Homozigot (Saf döl)",
+        "Mutasyon",
+        "Fenotip"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-E-006",
+      "subTopic": "Mutasyon Örnekleri",
+      "text": "Aşağıdakilerden hangisi bir mutasyon örneğidir?",
+      "explanation": "Göz renklerinin farklı olması genetik yapının bozulmasıyla oluşan bir mutasyondur.",
+      "imageUrl": null,
+      "options": [
+        "Spor yapan kişinin kaslarının gelişmesi",
+        "Van kedisinin gözlerinin farklı renk olması",
+        "Bukalemunun renk değiştirmesi",
+        "Kutup ayısının beyaz kürkünün olması"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-E-007",
+      "subTopic": "Adaptasyon Kavramı",
+      "text": "Canlıların belirli bir çevrede yaşama ve üreme şansını artıran kalıtsal özelliklerine ne ad verilir?",
+      "explanation": "Canlının çevreye kalıtsal uyum sağlayarak hayatta kalma şansını artırması adaptasyondur.",
+      "imageUrl": null,
+      "options": [
+        "Modifikasyon",
+        "Mutasyon",
+        "Adaptasyon",
+        "Varyasyon"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-BIY-E-008",
+      "subTopic": "Modifikasyon Örneği",
+      "text": "Himalaya tavşanının beyaz kürkünün kazınıp yerine buz konulduğunda siyah kürk çıkması neye örnektir?",
+      "explanation": "Çevre etkisiyle genin işleyişinin değişmesi modifikasyondur; kalıtsal değildir.",
+      "imageUrl": null,
+      "options": [
+        "Adaptasyon",
+        "Doğal Seçilim",
+        "Modifikasyon",
+        "Klonlama"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-BIY-E-009",
+      "subTopic": "Hücresel Solunum Amacı",
+      "text": "Canlıların oksijenli veya oksijensiz solunum yapmalarının temel amacı nedir?",
+      "explanation": "Solunumun temel amacı besinleri parçalayarak hücresel enerji (ATP) üretmektir.",
+      "imageUrl": null,
+      "options": [
+        "ATP (Enerji) üretmek",
+        "Glikoz üretmek",
+        "Oksijen depolamak",
+        "Büyümeyi durdurmak"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-010",
+      "subTopic": "Biyoteknoloji Uygulamaları",
+      "text": "Bakterilere insan geni aktarılarak şeker hastaları için İnsülin hormonu üretilmesi hangi alanın başarısıdır?",
+      "explanation": "Gen aktarımı yöntemiyle insülin üretimi biyoteknolojinin en yaygın uygulamalarındandır.",
+      "imageUrl": null,
+      "options": [
+        "Geleneksel ıslah",
+        "Genetik Mühendisliği ve Biyoteknoloji",
+        "Doğal seleksiyon",
+        "Fosil bilimi"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

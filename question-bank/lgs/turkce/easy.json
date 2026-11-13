@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "turkce",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-TUR-E-001",
+      "subTopic": "Sözcükte Anlam (Gerçek - Mecaz)",
+      "text": "\"Bize karşı çok soğuk davrandı.\" cümlesindeki \"soğuk\" sözcüğü hangi anlamda kullanılmıştır?",
+      "explanation": "Isı derecesi anlamından tamamen uzaklaşarak \"ilgisiz, sevgisiz\" anlamında mecazlaşmıştır.",
+      "imageUrl": null,
+      "options": [
+        "Gerçek anlam",
+        "Mecaz anlam",
+        "Terim anlam",
+        "Zıt anlam"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-E-002",
+      "subTopic": "Eş Anlamlı (Anlamdaş) Sözcükler",
+      "text": "\"Cevap\" sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?",
+      "explanation": "Cevap sözcüğünün eş anlamlısı yanıttır.",
+      "imageUrl": null,
+      "options": [
+        "Soru",
+        "Yanıt",
+        "Cümle",
+        "Kelime"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-E-003",
+      "subTopic": "Zıt (Karşıt) Anlamlı Sözcükler",
+      "text": "\"Taze\" sözcüğünün zıt anlamlısı hangisidir?",
+      "explanation": "Taze ekmeğin zıttı bayat ekmektir.",
+      "imageUrl": null,
+      "options": [
+        "Kuru",
+        "Bayat",
+        "Çürük",
+        "Eski"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-E-004",
+      "subTopic": "Fiilimsiler (Giriş)",
+      "text": "Fiilimsiler kaç temel gruba ayrılır?",
+      "explanation": "Fiilimsiler: İsim-fiil (Mameışmak), Sıfat-fiil (Anasımezardikekmiş) ve Zarf-fiil olmak üzere 3 gruba ayrılır.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-E-005",
+      "subTopic": "Cümlenin Temel Ögeleri",
+      "text": "Bir cümlenin iki temel ögesi aşağıdakilerden hangisidir?",
+      "explanation": "Yargıyı bildiren yüklem ve işi yapan özne cümlenin iki temel ögesidir.",
+      "imageUrl": null,
+      "options": [
+        "Özne ve Nesne",
+        "Yüklem ve Zarf Tümleci",
+        "Özne ve Yüklem",
+        "Nesne ve Yüklem"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-E-006",
+      "subTopic": "Noktalama İşaretleri",
+      "text": "Tamamlanmış, yargı bildiren cümlelerin sonuna hangi noktalama işareti konur?",
+      "explanation": "Tamamlanmış cümlelerin sonuna nokta konur.",
+      "imageUrl": null,
+      "options": [
+        "Nokta",
+        "Virgül",
+        "Ünlem",
+        "İki nokta"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-E-007",
+      "subTopic": "Yazım Kuralları (Büyük Harfler)",
+      "text": "Aşağıdaki cümlelerin hangisinde büyük harflerin yazımıyla ilgili bir YANLIŞLIK yapılmıştır?",
+      "explanation": "\"Van Gölü\" özel isim olduğundan her iki sözcük de büyük harfle başlamalıdır.",
+      "imageUrl": null,
+      "options": [
+        "Ahmet Bey geldi.",
+        "Türkçe dersini seviyorum.",
+        "van gölü çok büyüktür.",
+        "Ankara başkentimizdir."
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-E-008",
+      "subTopic": "Deyimler",
+      "text": "\"Çok sevinmek, sevinçten taşkınlık göstermek\" anlamındaki deyim hangisidir?",
+      "explanation": "Etekleri zil çalmak çok sevinmek anlamındadır; etekleri tutuşmak ise telaşlanmaktır.",
+      "imageUrl": null,
+      "options": [
+        "Etekleri tutuşmak",
+        "Etekleri zil çalmak",
+        "Göze girmek",
+        "Kulak kabartmak"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-E-009",
+      "subTopic": "Atasözleri",
+      "text": "\"Damlaya damlaya ... olur.\" atasözündeki boşluğa hangi kelime gelmelidir?",
+      "explanation": "Atasözünün doğrusu \"Damlaya damlaya göl olur\" biçimindedir.",
+      "imageUrl": null,
+      "options": [
+        "göl",
+        "deniz",
+        "sel",
+        "dere"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-E-010",
+      "subTopic": "Paragrafta Ana Fikir",
+      "text": "Bir metinde yazarın okuyucuya vermek istediği en temel mesaja ne ad verilir?",
+      "explanation": "Yazarın iletmek istediği asıl düşünce ana fikirdir.",
+      "imageUrl": null,
+      "options": [
+        "Konu",
+        "Ana düşünce (Ana fikir)",
+        "Yardımcı düşünce",
+        "Başlık"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}
