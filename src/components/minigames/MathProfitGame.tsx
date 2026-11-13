@@ -29,7 +29,6 @@ interface EquationStage {
   badge: string;
   name: string;
   funcSymbol: string;
-  questionScenario: string;
   questionPrompt: string;
   fullEquationText: string;
   maxScore: number;
@@ -46,10 +45,8 @@ const EQUATION_STAGES: EquationStage[] = [
     badge: 'Denklem 1/3',
     name: 'Standart Üretim Fonksiyonu',
     funcSymbol: 'G₁(x)',
-    questionScenario:
-      'Bir fabrikanın toplam kârı doğrusal üretim, parabolik verim, teknolojik büyüme, ısınma kaybı ve ters orantılı bakım fonksiyonlarının toplamıyla modellenmiştir.',
     questionPrompt:
-      'G₁(x) denklemindeki her kol (x₁..x₅) için {1, 2, 3, 4} kademelerinden parabol tepe noktası ve artış mantığına göre en yüksek katkıyı veren ayarları seçiniz ve toplam geliri zirveye (110 Bin ₺) ulaştırınız.',
+      '5 kontrol kolunu (x₁–x₅) doğru kademelere (1–4) getirerek toplam kârı zirveye (110 Bin ₺) ulaştır.',
     fullEquationText: 'G₁(x) = 10x₁ + [30 - 4(x₂-3)²] + 2^(x₃) - 5(x₄-2)² + 24/x₅',
     maxScore: 110, // 40 + 30 + 16 + 0 + 24
     minScore: 12,  // 10 + 14 + 2 - 20 + 6
@@ -145,10 +142,8 @@ const EQUATION_STAGES: EquationStage[] = [
     badge: 'Denklem 2/3',
     name: 'Kübik & Mutlak Değer Fonksiyonu',
     funcSymbol: 'G₂(x)',
-    questionScenario:
-      'Gelişmiş üretim hattında karesel rezonans, mutlak değer sapması ve dik artışlı kübik güç fonksiyonları devreye alınmıştır.',
     questionPrompt:
-      'Karesel parabol tepe noktası [40 - 6(x₁-2)²], dik tırmanan kübik güç x₂³, sapma kaybı -8|x₃-3|, hiperbolik akış 36/x₄ ve azalan maliyet (25 - 5x₅) analiz edilerek x_i ∈ {1, 2, 3, 4} kollarını ayarlayınız ve geliri 160 Bin ₺ zirvesine çıkarınız.',
+      'Kolları ayarlayarak mutlak değer kaybını sıfırla, kübik gücü maksimize et ve 160 Bin ₺ hedefine ulaş.',
     fullEquationText: 'G₂(x) = [40 - 6(x₁-2)²] + x₂³ - 8|x₃-3| + 36/x₄ + (25 - 5x₅)',
     maxScore: 160, // 40 + 64 + 0 + 36 + 20
     minScore: 15,  // 16 + 1 - 16 + 9 + 5
@@ -244,10 +239,8 @@ const EQUATION_STAGES: EquationStage[] = [
     badge: 'Denklem 3/3',
     name: 'Kuantum Polinom & Üstel Fonksiyonu',
     funcSymbol: 'G₃(x)',
-    questionScenario:
-      'Kuantum santralinde 3 tabanlı üstel artış, simetri eksenli paraboller ve konveks polinomlar aynı anda çalışmaktadır.',
     questionPrompt:
-      '3^(x₁) üstel büyümesini, r=3 simetrili tepe noktalı parabolü [45 - 5(x₂-3)²], konkav verim fonksiyonunu (16x₃ - 4x₃²), mutlak kaybı -10|x₄-1| ve konveks polinomu (3x₅² - 6x₅ + 10) optimize ederek 176 Bin ₺ maksimum kâra ulaşınız.',
+      'Parabol tepe noktalarını ve üstel artışı analiz ederek kârı maksimum seviyeye (176 Bin ₺) çıkar.',
     fullEquationText: 'G₃(x) = 3^(x₁) + [45 - 5(x₂-3)²] + (16x₃ - 4x₃²) - 10|x₄-1| + (3x₅² - 6x₅ + 10)',
     maxScore: 176, // 81 + 45 + 16 + 0 + 34
     minScore: 5,   // 3 + 25 + 0 - 30 + 7
@@ -491,35 +484,41 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
         </div>
       </div>
 
-      {/* MATEMATİK SORU METNİ & PROBLEM AÇIKLAMASI */}
-      <div className="bg-gradient-to-r from-amber-950/40 via-[#1A0E1C] to-blue-950/40 border border-amber-500/40 rounded-2xl p-4 flex flex-col gap-2.5 shadow-lg">
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">📐</span>
-            <span className="font-poppins font-black text-xs sm:text-sm text-amber-300 uppercase tracking-wide">
-              SORU METNİ: {currentStage.name} ({currentStage.badge})
-            </span>
+      {/* SADE VE NET SORU METNİ */}
+      <div className="bg-gradient-to-r from-amber-500/10 via-[#1A0E1C] to-emerald-500/10 border border-amber-500/35 rounded-2xl px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+        <div className="flex items-start sm:items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400 text-amber-300 flex items-center justify-center text-lg shrink-0">
+            🎯
           </div>
-          <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-            Zirve Kâr Hedefi: {currentStage.maxScore} Bin ₺
-          </span>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase">
+                Görev
+              </span>
+              <span className="font-poppins font-bold text-xs sm:text-sm text-white">
+                {currentStage.questionPrompt}
+              </span>
+            </div>
+            <p className="text-[11px] font-mono text-[#B5CBC8] mt-0.5">
+              💡 İpucu: Kolların üstüne tıklayarak tepe noktalarını ve grafik eğrilerini inceleyebilirsin.
+            </p>
+          </div>
         </div>
 
-        <p className="text-xs text-white leading-relaxed font-sans">
-          <strong className="text-amber-200">Problem Senaryosu:</strong> {currentStage.questionScenario}
-        </p>
-        <p className="text-xs text-[#B5CBC8] leading-relaxed font-sans">
-          <strong className="text-amber-300">Matematiksel Görev:</strong> {currentStage.questionPrompt}
-        </p>
+        <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+          <div className="text-right px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 font-mono">
+            <span className="text-[10px] text-zinc-400 uppercase block">Hedef Zirve</span>
+            <span className="font-black text-xs sm:text-sm text-emerald-400">
+              {currentStage.maxScore} Bin ₺
+            </span>
+          </div>
 
-        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400 pt-1.5 border-t border-white/5 flex-wrap gap-2">
-          <span>💡 İpucu: Kolların üzerine tıklayarak fonksiyonların tepe noktası (r, k) ve eğim davranışlarını inceleyin.</span>
           {isAllOptimal && onNextSubject && (
             <button
               onClick={onNextSubject}
-              className="btn-primary !py-1 !px-3 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
+              className="btn-primary !py-2 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md"
             >
-              <span>Sonraki Derse Geç (Geometri) →</span>
+              <span>Sonraki Ders (Geometri) →</span>
             </button>
           )}
         </div>
