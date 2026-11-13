@@ -237,7 +237,7 @@ export default function App() {
         topics={revisionPracticeTopics}
         modeTitle={isPracticeSession ? '🎯 Bireysel Soru Alıştırması' : '🎯 Eksik Konu Pekiştirme'}
         subtitle={isPracticeSession ? 'BİREYSEL ALIŞTIRMA MODU' : 'BİREYSEL TELAFİ ANTRENMANI'}
-        exitLabel={isPracticeSession ? '← Karşılaşma Seçeneklerine Dön' : 'Antrenmandan Çık'}
+        exitLabel={isPracticeSession ? 'Ana Sayfaya Dön' : 'Antrenmandan Çık'}
         rewardLabel={isPracticeSession ? '+15 Coin Alıştırma Ödülü' : '+30 Coin Telafi Ödülü'}
         onComplete={async (stats) => {
           if (isPracticeSession) {

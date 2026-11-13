@@ -360,6 +360,8 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
                 onExit();
               }}
               className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-zinc-300 hover:text-red-300 transition-all text-xs font-semibold flex items-center gap-1.5"
+              title={exitLabel}
+              aria-label={exitLabel}
             >
               <Home className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">{exitLabel}</span>

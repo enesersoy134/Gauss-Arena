@@ -9,6 +9,7 @@ import {
   RotateCcw,
   Gamepad2,
   ArrowRight,
+  LogOut,
 } from 'lucide-react';
 import BioCellGame from './BioCellGame';
 import ChemMoleculeGame from './ChemMoleculeGame';
@@ -97,15 +98,35 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
   if (!isOpen) return null;
 
   const currentIndex = MINI_GAME_SUBJECTS.findIndex((s) => s.id === activeSubject);
-  const nextSubjectMeta = MINI_GAME_SUBJECTS[(currentIndex + 1) % MINI_GAME_SUBJECTS.length];
   const isCurrentDone = completedMiniGames.includes(activeSubject);
+  const areAllMiniGamesDone = completedMiniGames.length >= MINI_GAME_SUBJECTS.length;
+
+  // Sıradaki çözülmemiş dersi bul (aktif dersin sonrasından başlayarak döngüsel ara)
+  let nextUnsolvedSubject: SubjectMeta | null = null;
+  if (!areAllMiniGamesDone) {
+    for (let i = 1; i < MINI_GAME_SUBJECTS.length; i++) {
+      const candidate = MINI_GAME_SUBJECTS[(currentIndex + i) % MINI_GAME_SUBJECTS.length];
+      if (!completedMiniGames.includes(candidate.id)) {
+        nextUnsolvedSubject = candidate;
+        break;
+      }
+    }
+    // Eğer aktif ders henüz bitirilmemişse ama yukarıdaki döngü bulamadıysa (sadece bu kaldıysa)
+    if (!nextUnsolvedSubject && !isCurrentDone) {
+      nextUnsolvedSubject = null;
+    }
+  }
 
   const handleCompleteCurrent = () => {
     onCompleteMiniGame(activeSubject);
   };
 
   const handleNextSubject = () => {
-    setActiveSubject(nextSubjectMeta.id);
+    if (nextUnsolvedSubject) {
+      setActiveSubject(nextUnsolvedSubject.id);
+    } else if (areAllMiniGamesDone) {
+      onClose();
+    }
   };
 
   return (
@@ -234,13 +255,23 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
               </div>
 
               <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
-                <button
-                  onClick={handleNextSubject}
-                  className="btn-primary !py-2.5 !px-5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-600/30 w-full sm:w-auto"
-                >
-                  <span>Sonraki Derse Geç ({nextSubjectMeta.icon} {nextSubjectMeta.label})</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+                {nextUnsolvedSubject ? (
+                  <button
+                    onClick={handleNextSubject}
+                    className="btn-primary !py-2.5 !px-5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-600/30 w-full sm:w-auto"
+                  >
+                    <span>Sıradaki Çözülmemiş Derse Geç ({nextUnsolvedSubject.icon} {nextUnsolvedSubject.label})</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={onClose}
+                    className="btn-primary !py-2.5 !px-5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 !bg-purple-600 hover:!bg-purple-500 shadow-lg shadow-purple-600/30 w-full sm:w-auto"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Tüm Dersler Tamamlandı - Çıkış Yap</span>
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -264,22 +295,46 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
           )}
 
           {activeSubject === 'biyoloji' && (
-            <BioCellGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+            <BioCellGame
+              onComplete={handleCompleteCurrent}
+              onNextSubject={handleNextSubject}
+              nextSubjectName={nextUnsolvedSubject ? nextUnsolvedSubject.label : (areAllMiniGamesDone ? 'Çıkış' : undefined)}
+            />
           )}
           {activeSubject === 'kimya' && (
-            <ChemMoleculeGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+            <ChemMoleculeGame
+              onComplete={handleCompleteCurrent}
+              onNextSubject={handleNextSubject}
+              nextSubjectName={nextUnsolvedSubject ? nextUnsolvedSubject.label : (areAllMiniGamesDone ? 'Çıkış' : undefined)}
+            />
           )}
           {activeSubject === 'fizik' && (
-            <PhysBalanceGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+            <PhysBalanceGame
+              onComplete={handleCompleteCurrent}
+              onNextSubject={handleNextSubject}
+              nextSubjectName={nextUnsolvedSubject ? nextUnsolvedSubject.label : (areAllMiniGamesDone ? 'Çıkış' : undefined)}
+            />
           )}
           {activeSubject === 'matematik' && (
-            <MathProfitGame onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+            <MathProfitGame
+              onComplete={handleCompleteCurrent}
+              onNextSubject={handleNextSubject}
+              nextSubjectName={nextUnsolvedSubject ? nextUnsolvedSubject.label : (areAllMiniGamesDone ? 'Çıkış' : undefined)}
+            />
           )}
           {activeSubject === 'geometri' && (
-            <GeoShapePuzzle onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+            <GeoShapePuzzle
+              onComplete={handleCompleteCurrent}
+              onNextSubject={handleNextSubject}
+              nextSubjectName={nextUnsolvedSubject ? nextUnsolvedSubject.label : (areAllMiniGamesDone ? 'Çıkış' : undefined)}
+            />
           )}
           {activeSubject === 'turkce' && (
-            <TurkRapBattle onComplete={handleCompleteCurrent} onNextSubject={handleNextSubject} />
+            <TurkRapBattle
+              onComplete={handleCompleteCurrent}
+              onNextSubject={handleNextSubject}
+              nextSubjectName={nextUnsolvedSubject ? nextUnsolvedSubject.label : (areAllMiniGamesDone ? 'Çıkış' : undefined)}
+            />
           )}
         </div>
       </div>

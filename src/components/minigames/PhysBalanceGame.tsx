@@ -11,6 +11,7 @@ import {
 export interface PhysBalanceGameProps {
   onComplete: () => void;
   onNextSubject?: () => void;
+  nextSubjectName?: string;
 }
 
 interface PlacedWeight {
@@ -60,7 +61,11 @@ const LEVELS: LevelConfig[] = [
   },
 ];
 
-export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete, onNextSubject }) => {
+export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({
+  onComplete,
+  onNextSubject,
+  nextSubjectName,
+}) => {
   const [levelIdx, setLevelIdx] = useState<number>(0);
   const currentLevel = LEVELS[levelIdx];
 
@@ -430,7 +435,13 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({ onComplete, on
                 onClick={onNextSubject}
                 className="btn-primary py-2.5 px-5 text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500 shrink-0"
               >
-                <span>Sonraki Derse Geç (Matematik)</span>
+                <span>
+                  {nextSubjectName === 'Çıkış'
+                    ? 'Tüm Dersler Bitti - Çıkış'
+                    : nextSubjectName
+                    ? `Sonraki Çözülmemiş Ders (${nextSubjectName})`
+                    : 'Sonraki Ders'}
+                </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             )}

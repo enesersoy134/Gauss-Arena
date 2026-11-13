@@ -4,6 +4,7 @@ import { CheckCircle2, RotateCcw, ArrowRight, FlaskConical } from 'lucide-react'
 export interface ChemMoleculeGameProps {
   onComplete: () => void;
   onNextSubject?: () => void;
+  nextSubjectName?: string;
 }
 
 interface BottleDef {
@@ -280,7 +281,11 @@ const FORMULA_STAGES: FormulaStage[] = [
   },
 ];
 
-export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({ onComplete, onNextSubject }) => {
+export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
+  onComplete,
+  onNextSubject,
+  nextSubjectName,
+}) => {
   const [stageIdx, setStageIdx] = useState<number>(0);
   const [beakerItems, setBeakerItems] = useState<string[]>([]);
   const [completedStages, setCompletedStages] = useState<number[]>([]);
@@ -596,7 +601,13 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({ onComplete, 
                   onClick={onNextSubject}
                   className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
                 >
-                  <span>Sonraki Derse Geç (Fizik)</span>
+                  <span>
+                    {nextSubjectName === 'Çıkış'
+                      ? 'Tüm Dersler Bitti - Çıkış'
+                      : nextSubjectName
+                      ? `Sonraki Çözülmemiş Ders (${nextSubjectName})`
+                      : 'Sonraki Ders'}
+                  </span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               )}

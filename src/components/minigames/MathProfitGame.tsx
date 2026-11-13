@@ -4,6 +4,7 @@ import { CheckCircle2, RotateCcw, RotateCw, ArrowRight } from 'lucide-react';
 export interface MathProfitGameProps {
   onComplete: () => void;
   onNextSubject?: () => void;
+  nextSubjectName?: string;
 }
 
 type LeverId = 'x1' | 'x2' | 'x3' | 'x4' | 'x5';
@@ -344,7 +345,11 @@ const getInitialValuesForStage = (stage: EquationStage): Record<LeverId, 1 | 2 |
   x5: stage.levers[4].initialX,
 });
 
-export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNextSubject }) => {
+export const MathProfitGame: React.FC<MathProfitGameProps> = ({
+  onComplete,
+  onNextSubject,
+  nextSubjectName,
+}) => {
   const [stageIndex, setStageIndex] = useState<number>(0);
   const currentStage = EQUATION_STAGES[stageIndex];
 
@@ -518,7 +523,13 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({ onComplete, onNe
               onClick={onNextSubject}
               className="btn-primary !py-2 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md"
             >
-              <span>Sonraki Ders (Geometri) →</span>
+              <span>
+                {nextSubjectName === 'Çıkış'
+                  ? 'Tüm Dersler Bitti - Çıkış'
+                  : nextSubjectName
+                  ? `Sonraki Çözülmemiş Ders (${nextSubjectName}) →`
+                  : 'Sonraki Ders →'}
+              </span>
             </button>
           )}
         </div>

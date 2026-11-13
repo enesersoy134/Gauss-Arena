@@ -4,6 +4,7 @@ import { CheckCircle2, RotateCcw, ArrowRight } from 'lucide-react';
 export interface GeoShapePuzzleProps {
   onComplete: () => void;
   onNextSubject?: () => void;
+  nextSubjectName?: string;
 }
 
 interface AngleBlock {
@@ -20,7 +21,11 @@ const ANGLE_BLOCKS: AngleBlock[] = [
   { angle: 120, label: '120° Dilim', desc: 'Altıgen Açısı', color: '#A855F7' },
 ];
 
-export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNextSubject }) => {
+export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
+  onComplete,
+  onNextSubject,
+  nextSubjectName,
+}) => {
   // Başlangıçta hiçbir açı seçili olmaz, oyuncu kendisi seçer
   const [selectedAngle, setSelectedAngle] = useState<AngleBlock['angle'] | null>(null);
   const [solved, setSolved] = useState<{
@@ -394,7 +399,13 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({ onComplete, onNe
               onClick={onNextSubject}
               className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
             >
-              <span>Sonraki Derse Geç (Türkçe)</span>
+              <span>
+                {nextSubjectName === 'Çıkış'
+                  ? 'Tüm Dersler Bitti - Çıkış'
+                  : nextSubjectName
+                  ? `Sonraki Çözülmemiş Ders (${nextSubjectName})`
+                  : 'Sonraki Ders'}
+              </span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           )}

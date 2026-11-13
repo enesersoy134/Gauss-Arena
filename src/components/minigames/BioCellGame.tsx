@@ -4,6 +4,7 @@ import { CheckCircle2, RotateCcw, ArrowRight, Sparkles } from 'lucide-react';
 export interface BioCellGameProps {
   onComplete: () => void;
   onNextSubject?: () => void;
+  nextSubjectName?: string;
 }
 
 type OrganelleSvgType =
@@ -483,7 +484,11 @@ const PinnedOrganelleIllustration: React.FC<{
   );
 };
 
-export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete, onNextSubject }) => {
+export const BioCellGame: React.FC<BioCellGameProps> = ({
+  onComplete,
+  onNextSubject,
+  nextSubjectName,
+}) => {
   const [stageIdx, setStageIdx] = useState<number>(0);
   const currentStage = CELL_STAGES[stageIdx];
 
@@ -865,7 +870,13 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({ onComplete, onNextSubj
                 onClick={onNextSubject}
                 className="btn-primary !py-1.5 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-500/20"
               >
-                <span>Sonraki Derse Geç (Kimya)</span>
+                <span>
+                  {nextSubjectName === 'Çıkış'
+                    ? 'Tüm Dersler Bitti - Çıkış'
+                    : nextSubjectName
+                    ? `Sonraki Çözülmemiş Ders (${nextSubjectName})`
+                    : 'Sonraki Ders'}
+                </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             )}
