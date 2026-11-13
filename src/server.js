@@ -1,3 +1,4 @@
+const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const express = require('express');
@@ -17,6 +18,11 @@ function isAuthorizedSocketPlayer(socketToPlayerIdMap, socketId, playerId) {
 function createAppServer(listenPort = null) {
   const app = express();
   app.use(express.json());
+
+  const distPath = path.join(__dirname, '..', 'dist');
+  if (fs.existsSync(path.join(distPath, 'index.html'))) {
+    app.use(express.static(distPath));
+  }
   app.use(express.static(path.join(__dirname, '..', 'public')));
 
   const httpServer = http.createServer(app);
@@ -293,6 +299,16 @@ function createAppServer(listenPort = null) {
     broadcastState();
     res.json({ ok: true });
   });
+
+  // SPA fallback for dist
+  if (fs.existsSync(path.join(distPath, 'index.html'))) {
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+        return next();
+      }
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  }
 
   // Socket.IO connection handling
   io.on('connection', (socket) => {
