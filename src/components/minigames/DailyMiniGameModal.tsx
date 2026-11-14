@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Lock,
   Unlock,
@@ -94,6 +94,12 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
   onResetLockDemo,
 }) => {
   const [activeSubject, setActiveSubject] = useState<MiniGameSubjectId>(initialSubject);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Aktif ders değiştiğinde otomatik en üste yumuşak kaydır
+  useEffect(() => {
+    scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeSubject]);
 
   if (!isOpen) return null;
 
@@ -124,6 +130,7 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
   const handleNextSubject = () => {
     if (nextUnsolvedSubject) {
       setActiveSubject(nextUnsolvedSubject.id);
+      scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (areAllMiniGamesDone) {
       onClose();
     }
@@ -233,7 +240,7 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
         </div>
 
         {/* ORTA ALAN: Aktif Mini Oyun Sahnesi */}
-        <div className="p-4 sm:p-5 overflow-y-auto flex-1 flex flex-col gap-3">
+        <div ref={scrollContainerRef} className="p-4 sm:p-5 overflow-y-auto flex-1 flex flex-col gap-3">
           {/* O DERS BİTTİĞİNDE: SONRAKİ DERSE GEÇ BARI */}
           {isCurrentDone && (
             <div className="bg-gradient-to-r from-emerald-950/80 via-[#1A0E1C] to-emerald-950/80 border-2 border-emerald-400 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl shadow-emerald-950/50">
@@ -337,6 +344,61 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
             />
           )}
         </div>
+
+        {/* =====================================================================
+         * DOCKED BOTTOM BAR: DERS BİTTİĞİNDE ASLA SCROLL ETMEYE GEREK KALMAZ
+         * Modalın en altına sabitlenir, kullanıcı anında bir sonrakine geçer.
+         * ===================================================================== */}
+        {isCurrentDone && (
+          <aside aria-label="Günlük Görev Aksiyonu" className="bg-[#180A1A]/98 backdrop-blur-md border-t-2 border-emerald-400 px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] z-30 animate-slide-up">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="text-xl shrink-0">🎉</span>
+              <div className="min-w-0">
+                <span className="font-poppins font-black text-xs sm:text-sm text-white block truncate">
+                  {MINI_GAME_SUBJECTS[currentIndex].label} Dersi Tamamlandı! ({completedMiniGames.length}/6 Bitti)
+                </span>
+                <span className="text-[11px] text-emerald-300/80 font-mono hidden sm:block truncate">
+                  {nextUnsolvedSubject
+                    ? `Sıradaki çözülmemiş derse (${nextUnsolvedSubject.label}) tek tıkla geçebilirsiniz.`
+                    : 'Tüm mini oyunlar tamamlandı!'}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {nextUnsolvedSubject ? (
+                <button
+                  type="button"
+                  onClick={handleNextSubject}
+                  className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center justify-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-600/30 active:scale-95 animate-pulse"
+                >
+                  <span>Sıradaki Derse Geç ({nextUnsolvedSubject.icon} {nextUnsolvedSubject.label})</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center justify-center gap-1.5 !bg-purple-600 hover:!bg-purple-500 shadow-lg shadow-purple-600/30 active:scale-95"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Tamamla & Çıkış</span>
+                </button>
+              )}
+
+              {isCompetitiveUnlocked && (
+                <button
+                  type="button"
+                  onClick={onProceedToArena}
+                  className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-mono text-white flex items-center gap-1.5 transition-all active:scale-95"
+                >
+                  <Swords className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="hidden sm:inline">1v1 Arenaya Geç</span>
+                </button>
+              )}
+            </div>
+          </aside>
+        )}
       </div>
     </div>
   );

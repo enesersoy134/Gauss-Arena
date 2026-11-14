@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Scale,
   CheckCircle2,
@@ -68,6 +68,7 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({
 }) => {
   const [levelIdx, setLevelIdx] = useState<number>(0);
   const currentLevel = LEVELS[levelIdx];
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const [selectedWeightId, setSelectedWeightId] = useState<string | null>(
     LEVELS[0].availableWeights[1].id
@@ -163,6 +164,14 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({
       setLevelIdx(nextIdx);
       setPlacements({});
       setSelectedWeightId(LEVELS[nextIdx].availableWeights[0].id);
+
+      // Üste yumuşak kaydır
+      const scrollParent = rootRef.current?.closest('.overflow-y-auto');
+      if (scrollParent) {
+        scrollParent.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     } else {
       setIsGameFinished(true);
       onComplete();
@@ -175,7 +184,7 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div ref={rootRef} className="flex flex-col gap-5">
       {/* Üst Bilgi & Formül Özeti */}
       <div className="bg-[#0F0510] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -201,13 +210,29 @@ export const PhysBalanceGame: React.FC<PhysBalanceGameProps> = ({
           </div>
         </div>
 
-        <button
-          onClick={handleResetLevel}
-          className="self-end sm:self-auto px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5 transition-all shrink-0"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>Kütleleri Topla</span>
-        </button>
+        <div className="flex items-center gap-2 self-end sm:self-auto">
+          {isBalanced && !isGameFinished && (
+            <button
+              onClick={handleNextOrFinish}
+              className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-black font-mono font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/30 animate-pulse transition-all shrink-0 cursor-pointer"
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>
+                {levelIdx < LEVELS.length - 1
+                  ? '2. Aşamaya Geç →'
+                  : 'Dengeyi Onayla ✓'}
+              </span>
+            </button>
+          )}
+
+          <button
+            onClick={handleResetLevel}
+            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5 transition-all shrink-0"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Kütleleri Topla</span>
+          </button>
+        </div>
       </div>
 
       {/* Canlı Tork Karşılaştırma Paneli */}

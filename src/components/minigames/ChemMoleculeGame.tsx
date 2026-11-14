@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CheckCircle2, RotateCcw, ArrowRight, FlaskConical } from 'lucide-react';
 
 export interface ChemMoleculeGameProps {
@@ -289,6 +289,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
   const [stageIdx, setStageIdx] = useState<number>(0);
   const [beakerItems, setBeakerItems] = useState<string[]>([]);
   const [completedStages, setCompletedStages] = useState<number[]>([]);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const currentStage = FORMULA_STAGES[stageIdx];
   const correctIds = currentStage.bottles
@@ -343,6 +344,14 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
     if (stageIdx < FORMULA_STAGES.length - 1) {
       setStageIdx(stageIdx + 1);
       setBeakerItems([]);
+
+      // Üste yumuşak kaydır
+      const scrollParent = rootRef.current?.closest('.overflow-y-auto');
+      if (scrollParent) {
+        scrollParent.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
@@ -362,7 +371,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
     : 'from-white/5 to-white/10 border-white/10';
 
   return (
-    <div className="flex flex-col gap-4">
+    <div ref={rootRef} className="flex flex-col gap-4">
       {/* ÜST FORMÜL SEÇİCİ (3 FARKLI FORMÜL VERSİYONU) */}
       <div className="grid grid-cols-3 gap-2.5">
         {FORMULA_STAGES.map((stg, idx) => {

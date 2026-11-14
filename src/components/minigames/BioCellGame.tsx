@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CheckCircle2, RotateCcw, ArrowRight, Sparkles } from 'lucide-react';
 
 export interface BioCellGameProps {
@@ -491,6 +491,7 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
 }) => {
   const [stageIdx, setStageIdx] = useState<number>(0);
   const currentStage = CELL_STAGES[stageIdx];
+  const rootRef = useRef<HTMLDivElement>(null);
 
   // Kullanıcı kendisi seçene kadar hiçbir organel seçili başlamaz
   const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
@@ -519,6 +520,14 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
       type: 'info',
       text: `${CELL_STAGES[newIdx].title}: Alttaki 7 organel arasından birini seç, ardından hücre üzerindeki doğru yuvaya tıkla!`,
     });
+
+    // Üste yumuşak kaydır
+    const scrollParent = rootRef.current?.closest('.overflow-y-auto');
+    if (scrollParent) {
+      scrollParent.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handlePinSlotClick = (slotOrg: CellSlotOrganelle) => {
@@ -586,7 +595,7 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div ref={rootRef} className="flex flex-col gap-4">
       {/* ÜST BÖLÜM SEÇİCİ: 1. HAYVAN HÜCRESİ / 2. BİTKİ HÜCRESİ */}
       <div className="grid grid-cols-2 gap-3">
         {CELL_STAGES.map((stg, idx) => {

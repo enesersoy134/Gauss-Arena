@@ -527,6 +527,17 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({
             </span>
           </div>
 
+          {isAllOptimal && stageIndex < EQUATION_STAGES.length - 1 && (
+            <button
+              type="button"
+              onClick={() => selectStage(stageIndex + 1)}
+              className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-black font-mono font-black text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/30 animate-pulse transition-all cursor-pointer"
+            >
+              <span>Sonraki Denklem ({EQUATION_STAGES[stageIndex + 1].funcSymbol})</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+
           {isAllOptimal && onNextSubject && (
             <button
               onClick={onNextSubject}
@@ -1049,6 +1060,69 @@ export const MathProfitGame: React.FC<MathProfitGameProps> = ({
           </div>
         </div>
       </div>
+
+      {/* =====================================================================
+       * STICKY BOTTOM TEBRİK & SONRAKİ DENKLEM BARI (EKRANI KAYDIRMADAN ERİŞİM)
+       * 5 kol da tepe noktasına ulaştığı anda ekranın altında sabitlenir.
+       * ===================================================================== */}
+      {isAllOptimal && (
+        <aside aria-label="Denklem Aksiyonu" className="sticky bottom-0 z-30 w-full p-3 sm:p-4 rounded-2xl bg-[#1A0E1C]/95 backdrop-blur-md border-2 border-emerald-400 shadow-[0_-8px_25px_rgba(0,0,0,0.8)] flex flex-col sm:flex-row items-center justify-between gap-3 animate-slide-up mt-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center text-base shrink-0">
+              🎉
+            </div>
+            <div className="min-w-0">
+              <span className="font-poppins font-black text-xs sm:text-sm text-white block truncate">
+                Tebrikler! {currentStage.funcSymbol} Zirve Kâr ({currentStage.maxScore} Bin ₺) Elde Edildi!
+              </span>
+              <span className="text-[11px] text-emerald-300/80 font-mono hidden sm:block truncate">
+                {stageIndex < EQUATION_STAGES.length - 1
+                  ? 'Sıradaki denkleme geçerek optimizasyona devam edebilirsiniz.'
+                  : 'Tüm denklemler tamamlandı! Sonraki derse geçebilirsiniz.'}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            {stageIndex < EQUATION_STAGES.length - 1 && (
+              <button
+                type="button"
+                onClick={() => selectStage(stageIndex + 1)}
+                className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-black font-mono font-black text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-500/30 animate-pulse transition-all cursor-pointer"
+              >
+                <span>Sonraki Denklem ({EQUATION_STAGES[stageIndex + 1].funcSymbol})</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            {onNextSubject && (
+              <button
+                type="button"
+                onClick={onNextSubject}
+                className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-500/20 active:scale-95"
+              >
+                <span>
+                  {nextSubjectName === 'Çıkış'
+                    ? 'Tüm Dersler Bitti - Çıkış'
+                    : nextSubjectName
+                    ? `Sonraki Ders (${nextSubjectName}) →`
+                    : 'Sonraki Ders (Geometri) →'}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={handleReset}
+              className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1 transition-all"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Sıfırla</span>
+            </button>
+          </div>
+        </aside>
+      )}
     </div>
   );
 };
