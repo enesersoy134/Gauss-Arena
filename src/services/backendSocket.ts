@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { BACKEND_GAME_DATA } from '../data/backendMockData';
 import { Question, RevisionDetail } from '../types/game';
-import { ResourceRecommendation } from '../utils/resourceRecommendations';
+import { ResourceRecommendation, getRecommendationsForTopic } from '../utils/resourceRecommendations';
 
 export interface RevisionWrongQuestion {
   externalId: string;
@@ -272,6 +272,8 @@ export function getBackendSocket(): Socket {
  * Initial fallback players list from backendMockData & specs
  */
 function createFallbackPlayers(): BackendPlayer[] {
+  const nowIso = new Date().toISOString();
+
   return [
     {
       id: 'p1',
@@ -294,6 +296,51 @@ function createFallbackPlayers(): BackendPlayer[] {
       dailyQuestDone: true,
       completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
       coupons: [],
+      revisionDetails: [
+        {
+          topic: 'Türev ve Teğet Eğimi',
+          subject: 'matematik',
+          examType: 'AYT',
+          wrongCount: 3,
+          totalAttempts: 4,
+          errorRatePercent: 75,
+          failedQuestionIds: ['q_uc_test_001', 'q_pm_007'],
+        },
+        {
+          topic: 'Dalgalar ve Ses',
+          subject: 'fizik',
+          examType: 'TYT',
+          wrongCount: 2,
+          totalAttempts: 4,
+          errorRatePercent: 50,
+          failedQuestionIds: ['q_uc_tf_002'],
+        },
+      ],
+      revisionTopics: [
+        {
+          topic: 'Türev ve Teğet Eğimi',
+          subject: 'matematik',
+          examType: 'AYT',
+          mistakeCount: 3,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'q_uc_test_001', text: 'Türev ve Teğet Eğimi Sorusu', explanation: '', difficulty: 'orta', failedCount: 2, failedAt: nowIso },
+            { externalId: 'q_pm_007', text: 'Türev Eşleştirme Sorusu', explanation: '', difficulty: 'zor', failedCount: 1, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('matematik', 'Türev ve Teğet Eğimi', 'AYT'),
+        },
+        {
+          topic: 'Dalgalar ve Ses',
+          subject: 'fizik',
+          examType: 'TYT',
+          mistakeCount: 2,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'q_uc_tf_002', text: 'Dalgalar ve Ses Sorusu', explanation: '', difficulty: 'orta', failedCount: 2, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('fizik', 'Dalgalar ve Ses', 'TYT'),
+        },
+      ],
     },
     {
       id: 'p2',
@@ -316,6 +363,50 @@ function createFallbackPlayers(): BackendPlayer[] {
       dailyQuestDone: true,
       completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
       coupons: [],
+      revisionDetails: [
+        {
+          topic: 'Kimyasal Tepkimeler ve Denge',
+          subject: 'kimya',
+          examType: 'TYT',
+          wrongCount: 3,
+          totalAttempts: 5,
+          errorRatePercent: 60,
+          failedQuestionIds: ['AYT-KIM-E-001', 'AYT-KIM-E-002'],
+        },
+        {
+          topic: 'Üslü ve Köklü Sayılar',
+          subject: 'matematik',
+          examType: 'TYT',
+          wrongCount: 2,
+          totalAttempts: 4,
+          errorRatePercent: 50,
+          failedQuestionIds: ['q_uc_comp_003'],
+        },
+      ],
+      revisionTopics: [
+        {
+          topic: 'Kimyasal Tepkimeler ve Denge',
+          subject: 'kimya',
+          examType: 'TYT',
+          mistakeCount: 3,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'AYT-KIM-E-001', text: 'Kimyasal Denge Sorusu', explanation: '', difficulty: 'orta', failedCount: 2, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('kimya', 'Kimyasal Tepkimeler ve Denge', 'TYT'),
+        },
+        {
+          topic: 'Üslü ve Köklü Sayılar',
+          subject: 'matematik',
+          examType: 'TYT',
+          mistakeCount: 2,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'q_uc_comp_003', text: 'Üslü ve Köklü Sayılar Sorusu', explanation: '', difficulty: 'orta', failedCount: 2, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('matematik', 'Üslü ve Köklü Sayılar', 'TYT'),
+        },
+      ],
     },
     {
       id: 'p3',
@@ -338,6 +429,50 @@ function createFallbackPlayers(): BackendPlayer[] {
       dailyQuestDone: false,
       completedMiniGames: [],
       coupons: [],
+      revisionDetails: [
+        {
+          topic: 'Basınç (Katı ve Sıvı Basıncı)',
+          subject: 'fen',
+          examType: 'LGS',
+          wrongCount: 3,
+          totalAttempts: 4,
+          errorRatePercent: 75,
+          failedQuestionIds: ['LGS-FEN-E-001'],
+        },
+        {
+          topic: 'Paragrafta Anlatım Biçimleri',
+          subject: 'turkce',
+          examType: 'LGS',
+          wrongCount: 2,
+          totalAttempts: 5,
+          errorRatePercent: 40,
+          failedQuestionIds: ['q_mb_025'],
+        },
+      ],
+      revisionTopics: [
+        {
+          topic: 'Basınç (Katı ve Sıvı Basıncı)',
+          subject: 'fen',
+          examType: 'LGS',
+          mistakeCount: 3,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'LGS-FEN-E-001', text: 'Katı ve Sıvı Basıncı Sorusu', explanation: '', difficulty: 'orta', failedCount: 3, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('fen', 'Basınç', 'LGS'),
+        },
+        {
+          topic: 'Paragrafta Anlatım Biçimleri',
+          subject: 'turkce',
+          examType: 'LGS',
+          mistakeCount: 2,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'q_mb_025', text: 'Paragrafta Anlatım Sorusu', explanation: '', difficulty: 'orta', failedCount: 2, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('turkce', 'Paragrafta Anlatım Biçimleri', 'LGS'),
+        },
+      ],
     },
     {
       id: 'p4',
@@ -360,6 +495,50 @@ function createFallbackPlayers(): BackendPlayer[] {
       dailyQuestDone: false,
       completedMiniGames: [],
       coupons: [],
+      revisionDetails: [
+        {
+          topic: 'Çarpanlar ve Katlar',
+          subject: 'matematik',
+          examType: 'LGS',
+          wrongCount: 2,
+          totalAttempts: 4,
+          errorRatePercent: 50,
+          failedQuestionIds: ['LGS-MAT-E-001'],
+        },
+        {
+          topic: 'Mevsimlerin Oluşumu',
+          subject: 'fen',
+          examType: 'LGS',
+          wrongCount: 2,
+          totalAttempts: 5,
+          errorRatePercent: 40,
+          failedQuestionIds: ['LGS-FEN-E-002'],
+        },
+      ],
+      revisionTopics: [
+        {
+          topic: 'Çarpanlar ve Katlar',
+          subject: 'matematik',
+          examType: 'LGS',
+          mistakeCount: 2,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'LGS-MAT-E-001', text: 'Çarpanlar ve Katlar Sorusu', explanation: '', difficulty: 'orta', failedCount: 2, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('matematik', 'Çarpanlar ve Katlar', 'LGS'),
+        },
+        {
+          topic: 'Mevsimlerin Oluşumu',
+          subject: 'fen',
+          examType: 'LGS',
+          mistakeCount: 2,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'LGS-FEN-E-002', text: 'Mevsimlerin Oluşumu Sorusu', explanation: '', difficulty: 'orta', failedCount: 2, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('fen', 'Mevsimlerin Oluşumu', 'LGS'),
+        },
+      ],
     },
     {
       id: 'p5',
@@ -378,6 +557,30 @@ function createFallbackPlayers(): BackendPlayer[] {
       dailyQuestDone: false,
       completedMiniGames: [],
       coupons: [],
+      revisionDetails: [
+        {
+          topic: 'Hücre Organelleri',
+          subject: 'biyoloji',
+          examType: 'TYT',
+          wrongCount: 3,
+          totalAttempts: 4,
+          errorRatePercent: 75,
+          failedQuestionIds: ['q_hs_018'],
+        },
+      ],
+      revisionTopics: [
+        {
+          topic: 'Hücre Organelleri',
+          subject: 'biyoloji',
+          examType: 'TYT',
+          mistakeCount: 3,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'q_hs_018', text: 'Hücre Organelleri Sorusu', explanation: '', difficulty: 'orta', failedCount: 3, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('biyoloji', 'Hücre Organelleri', 'TYT'),
+        },
+      ],
     },
     {
       id: 'p6',
@@ -396,6 +599,30 @@ function createFallbackPlayers(): BackendPlayer[] {
       dailyQuestDone: false,
       completedMiniGames: [],
       coupons: [],
+      revisionDetails: [
+        {
+          topic: 'Trigonometri',
+          subject: 'matematik',
+          examType: 'AYT',
+          wrongCount: 4,
+          totalAttempts: 5,
+          errorRatePercent: 80,
+          failedQuestionIds: ['q_uc_comp_003'],
+        },
+      ],
+      revisionTopics: [
+        {
+          topic: 'Trigonometri',
+          subject: 'matematik',
+          examType: 'AYT',
+          mistakeCount: 4,
+          lastMistakeAt: nowIso,
+          wrongQuestions: [
+            { externalId: 'q_uc_comp_003', text: 'Trigonometri Sorusu', explanation: '', difficulty: 'orta', failedCount: 4, failedAt: nowIso },
+          ],
+          recommendedResources: getRecommendationsForTopic('matematik', 'Trigonometri', 'AYT'),
+        },
+      ],
     },
   ];
 }
@@ -524,6 +751,28 @@ export function useBackendGame() {
 
   // Yanlış Soruları Tekrar Çözme Antrenmanını Tamamlama (+30 Coin)
   const completeRevisionPractice = useCallback(async (playerId: string, solvedTopics?: string[]) => {
+    // 1. Optimistik yerel state güncellemesi (+30 Coin ve çözülen eksik konuların temizlenmesi)
+    const solvedNorm = (solvedTopics || []).map((t) => t.toLowerCase().trim());
+    setBackendState((prev) => {
+      const updatedPlayers = prev.players.map((p) => {
+        if (p.id !== playerId) return p;
+        const newCoins = (p.coins || 0) + 30;
+        const newDetails = (p.revisionDetails || []).filter(
+          (d) => !solvedNorm.includes(d.topic.toLowerCase().trim())
+        );
+        const newTopics = (p.revisionTopics || []).filter(
+          (t) => !solvedNorm.includes(t.topic.toLowerCase().trim())
+        );
+        return {
+          ...p,
+          coins: newCoins,
+          revisionDetails: newDetails,
+          revisionTopics: newTopics,
+        };
+      });
+      return { ...prev, players: updatedPlayers };
+    });
+
     try {
       const res = await fetch('/api/players/complete-revision-practice', {
         method: 'POST',
@@ -532,8 +781,8 @@ export function useBackendGame() {
       });
       return await res.json();
     } catch (err) {
-      console.error('completeRevisionPractice error:', err);
-      return { ok: false, reason: 'Bağlantı hatası' };
+      console.warn('completeRevisionPractice backend fetch failed, kept optimistic update:', err);
+      return { ok: true, offline: true };
     }
   }, []);
 
@@ -793,6 +1042,25 @@ export function useBackendGame() {
 
   const clearRevisionTopic = useCallback(
     async (topic?: string, playerId: string = currentPlayerId) => {
+      if (topic) {
+        const normTopic = topic.toLowerCase().trim();
+        setBackendState((prev) => {
+          const updatedPlayers = prev.players.map((p) => {
+            if (p.id !== playerId) return p;
+            return {
+              ...p,
+              revisionDetails: (p.revisionDetails || []).filter(
+                (d) => d.topic.toLowerCase().trim() !== normTopic
+              ),
+              revisionTopics: (p.revisionTopics || []).filter(
+                (t) => t.topic.toLowerCase().trim() !== normTopic
+              ),
+            };
+          });
+          return { ...prev, players: updatedPlayers };
+        });
+      }
+
       try {
         const res = await fetch('/api/revision/clear-topic', {
           method: 'POST',
@@ -801,8 +1069,8 @@ export function useBackendGame() {
         });
         return await res.json();
       } catch (err) {
-        console.error('clearRevisionTopic failed', err);
-        return { ok: false };
+        console.warn('clearRevisionTopic fetch failed, kept optimistic state:', err);
+        return { ok: true, offline: true };
       }
     },
     [currentPlayerId]

@@ -465,22 +465,9 @@ function createAppServer(listenPort = null) {
     const opponentPlayer = String(playerId) === String(duel.playerA.id) ? duel.playerB : duel.playerA;
     const isLastQuestion = duel.currentQuestionIndex >= duel.questions.length - 1;
 
-    // 1. SON SORU KONTROLÜ:
-    // Kullanıcı kendi sorularını tamamladığı anda rakibin bitirmesini bekletmemek için:
-    // Rakip henüz cevap vermemiş olsa bile kalan hamlesi anında hesaplansın ve maç derhal sonuçlandırılsın.
-    if (isLastQuestion && !duel.currentAnswers.has(opponentPlayer.id)) {
-      if (entry.ghostTimer) {
-        clearTimeout(entry.ghostTimer);
-        entry.ghostTimer = null;
-      }
-      const oppAnswer = generateImmediateOpponentAnswer(duel, opponentPlayer);
-      duel.submitAnswer(opponentPlayer.id, duel.currentQuestionIndex, oppAnswer, Date.now());
-    }
-
-    // 2. ÖNCEKİ SORULARDA GHOST RAKİP HIZLANDIRMA:
-    // Eğer son soru değilse ve rakip bir ghost ise, kullanıcı cevap verdiğinde ghost'un 4-7 sn gereksiz bekletmesini
-    // engelleyip 350ms içinde yanıt vermesini sağla.
-    if (!isLastQuestion && opponentPlayer.isGhost && !duel.currentAnswers.has(opponentPlayer.id)) {
+    // GHOST RAKİP HIZLANDIRMA (Yalnızca rakip Ghost bot ise ve henüz cevap vermediyse):
+    // Gerçek oyuncuların düellosunda diğer oyuncunun cevabı veya süre bitimi mutlaka beklenir.
+    if (opponentPlayer.isGhost && !duel.currentAnswers.has(opponentPlayer.id)) {
       if (entry.ghostTimer) {
         clearTimeout(entry.ghostTimer);
         entry.ghostTimer = null;

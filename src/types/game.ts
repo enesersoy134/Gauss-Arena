@@ -30,6 +30,7 @@ export type QuestionType =
 export interface RevisionDetail {
   topic: string;
   subject: string;
+  examType?: ExamCategory | string;
   wrongCount: number;
   totalAttempts: number;
   errorRatePercent: number; // Math.round((wrongCount / totalAttempts) * 100)

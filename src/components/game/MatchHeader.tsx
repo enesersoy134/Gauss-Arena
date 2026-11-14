@@ -100,20 +100,24 @@ export const MatchHeader: React.FC<MatchHeaderProps> = ({
                     ? 'text-sky-400'
                     : player1.streak >= 2
                     ? 'px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-red-500/30 border border-amber-400 text-amber-200 shadow-lg shadow-amber-500/50 ring-1 ring-amber-400/60 animate-flame-aura'
-                    : 'text-amber-400'
+                    : player1.streak > 0
+                    ? 'text-amber-400'
+                    : 'text-zinc-400'
                 }`}
               >
                 {player1.streak < 0 ? (
                   <span>❄️ {player1.streak}</span>
-                ) : (
+                ) : player1.streak > 0 ? (
                   <>
                     <Flame
                       className={`w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400 ${
                         player1.streak >= 2 ? 'animate-bounce' : ''
                       }`}
                     />
-                    {player1.streak >= 2 ? `🔥 ${player1.streak}x ALEV ALDI!` : player1.streak}
+                    {player1.streak >= 2 ? `🔥 ${player1.streak}x ALEV ALDI!` : `+${player1.streak}`}
                   </>
+                ) : (
+                  <span>{player1.streak}</span>
                 )}
               </span>
             </div>
@@ -177,16 +181,20 @@ export const MatchHeader: React.FC<MatchHeaderProps> = ({
                     ? 'text-sky-400'
                     : player2.streak >= 2
                     ? 'px-1.5 py-0.5 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-300'
-                    : 'text-blue-400'
+                    : player2.streak > 0
+                    ? 'text-blue-400'
+                    : 'text-zinc-400'
                 }`}
               >
                 {player2.streak < 0 ? (
                   <span>❄️ {player2.streak}</span>
-                ) : (
+                ) : player2.streak > 0 ? (
                   <>
                     <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-blue-400 text-blue-400" />
-                    {player2.streak >= 2 ? `🔥 ${player2.streak}x` : player2.streak}
+                    {player2.streak >= 2 ? `🔥 ${player2.streak}x` : `+${player2.streak}`}
                   </>
+                ) : (
+                  <span>{player2.streak}</span>
                 )}
               </span>
               <span className="text-[#3B82F6] font-bold">{player2.elo} ELO</span>

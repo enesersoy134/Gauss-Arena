@@ -322,10 +322,21 @@ function isRichInteractive(q) {
 }
 
 /**
+ * Check if a question is a matrix_toggle type
+ */
+function isMatrixToggleQuestion(q) {
+  if (!q) return false;
+  if (q.type === 'matrix_toggle') return true;
+  if (q.interactiveQuestion && q.interactiveQuestion.type === 'matrix_toggle') return true;
+  return false;
+}
+
+/**
  * Selects `count` (5) questions matching the ELO/difficulty distribution across `commonSubjects`.
  * Supports examType: 'LGS', 'TYT', 'AYT', 'KARMA'.
  * Ensures 2-3 questions come from rich interactive questions when available,
  * while strictly respecting the difficulty distribution and commonSubjects filter.
+ * Düello karşılaşmalarında matrix_toggle türü sorular hariç tutulur.
  */
 function selectMatchQuestions(bank, {
   examType = 'TYT',
@@ -365,7 +376,10 @@ function selectMatchQuestions(bank, {
         pool.push(...list);
       }
     }
-    pool = shuffleArray(pool).filter((q) => !usedIds.has(q.externalId));
+    // Düello eşleşmelerinde matrix_toggle türü soruları ele
+    pool = shuffleArray(pool)
+      .filter((q) => !usedIds.has(q.externalId))
+      .filter((q) => !isMatrixToggleQuestion(q));
 
     const interactiveCandidates = pool.filter(isRichInteractive);
     const standardCandidates = pool.filter((q) => !isRichInteractive(q));
@@ -403,9 +417,12 @@ function selectMatchQuestions(bank, {
 
   // Güvenli ve Kademeli Fallback: Filtrelerin (özellikle seçilen ders/branşın) korunması esastır
   if (selected.length < count) {
-    // 1. Kademe: İstenen sınav ve seçili branş havuzundaki kalan tüm sorular (farklı zorluklar dahil)
+    // 1. Kademe: İstenen sınav ve seçili branş havuzundaki kalan tüm sorular (farklı zorluklar dahil, matrix_toggle hariç)
     const sameExamSubjectPool = bank.allQuestions.filter(
-      (q) => (normExam === 'KARMA' || q.examType === normExam) && subjects.includes(q.subject) && !usedIds.has(q.externalId)
+      (q) => (normExam === 'KARMA' || q.examType === normExam) &&
+             subjects.includes(q.subject) &&
+             !usedIds.has(q.externalId) &&
+             !isMatrixToggleQuestion(q)
     );
     for (const q of shuffleArray(sameExamSubjectPool)) {
       if (selected.length >= count) break;
@@ -415,9 +432,11 @@ function selectMatchQuestions(bank, {
   }
 
   if (selected.length < count) {
-    // 2. Kademe: Seçilen BRANŞI ASLA BOZMADAN diğer sınavlardan aynı branşa ait sorular
+    // 2. Kademe: Seçilen BRANŞI ASLA BOZMADAN diğer sınavlardan aynı branşa ait sorular (matrix_toggle hariç)
     const sameSubjectOtherExams = bank.allQuestions.filter(
-      (q) => subjects.includes(q.subject) && !usedIds.has(q.externalId)
+      (q) => subjects.includes(q.subject) &&
+             !usedIds.has(q.externalId) &&
+             !isMatrixToggleQuestion(q)
     );
     for (const q of shuffleArray(sameSubjectOtherExams)) {
       if (selected.length >= count) break;
@@ -427,8 +446,10 @@ function selectMatchQuestions(bank, {
   }
 
   if (selected.length < count) {
-    // 3. Kademe: Seçilen branşta hiç kullanılmamış soru kalmadıysa, başka branşa geçmek yerine aynı branş sorularını döngüyle tekrar ekle
-    const cycleSubjectPool = bank.allQuestions.filter((q) => subjects.includes(q.subject));
+    // 3. Kademe: Seçilen branşta hiç kullanılmamış soru kalmadıysa, başka branşa geçmek yerine aynı branş sorularını döngüyle tekrar ekle (matrix_toggle hariç)
+    const cycleSubjectPool = bank.allQuestions.filter(
+      (q) => subjects.includes(q.subject) && !isMatrixToggleQuestion(q)
+    );
     if (cycleSubjectPool.length > 0) {
       for (const q of shuffleArray(cycleSubjectPool)) {
         if (selected.length >= count) break;
@@ -436,7 +457,9 @@ function selectMatchQuestions(bank, {
       }
     } else {
       // Sadece ve sadece soru bankasında bu branş hiç tanımlı değilse genel havuzdan al (güvenlik koruması)
-      const generalFallback = bank.allQuestions.filter((q) => !usedIds.has(q.externalId));
+      const generalFallback = bank.allQuestions.filter(
+        (q) => !usedIds.has(q.externalId) && !isMatrixToggleQuestion(q)
+      );
       for (const q of shuffleArray(generalFallback)) {
         if (selected.length >= count) break;
         selected.push(q);

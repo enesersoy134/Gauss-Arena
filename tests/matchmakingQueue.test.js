@@ -39,7 +39,7 @@ test('MatchmakingQueue matches high-momentum 1200 ELO (S=5) with 1340 ELO (S=0) 
   assert.deepEqual(res.matches[0].commonSubjects, ['fizik']);
 });
 
-test('MatchmakingQueue rejects disjoint subjects, >250 real ELO diff, and >=2 pairwise matches in 24h, and triggers Ghost at 30s', () => {
+test('MatchmakingQueue allows unlimited pairwise matches (günlük eşleşme sınırı kaldırıldı), and enforces limit only if explicitly configured', () => {
   const q = new MatchmakingQueue();
   const t0 = 2_000_000;
   q.recordRankedMatch('a', 'b', t0 - 3600_000);
@@ -48,13 +48,24 @@ test('MatchmakingQueue rejects disjoint subjects, >250 real ELO diff, and >=2 pa
   q.enqueue({ playerId: 'a', name: 'A', elo: 1200, streak: 0, examType: 'TYT', subjects: ['matematik'], mode: 'ranked', enqueuedAt: t0 });
   q.enqueue({ playerId: 'b', name: 'B', elo: 1200, streak: 0, examType: 'TYT', subjects: ['matematik'], mode: 'ranked', enqueuedAt: t0 });
 
-  // Blocked by 24h pairwise cooldown (already 2 matches)
+  // Günlük eşleşme sınırı kaldırıldı: Önceden 2 maç yapılmış olsa bile eşleşme serbesttir
   const res1 = q.tick(t0 + 2000);
-  assert.equal(res1.matches.length, 0);
+  assert.equal(res1.matches.length, 1);
+  assert.equal(res1.matches[0].playerA.playerId, 'a');
+  assert.equal(res1.matches[0].playerB.playerId, 'b');
 
-  // At 31s, both get Ghost matches
-  const res2 = q.tick(t0 + 31000);
-  assert.equal(res2.ghostMatches.length, 2);
+  // dailyMatchLimit parametresi verilirse opsiyonel sınır devreye girer
+  const qLimited = new MatchmakingQueue({ dailyMatchLimit: 2 });
+  qLimited.recordRankedMatch('c', 'd', t0 - 3600_000);
+  qLimited.recordRankedMatch('c', 'd', t0 - 1800_000);
+  qLimited.enqueue({ playerId: 'c', name: 'C', elo: 1200, streak: 0, examType: 'TYT', subjects: ['matematik'], mode: 'ranked', enqueuedAt: t0 });
+  qLimited.enqueue({ playerId: 'd', name: 'D', elo: 1200, streak: 0, examType: 'TYT', subjects: ['matematik'], mode: 'ranked', enqueuedAt: t0 });
+  const resLimited = qLimited.tick(t0 + 2000);
+  assert.equal(resLimited.matches.length, 0);
+
+  // 31s'de limitli kuyrukta ghost eşleşmesi tetiklenir
+  const resGhost = qLimited.tick(t0 + 31000);
+  assert.equal(resGhost.ghostMatches.length, 2);
 });
 
 test('MatchmakingQueue preserves empty subjects [] and rejects disjoint subjects and >250 ELO diff at 25s', () => {

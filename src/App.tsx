@@ -2,11 +2,12 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useBackendGame, BackendPlayer } from './services/backendSocket';
 import { Question } from './types/game';
 import { ALL_INTERACTIVE_QUESTIONS } from './data/allInteractiveQuestions';
-import { ALL_QUESTIONS, filterAppQuestions } from './data/allQuestions';
+import { ALL_QUESTIONS, filterAppQuestions, getRevisionQuestionsForTopics } from './data/allQuestions';
 import { getRecommendationsForTopic } from './utils/resourceRecommendations';
 import LiveDuelScreen from './components/game/LiveDuelScreen';
 import GameScreen from './components/game/GameScreen';
 import RevisionPracticeScreen from './components/game/RevisionPracticeScreen';
+import PresentationDeck from './components/presentation/PresentationDeck';
 import AdminPanel from './components/admin/AdminPanel';
 import SmartboardScreen from './components/smartboard/SmartboardScreen';
 import KahootPlayerView from './components/smartboard/KahootPlayerView';
@@ -117,7 +118,7 @@ function getPlayerDailyStatus(
 
   return {
     completedMiniGames: [],
-    isCompetitiveUnlocked: false,
+    isCompetitiveUnlocked: true,
   };
 }
 
@@ -278,6 +279,28 @@ export default function App() {
     return isMiddleSchoolPlayer(currentPlayerId, currentPlayer) ? 'tour-lgs-1' : 'tour-tyt-1';
   });
 
+  const lgsSubjects = [
+    { id: 'turkce', label: 'Türkçe' },
+    { id: 'matematik', label: 'Matematik' },
+    { id: 'sosyal', label: 'Sosyal Bilgiler (Sosyal)' },
+    { id: 'fen', label: 'Fen Bilimleri (Fen)' },
+  ];
+
+  const highSchoolSubjects = [
+    { id: 'matematik', label: 'Matematik' },
+    { id: 'fizik', label: 'Fizik' },
+    { id: 'kimya', label: 'Kimya' },
+    { id: 'biyoloji', label: 'Biyoloji' },
+    { id: 'geometri', label: 'Geometri' },
+    { id: 'turkce', label: 'Türkçe' },
+  ];
+
+  const allSubjects = selectedExamType === 'LGS' ? lgsSubjects : highSchoolSubjects;
+
+  const availableExamTypes: ('LGS' | 'TYT' | 'AYT')[] = isMiddleSchool
+    ? ['LGS']
+    : ['TYT', 'AYT'];
+
   // Mod bazlı kuyruk durumu
   const isRankedQueueing = Boolean(myQueueEntry && myQueueEntry.mode === 'ranked');
   const isTournamentQueueing = Boolean(myQueueEntry && myQueueEntry.mode === 'tournament');
@@ -397,6 +420,17 @@ export default function App() {
   // ROUTE GÖRÜNÜMLERİ
   // =========================================================================
 
+  // 0. PROJE SUNUM SLAYTLARI (/sunum veya /slayt)
+  if (currentPath.startsWith('/sunum') || currentPath.startsWith('/slayt')) {
+    return (
+      <PresentationDeck
+        onExit={() => {
+          navigateTo('/');
+        }}
+      />
+    );
+  }
+
   // 1. /random YÜKLEME EKRANI
   if (currentPath.startsWith('/random')) {
     return (
@@ -428,11 +462,12 @@ export default function App() {
         ? 'Zor'
         : 'Adaptif';
     const subjLabels = selectedSubjects
-      .map((s) => allSubjects.find((as) => as.id === s)?.label || s)
+      .map((s) => (allSubjects || []).find((as) => as.id === s)?.label || s)
       .join(', ');
 
     return (
       <RevisionPracticeScreen
+        key={`practice_screen_${isPracticeSession ? 'solo' : 'rev'}_${revisionPracticeQuestions.map((q) => q.id).join('_').slice(0, 40)}`}
         questions={revisionPracticeQuestions}
         topics={revisionPracticeTopics}
         modeTitle={
@@ -540,28 +575,6 @@ export default function App() {
   // =========================================================================
   // 7. ÖĞRENCİ ARAYÜZÜ (/) - EdTech Platformu
   // =========================================================================
-  const lgsSubjects = [
-    { id: 'turkce', label: 'Türkçe' },
-    { id: 'matematik', label: 'Matematik' },
-    { id: 'sosyal', label: 'Sosyal Bilgiler (Sosyal)' },
-    { id: 'fen', label: 'Fen Bilimleri (Fen)' },
-  ];
-
-  const highSchoolSubjects = [
-    { id: 'matematik', label: 'Matematik' },
-    { id: 'fizik', label: 'Fizik' },
-    { id: 'kimya', label: 'Kimya' },
-    { id: 'biyoloji', label: 'Biyoloji' },
-    { id: 'geometri', label: 'Geometri' },
-    { id: 'turkce', label: 'Türkçe' },
-  ];
-
-  const allSubjects = selectedExamType === 'LGS' ? lgsSubjects : highSchoolSubjects;
-
-  const availableExamTypes: ('LGS' | 'TYT' | 'AYT')[] = isMiddleSchool
-    ? ['LGS']
-    : ['TYT', 'AYT'];
-
   const handleExamTypeChange = (t: 'LGS' | 'TYT' | 'AYT') => {
     if (isMiddleSchool && t !== 'LGS') return;
     if (!isMiddleSchool && t === 'LGS') return;
@@ -586,12 +599,9 @@ export default function App() {
       handleStartPracticeFromMatchmaking();
       return;
     }
+    // Günlük eşleşme sınırı ve kilitleri kaldırıldı: Sınırsız 1v1 düello ve eşleşme serbesttir
     if (!isCompetitiveUnlocked) {
-      showToast(
-        '🔒 1v1 Rekabetçi Düello kilitli! Önce Günün Öğretici Mini Oyununu tamamlamalısın.'
-      );
-      setShowMiniGameScreen(true);
-      return;
+      setIsCompetitiveUnlocked(true);
     }
     soundEngine.playClick();
     if (selectedSubjects.length === 0) {
@@ -668,67 +678,80 @@ export default function App() {
 
   // Tüm Eksik Konuları Karışık Çöz
   const handlePracticeAllRevision = () => {
+    soundEngine.playClick();
+    const effectiveExam = isMiddleSchool ? 'LGS' : selectedExamType;
+
     if (revisionItems.length === 0) {
       showToast('Tekrar edilecek eksik konunuz bulunmuyor!');
       return;
     }
 
-    const allFailedIds = new Set<string>();
+    const allFailedIds: string[] = [];
     const topicNames: string[] = [];
+    const subjectNames: string[] = [];
 
     revisionItems.forEach((item) => {
       topicNames.push(item.topic);
-      (item.failedQuestionIds || []).forEach((id) => allFailedIds.add(id));
+      if (item.subject) subjectNames.push(item.subject);
+      (item.failedQuestionIds || []).forEach((id) => allFailedIds.push(id));
     });
 
-    let matchedQuestions = ALL_QUESTIONS.filter((q) =>
-      allFailedIds.has(q.id) ||
-      topicNames.some(
-        (tn) =>
-          q.topic.toLowerCase().includes(tn.toLowerCase()) ||
-          tn.toLowerCase().includes(q.topic.toLowerCase())
-      )
-    );
+    const picked = getRevisionQuestionsForTopics({
+      topics: topicNames,
+      failedQuestionIds: allFailedIds,
+      subjects: subjectNames,
+      examType: effectiveExam,
+      targetCount: Math.min(10, Math.max(5, topicNames.length * 2)),
+    });
 
-    if (matchedQuestions.length === 0) {
-      matchedQuestions = ALL_QUESTIONS.slice(0, 5);
+    if (picked.length === 0) {
+      showToast('Telafi antrenmanı için uygun soru bulunamadı!');
+      return;
     }
 
-    const shuffled = [...matchedQuestions].sort(() => Math.random() - 0.5);
     setIsPracticeSession(false);
     setRevisionPracticeTopics(topicNames);
-    setRevisionPracticeQuestions(shuffled);
+    setRevisionPracticeQuestions(picked);
   };
 
   // Tekil Bir Eksik Konuyu Çöz
   const handlePracticeSingleTopic = (topicName: string, failedIds?: string[]) => {
-    const idSet = new Set(failedIds || []);
-    let matched = ALL_QUESTIONS.filter(
-      (q) =>
-        idSet.has(q.id) ||
-        q.topic.toLowerCase().includes(topicName.toLowerCase()) ||
-        topicName.toLowerCase().includes(q.topic.toLowerCase())
-    );
-    if (matched.length === 0) {
-      matched = ALL_QUESTIONS.slice(0, 3);
+    soundEngine.playClick();
+    const item = revisionItems.find((r) => r.topic === topicName);
+    const itemSubj = item?.subject ? [item.subject] : [];
+    const effectiveExam = isMiddleSchool ? 'LGS' : item?.examType || selectedExamType;
+
+    const picked = getRevisionQuestionsForTopics({
+      topics: [topicName],
+      failedQuestionIds: failedIds || [],
+      subjects: itemSubj,
+      examType: effectiveExam,
+      targetCount: 4,
+    });
+
+    if (picked.length === 0) {
+      showToast('Bu konu için telafi sorusu bulunamadı!');
+      return;
     }
-    const shuffled = [...matched].sort(() => Math.random() - 0.5);
+
     setIsPracticeSession(false);
     setRevisionPracticeTopics([topicName]);
-    setRevisionPracticeQuestions(shuffled);
+    setRevisionPracticeQuestions(picked);
   };
 
   // Karşılaşma Seçenekleri altındaki Bireysel Alıştırma Başlatıcı
   const handleStartPracticeFromMatchmaking = () => {
     soundEngine.playClick();
-    if (selectedSubjects.length === 0) {
-      showToast('Lütfen alıştırma yapmak için en az bir ders seçin!');
-      return;
-    }
+    const activeSubjects =
+      selectedSubjects.length > 0
+        ? selectedSubjects
+        : isMiddleSchool
+        ? ['turkce', 'matematik', 'sosyal', 'fen']
+        : ['matematik', 'fizik', 'kimya', 'biyoloji', 'turkce'];
 
     const picked = filterAppQuestions({
       examType: selectedExamType,
-      subjects: selectedSubjects,
+      subjects: activeSubjects,
       difficultyMode: selectedDifficultyMode,
       count: practiceQuestionCount,
     });
@@ -811,7 +834,7 @@ export default function App() {
               <span className="hidden md:inline">Günlük Görev</span>
               <span className="md:hidden">Görev</span>
               <span className="font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-black/30">
-                {isMiddleSchool ? 'Muaf' : isCompetitiveUnlocked ? `${completedMiniGames.length}/6` : 'Kilitli'}
+                {isMiddleSchool ? 'Muaf' : `${completedMiniGames.length}/6`}
               </span>
             </button>
 
@@ -854,12 +877,12 @@ export default function App() {
 
                 <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono mt-0.5 whitespace-nowrap">
                   <span className="text-[#F14E13] font-bold">{currentPlayer.elo} ELO</span>
-                  <span className={`flex items-center gap-0.5 font-semibold ${currentPlayer.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
+                  <span className={`flex items-center gap-0.5 font-semibold ${currentPlayer.streak < 0 ? 'text-sky-400' : currentPlayer.streak > 0 ? 'text-amber-400' : 'text-zinc-400'}`}>
                     {currentPlayer.streak < 0 ? (
                       <span>❄️</span>
-                    ) : (
+                    ) : currentPlayer.streak > 0 ? (
                       <Flame className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400" />
-                    )}
+                    ) : null}
                     <span>{currentPlayer.streak > 0 ? `+${currentPlayer.streak}` : currentPlayer.streak}</span>
                   </span>
                   <span className="text-zinc-500">•</span>
@@ -1046,13 +1069,15 @@ export default function App() {
                         <span className={`flex items-center gap-1 font-semibold px-2.5 py-1 rounded-xl border ${
                           currentPlayer.streak < 0
                             ? 'text-sky-300 bg-sky-500/10 border-sky-500/25'
-                            : 'text-amber-400 bg-amber-500/10 border-amber-500/25'
+                            : currentPlayer.streak > 0
+                            ? 'text-amber-400 bg-amber-500/10 border-amber-500/25'
+                            : 'text-zinc-400 bg-white/5 border-white/10'
                         }`}>
                           {currentPlayer.streak < 0 ? (
                             <span>❄️</span>
-                          ) : (
+                          ) : currentPlayer.streak > 0 ? (
                             <Flame className="w-3.5 h-3.5 fill-amber-400" />
-                          )}
+                          ) : null}
                           <span>{currentPlayer.streak > 0 ? `+${currentPlayer.streak}` : currentPlayer.streak} Seri</span>
                         </span>
                       </div>
@@ -1240,7 +1265,14 @@ export default function App() {
                     </button>
 
                     <button
-                      onClick={() => setSelectedMode('practice')}
+                      onClick={() => {
+                        soundEngine.playClick();
+                        if (selectedMode === 'practice') {
+                          handleStartPracticeFromMatchmaking();
+                        } else {
+                          setSelectedMode('practice');
+                        }
+                      }}
                       className={`p-3.5 rounded-2xl border text-left transition-all ${
                         selectedMode === 'practice'
                           ? 'border-[#F14E13] bg-[#F14E13]/15 text-white shadow-md shadow-[#F14E13]/20 ring-1 ring-[#F14E13]/40'
@@ -1254,6 +1286,11 @@ export default function App() {
                         )}
                       </div>
                       <div className="text-[11px] opacity-70 mt-1 leading-snug">Tek Başına Soru Çöz & Pekiştir</div>
+                      {selectedMode === 'practice' && (
+                        <div className="mt-2 text-[10px] font-mono text-orange-400 font-bold flex items-center gap-1">
+                          <span>Seçili • Başlatmak için Tekrar Tıkla →</span>
+                        </div>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -1422,23 +1459,10 @@ export default function App() {
                   ) : (
                     <button
                       onClick={handleStartQueue}
-                      className={`w-full py-4 rounded-2xl text-white font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-2xl transition-all border border-white/20 ${
-                        !isCompetitiveUnlocked
-                          ? 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-500 shadow-amber-600/30 hover:brightness-110'
-                          : 'bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99]'
-                      }`}
+                      className="w-full py-4 rounded-2xl text-white font-poppins font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-2xl transition-all border border-white/20 bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99]"
                     >
-                      {!isCompetitiveUnlocked ? (
-                        <>
-                          <Lock className="w-5 h-5" />
-                          <span>Günlük Mini Oyunu Tamamla & 1v1 Kilidini Aç</span>
-                        </>
-                      ) : (
-                        <>
-                          <Swords className="w-5 h-5 fill-current" />
-                          <span>1v1 RAKİP BUL & DÜELLOYU BAŞLAT</span>
-                        </>
-                      )}
+                      <Swords className="w-5 h-5 fill-current" />
+                      <span>1v1 RAKİP BUL & DÜELLOYU BAŞLAT</span>
                     </button>
                   )}
                 </div>
@@ -1481,8 +1505,8 @@ export default function App() {
                         </div>
                         <div className="font-mono text-right">
                           <span className="text-[#F14E13] font-bold">{p.elo} ELO</span>
-                          <span className={`text-[10px] ml-1.5 ${p.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
-                            {p.streak > 0 ? `+${p.streak}🔥` : p.streak < 0 ? `${p.streak}❄️` : `${p.streak}🔥`}
+                          <span className={`text-[10px] ml-1.5 ${p.streak < 0 ? 'text-sky-400' : p.streak > 0 ? 'text-amber-400' : 'text-zinc-500'}`}>
+                            {p.streak > 0 ? `+${p.streak}🔥` : p.streak < 0 ? `${p.streak}❄️` : `${p.streak}`}
                           </span>
                         </div>
                       </div>
@@ -2020,14 +2044,23 @@ export default function App() {
 
               {/* Ders Filtreleri */}
               <div className="flex items-center gap-2 flex-wrap pt-1">
-                {[
-                  { id: 'all', label: 'TÜM DERSLER' },
-                  { id: 'matematik', label: 'MATEMATİK' },
-                  { id: 'fizik', label: 'FİZİK' },
-                  { id: 'kimya', label: 'KİMYA' },
-                  { id: 'biyoloji', label: 'BİYOLOJİ' },
-                  { id: 'turkce', label: 'TÜRKÇE' },
-                ].map((sub) => (
+                {(isMiddleSchool
+                  ? [
+                      { id: 'all', label: 'TÜM DERSLER' },
+                      { id: 'turkce', label: 'TÜRKÇE' },
+                      { id: 'matematik', label: 'MATEMATİK' },
+                      { id: 'fen', label: 'FEN BİLİMLERİ' },
+                      { id: 'sosyal', label: 'SOSYAL BİLGİLER' },
+                    ]
+                  : [
+                      { id: 'all', label: 'TÜM DERSLER' },
+                      { id: 'matematik', label: 'MATEMATİK' },
+                      { id: 'fizik', label: 'FİZİK' },
+                      { id: 'kimya', label: 'KİMYA' },
+                      { id: 'biyoloji', label: 'BİYOLOJİ' },
+                      { id: 'turkce', label: 'TÜRKÇE' },
+                    ]
+                ).map((sub) => (
                   <button
                     key={sub.id}
                     onClick={() => setRevisionSubjectFilter(sub.id)}
