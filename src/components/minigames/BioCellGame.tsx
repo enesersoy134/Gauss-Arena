@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { CheckCircle2, RotateCcw, ArrowRight, Sparkles } from 'lucide-react';
+import soundEngine from '../../utils/soundEngine';
 
 export interface BioCellGameProps {
   onComplete: () => void;
@@ -546,20 +547,25 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
 
     // 1. Bu hücre tipinde hiç bulunmayan çeldirici organel mi?
     if (!chosenOption.isValidForCell) {
+      soundEngine.playWrong();
       setStatusMsg({
         type: 'error',
         text:
-          chosenOption.invalidCellReason ||
-          'Bu organel bu hücre tipinde bulunmaz!',
+          currentStage.cellType === 'animal'
+            ? `🚨 Dr. Elif: "DUR! Hayvan hücresine ${chosenOption.name} takamazsın! Hastayı fotosentez yapan yeşil bir bitkiye mi dönüştüreceksin?! (${chosenOption.invalidCellReason})"`
+            : `🥀 Prof. Çınar: "Olmaz! Gelişmiş bitki hücresinde ${chosenOption.name} ne arar?! Bitkiyi yürütecek misin?! (${chosenOption.invalidCellReason})"`,
       });
       return;
     }
 
     // 2. Hücreye ait ama yanlış yuvaya mı tıklandı?
     if (chosenOption.id !== slotOrg.id) {
+      soundEngine.playWrong();
       setStatusMsg({
         type: 'error',
-        text: `⚠️ Yanlış Yuva! Burası "${slotOrg.slotLabel}" (${slotOrg.slotHint}). Seçtiğin "${chosenOption.name}" (${chosenOption.roleShort}) için diğer iğne yuvasını dene!`,
+        text: `🧐 ${
+          currentStage.cellType === 'animal' ? 'Dr. Elif' : 'Prof. Çınar'
+        }: "Organel doğru ama yuva yanlış! Burası '${slotOrg.slotLabel}' (${slotOrg.slotHint}). Seçtiğin '${chosenOption.name}' organelini kendi görev yuvasına iğnele!"`,
       });
       return;
     }
@@ -572,15 +578,22 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
     setSelectedOrgId(null);
 
     if (nextPinned.length === currentStage.slots.length) {
+      soundEngine.playCorrect();
       setStatusMsg({
         type: 'success',
-        text: currentStage.activeAnimationText,
+        text:
+          currentStage.cellType === 'animal'
+            ? '🤩 Dr. Elif: "Harikasın! Mitokondri ATP pompalıyor, Sentrozom bölünmeyi başlattı, Çekirdek ve Golgi aktif! Yaralı hayvan hücresini hayata döndürdün!"'
+            : '🌿 Prof. Çınar: "Muhteşem! Kloroplastlar güneş ışığıyla O₂ üretiyor, Merkezi Koful turgor basıncıyla bitkiyi dimdik ayağa kaldırdı! Sera kurtuldu!"',
       });
       onComplete();
     } else {
+      soundEngine.playPartial();
       setStatusMsg({
         type: 'success',
-        text: `📍 ${slotOrg.name} hücreye iğnelendi! (${nextPinned.length}/4 tamamlandı). Şimdi sıradaki organeli tepsiden seç!`,
+        text: `📍 ${
+          currentStage.cellType === 'animal' ? 'Dr. Elif' : 'Prof. Çınar'
+        }: "Süper! ${slotOrg.name} yuvasına oturdu (${nextPinned.length}/4). Hemen sıradaki organeli tepsiden seç!"`,
       });
     }
   };
@@ -631,6 +644,73 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
             </button>
           );
         })}
+      </div>
+
+      {/* HİKAYE KARAKTERİ & ACİL LABORATUVAR GÖREV BALONU */}
+      <div
+        className={`rounded-2xl border-2 p-3.5 flex items-center gap-3.5 transition-all duration-300 ${
+          statusMsg.type === 'error'
+            ? 'bg-red-950/60 border-red-400 shadow-lg shadow-red-500/20'
+            : isCurrentCellWorking
+            ? 'bg-emerald-950/60 border-emerald-400 shadow-lg shadow-emerald-500/20'
+            : 'bg-[#170B19] border-pink-500/40'
+        }`}
+      >
+        <div
+          className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center text-3xl shrink-0 transition-transform duration-300 ${
+            statusMsg.type === 'error'
+              ? 'border-red-400 bg-red-500/20 animate-bounce'
+              : isCurrentCellWorking
+              ? 'border-emerald-400 bg-emerald-500/20 scale-105'
+              : 'border-pink-400/50 bg-pink-500/15'
+          }`}
+        >
+          {statusMsg.type === 'error'
+            ? '🚨'
+            : isCurrentCellWorking
+            ? '🤩'
+            : currentStage.cellType === 'animal'
+            ? '👩‍🔬'
+            : '🧑‍🌾'}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-poppins font-black text-xs sm:text-sm text-white">
+              {currentStage.cellType === 'animal'
+                ? 'Genetik Uzmanı Dr. Elif'
+                : 'Mars Botanikçisi Prof. Çınar'}
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-pink-200">
+              {currentStage.cellType === 'animal'
+                ? 'Acil Hücre Onarım Birimi'
+                : 'Biyo-Sera Oksijen Üssü'}
+            </span>
+            <span
+              className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ml-auto ${
+                statusMsg.type === 'error'
+                  ? 'bg-red-500/30 text-red-200 border border-red-400/50'
+                  : isCurrentCellWorking
+                  ? 'bg-emerald-500/30 text-emerald-200 border border-emerald-400/50'
+                  : 'bg-pink-500/20 text-pink-200 border border-pink-400/40'
+              }`}
+            >
+              {statusMsg.type === 'error'
+                ? '⚠️ DOKU UYUŞMAZLIĞI!'
+                : isCurrentCellWorking
+                ? '🎉 HÜCRE KURTARILDI!'
+                : `🦠 GÖREV: ${currentPinnedIds.length}/4 Organel Nakli`}
+            </span>
+          </div>
+
+          <p className="text-xs text-white/95 mt-1 leading-relaxed font-medium">
+            {statusMsg.type === 'info' && currentPinnedIds.length === 0
+              ? currentStage.cellType === 'animal'
+                ? '“Acil vaka! Yaralı hayvan dokusu hücresi ATP üretemiyor ve bölünemiyor! Tepsideki bitki organellerine aldanmadan hayvan hücresine ait 4 doğru organeli yuvalarına iğnele!”'
+                : '“Uzay seramızdaki bitki hücresi solmak üzere! Fotosentezi ve turgor basıncını başlatmak için bitki hücresine özgü 4 doğru organeli hemen yuvalarına yerleştir!”'
+              : statusMsg.text}
+          </p>
+        </div>
       </div>
 
       {/* ORTA BÜYÜK GÖRSEL HÜCRE SAHNESİ */}

@@ -221,14 +221,14 @@ class GameStore {
       return { ok: false, reason: 'Oyuncu bulunamadı' };
     }
     const coins = Math.floor(Number(coinsToSpend) || 0);
-    if (coins < 10 || coins % 10 !== 0) {
-      return { ok: false, reason: 'En az 10 ve 10\'un katı Coin dönüştürülebilir (10 Coin = 1 İşler Sadakat Puanı).' };
+    if (coins < 5000 || coins % 500 !== 0) {
+      return { ok: false, reason: 'En az 5000 ve 500\'ün katı Coin dönüştürülebilir (5000 Coin = 10 İşler Sadakat Puanı).' };
     }
     if (p.coins < coins) {
       return { ok: false, reason: `Yetersiz Coin bakiyesi (Mevcut: ${p.coins} Coin).` };
     }
 
-    const islerPointsAdded = Math.floor(coins / 10);
+    const islerPointsAdded = Math.floor(coins / 500);
     p.coins -= coins;
     p.islerPoints += islerPointsAdded;
 
@@ -236,6 +236,9 @@ class GameStore {
     const couponCode = `ISLER-${islerPointsAdded}TL-${randSuffix}`;
     p.coupons.unshift({
       code: couponCode,
+      description: 'İşler Kitabevi İndirim Kuponu',
+      discountPercent: islerPointsAdded,
+      pointsSpent: islerPointsAdded,
       islerPointsUsed: islerPointsAdded,
       discountTl: islerPointsAdded,
       createdAt: new Date().toISOString(),
@@ -245,6 +248,7 @@ class GameStore {
       ok: true,
       coinsSpent: coins,
       islerPointsAdded,
+      islerPointsAwarded: islerPointsAdded,
       couponCode,
       newCoinBalance: p.coins,
       newIslerPoints: p.islerPoints,
