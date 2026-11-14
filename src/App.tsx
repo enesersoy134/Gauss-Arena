@@ -7,6 +7,7 @@ import { getRecommendationsForTopic } from './utils/resourceRecommendations';
 import LiveDuelScreen from './components/game/LiveDuelScreen';
 import GameScreen from './components/game/GameScreen';
 import RevisionPracticeScreen from './components/game/RevisionPracticeScreen';
+import PresentationDeck from './components/presentation/PresentationDeck';
 import AdminPanel from './components/admin/AdminPanel';
 import SmartboardScreen from './components/smartboard/SmartboardScreen';
 import KahootPlayerView from './components/smartboard/KahootPlayerView';
@@ -396,6 +397,17 @@ export default function App() {
   // =========================================================================
   // ROUTE GÖRÜNÜMLERİ
   // =========================================================================
+
+  // 0. PROJE SUNUM SLAYTLARI (/sunum veya /slayt)
+  if (currentPath.startsWith('/sunum') || currentPath.startsWith('/slayt')) {
+    return (
+      <PresentationDeck
+        onExit={() => {
+          navigateTo('/');
+        }}
+      />
+    );
+  }
 
   // 1. /random YÜKLEME EKRANI
   if (currentPath.startsWith('/random')) {
@@ -787,6 +799,21 @@ export default function App() {
             >
               <Presentation className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-cyan-400 group-hover:scale-110 transition-transform" />
               <span className="hidden md:inline">Akıllı Tahta</span>
+            </button>
+
+            {/* Sunum Slaytları (/sunum) */}
+            <button
+              onClick={() => {
+                soundEngine.playClick();
+                navigateTo('/sunum');
+              }}
+              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 hover:border-purple-500/50 text-[11px] sm:text-xs font-poppins font-bold flex items-center gap-1.5 transition-all shadow-sm shadow-purple-500/10 group cursor-pointer"
+              title="Proje Sunum Slaytları (/sunum)"
+              aria-label="Proje Sunum Slaytları (/sunum)"
+            >
+              <Presentation className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-purple-400 group-hover:scale-110 transition-transform" />
+              <span className="hidden md:inline">📊 Sunum</span>
+              <span className="md:hidden">Sunum</span>
             </button>
 
             <button
