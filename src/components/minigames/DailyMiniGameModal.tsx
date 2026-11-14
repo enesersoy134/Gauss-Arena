@@ -60,7 +60,7 @@ export const MINI_GAME_SUBJECTS: SubjectMeta[] = [
   {
     id: 'fizik',
     label: 'Fizik',
-    shortTitle: 'Tork & Denge',
+    shortTitle: 'Tork & Fener',
     icon: '⚖️',
   },
   {
@@ -78,8 +78,8 @@ export const MINI_GAME_SUBJECTS: SubjectMeta[] = [
   {
     id: 'turkce',
     label: 'Türkçe',
-    shortTitle: 'Kibar Rap',
-    icon: '🎤',
+    shortTitle: 'Kelime Sohbeti',
+    icon: '💬',
   },
 ];
 

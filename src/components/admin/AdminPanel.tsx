@@ -474,12 +474,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         </div>
                         <div>
                           <div className="text-[10px] text-zinc-500 uppercase">Seri</div>
-                          <div className={`font-bold mt-0.5 flex items-center justify-center gap-0.5 ${p.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
+                          <div className={`font-bold mt-0.5 flex items-center justify-center gap-0.5 ${p.streak < 0 ? 'text-sky-400' : p.streak > 0 ? 'text-amber-400' : 'text-zinc-400'}`}>
                             {p.streak < 0 ? (
                               <span>❄️</span>
-                            ) : (
+                            ) : p.streak > 0 ? (
                               <Flame className="w-3 h-3 fill-amber-400" />
-                            )}
+                            ) : null}
                             <span>{p.streak > 0 ? `+${p.streak}` : p.streak}</span>
                           </div>
                         </div>

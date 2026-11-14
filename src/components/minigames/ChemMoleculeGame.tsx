@@ -161,9 +161,9 @@ const FORMULA_STAGES: FormulaStage[] = [
       wrongAvatar: '🤦‍♀️',
       successAvatar: '🤩',
       requestQuote:
-        'Acil durum! Okul revirini dezenfekte etmem lazım ama Çamaşır Suyumuz (NaClO) bitti! Bana hemen Sud Kostik ile doğru çözeltiyi karıştırıp NaClO üretir misin?',
+        'Acil durum! Okul revirini dezenfekte etmem lazım ama Çamaşır Suyumuz (NaClO) bitti! Bana hemen doğru çözeltileri karıştırıp NaClO üretir misin?',
       halfwayQuote:
-        'Güzel, ilk çözeltiyi beherglasa döktün! Şimdi ikinciyi dikkatli seç; sakın Tuz Ruhu veya Amonyak karıştırıp reviri zehirli gazla doldurma!',
+        'Güzel, ilk çözeltiyi beherglasa döktün! Şimdi ikinciyi dikkatli seç; sakın reviri zehirli gazla doldurma!',
       dangerReactionQuote:
         'ÖHÖ ÖHÖ! Ne yaptın?! Laboratuvarı zehirli gazla doldurdun, pencereleri açın! Hemen kabı boşalt!',
       harmlessWrongQuote:
@@ -265,7 +265,7 @@ const FORMULA_STAGES: FormulaStage[] = [
       dangerReactionQuote:
         'Aman evladım ne yaptın?! Çorbaya koyacağız dedik, sen yakıcı asit/kostik bombası yaptın! Mutfak duman altı oldu!',
       harmlessWrongQuote:
-        'Ögh, tadı zehir gibi acı! Bu Sofra Tuzu (NaCl) değil, deterjan/gübre sanayisi tuzu üretmişsin! Öğrenciler kazan kaldırır!',
+        'Ögh, tadı zehir gibi acı! Bu Sofra Tuzu (NaCl) değil, deterjan/gübre sanayisi tuzu üretmişsin!',
       successQuote:
         'İşte gerçek lezzet! HCl ile NaOH tam nötralleşti ve saf Sofra Tuzu (NaCl) oluştu! Yemekhaneyi kurtardın!',
     },

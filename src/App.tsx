@@ -854,12 +854,12 @@ export default function App() {
 
                 <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono mt-0.5 whitespace-nowrap">
                   <span className="text-[#F14E13] font-bold">{currentPlayer.elo} ELO</span>
-                  <span className={`flex items-center gap-0.5 font-semibold ${currentPlayer.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
+                  <span className={`flex items-center gap-0.5 font-semibold ${currentPlayer.streak < 0 ? 'text-sky-400' : currentPlayer.streak > 0 ? 'text-amber-400' : 'text-zinc-400'}`}>
                     {currentPlayer.streak < 0 ? (
                       <span>❄️</span>
-                    ) : (
+                    ) : currentPlayer.streak > 0 ? (
                       <Flame className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400" />
-                    )}
+                    ) : null}
                     <span>{currentPlayer.streak > 0 ? `+${currentPlayer.streak}` : currentPlayer.streak}</span>
                   </span>
                   <span className="text-zinc-500">•</span>
@@ -1046,13 +1046,15 @@ export default function App() {
                         <span className={`flex items-center gap-1 font-semibold px-2.5 py-1 rounded-xl border ${
                           currentPlayer.streak < 0
                             ? 'text-sky-300 bg-sky-500/10 border-sky-500/25'
-                            : 'text-amber-400 bg-amber-500/10 border-amber-500/25'
+                            : currentPlayer.streak > 0
+                            ? 'text-amber-400 bg-amber-500/10 border-amber-500/25'
+                            : 'text-zinc-400 bg-white/5 border-white/10'
                         }`}>
                           {currentPlayer.streak < 0 ? (
                             <span>❄️</span>
-                          ) : (
+                          ) : currentPlayer.streak > 0 ? (
                             <Flame className="w-3.5 h-3.5 fill-amber-400" />
-                          )}
+                          ) : null}
                           <span>{currentPlayer.streak > 0 ? `+${currentPlayer.streak}` : currentPlayer.streak} Seri</span>
                         </span>
                       </div>
@@ -1481,8 +1483,8 @@ export default function App() {
                         </div>
                         <div className="font-mono text-right">
                           <span className="text-[#F14E13] font-bold">{p.elo} ELO</span>
-                          <span className={`text-[10px] ml-1.5 ${p.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
-                            {p.streak > 0 ? `+${p.streak}🔥` : p.streak < 0 ? `${p.streak}❄️` : `${p.streak}🔥`}
+                          <span className={`text-[10px] ml-1.5 ${p.streak < 0 ? 'text-sky-400' : p.streak > 0 ? 'text-amber-400' : 'text-zinc-500'}`}>
+                            {p.streak > 0 ? `+${p.streak}🔥` : p.streak < 0 ? `${p.streak}❄️` : `${p.streak}`}
                           </span>
                         </div>
                       </div>
