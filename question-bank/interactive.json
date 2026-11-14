@@ -1,9 +1,8 @@
 {
   "meta": {
-    "examType": "LGS, TYT & AYT",
-    "totalCount": 40,
-    "interactiveTypesCount": 14,
-    "description": "İşler Arena 14 İnteraktif Soru Tipi Havuzu (LGS, TYT & AYT Matematik, Fizik, Kimya, Biyoloji, Türkçe)"
+    "examType": "TYT, AYT & LGS",
+    "totalCount": 46,
+    "description": "İşler Arena İnteraktif Soru Havuzu"
   },
   "questions": [
     {
@@ -468,7 +467,7 @@
       "prompt": "Paralel bağlandıklarında eşdeğer direnci 4 Ω yapan İKİ direnci seçin:",
       "explanation": "Paralel bağlı 6 Ω ve 12 Ω için eşdeğer direnç: (6 × 12) / (6 + 12) = 72 / 18 = 4 Ω olur.",
       "payload": {
-        "targetBadge": "Hedef Reş = 4 Ω",
+        "targetBadge": "Hedef: Eşdeğer Direnç = 4 Ω",
         "ruleHint": "Paralel bağlandığında 4 Ω veren 2 direnci seçin",
         "options": [
           {
@@ -1265,18 +1264,46 @@
       "payload": {
         "tablePrompt": "Her hücreyi ✓ (Doğru) veya ✗ (Yanlış) olarak işaretleyin:",
         "rows": [
-          { "id": "r_kati", "title": "Katı Basıncı" },
-          { "id": "r_sivi", "title": "Sıvı Basıncı" }
+          {
+            "id": "r_kati",
+            "title": "Katı Basıncı"
+          },
+          {
+            "id": "r_sivi",
+            "title": "Sıvı Basıncı"
+          }
         ],
         "columns": [
-          { "id": "c_alan", "title": "Yüzey Alanı Büyürse Azalır" },
-          { "id": "c_derinlik", "title": "Derinlik Arttıkça Artar" }
+          {
+            "id": "c_alan",
+            "title": "Yüzey Alanı Büyürse Azalır"
+          },
+          {
+            "id": "c_derinlik",
+            "title": "Derinlik Arttıkça Artar"
+          }
         ],
         "answers": [
-          { "rowId": "r_kati", "colId": "c_alan", "expectedBool": true },
-          { "rowId": "r_kati", "colId": "c_derinlik", "expectedBool": false },
-          { "rowId": "r_sivi", "colId": "c_alan", "expectedBool": false },
-          { "rowId": "r_sivi", "colId": "c_derinlik", "expectedBool": true }
+          {
+            "rowId": "r_kati",
+            "colId": "c_alan",
+            "expectedBool": true
+          },
+          {
+            "rowId": "r_kati",
+            "colId": "c_derinlik",
+            "expectedBool": false
+          },
+          {
+            "rowId": "r_sivi",
+            "colId": "c_alan",
+            "expectedBool": false
+          },
+          {
+            "rowId": "r_sivi",
+            "colId": "c_derinlik",
+            "expectedBool": true
+          }
         ]
       }
     },
@@ -1292,13 +1319,37 @@
       "prompt": "Günlük hayattaki maddeleri Asit (pH < 7) ve Baz (pH > 7) özelliklerine göre kaydırarak gruplayın:",
       "explanation": "Limon suyu ve sirke asidiktir (pH < 7). Sabunlu su ve çamaşır suyu baziktir (pH > 7).",
       "payload": {
-        "leftCategory": { "id": "left", "label": "⬅️ Asit (pH < 7)", "colorHex": "#EF4444" },
-        "rightCategory": { "id": "right", "label": "Baz (pH > 7) ➡️", "colorHex": "#3B82F6" },
+        "leftCategory": {
+          "id": "left",
+          "label": "⬅️ Asit (pH < 7)",
+          "colorHex": "#EF4444"
+        },
+        "rightCategory": {
+          "id": "right",
+          "label": "Baz (pH > 7) ➡️",
+          "colorHex": "#3B82F6"
+        },
         "cards": [
-          { "id": "c1", "text": "Limon Suyu", "correctCategory": "left" },
-          { "id": "c2", "text": "Sabunlu Su", "correctCategory": "right" },
-          { "id": "c3", "text": "Sirke", "correctCategory": "left" },
-          { "id": "c4", "text": "Çamaşır Suyu", "correctCategory": "right" }
+          {
+            "id": "c1",
+            "text": "Limon Suyu",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c2",
+            "text": "Sabunlu Su",
+            "correctCategory": "right"
+          },
+          {
+            "id": "c3",
+            "text": "Sirke",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c4",
+            "text": "Çamaşır Suyu",
+            "correctCategory": "right"
+          }
         ]
       }
     },
@@ -1316,8 +1367,20 @@
       "payload": {
         "mode": "sequence",
         "directionLabel": "Basitten Karmaşığa (Küçükten Büyüğe)",
-        "items": ["Kromozom", "Gen", "Organik Baz", "DNA", "Nükleotid"],
-        "correctOrder": ["Organik Baz", "Nükleotid", "Gen", "DNA", "Kromozom"]
+        "items": [
+          "Kromozom",
+          "Gen",
+          "Organik Baz",
+          "DNA",
+          "Nükleotid"
+        ],
+        "correctOrder": [
+          "Organik Baz",
+          "Nükleotid",
+          "Gen",
+          "DNA",
+          "Kromozom"
+        ]
       }
     },
     {
@@ -1334,7 +1397,12 @@
       "payload": {
         "variant": "test",
         "optionCount": 4,
-        "options": ["İlkbahar", "Yaz", "Sonbahar", "Kış"],
+        "options": [
+          "İlkbahar",
+          "Yaz",
+          "Sonbahar",
+          "Kış"
+        ],
         "correctIndex": 1,
         "shuffleOptions": false
       }
@@ -1354,9 +1422,21 @@
         "leftColumnTitle": "Cümle / İfade",
         "rightColumnTitle": "Fiilimsi Türü",
         "pairs": [
-          { "pairId": "f_1", "leftText": "Kitap okumayı çok seviyor", "rightText": "İsim-fiil (-ma)" },
-          { "pairId": "f_2", "leftText": "Yıkılası dünyada gülmedi", "rightText": "Sıfat-fiil (-ası)" },
-          { "pairId": "f_3", "leftText": "Güneş doğarken yola çıktık", "rightText": "Zarf-fiil (-ken)" }
+          {
+            "pairId": "f_1",
+            "leftText": "Kitap okumayı çok seviyor",
+            "rightText": "İsim-fiil (-ma)"
+          },
+          {
+            "pairId": "f_2",
+            "leftText": "Yıkılası dünyada gülmedi",
+            "rightText": "Sıfat-fiil (-ası)"
+          },
+          {
+            "pairId": "f_3",
+            "leftText": "Güneş doğarken yola çıktık",
+            "rightText": "Zarf-fiil (-ken)"
+          }
         ]
       }
     },
@@ -1391,6 +1471,218 @@
           "y = -3x + 6",
           "m = -3",
           "m = 6"
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_041",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "Atatürk İlkeleri ve İnkılaplar",
+      "type": "pair_matching",
+      "difficulty": "orta",
+      "timeLimitSeconds": 25,
+      "points": 150,
+      "prompt": "Verilen inkılap ve gelişmeleri doğrudan ilişkili olduğu Atatürk İlkesi ile eşleştirin.",
+      "explanation": "TBMM'nin açılması -> Cumhuriyetçilik, Türk Dil Kurumu -> Milliyetçilik, Medreselerin kapatılması -> Laiklik ile doğrudan ilgilidir.",
+      "payload": {
+        "leftColumnTitle": "İnkılap / Gelişme",
+        "rightColumnTitle": "Atatürk İlkesi",
+        "pairs": [
+          {
+            "pairId": "s_1",
+            "leftText": "TBMM'nin Açılması ve Saltanatın Kaldırılması",
+            "rightText": "Cumhuriyetçilik"
+          },
+          {
+            "pairId": "s_2",
+            "leftText": "Türk Dil ve Türk Tarih Kurumunun Kurulması",
+            "rightText": "Milliyetçilik"
+          },
+          {
+            "pairId": "s_3",
+            "leftText": "Medreselerin ve Tekke-Zaviyelerin Kapatılması",
+            "rightText": "Laiklik"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_042",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "Millî Mücadele Hazırlık Dönemi Kronolojisi",
+      "type": "ordering_and_formula",
+      "difficulty": "orta",
+      "timeLimitSeconds": 20,
+      "points": 130,
+      "prompt": "Kurtuluş Savaşı hazırlık dönemindeki tarihi olayları kronolojik sıraya (eskiden yeniye) dizin:",
+      "explanation": "Kronolojik sıra: Samsun'a Çıkış (19 Mayıs 1919) -> Amasya Genelgesi -> Erzurum Kongresi -> Sivas Kongresi -> TBMM'nin Açılışı.",
+      "payload": {
+        "mode": "sequence",
+        "directionLabel": "Kronolojik Sıra (Geçmişten Günümüze)",
+        "items": [
+          "TBMM'nin Ankara'da Açılması",
+          "Amasya Genelgesi",
+          "Mustafa Kemal'in Samsun'a Çıkışı",
+          "Sivas Kongresi",
+          "Erzurum Kongresi"
+        ],
+        "correctOrder": [
+          "Mustafa Kemal'in Samsun'a Çıkışı",
+          "Amasya Genelgesi",
+          "Erzurum Kongresi",
+          "Sivas Kongresi",
+          "TBMM'nin Ankara'da Açılması"
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_043",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "I. Dünya Savaşı İttifak ve İtilaf Blokları",
+      "type": "swipe_grouping",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 100,
+      "prompt": "I. Dünya Savaşı'ndaki devletleri İtilaf (Anlaşma) ve İttifak (Bağlaşma) bloklarına göre kaydırarak gruplayın:",
+      "explanation": "İtilaf Devletleri: İngiltere, Fransa. İttifak Devletleri: Osmanlı Devleti, Almanya.",
+      "payload": {
+        "leftCategory": {
+          "id": "left",
+          "label": "⬅️ İtilaf (Anlaşma)",
+          "colorHex": "#3B82F6"
+        },
+        "rightCategory": {
+          "id": "right",
+          "label": "İttifak (Bağlaşma) ➡️",
+          "colorHex": "#EF4444"
+        },
+        "cards": [
+          {
+            "id": "c1",
+            "text": "İngiltere",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c2",
+            "text": "Osmanlı Devleti",
+            "correctCategory": "right"
+          },
+          {
+            "id": "c3",
+            "text": "Fransa",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c4",
+            "text": "Almanya",
+            "correctCategory": "right"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_044",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "Millî Mücadele Genelgeleri",
+      "type": "universal_choice",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 15,
+      "points": 80,
+      "prompt": "\"Milletin bağımsızlığını yine milletin azim ve kararı kurtaracaktır.\" ilkesi Kurtuluş Savaşı'nın amacı ve yöntemi olarak ilk kez hangi tarihî belgede ilan edilmiştir?",
+      "explanation": "22 Haziran 1919 tarihli Amasya Genelgesi'nde bu karar alınarak millî egemenlik ve ihtilal vurgulanmıştır.",
+      "payload": {
+        "variant": "test",
+        "optionCount": 4,
+        "options": [
+          "Havza Genelgesi",
+          "Amasya Genelgesi",
+          "Erzurum Kongresi",
+          "Misak-ı Millî Kararları"
+        ],
+        "correctIndex": 1,
+        "shuffleOptions": false
+      }
+    },
+    {
+      "id": "q_lgs_045",
+      "examType": "LGS",
+      "subject": "fen",
+      "topic": "DNA ve Nükleotid Eşleşmesi",
+      "type": "pair_matching",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 110,
+      "prompt": "DNA molekülündeki nükleotid bazlarını ve temel bileşenlerini doğru eşleşmeleriyle birleştirin:",
+      "explanation": "DNA'da Adenin karşısına Timin, Guanin karşısına Sitozin gelir. Deoksiriboz 5 karbonlu şekerdir.",
+      "payload": {
+        "leftColumnTitle": "DNA Bileşeni",
+        "rightColumnTitle": "Eşleşen Karşılık",
+        "pairs": [
+          {
+            "pairId": "dna_1",
+            "leftText": "Adenin (A) bazı",
+            "rightText": "Timin (T) bazı"
+          },
+          {
+            "pairId": "dna_2",
+            "leftText": "Guanin (G) bazı",
+            "rightText": "Sitozin (C) bazı"
+          },
+          {
+            "pairId": "dna_3",
+            "leftText": "Deoksiriboz",
+            "rightText": "5 Karbonlu Şeker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_046",
+      "examType": "LGS",
+      "subject": "fen",
+      "topic": "Fiziksel ve Kimyasal Değişimler",
+      "type": "swipe_grouping",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 100,
+      "prompt": "Günlük hayattaki olayları Fiziksel Değişim ve Kimyasal Değişim olarak kaydırarak gruplayın:",
+      "explanation": "Buzun erimesi ve şekerin çözünmesi fizikseldir (iç yapı değişmez). Demirin paslanması ve sütün mayalanması kimyasaldır.",
+      "payload": {
+        "leftCategory": {
+          "id": "left",
+          "label": "⬅️ Fiziksel Değişim",
+          "colorHex": "#10B981"
+        },
+        "rightCategory": {
+          "id": "right",
+          "label": "Kimyasal Değişim ➡️",
+          "colorHex": "#F59E0B"
+        },
+        "cards": [
+          {
+            "id": "fc1",
+            "text": "Buzun erimesi",
+            "correctCategory": "left"
+          },
+          {
+            "id": "fc2",
+            "text": "Demirin paslanması",
+            "correctCategory": "right"
+          },
+          {
+            "id": "fc3",
+            "text": "Şekerin suda çözünmesi",
+            "correctCategory": "left"
+          },
+          {
+            "id": "fc4",
+            "text": "Sütten yoğurt yapılması",
+            "correctCategory": "right"
+          }
         ]
       }
     }

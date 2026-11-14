@@ -322,7 +322,7 @@ export const SliderQuestion: React.FC<QuestionComponentProps<SliderQuestionType>
             `}
           >
             <Lock className="w-4 h-4" />
-            Değeri Kilitle ⚡
+            <span>Değeri Kilitle</span>
           </button>
         </div>
       )}

@@ -66,7 +66,7 @@
       "externalId": "TYT-FIZ-M-005",
       "subTopic": "Elektrik Devreleri",
       "text": "Birbirine paralel bağlı 6 Ω ve 3 Ω'luk iki direncin eşdeğer direnci kaç Ω'dur?",
-      "explanation": "Reş = (6 · 3) / (6 + 3) = 18 / 9 = 2 Ω bulunur.",
+      "explanation": "Eşdeğer Direnç = (6 · 3) / (6 + 3) = 18 / 9 = 2 Ω bulunur.",
       "imageUrl": null,
       "options": [
         "1",

@@ -134,17 +134,17 @@
     },
     {
       "externalId": "LGS-KIM-E-010",
-      "subTopic": "Günlük Hayatta Bazlar",
-      "text": "Aşağıdakilerden hangisi bazik özellik gösteren bir maddedir?",
-      "explanation": "Sabun, deterjan, çamaşır suyu ve diş macunu bazik özellik gösterir; ele kayganlık hissi verir.",
+      "subTopic": "Tepkimeye Girenler ve Ürünler",
+      "text": "Kimyasal bir tepkime denkleminde ok işaretinin (→) sol tarafında yer alan maddelere ne ad verilir?",
+      "explanation": "Kimyasal tepkimelerde okun sol tarafındakiler girenler, sağ tarafındakiler ürünlerdir.",
       "imageUrl": null,
       "options": [
-        "Limon suyu",
-        "Sirke",
-        "Sabunlu su",
-        "Domates suyu"
+        "Ürünler",
+        "Girenler (Tepkimeye girenler)",
+        "Katalizörler",
+        "Çözeltiler"
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 1
     }
   ]
 }

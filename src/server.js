@@ -31,6 +31,18 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
     : [];
   const normalizedExam = String(examType || 'KARMA').toUpperCase();
 
+  const isSubjectMatch = (qSubj) => {
+    if (normSubjects.length === 0) return true;
+    if (normSubjects.includes(qSubj)) return true;
+    if (normalizedExam === 'LGS') {
+      if (normSubjects.includes('fen') && ['fen', 'fizik', 'kimya', 'biyoloji'].includes(qSubj)) return true;
+      if (['fizik', 'kimya', 'biyoloji'].includes(qSubj) && normSubjects.includes('fen')) return true;
+    } else if (normalizedExam === 'TYT' || normalizedExam === 'AYT') {
+      if (normSubjects.includes('geometri') && qSubj === 'matematik') return true;
+    }
+    return false;
+  };
+
   const candidatePool = [];
 
   // 1. RAW_INTERACTIVE_QUESTIONS havuzundan filtreye uyanları al
@@ -39,7 +51,7 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
     const qSubj = String(rawQ.subject || '').toLowerCase();
 
     const examMatches = normalizedExam === 'KARMA' || qExam === normalizedExam;
-    const subjMatches = normSubjects.length === 0 || normSubjects.includes(qSubj);
+    const subjMatches = isSubjectMatch(qSubj);
 
     if (examMatches && subjMatches) {
       candidatePool.push(normalizeInteractiveQuestion(rawQ, qExam));
@@ -52,7 +64,7 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
       const qExam = String(q.examType || 'TYT').toUpperCase();
       const qSubj = String(q.subject || '').toLowerCase();
       const examMatches = normalizedExam === 'KARMA' || qExam === normalizedExam;
-      const subjMatches = normSubjects.length === 0 || normSubjects.includes(qSubj);
+      const subjMatches = isSubjectMatch(qSubj);
 
       if (examMatches && subjMatches) {
         const id = q.id || q.externalId;
@@ -63,7 +75,21 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
     }
   }
 
-  // 3. Hala yetersizse filtreleri esneterek RAW_INTERACTIVE_QUESTIONS havuzundan tamamla
+  // 3. Hala yetersizse filtreleri esneterek önce aynı sınav türünden tamamla
+  if (candidatePool.length < count) {
+    for (const rawQ of RAW_INTERACTIVE_QUESTIONS) {
+      const qExam = String(rawQ.examType || 'TYT').toUpperCase();
+      if (normalizedExam !== 'KARMA' && qExam !== normalizedExam) continue;
+      const norm = normalizeInteractiveQuestion(rawQ, rawQ.examType || 'TYT');
+      const id = norm.id || norm.externalId;
+      if (!candidatePool.some((c) => (c.id || c.externalId) === id)) {
+        candidatePool.push(norm);
+      }
+      if (candidatePool.length >= count) break;
+    }
+  }
+
+  // 4. Genel fallback
   if (candidatePool.length < count) {
     for (const rawQ of RAW_INTERACTIVE_QUESTIONS) {
       const norm = normalizeInteractiveQuestion(rawQ, rawQ.examType || 'TYT');
@@ -297,33 +323,49 @@ function createAppServer(listenPort = null) {
 
   const INTERMISSION_MS = listenPort === 0 ? 2600 : 5000;
 
+  function generateImmediateOpponentAnswer(duel, opponentPlayer) {
+    const q = duel.getCurrentQuestion();
+    if (!q) return 0;
+    const isCorrectRoll = Math.random() < 0.72;
+    let chosenIdx = q.correctOptionIndex;
+    if (!isCorrectRoll) {
+      const wrongOptions = [0, 1, 2, 3].filter((idx) => idx !== q.correctOptionIndex);
+      chosenIdx = wrongOptions.length > 0
+        ? wrongOptions[Math.floor(Math.random() * wrongOptions.length)]
+        : 0;
+    }
+
+    if (q.interactiveQuestion && q.interactiveQuestion.type !== 'universal_choice') {
+      return {
+        isCorrect: isCorrectRoll,
+        accuracy: isCorrectRoll ? 1 : 0,
+        selectedOptionIndex: chosenIdx,
+      };
+    }
+    return chosenIdx;
+  }
+
   function scheduleGhostAnswerIfNeeded(duel) {
     if (!duel.playerB.isGhost || duel.status !== 'IN_PROGRESS') return;
     const qIdx = duel.currentQuestionIndex;
     const q = duel.getCurrentQuestion();
     if (!q) return;
 
+    const entry = activeDuels.get(duel.matchId);
+
     // Simulate Ghost answering within 4-7 seconds with ~75% accuracy
     const delayMs = 3800 + Math.floor(Math.random() * 3000);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       if (duel.status !== 'IN_PROGRESS' || duel.currentQuestionIndex !== qIdx) return;
-      const isCorrectRoll = Math.random() < 0.72;
-      let chosenIdx = q.correctOptionIndex;
-      if (!isCorrectRoll) {
-        const wrongOptions = [0, 1, 2, 3].filter((idx) => idx !== q.correctOptionIndex);
-        chosenIdx = wrongOptions[Math.floor(Math.random() * wrongOptions.length)];
-      }
-
-      if (q.interactiveQuestion && q.interactiveQuestion.type !== 'universal_choice') {
-        handleAnswerSubmission(duel.matchId, duel.playerB.id, qIdx, {
-          isCorrect: isCorrectRoll,
-          accuracy: isCorrectRoll ? 1 : 0,
-          selectedOptionIndex: chosenIdx,
-        });
-      } else {
-        handleAnswerSubmission(duel.matchId, duel.playerB.id, qIdx, chosenIdx);
-      }
+      if (duel.currentAnswers.has(duel.playerB.id)) return;
+      const oppAnswer = generateImmediateOpponentAnswer(duel, duel.playerB);
+      handleAnswerSubmission(duel.matchId, duel.playerB.id, qIdx, oppAnswer);
     }, delayMs);
+
+    if (entry) {
+      if (entry.ghostTimer) clearTimeout(entry.ghostTimer);
+      entry.ghostTimer = timer;
+    }
   }
 
   function startDuelFromMatch(matchInfo) {
@@ -367,6 +409,17 @@ function createAppServer(listenPort = null) {
   }
 
   function finalizeDuel(duel) {
+    const entry = activeDuels.get(duel.matchId);
+    if (entry) {
+      if (entry.intermissionTimer) {
+        clearTimeout(entry.intermissionTimer);
+        entry.intermissionTimer = null;
+      }
+      if (entry.ghostTimer) {
+        clearTimeout(entry.ghostTimer);
+        entry.ghostTimer = null;
+      }
+    }
     const summary = duel.finalSummary;
     store.recordMatchOutcome(summary);
     if (!duel.playerB.isGhost) {
@@ -385,6 +438,10 @@ function createAppServer(listenPort = null) {
     if (entry.intermissionTimer) {
       clearTimeout(entry.intermissionTimer);
       entry.intermissionTimer = null;
+    }
+    if (entry.ghostTimer) {
+      clearTimeout(entry.ghostTimer);
+      entry.ghostTimer = null;
     }
     entry.readyPlayers = new Set();
     const next = duel.advanceToNextQuestion(Date.now());
@@ -405,17 +462,61 @@ function createAppServer(listenPort = null) {
     const res = duel.submitAnswer(playerId, questionIndex, answerInput, Date.now());
     if (!res.accepted) return;
 
+    const opponentPlayer = String(playerId) === String(duel.playerA.id) ? duel.playerB : duel.playerA;
+    const isLastQuestion = duel.currentQuestionIndex >= duel.questions.length - 1;
+
+    // 1. SON SORU KONTROLÜ:
+    // Kullanıcı kendi sorularını tamamladığı anda rakibin bitirmesini bekletmemek için:
+    // Rakip henüz cevap vermemiş olsa bile kalan hamlesi anında hesaplansın ve maç derhal sonuçlandırılsın.
+    if (isLastQuestion && !duel.currentAnswers.has(opponentPlayer.id)) {
+      if (entry.ghostTimer) {
+        clearTimeout(entry.ghostTimer);
+        entry.ghostTimer = null;
+      }
+      const oppAnswer = generateImmediateOpponentAnswer(duel, opponentPlayer);
+      duel.submitAnswer(opponentPlayer.id, duel.currentQuestionIndex, oppAnswer, Date.now());
+    }
+
+    // 2. ÖNCEKİ SORULARDA GHOST RAKİP HIZLANDIRMA:
+    // Eğer son soru değilse ve rakip bir ghost ise, kullanıcı cevap verdiğinde ghost'un 4-7 sn gereksiz bekletmesini
+    // engelleyip 350ms içinde yanıt vermesini sağla.
+    if (!isLastQuestion && opponentPlayer.isGhost && !duel.currentAnswers.has(opponentPlayer.id)) {
+      if (entry.ghostTimer) {
+        clearTimeout(entry.ghostTimer);
+        entry.ghostTimer = null;
+      }
+      entry.ghostTimer = setTimeout(() => {
+        if (duel.status !== 'IN_PROGRESS' || duel.currentQuestionIndex !== questionIndex) return;
+        if (duel.currentAnswers.has(opponentPlayer.id)) return;
+        const oppAnswer = generateImmediateOpponentAnswer(duel, opponentPlayer);
+        handleAnswerSubmission(duel.matchId, opponentPlayer.id, questionIndex, oppAnswer);
+      }, 350);
+    }
+
     io.emit('duel:state', duel.getCurrentPublicState());
 
-    if (res.bothAnswered && !entry.advancing) {
+    const bothAnswered = duel.currentAnswers.has(duel.playerA.id) && duel.currentAnswers.has(duel.playerB.id);
+
+    if (bothAnswered && !entry.advancing) {
       entry.advancing = true;
       entry.readyPlayers = new Set();
       if (duel.playerB.isGhost) {
         entry.readyPlayers.add(String(duel.playerB.id));
       }
+
+      // Son soru tamamlandığında ara bekleme (intermission) OLMADAN doğrudan maçı sonuçlandır!
+      if (isLastQuestion) {
+        if (entry.intermissionTimer) {
+          clearTimeout(entry.intermissionTimer);
+          entry.intermissionTimer = null;
+        }
+        advanceDuelRound(duel, entry);
+        return;
+      }
+
       io.emit('duel:roundResult', {
         matchId: duel.matchId,
-        roundResult: res.roundResult,
+        roundResult: duel.buildCurrentRoundResult(),
         publicState: duel.getCurrentPublicState(),
       });
 
@@ -457,6 +558,11 @@ function createAppServer(listenPort = null) {
           entry.readyPlayers.add(String(duel.playerB.id));
         }
         const timeoutRes = duel.forceQuestionTimeout(now);
+        const isLastQuestion = duel.currentQuestionIndex >= duel.questions.length - 1;
+        if (isLastQuestion) {
+          advanceDuelRound(duel, entry);
+          continue;
+        }
         io.emit('duel:roundResult', {
           matchId,
           roundResult: timeoutRes.roundResult,

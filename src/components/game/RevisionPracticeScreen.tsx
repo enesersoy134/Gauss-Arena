@@ -267,7 +267,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
                 </div>
               </div>
               <span className="px-3 py-1 rounded-xl bg-amber-400 text-black font-black font-mono text-xs shrink-0">
-                HAK EDİLDİ
+                KAZANILDI
               </span>
             </div>
           </div>
@@ -279,13 +279,13 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
               className="w-full sm:flex-1 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-poppins font-bold text-sm transition-all flex items-center justify-center gap-2"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>🔀 Soruları Tekrar Karıştır & Çöz</span>
+              <span>Soruları Tekrar Karıştır & Çöz</span>
             </button>
             <button
               onClick={handleClaimReward}
               className="w-full sm:flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 text-white font-poppins font-black text-sm shadow-xl shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 border border-white/20"
             >
-              <span>{modeTitle.includes('Alıştırma') ? '✓ Tamamla ve Menüye Dön' : '✓ Ödülü Al ve Eksik Konularıma Dön'}</span>
+              <span>{modeTitle.includes('Alıştırma') ? 'Tamamla ve Menüye Dön' : 'Ödülü Al ve Eksik Konularıma Dön'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -501,30 +501,19 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
               </div>
             )}
 
-            {/* Aksiyon Butonları */}
-            <div className="flex items-center justify-end gap-3 pt-2 flex-wrap">
-              {!lastResult.isCorrect && (
+            {/* Aksiyon Butonları (Yanlış yanıt durumunda hızlı tekrar deneme; sıradaki soruya geçiş alt barda mevcuttur) */}
+            {!lastResult.isCorrect && (
+              <div className="flex items-center justify-end gap-3 pt-2 flex-wrap">
                 <button
+                  type="button"
                   onClick={handleRetry}
-                  className="px-4 py-2.5 rounded-2xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-poppins font-bold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-md"
+                  className="px-4 py-2.5 rounded-2xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-poppins font-bold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-md active:scale-95"
                 >
                   <RotateCcw className="w-4 h-4 text-amber-300" />
-                  <span>🔄 Şimdi Tekrar Dene</span>
+                  <span>Şimdi Tekrar Dene</span>
                 </button>
-              )}
-
-              <button
-                onClick={handleNext}
-                className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 hover:brightness-110 text-white font-poppins font-black text-xs sm:text-sm flex items-center gap-2 transition-all shadow-xl shadow-[#F14E13]/30 border border-white/20"
-              >
-                <span>
-                  {currentIndex + 1 >= questions.length
-                    ? '🏆 Antrenmanı Tamamla'
-                    : 'Sıradaki Soruya Geç'}
-                </span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+              </div>
+            )}
           </div>
         )}
       </main>
@@ -581,7 +570,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
               >
                 <span>
                   {currentIndex + 1 >= questions.length
-                    ? '🏆 Antrenmanı Tamamla'
+                    ? 'Antrenmanı Tamamla'
                     : 'Sıradaki Soruya Geç'}
                 </span>
                 <ArrowRight className="w-4 h-4" />

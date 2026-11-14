@@ -8,82 +8,12 @@
   "questions": [
     {
       "externalId": "LGS-TUR-H-001",
-      "subTopic": "Fiilimsi ve Kalıcı İsim Ayrımı",
-      "text": "\"Annem dolaptaki dolmayı ısıttı ve bize dondurma ikram etti.\" cümlesinde kaç tane kalıcı isim vardır?",
-      "explanation": "\"Dolma\" ve \"dondurma\" sözcükleri fiilimsi eklerini almalarına rağmen kalıcı bir varlığın adı olmuşlardır (2 tane).",
+      "subTopic": "Fiilde Çatı (Etken - Edilgen - Dönüşlü)",
+      "text": "\"Okul bahçesindeki çöpler görevlilerce temizlendi.\" cümlesindeki fiilin çatı özelliği nedir?",
+      "explanation": "İşi yapan belli değildir (-n edilgenlik eki almıştır) ve \"onu temizlendi\" denilemediğinden geçişsizdir.",
       "imageUrl": null,
       "options": [
-        "1",
-        "2",
-        "3",
-        "Hiçbiri"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-TUR-H-002",
-      "subTopic": "Cümle Türleri (Yapısına Göre Cümleler)",
-      "text": "İçinde en az bir fiilimsi bulunan ve tek yüklemi olan cümlelere yapısına göre ne ad verilir?",
-      "explanation": "İçinde yan cümlecik (fiilimsi) bulunan ve tek yüklemli cümleler girişik birleşik cümledir.",
-      "imageUrl": null,
-      "options": [
-        "Basit cümle",
-        "Birleşik cümle (Fiilimsili)",
-        "Sıralı cümle",
-        "Bağlı cümle"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-TUR-H-003",
-      "subTopic": "Öge Vurgusu Kuralları",
-      "text": "Fiil cümlelerinde vurgu kural olarak yüklemden hemen önceki ögededir. \"Dün akşam Ankara'dan teyzem geldi.\" cümlesinde hangi öge vurgulanmıştır?",
-      "explanation": "Yüklemden hemen önce \"teyzem\" öznesi bulunduğu için vurgu öznededir.",
-      "imageUrl": null,
-      "options": [
-        "Yüklem",
-        "Özne (teyzem)",
-        "Dolaylı tümleç (Ankara'dan)",
-        "Zarf tümleci (Dün akşam)"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-TUR-H-004",
-      "subTopic": "Yazım Kuralları (ki Bağlacı)",
-      "text": "Aşağıdaki cümlelerin hangisinde \"-ki\" nin yazımı YANLIŞTIR?",
-      "explanation": "\"Öyle bir insandı ki\" cümlesindeki ki ayrı bir sözcük olan bağlaçtır ve ayrı yazılmalıdır.",
-      "imageUrl": null,
-      "options": [
-        "Evdeki hesap çarşıya uymaz.",
-        "Duydum ki unutmuşsun beni.",
-        "Seninki yine derse geç kaldı.",
-        "Öyle bir insan diki herkes severdi."
-      ],
-      "correctOptionIndex": 3
-    },
-    {
-      "externalId": "LGS-TUR-H-005",
-      "subTopic": "Anlatım Bozuklukları",
-      "text": "\"Kardeşim hiç ders çalışmaz, sadece televizyon izlerdi.\" cümlesindeki anlatım bozukluğunun sebebi nedir?",
-      "explanation": "İlk cümle olumsuz (çalışmaz), ikinci cümle olumludur (izlerdi). \"Hiç\" zarfı olumlu cümleye bağlanamaz.",
-      "imageUrl": null,
-      "options": [
-        "Gereksiz sözcük kullanımı",
-        "Özne-yüklem uyuşmazlığı",
-        "Tümleç eksikliği",
-        "Sözcüğün yanlış yerde kullanımı"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-TUR-H-006",
-      "subTopic": "Fiilde Çatı (Etken - Edilgen)",
-      "text": "\"Okul bahçesindeki çöpler öğrenciler tarafından toplandı.\" cümlesindeki fiilin çatı özelliği nedir?",
-      "explanation": "-n eki almıştır, işi yapan gizlenmiştir veya \"tarafından\" ile verilmiştir (edilgendir) ve \"onu toplandı\" denemez (geçişsizdir).",
-      "imageUrl": null,
-      "options": [
-        "Etken - Geçişsiz",
+        "Etken - Geçişli",
         "Edilgen - Geçişsiz",
         "Dönüşlü - Geçişli",
         "İşteş - Geçişsiz"
@@ -91,32 +21,102 @@
       "correctOptionIndex": 1
     },
     {
-      "externalId": "LGS-TUR-H-007",
-      "subTopic": "Metin Türleri (Biyografi - Otobiyografi)",
-      "text": "Tanınmış bir kişinin kendi hayatını bizzat kendisinin kaleme aldığı metin türü hangisidir?",
-      "explanation": "Kişinin kendi yaşamını yazması otobiyografi (öz yaşam öyküsü), başkasının yazması biyografidir.",
+      "externalId": "LGS-TUR-H-002",
+      "subTopic": "Cümle Türleri (Biçimce ve Anlamca)",
+      "text": "\"Bu güzel havada evde oturulur mu hiç?\" cümlesinin yapısı ve anlamı aşağıdakilerden hangisidir?",
+      "explanation": "Cümlede olumsuzluk eki yoktur (biçimce olumlu), ancak kastedilen \"oturulmaz\"dır (anlamca olumsuz).",
       "imageUrl": null,
       "options": [
-        "Biyografi",
-        "Otobiyografi",
-        "Monografi",
-        "Hatıra (Anı)"
+        "Biçimce olumlu, anlamca olumsuz soru cümlesi",
+        "Biçimce ve anlamca olumlu",
+        "Biçimce olumsuz, anlamca olumlu",
+        "Biçimce ve anlamca olumsuz"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-003",
+      "subTopic": "Anlatım Bozuklukları (Özne-Yüklem Uyumsuzluğu)",
+      "text": "\"Herkes içeri girdi, tek kelime etmedi.\" cümlesindeki anlatım bozukluğunun nedeni nedir?",
+      "explanation": "\"Herkes\" olumlu öznedir; ikinci cümlenin yüklemi olumsuz olduğundan \"hiç kimse\" öznesi gerekir.",
+      "imageUrl": null,
+      "options": [
+        "Özne eksikliği (Hiç kimse tek kelime etmedi)",
+        "Nesne eksikliği",
+        "Tümleç uyuşmazlığı",
+        "Yüklem eksikliği"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-004",
+      "subTopic": "Mantık ve Muhakeme (Sözel Mantık)",
+      "text": "A, B, C ve D isimli dört arkadaş bir yarışta ilk dört dereceyi paylaşmıştır. A sonuncu değildir, B birinci veya ikinci olmuştur, C ise B'den hemen sonra gelmiştir. D kaçıncı olmuştur?",
+      "explanation": "B 1. ise C 2., A 3., D 4. olur (A sonuncu olamayacağı için D 4. sıradadır).",
+      "imageUrl": null,
+      "options": [
+        "1.",
+        "2.",
+        "3.",
+        "4."
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-TUR-H-005",
+      "subTopic": "Düşünceyi Geliştirme Yolları",
+      "text": "Yazarın savunduğu düşünceyi desteklemek için alanında tanınmış güvenilir bir kişinin sözünü aynen aktarmasına ne ad verilir?",
+      "explanation": "Kişinin adı ve tırnak içinde sözünün aktarılması tanık göstermedir.",
+      "imageUrl": null,
+      "options": [
+        "Tanık gösterme",
+        "Örneklendirme",
+        "Karşılaştırma",
+        "Benzetme"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-006",
+      "subTopic": "Kalıplaşmış Fiilimsiler (Kalıcı İsim)",
+      "text": "Aşağıdaki altı çizili sözcüklerden hangisi fiilimsi ekini alarak kalıcı bir ada (isme) dönüşmüştür?",
+      "explanation": "\"Sarma\" sözcüğü artık bir yiyeceğin kalıcı adı olmuştur, fiilimsi özelliğini yitirmiştir.",
+      "imageUrl": null,
+      "options": [
+        "Annemin yaptığı sarma çok lezzetliydi.",
+        "Etrafa su saçma sakın.",
+        "Koşarak gelen çocuğu gördüm.",
+        "Gülümseyen gözlerle baktı."
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-007",
+      "subTopic": "Noktalama İşaretleri (Tırnak ve Yay Ayraç)",
+      "text": "Cümle içinde başka bir kimseden veya yazıdan olduğu gibi aktarılan sözlerin başına ve sonuna hangi işaret konur?",
+      "explanation": "Doğrudan aktarma cümleleri tırnak işareti içine alınır.",
+      "imageUrl": null,
+      "options": [
+        "Tırnak işareti (\" \")",
+        "Yay ayraç (( ))",
+        "Köşeli ayraç ([ ])",
+        "Kesme işareti (')"
+      ],
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-TUR-H-008",
-      "subTopic": "Mantık ve Muhakeme Çıkarımı",
-      "text": "A, B, C, D koşucularının yarıştığı bir yarışta A yarışı B'den önce, C'den sonra bitirmiştir. D ise sonuncu olmamıştır. Birinci kimdir?",
-      "explanation": "C > A > B sıralaması kesindir. Birinci sırada C yer alır.",
+      "subTopic": "Yazım Kuralları (Birleşik Sözcükler)",
+      "text": "Aşağıdaki cümlelerin hangisinde birleşik sözcüklerin yazımı ile ilgili bir YANLIŞLIK yapılmıştır?",
+      "explanation": "Ses düşmesi veya türemesi olmayan birleşik fiiller ayrı yazılır: \"fark etti\" olmalıdır.",
       "imageUrl": null,
       "options": [
-        "A",
-        "B",
-        "C",
-        "D"
+        "Bu olayı farkettiğimde çok geçti.",
+        "Soruları çözmeyi terk etti.",
+        "Tüm teklifleri reddetti.",
+        "Ona yardım etti."
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-TUR-H-009",

@@ -8,23 +8,9 @@
   "questions": [
     {
       "externalId": "LGS-BIY-H-001",
-      "subTopic": "Akraba Evliliği ve Genetik Hastalıklar",
-      "text": "Akraba evliliklerinde kalıtsal hastalıkların çocuklarda görülme olasılığının yüksek olmasının temel sebebi nedir?",
-      "explanation": "Ortak atadan gelen bireylerde çekinik hastalık genlerinin bir araya gelme (homozigot olma) olasılığı çok yüksektir.",
-      "imageUrl": null,
-      "options": [
-        "Kromozom sayısının değişmesi",
-        "Zararlı çekinik (resesif) genlerin bir araya gelme ihtimalinin artması",
-        "Baskın genlerin mutasyona uğraması",
-        "Beslenme yetersizliği"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-BIY-H-002",
-      "subTopic": "DNA Zincir Hesaplaması",
-      "text": "Toplam 1200 nükleotidden oluşan bir DNA molekülünde 200 Adenin bulunmaktadır. Bu DNA'daki Guanin nükleotidi sayısı kaçtır?",
-      "explanation": "A = T = 200 (toplam 400). G + C = 1200 - 400 = 800. G = C olduğundan 400 Guanin bulunur.",
+      "subTopic": "DNA Nükleotid Sayısı Hesaplama",
+      "text": "1200 nükleotidden oluşan bir DNA molekülünde 200 adet Guanin nükleotidi olduğuna göre bu DNA'da kaç adet Timin nükleotidi bulunur?",
+      "explanation": "G = C = 200. Toplam G + C = 400. Kalan A + T = 1200 - 400 = 800. A = T olduğundan T = 400 bulunur.",
       "imageUrl": null,
       "options": [
         "200",
@@ -35,116 +21,130 @@
       "correctOptionIndex": 1
     },
     {
-      "externalId": "LGS-BIY-H-003",
-      "subTopic": "Klonlama Basamakları (Dolly)",
-      "text": "Klon koyun Dolly'nin genetik ikizi, kendisini doğuran taşıyıcı koyun değil, çekirdeği alınan koyun olmuştur. Bu durum neyi kanıtlar?",
-      "explanation": "Klon canlı, çekirdeği (genetik şifresi) aktarılan canlının birebir kopyasıdır.",
+      "externalId": "LGS-BIY-H-002",
+      "subTopic": "Çaprazlama ve Olasılık Problemi",
+      "text": "Melez döl kahverengi gözlü (Bb) bir anne ile mavi gözlü (bb) bir babanın doğacak ilk çocuklarının mavi gözlü olma olasılığı nedir?",
+      "explanation": "Bb × bb çaprazlamasında genotipler: Bb, Bb, bb, bb (%50 melez kahverengi, %50 saf mavi).",
       "imageUrl": null,
       "options": [
-        "Sitoplazmanın genetik bilgiyi belirlediğini",
-        "Kalıtsal bilginin çekirdekteki DNA'da saklandığını",
-        "Yumurtanın spermsiz bölünemeyeceğini",
-        "Klonlamanın cinsiyeti değiştirdiğini"
+        "%0",
+        "%25",
+        "%50",
+        "%75"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-BIY-H-003",
+      "subTopic": "Akraba Evliliği ve Genetik Hastalıklar",
+      "text": "Akraba evliliklerinde kalıtsal hastalıkların görülme sıklığının yüksek olmasının temel bilimsel gerekçesi nedir?",
+      "explanation": "Kalıtsal hastalıkların çoğu çekinik genlerle taşınır; ortak atadan gelen çekinik genler birleşir.",
+      "imageUrl": null,
+      "options": [
+        "Akrabaların genetik benzerliğinin fazla olması nedeniyle çekinik hastalık genlerinin yan yana gelme olasılığının artması",
+        "Akrabaların aynı kan grubuna sahip olması",
+        "Akrabalarda mutasyon hızının daha yüksek olması",
+        "Akrabaların aynı çevrede yaşaması"
+      ],
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-H-004",
-      "subTopic": "Fotosentez ve Kuru Ağırlık Artışı",
-      "text": "Işıklı bir ortamda bekletilen bir bitkinin yaprağındaki kuru madde ağırlığının artması aşağıdakilerden hangisinin sonucudur?",
-      "explanation": "Fotosentezle üretilen organik besin solunumla harcanandan fazla olursa bitkide net kuru madde artışı olur.",
+      "subTopic": "Besin Piramidinde Biyolojik Birikim",
+      "text": "Ot → Çekirge → Kurbağa → Yılan → Kartal besin zincirinde dokularında tarım ilacı (DDT) ve ağır metal birikimi EN FAZLA olan canlı hangisidir?",
+      "explanation": "Biyolojik birikim (zehir oranı) besin piramidinin en üst basamağındaki son tüketicide (kartal) en fazladır.",
       "imageUrl": null,
       "options": [
-        "Yalnızca terleme olayının",
-        "Fotosentez hızının hücresel solunum hızından yüksek olmasının",
-        "Köklerden fazla su çekilmesinin",
-        "Glikozun parçalanmasının"
+        "Ot",
+        "Çekirge",
+        "Kurbağa",
+        "Kartal"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 3
     },
     {
       "externalId": "LGS-BIY-H-005",
-      "subTopic": "Azot Döngüsü ve Bakteriler",
-      "text": "Topraktaki azotlu bileşikleri serbest azot gazına (N₂) dönüştürerek atmosfere veren bakterilere ne ad verilir?",
-      "explanation": "Denitrifikasyon bakterileri topraktaki azotu gaz halinde atmosfere salarak döngüyü tamamlar.",
+      "subTopic": "Klonlama Aşamaları (Dolly)",
+      "text": "Klonlanan bir canlının genetik ikizi, klonlama sürecinde hangi canlının genetik kopyasıdır?",
+      "explanation": "Genetik materyal (DNA) çekirdekte bulunur; çekirdeği aktarılan canlının birebir genetik kopyası oluşur.",
       "imageUrl": null,
       "options": [
-        "Nitrifikasyon bakterileri",
-        "Denitrifikasyon bakterileri",
-        "Azot bağlayıcı bakteriler",
-        "Çürükçül bakteriler"
+        "Çekirdeği alınan vücut hücresinin sahibinin",
+        "Yumurta hücresi bağışlayan dişinin",
+        "Taşıyıcı annenin",
+        "Yavrunun babasının"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-H-006",
-      "subTopic": "Oksijenli Solunum Denklemi",
-      "text": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP denkleminde açığa çıkan CO₂ kireç suyunu nasıl etkiler?",
-      "explanation": "Kireç suyu karbondioksitin (CO₂) ayıracıdır ve CO₂ varlığında bulanır.",
+      "subTopic": "Karbon Döngüsü ve Küresel Isınma",
+      "text": "Atmosferdeki karbondioksit (CO₂) miktarını azaltan ve karbonu biyolojik yapıya katan YEGÂNE temel olay hangisidir?",
+      "explanation": "Atmosferdeki serbest CO₂ gazını bağlayarak organik maddeye dönüştüren tek süreç fotosentezdir.",
       "imageUrl": null,
       "options": [
-        "Kireç suyunu mavileştirir",
-        "Kireç suyunu bulandırır",
-        "Kireç suyunu berraklaştırır",
-        "Hiçbir değişiklik yapmaz"
+        "Fotosentez",
+        "Oksijenli solunum",
+        "Fosil yakıtların yakılması",
+        "Ayrıştırma faaliyetleri"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-H-007",
-      "subTopic": "Gen Tedavisi ve Islah",
-      "text": "Zararlı genlerin etkisiz hale getirilmesi veya kusurlu genlerin sağlıklı olanlarla değiştirilmesini amaçlayan yöntem hangisidir?",
-      "explanation": "Genetik hastalıkların tedavisinde kusurlu geni onarma veya değiştirme işlemine gen tedavisi denir.",
+      "subTopic": "Fermantasyon ve Gaz Çıkışı",
+      "text": "Hamurun mayalanması (maya mantarlarının etil alkol fermantasyonu) sırasında hamurun kabarmasını sağlayan gaz hangisidir?",
+      "explanation": "Etil alkol fermantasyonunda etil alkol ile birlikte CO₂ gazı açığa çıkar; kabarcıklar hamuru kabartır.",
       "imageUrl": null,
       "options": [
-        "Aşılama",
-        "Gen Tedavisi",
-        "Doğal seleksiyon",
-        "Polenleme"
+        "O₂ (Oksijen)",
+        "CO₂ (Karbondioksit)",
+        "N₂ (Azot)",
+        "H₂ (Hidrojen)"
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-BIY-H-008",
-      "subTopic": "Besin Ağı ve Biyokütle",
-      "text": "Bir besin piramidinde tabandan tavana doğru gidildikçe toplam biyokütle (canlı ağırlığı) nasıl değişir?",
-      "explanation": "Piramidin en altında üreticilerin toplam kütlesi en fazladır; yukarı çıkıldıkça biyokütle azalır.",
+      "subTopic": "DNA Replikasyonunda İplik Dağılımı",
+      "text": "Kendini bir kez eşleyen bir DNA molekülünden oluşan iki yeni DNA molekülünün iplikleri nasıldır?",
+      "explanation": "DNA eşlenmesi yarı korunumlu (semikonservatif) gerçekleşir; ana zincir kalıp olarak kullanılır.",
       "imageUrl": null,
       "options": [
-        "Sürekli artar",
-        "Sürekli azalır",
-        "Önce azalır sonra artar",
-        "Değişmez"
+        "Her iki DNA'da da biri eski, biri yeni sentezlenmiş iplik bulunur (Yarı korunumlu eşlenme)",
+        "Bir DNA tamamen eski, diğeri tamamen yenidir",
+        "İki iplik de tamamen parçalanıp yeniden yapılır",
+        "Yalnızca tek bir yeni iplik oluşur"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-H-009",
-      "subTopic": "Modifikasyon Mekanizması",
-      "text": "Arı sütüyle beslenen dişi arıların kraliçe arı, çiçek tozuyla beslenenlerin işçi arı olmasıyla ilgili hangisi YANLIŞTIR?",
-      "explanation": "Modifikasyonda gen dizilimi değişmez, sadece çevresel faktörlerle genin işleyişi değişir.",
+      "subTopic": "Modifikasyon Örneklerinin Özellikleri",
+      "text": "Aşağıdakilerden hangisi modifikasyonların mutasyonlardan en temel farkıdır?",
+      "explanation": "Modifikasyon fenotipte görülür, genin işleyişi değişir ve kesinlikle sonraki nesle aktarılmaz.",
       "imageUrl": null,
       "options": [
-        "Beslenme faktörünün gen işleyişini değiştirmesidir",
-        "Bu durum yavrulara doğrudan kalıtılmaz",
-        "Genlerin nükleotid dizilimi kökten değişmiştir",
-        "Modifikasyon örneğidir"
+        "Döllere kalıtsal olarak aktarılmaması ve genin nükleotid yapısının değil sadece işleyişinin değişmesi",
+        "Yalnızca hayvanlarda görülmesi",
+        "Zararlı etkilerinin olmaması",
+        "Radyasyon sonucu ortaya çıkması"
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-H-010",
-      "subTopic": "Sera Etkisi ve Küresel İklim Değişikliği",
-      "text": "Atmosferdeki sera gazlarının (özellikle CO₂ ve CH₄) aşırı artması sonucu aşağıdakilerden hangisi beklenmez?",
-      "explanation": "Sera etkisi küresel ısınmaya yol açar; dünya ortalama sıcaklığı düşmez, tam tersine artar.",
+      "subTopic": "Işık Şiddeti ve Fotosentez Denge Noktası",
+      "text": "Bir bitkinin birim zamanda fotosentezle ürettiği oksijen miktarı, solunumla tükettiği oksijen miktarına eşit olduğunda ne gerçekleşir?",
+      "explanation": "Fotosentez hızı solunum hızına eşit olduğunda bitki dış ortamdan O₂ almaz ve dışarı O₂ vermez.",
       "imageUrl": null,
       "options": [
-        "Buzulların erimesi ve deniz seviyesinin yükselmesi",
-        "Ekstrem hava olaylarının sıklaşması",
-        "Mevsimlerin süresinin uzaması ve dünya ortalama sıcaklığının düşmesi",
-        "Tarımsal kuraklığın artması"
+        "Dış ortamla net gaz alışverişi sıfır olur (Denge noktası)",
+        "Bitki kurur",
+        "Fotosentez tamamen durur",
+        "Bitki anında ölür"
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 0
     }
   ]
 }

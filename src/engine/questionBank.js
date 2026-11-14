@@ -401,18 +401,47 @@ function selectMatchQuestions(bank, {
     }
   }
 
-  // Fallback if fewer than `count` found in requested subjects/difficulties
+  // Güvenli ve Kademeli Fallback: Filtrelerin (özellikle seçilen ders/branşın) korunması esastır
   if (selected.length < count) {
-    let fallbackPool = bank.allQuestions.filter(
+    // 1. Kademe: İstenen sınav ve seçili branş havuzundaki kalan tüm sorular (farklı zorluklar dahil)
+    const sameExamSubjectPool = bank.allQuestions.filter(
       (q) => (normExam === 'KARMA' || q.examType === normExam) && subjects.includes(q.subject) && !usedIds.has(q.externalId)
     );
-    if (fallbackPool.length < count - selected.length) {
-      fallbackPool = bank.allQuestions.filter((q) => !usedIds.has(q.externalId));
-    }
-    for (const q of shuffleArray(fallbackPool)) {
+    for (const q of shuffleArray(sameExamSubjectPool)) {
       if (selected.length >= count) break;
       selected.push(q);
       usedIds.add(q.externalId);
+    }
+  }
+
+  if (selected.length < count) {
+    // 2. Kademe: Seçilen BRANŞI ASLA BOZMADAN diğer sınavlardan aynı branşa ait sorular
+    const sameSubjectOtherExams = bank.allQuestions.filter(
+      (q) => subjects.includes(q.subject) && !usedIds.has(q.externalId)
+    );
+    for (const q of shuffleArray(sameSubjectOtherExams)) {
+      if (selected.length >= count) break;
+      selected.push(q);
+      usedIds.add(q.externalId);
+    }
+  }
+
+  if (selected.length < count) {
+    // 3. Kademe: Seçilen branşta hiç kullanılmamış soru kalmadıysa, başka branşa geçmek yerine aynı branş sorularını döngüyle tekrar ekle
+    const cycleSubjectPool = bank.allQuestions.filter((q) => subjects.includes(q.subject));
+    if (cycleSubjectPool.length > 0) {
+      for (const q of shuffleArray(cycleSubjectPool)) {
+        if (selected.length >= count) break;
+        selected.push(q);
+      }
+    } else {
+      // Sadece ve sadece soru bankasında bu branş hiç tanımlı değilse genel havuzdan al (güvenlik koruması)
+      const generalFallback = bank.allQuestions.filter((q) => !usedIds.has(q.externalId));
+      for (const q of shuffleArray(generalFallback)) {
+        if (selected.length >= count) break;
+        selected.push(q);
+        usedIds.add(q.externalId);
+      }
     }
   }
 

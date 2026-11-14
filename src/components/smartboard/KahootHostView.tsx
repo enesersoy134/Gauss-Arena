@@ -343,13 +343,30 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
   // 1. KURULUM EKRANI (Oda Yokken)
   // =========================================================================
   if (!room) {
-    const subjectsList = [
+    const lgsSubjects = [
+      { id: 'turkce', label: 'Türkçe' },
+      { id: 'matematik', label: 'Matematik' },
+      { id: 'sosyal', label: 'Sosyal Bilgiler (Sosyal)' },
+      { id: 'fen', label: 'Fen Bilimleri (Fen)' },
+    ];
+    const highSchoolSubjects = [
       { id: 'matematik', label: 'Matematik' },
       { id: 'fizik', label: 'Fizik' },
       { id: 'kimya', label: 'Kimya' },
       { id: 'biyoloji', label: 'Biyoloji' },
+      { id: 'geometri', label: 'Geometri' },
       { id: 'turkce', label: 'Türkçe' },
     ];
+    const subjectsList = examType === 'LGS' ? lgsSubjects : highSchoolSubjects;
+
+    const handleExamTypeChange = (t: string) => {
+      setExamType(t);
+      if (t === 'LGS') {
+        setSelectedSubjects(['turkce', 'matematik', 'sosyal', 'fen']);
+      } else {
+        setSelectedSubjects(['matematik', 'fizik', 'kimya', 'biyoloji', 'turkce']);
+      }
+    };
 
     return (
       <div className="flex flex-col gap-6 max-w-4xl mx-auto w-full py-4 animate-fade-in font-sans">
@@ -371,7 +388,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
                   Canlı Sınıf Etkileşimi
                 </span>
                 <h2 className="text-xl sm:text-2xl font-black font-poppins text-white">
-                  📱 QR ile Kahoot Tarzı Sınıf Yarışması Kur
+                  📱 Canlı Sınıf Yarışması Kur
                 </h2>
               </div>
             </div>
@@ -401,7 +418,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
                 {(['LGS', 'TYT', 'AYT', 'KARMA'] as const).map((t) => (
                   <button
                     key={t}
-                    onClick={() => setExamType(t)}
+                    onClick={() => handleExamTypeChange(t)}
                     className={`py-2 rounded-xl text-xs font-bold transition-all ${
                       examType === t
                         ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
@@ -505,7 +522,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
             className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 text-white font-poppins font-black text-base sm:text-lg shadow-xl shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-3 border border-white/20 mt-2"
           >
             <QrCode className="w-5 h-5" />
-            <span>📱 QR KODLU CANLI SINIF ODASI OLUŞTUR</span>
+            <span>QR KODLU CANLI SINIF ODASI OLUŞTUR</span>
           </button>
         </div>
       </div>
@@ -671,7 +688,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
                 <Play className="w-5 h-5 fill-current" />
                 <span>
                   {playersCount > 0
-                    ? `🚀 YARIŞMAYI BAŞLAT (${playersCount} Öğrenci)`
+                    ? `YARIŞMAYI BAŞLAT (${playersCount} Öğrenci)`
                     : 'En Az 1 Öğrenci Katılmalı'}
                 </span>
               </button>
@@ -693,11 +710,11 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
     const progressPercent = Math.min(100, (answered / total) * 100);
 
     return (
-      <div className="flex flex-col gap-5 max-w-5xl mx-auto w-full py-2 animate-fade-in font-sans">
+      <div className="flex flex-col gap-2.5 sm:gap-3.5 max-w-5xl mx-auto w-full h-full max-h-full py-1 animate-fade-in font-sans justify-between min-h-0">
         {/* Üst Bilgi Başlığı */}
-        <div className="flex items-center justify-between gap-3 bg-[#1A0E1C]/80 px-4 py-3 rounded-2xl border border-white/10">
-          <div className="flex items-center gap-2.5">
-            <span className="px-3 py-1 rounded-xl bg-orange-600/30 text-orange-300 border border-orange-500/40 text-xs font-mono font-bold">
+        <div className="flex items-center justify-between gap-3 bg-[#1A0E1C]/90 px-3.5 py-2 sm:py-2.5 rounded-2xl border border-white/10 shrink-0">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 sm:px-3 py-1 rounded-xl bg-orange-600/30 text-orange-300 border border-orange-500/40 text-xs font-mono font-bold">
               SORU {room.currentQuestionIndex + 1} / {room.totalQuestions}
             </span>
             {q?.subject && (
@@ -712,10 +729,10 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
             )}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Cevaplayanlar Sayacı */}
-            <div className="flex items-center gap-2 bg-[#0F0510] px-3 py-1.5 rounded-xl border border-white/10">
-              <Users className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-[#0F0510] px-3 py-1 rounded-xl border border-white/10">
+              <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
               <span className="text-xs font-mono font-bold text-white">
                 {answered} / {total} Cevapladı
               </span>
@@ -723,62 +740,69 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
 
             <button
               onClick={handleEndQuestion}
-              className="px-3 py-1.5 rounded-xl bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 text-xs font-bold flex items-center gap-1.5 transition-all"
+              className="px-2.5 sm:px-3 py-1 rounded-xl bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 text-xs font-bold flex items-center gap-1.5 transition-all"
               title="Süreyi beklemeden soruyu bitir ve sonuçları göster"
             >
-              <Square className="w-3.5 h-3.5 fill-current" />
+              <Square className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" />
               <span>⏹️ Soruyu Bitir</span>
             </button>
           </div>
         </div>
 
         {/* Cevaplama İlerleme Çubuğu */}
-        <div className="w-full bg-[#0F0510] h-2 rounded-full overflow-hidden border border-white/10">
+        <div className="w-full bg-[#0F0510] h-1.5 rounded-full overflow-hidden border border-white/10 shrink-0">
           <div
             className="h-full bg-gradient-to-r from-orange-500 to-emerald-400 transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
 
-        {/* Orta Büyük Soru Paneli */}
-        <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[#1A0E1C] via-[#210D24] to-[#120713] border-2 border-orange-500/30 shadow-2xl flex flex-col gap-6 relative overflow-hidden">
+        {/* Orta Büyük Soru Paneli (Ekrana sığacak şekilde flex-1 ve min-h-0) */}
+        <div className="p-3.5 sm:p-5 lg:p-6 rounded-3xl bg-gradient-to-br from-[#1A0E1C] via-[#210D24] to-[#120713] border-2 border-orange-500/30 shadow-2xl flex flex-col flex-1 min-h-0 justify-between gap-3 relative overflow-hidden">
           {/* Ortada Büyük Dairesel Sayaç */}
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-mono font-bold text-[#FF7A45] uppercase tracking-wider">
+          <div className="flex items-center justify-between shrink-0">
+            <span className="text-[11px] sm:text-xs font-mono font-bold text-[#FF7A45] uppercase tracking-wider">
               ÖĞRENCİLER TELEFONDAN CEVAPLIYOR...
             </span>
 
             <div
-              className={`flex items-center gap-2 px-4 py-2 rounded-2xl border font-mono font-black text-xl sm:text-2xl transition-all ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1 rounded-2xl border font-mono font-black text-base sm:text-xl transition-all ${
                 remainingSec <= 5
                   ? 'bg-red-600/20 border-red-500 text-red-400 animate-pulse'
                   : 'bg-orange-500/20 border-orange-500/40 text-orange-300'
               }`}
             >
-              <Clock className="w-5 h-5" />
+              <Clock className="w-4 h-4" />
               <span>{remainingSec}s</span>
             </div>
           </div>
 
-          {/* Soru Metni */}
-          <div className="min-h-[140px] flex items-center">
-            <h2 className="text-xl sm:text-3xl font-black font-poppins text-white leading-relaxed">
+          {/* Soru Metni & Varsa Görsel (Dikeyde ferah ve taşmayan esnek alan) */}
+          <div className="flex-1 min-h-0 flex flex-col items-center justify-center text-center overflow-y-auto px-2 py-1">
+            {Boolean((q as any)?.imageUrl || (q as any)?.image) && (
+              <img
+                src={(q as any)?.imageUrl || (q as any)?.image}
+                alt="Soru Görseli"
+                className="max-h-28 sm:max-h-40 object-contain rounded-xl border border-white/10 mb-2 shrink-0 shadow-md"
+              />
+            )}
+            <h2 className="text-base sm:text-xl lg:text-2xl font-black font-poppins text-white leading-snug sm:leading-relaxed max-w-3xl">
               {q?.prompt || 'Soru yükleniyor...'}
             </h2>
           </div>
 
-          {/* Çoktan Seçmeli veya Soru Seçenekleri Önizlemesi (Tahta Görünümü) */}
+          {/* Çoktan Seçmeli veya Soru Seçenekleri Önizlemesi (Tahta Görünümü - alta sabit, taşmaz) */}
           {q?.type === 'universal_choice' && (q.payload as any)?.options && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 shrink-0 pt-1">
               {((q.payload as any).options as string[]).map((opt, i) => (
                 <div
                   key={i}
-                  className="p-4 rounded-2xl bg-[#0F0510]/80 border border-white/10 flex items-center gap-3 text-white font-semibold text-sm sm:text-base"
+                  className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#0F0510]/90 border border-white/10 flex items-center gap-2.5 text-white font-semibold text-xs sm:text-sm lg:text-base shadow-sm"
                 >
-                  <span className="w-8 h-8 rounded-xl bg-[#F14E13]/20 border border-[#F14E13]/40 text-[#F14E13] font-mono font-bold flex items-center justify-center shrink-0">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#F14E13]/20 border border-[#F14E13]/40 text-[#F14E13] font-mono font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">
                     {String.fromCharCode(65 + i)}
                   </span>
-                  <span>{opt}</span>
+                  <span className="line-clamp-2 leading-tight">{opt}</span>
                 </div>
               ))}
             </div>
@@ -786,19 +810,18 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
 
           {/* Diğer interaktif soru tipleri için tahtadaki ipucu kartı & salt-okunur önizleme */}
           {q && q.type !== 'universal_choice' && (
-            <div className="flex flex-col gap-4 pt-1">
-              <div className="p-4 rounded-2xl bg-[#0F0510]/60 border border-white/10 flex items-center justify-between text-xs text-zinc-300 font-mono">
+            <div className="flex flex-col gap-2 shrink-0 pt-1">
+              <div className="px-3 py-1.5 rounded-xl bg-[#0F0510]/60 border border-white/10 flex items-center justify-between text-[11px] sm:text-xs text-zinc-300 font-mono">
                 <span className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>
-                    İnteraktif Soru Tipi:{' '}
-                    <strong>{(q.type || 'universal_choice').replace(/_/g, ' ').toUpperCase()}</strong>
+                    İnteraktif Tip: <strong>{(q.type || 'universal_choice').replace(/_/g, ' ').toUpperCase()}</strong>
                   </span>
                 </span>
-                <span className="text-orange-400">Öğrenciler kendi ekranlarında interaktif olarak çözüyor</span>
+                <span className="text-orange-400 text-[10px] sm:text-xs">Öğrenciler telefonlarından interaktif çözüyor</span>
               </div>
 
-              <div className="p-4 rounded-3xl bg-[#0F0510]/40 border border-white/10 pointer-events-none opacity-95">
+              <div className="p-2.5 sm:p-3 rounded-2xl bg-[#0F0510]/40 border border-white/10 pointer-events-none opacity-95 max-h-[180px] sm:max-h-[240px] overflow-y-auto">
                 <QuestionRenderer question={q} onSubmit={() => {}} disabled={true} />
               </div>
             </div>
@@ -847,11 +870,11 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
               ) : isLastQuestion ? (
                 <>
                   <Trophy className="w-4 h-4" />
-                  <span>🏆 Final Podyumunu Görüntüle</span>
+                  <span>Final Podyumunu Görüntüle</span>
                 </>
               ) : (
                 <>
-                  <span>⏭️ Sonraki Soruya Geç (3s)</span>
+                  <span>Sonraki Soruya Geç (3s)</span>
                   <ChevronRight className="w-4 h-4" />
                 </>
               )}
@@ -1239,7 +1262,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
               className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 text-white font-poppins font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99] transition-all"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>🔄 Yeni Bir Canlı Sınıf Yarışması Kur</span>
+              <span>Yeni Bir Canlı Sınıf Yarışması Kur</span>
             </button>
           </div>
         </div>

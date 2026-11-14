@@ -29,22 +29,95 @@ export interface BackendGameDataContract {
   questionPool: Question[];
 }
 
+export const MOCK_STUDENTS: PlayerInfo[] = [
+  {
+    id: 'p1',
+    name: 'Ahmet Yılmaz',
+    elo: 1250,
+    avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Ahmet&backgroundColor=f14e13',
+    streak: 0,
+    educationLevel: 'lise',
+    gradeLevel: '12. Sınıf (YKS)',
+    allowedExamTypes: ['TYT', 'AYT'],
+    dailyQuestExempt: false,
+    dailyCompleted: true,
+    dailyQuestDone: true,
+    completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
+  },
+  {
+    id: 'p2',
+    name: 'Zeynep Kaya',
+    elo: 1200,
+    avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Zeynep&backgroundColor=b6e3f4',
+    streak: 5,
+    educationLevel: 'lise',
+    gradeLevel: '12. Sınıf (YKS)',
+    allowedExamTypes: ['TYT', 'AYT'],
+    dailyQuestExempt: false,
+    dailyCompleted: true,
+    dailyQuestDone: true,
+    completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
+  },
+  {
+    id: 'p3',
+    name: 'Mehmet Demir',
+    elo: 1340,
+    avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Mehmet&backgroundColor=c0aede',
+    streak: 1,
+    educationLevel: 'ortaokul',
+    gradeLevel: '8. Sınıf (LGS)',
+    allowedExamTypes: ['LGS'],
+    dailyQuestExempt: true,
+    dailyCompleted: false,
+    dailyQuestDone: false,
+    completedMiniGames: [],
+  },
+  {
+    id: 'p4',
+    name: 'Ayşe Çelik',
+    elo: 1620,
+    avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Ayse&backgroundColor=ffd5dc',
+    streak: 3,
+    educationLevel: 'ortaokul',
+    gradeLevel: '8. Sınıf (LGS)',
+    allowedExamTypes: ['LGS'],
+    dailyQuestExempt: true,
+    dailyCompleted: false,
+    dailyQuestDone: false,
+    completedMiniGames: [],
+  },
+];
+
 export const BACKEND_GAME_DATA: BackendGameDataContract = {
   // Karşılaşmadaki 2 Oyuncunun Verisi
   players: {
     currentPlayer: {
       id: 'p1',
-      name: 'Kerim Onur',
-      elo: 1420,
-      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Kerim&backgroundColor=f14e13',
-      streak: 3
+      name: 'Ahmet Yılmaz',
+      elo: 1250,
+      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Ahmet&backgroundColor=f14e13',
+      streak: 0,
+      educationLevel: 'lise',
+      gradeLevel: '12. Sınıf (YKS)',
+      allowedExamTypes: ['TYT', 'AYT'],
+      dailyQuestExempt: false,
+      dailyCompleted: true,
+      dailyQuestDone: true,
+      completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
     },
     opponentPlayer: {
       id: 'p2',
-      name: 'Enes Ersoy',
-      elo: 1435,
-      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Enes&backgroundColor=3b82f6',
-      streak: 2
+      name: 'Zeynep Kaya',
+      elo: 1200,
+      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Zeynep&backgroundColor=b6e3f4',
+      streak: 5,
+      educationLevel: 'lise',
+      gradeLevel: '12. Sınıf (YKS)',
+      allowedExamTypes: ['TYT', 'AYT'],
+      dailyQuestExempt: false,
+      dailyCompleted: true,
+      dailyQuestDone: true,
+      completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
     }
   },
 
@@ -385,7 +458,7 @@ export const BACKEND_GAME_DATA: BackendGameDataContract = {
       prompt: 'Paralel bağlandıklarında eşdeğer direnci 4 Ω yapan İKİ direnci seçin:',
       explanation: 'Paralel bağlı 6 Ω ve 12 Ω için eşdeğer direnç: (6 × 12) / (6 + 12) = 72 / 18 = 4 Ω olur.',
       payload: {
-        targetBadge: 'Hedef Reş = 4 Ω',
+        targetBadge: 'Hedef: Eşdeğer Direnç = 4 Ω',
         ruleHint: 'Paralel bağlandığında 4 Ω veren 2 direnci seçin',
         options: [
           { id: 'r1', label: '2 Ω' },

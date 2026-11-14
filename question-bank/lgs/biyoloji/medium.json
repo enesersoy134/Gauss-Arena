@@ -8,107 +8,135 @@
   "questions": [
     {
       "externalId": "LGS-BIY-M-001",
-      "subTopic": "Mendel Çaprazlaması (Aa × Aa)",
-      "text": "Melez sarı tohumlu iki bezelye (Aa × Aa) çaprazlandığında yeşil tohumlu (aa) bezelye oluşma olasılığı yüzde kaçtır?",
-      "explanation": "Aa × Aa çaprazlamasından AA, Aa, Aa, aa oluşur. Yeşil tohumlu olma ihtimali 1/4 = %25'tir.",
+      "subTopic": "DNA Replikasyon Aşamaları",
+      "text": "Hücre bölünmesi öncesinde DNA'nın kendini eşlemesi (replikasyon) sırasında gerçekleşen ilk olay nedir?",
+      "explanation": "İlk aşamada enzimler yardımıyla hidrojen bağları kopar ve DNA fermuar gibi iki ipliğe ayrılır.",
       "imageUrl": null,
       "options": [
-        "%25",
-        "%50",
-        "%75",
-        "%100"
+        "DNA sarmalının bir fermuar gibi ikiye açılması",
+        "Sitoplazmadaki serbest nükleotidlerin çekirdeğe girmesi",
+        "Kromozomların kutuplara çekilmesi",
+        "Hücre zarının boğumlanması"
       ],
       "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-M-002",
-      "subTopic": "Besin Piramidinde Enerji Aktarımı",
-      "text": "Besin zincirinde üreticilerden tüketicilere doğru gidildikçe bir üst basamağa enerjinin yaklaşık yüzde kaçı aktarılır?",
-      "explanation": "%10 kuralına göre enerjinin yalnızca yaklaşık %10'u bir üst basamağa aktarılır, %90'ı ısı olarak kaybedilir.",
+      "subTopic": "Kalıtım (Fenotip ve Genotip Oranları)",
+      "text": "Saf döl yuvarlak tohumlu (YY) bezelye ile buruşuk tohumlu (yy) bezelyenin çaprazlanmasından oluşan F1 dölünün genotip oranı nedir?",
+      "explanation": "YY × yy çaprazlamasında yavruların tamamı (%100) melez döl (Yy) olur.",
       "imageUrl": null,
       "options": [
-        "%1",
-        "%10",
-        "%50",
-        "%90"
+        "%100 Heterozigot (Yy)",
+        "%50 YY, %50 yy",
+        "%25 YY, %50 Yy, %25 yy",
+        "%100 Homozigot çekinik"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-M-003",
-      "subTopic": "Doğal Seçilim Mekanizması",
-      "text": "Sanayi devrimi sonrasında ağaç gövdelerinin kararmasıyla koyu renkli güve kelebeklerinin hayatta kalıp beyazların avlanarak azalması neye örnektir?",
-      "explanation": "Çevre şartlarına uyum sağlayan bireylerin hayatta kalıp diğerlerinin elenmesi doğal seçilimdir.",
+      "subTopic": "Mutasyon Sebepleri",
+      "text": "Aşağıdakilerden hangisi canlılarda DNA yapısında kalıcı mutasyona yol açabilen çevresel faktörlerden biridir?",
+      "explanation": "Radyasyon, X ışınları ve kimyasal maddeler gen dizilimini bozarak mutasyon oluşturur.",
       "imageUrl": null,
       "options": [
-        "Yapay seçilim",
-        "Doğal seçilim",
-        "Modifikasyon",
-        "Kalıtsal olmayan varyasyon"
+        "Radyasyon (X ışınları ve zararlı UV)",
+        "Sağlıklı beslenme",
+        "Egzersiz yapma",
+        "Temiz hava soluma"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-M-004",
-      "subTopic": "DNA Replikasyonu (Eşlenme)",
-      "text": "Hücre bölünmesi öncesinde DNA'nın kendini eşlemesi sırasında sitoplazmadaki serbest nükleotid miktarı nasıl değişir?",
-      "explanation": "Çekirdekte yeni DNA zincirleri kurulurken sitoplazmadaki serbest nükleotidler çekirdeğe girer ve azalır.",
+      "subTopic": "Doğal Seçilim Mekanizması",
+      "text": "Çevre şartlarına uyum sağlayan güçlü canlıların hayatta kalması, uyum sağlayamayan zayıfların ise elenip yok olması sürecine ne ad verilir?",
+      "explanation": "Darwin'in tanımladığı çevreye en iyi uyum sağlayanın hayatta kalması ilkesi doğal seçilimdir.",
       "imageUrl": null,
       "options": [
-        "Sürekli artar",
-        "Sürekli azalır",
-        "Önce artar sonra azalır",
-        "Değişmez"
+        "Doğal seçilim",
+        "Yapay döllenme",
+        "Klonlama",
+        "Modifikasyon"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-M-005",
-      "subTopic": "Fotosentez Hızını Etkileyen Faktörler",
-      "text": "Fotosentez hızı ışığın dalga boyuna (rengine) göre değişir. Fotosentez en hızlı hangi ışık renklerinde gerçekleşir?",
-      "explanation": "Klorofil kırmızı ve mor ışığı en yüksek oranda soğurduğu için fotosentez bu ışıklarda en hızlıdır; yeşilde en yavaştır.",
+      "subTopic": "Besin Piramidinde Enerji Akışı",
+      "text": "Üreticiden son tüketiciye doğru çıkıldıkça biyokütle ve aktarılan enerji miktarı nasıl değişir?",
+      "explanation": "Üst basamaklara çıktıkça toplam biyokütle ve basamaklar arası enerji miktarı azalır.",
       "imageUrl": null,
       "options": [
-        "Yalnızca yeşil ışıkta",
-        "Kırmızı ve mor ışıkta",
-        "Sarı ışıkta",
-        "Turuncu ışıkta"
+        "Biyokütle azalır, aktarılan enerji azalır",
+        "Biyokütle artar, aktarılan enerji artar",
+        "Biyokütle azalır, aktarılan enerji artar",
+        "İkisi de değişmez"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-M-006",
-      "subTopic": "Biyolojik Birikim (Zehir Miktarı)",
-      "text": "Bir besin piramidinde üreticiden son tüketiciye doğru çıkıldıkça dokularda biriken zehirli madde miktarı nasıl değişir?",
-      "explanation": "Zehirli kimyasal maddeler üst basamaklara doğru birikerek çoğalır (Biyolojik Birikim artar).",
+      "subTopic": "Fotosentez ve Solunum Karşılaştırması",
+      "text": "Fotosentez ile solunum arasındaki ilişki için aşağıdakilerden hangisi DOĞRUDUR?",
+      "explanation": "Fotosentezde üretilen besin (glikoz) ve oksijen, solunumda tüketilen temel maddelerdir.",
       "imageUrl": null,
       "options": [
-        "Sürekli azalır",
-        "Sürekli artar",
-        "Değişmez",
-        "Önce artar sonra azalır"
+        "Fotosentezin ürünleri solunumun girenleridir",
+        "İkisi de yalnızca geceleri gerçekleşir",
+        "Fotosentezde ATP harcanmaz",
+        "Solunum yalnızca bitkilerde gerçekleşir"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-M-007",
-      "subTopic": "Fermantasyon Çeşitleri",
-      "text": "Yoğurt bakterilerinin ve yorulan insan çizgili kaslarının oksijensiz ortamda gerçekleştirdiği fermantasyon ürünü nedir?",
-      "explanation": "Çizgili kaslar ve yoğurt bakterileri laktik asit fermantasyonu yapar.",
+      "subTopic": "Azot Döngüsü ve Bakteriler",
+      "text": "Havadaki serbest azotu (N₂) bağlayarak baklagillerin kökünde bitkinin kullanabileceği forma dönüştüren canlılar hangileridir?",
+      "explanation": "Rhizobium cinsi azot bağlayıcı bakteriler baklagil köklerinde yaşayarak havadaki azotu bağlar.",
       "imageUrl": null,
       "options": [
-        "Etil alkol",
-        "Laktik asit",
-        "Asetik asit",
-        "Glikoz"
+        "Azot bağlayıcı bakteriler",
+        "Ayrıştırıcı böcekler",
+        "Karasinekler",
+        "Memeli hayvanlar"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-M-008",
-      "subTopic": "Cinsiyet Tayini",
-      "text": "İnsanlarda doğacak bir çocuğun erkek olma olasılığı yüzde kaçtır?",
-      "explanation": "Anne daima X kromozomu verir, babadan X veya Y gelme olasılığı %50'dir; çocuk %50 kız, %50 erkek olur.",
+      "subTopic": "Biyoteknolojinin Olumsuz Yönleri",
+      "text": "Aşağıdakilerden hangisi kontrolsüz biyoteknolojik uygulamaların potansiyel zararlarından biridir?",
+      "explanation": "GDO'lu tohumların yaygınlaşması doğal türleri tehdit edebilir ve alerjiye neden olabilir.",
+      "imageUrl": null,
+      "options": [
+        "Biyoçeşitliliğin azalması ve alerjik reaksiyon riskleri",
+        "Yeni aşıların geliştirilmesi",
+        "Daha dayanıklı tarım ürünleri üretilmesi",
+        "Hastalıkların erken teşhis edilmesi"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-009",
+      "subTopic": "Oksijensiz Solunum (Fermantasyon)",
+      "text": "Yoğurt mayalanması ve kaslarda yorgunluk hissi oluşması hangi fermantasyon çeşidi sonucunda gerçekleşir?",
+      "explanation": "Sütten yoğurt oluşumu ve çizgili kasların oksijensiz ortamda çalışması laktik asit fermantasyonudur.",
+      "imageUrl": null,
+      "options": [
+        "Laktik asit fermantasyonu",
+        "Etil alkol fermantasyonu",
+        "Oksijenli yanma",
+        "Fotosentez"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-010",
+      "subTopic": "Cinsiyet Kalıtımı",
+      "text": "İnsanda doğacak bir bebeğin cinsiyetinin kız veya erkek olma olasılığı her doğum için yüzde kaçtır?",
+      "explanation": "Babadan gelen spermin X veya Y taşıma ihtimali eşit olduğundan olasılık daima %50'dir.",
       "imageUrl": null,
       "options": [
         "%25",
@@ -117,34 +145,6 @@
         "%100"
       ],
       "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-BIY-M-009",
-      "subTopic": "Ekolojik Ayak İzi",
-      "text": "Bireylerin ve toplumların tükettiği doğal kaynakların üretilmesi ve atıkların bertarafı için gereken biyolojik alana ne ad verilir?",
-      "explanation": "İnsan faaliyetlerinin doğada bıraktığı toplam yük ekolojik ayak izi kavramıyla ölçülür.",
-      "imageUrl": null,
-      "options": [
-        "Su ayak izi",
-        "Ekolojik ayak izi",
-        "Karbon dengesi",
-        "Biyokütle"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-BIY-M-010",
-      "subTopic": "Ayrıştırıcıların Ekosistemdeki Rolü",
-      "text": "Besin zincirinde ayrıştırıcıların (mantar ve bakteriler) yok olması ekosistemi nasıl etkiler?",
-      "explanation": "Ayrıştırıcılar organik atıkları inorganik minerallere dönüştürür; yokluklarında madde döngüsü kilitlenir.",
-      "imageUrl": null,
-      "options": [
-        "Madde döngüleri durur ve organik atıklar birikir",
-        "Üretici sayısı sonsuza kadar artar",
-        "Besin piramidi çöker ama döngü etkilenmez",
-        "Hiçbir canlı etkilenmez"
-      ],
-      "correctOptionIndex": 0
     }
   ]
 }

@@ -23,126 +23,126 @@
     {
       "externalId": "LGS-TUR-E-002",
       "subTopic": "Eş Anlamlı (Anlamdaş) Sözcükler",
-      "text": "\"Cevap\" sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?",
-      "explanation": "Cevap sözcüğünün eş anlamlısı yanıttır.",
+      "text": "\"Görev\" sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?",
+      "explanation": "\"Görev\" ile \"vazife\" aynı anlama gelen eş anlamlı sözcüklerdir.",
       "imageUrl": null,
       "options": [
-        "Soru",
-        "Yanıt",
-        "Cümle",
-        "Kelime"
+        "Amaç",
+        "Vazife",
+        "Sebep",
+        "Sonuç"
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-TUR-E-003",
-      "subTopic": "Zıt (Karşıt) Anlamlı Sözcükler",
-      "text": "\"Taze\" sözcüğünün zıt anlamlısı hangisidir?",
-      "explanation": "Taze ekmeğin zıttı bayat ekmektir.",
+      "subTopic": "Deyimler ve Atasözleri",
+      "text": "Aşağıdaki deyimlerden hangisi \"çok sevinmek, mutlu olmak\" anlamında kullanılır?",
+      "explanation": "\"Etekleri zil çalmak\" büyük bir neşe ve sevinç duymak demektir.",
       "imageUrl": null,
       "options": [
-        "Kuru",
-        "Bayat",
-        "Çürük",
-        "Eski"
+        "Etekleri tutuşmak",
+        "Etekleri zil çalmak",
+        "Gözden düşmek",
+        "Pabucu dama atılmak"
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-TUR-E-004",
-      "subTopic": "Fiilimsiler (Giriş)",
-      "text": "Fiilimsiler kaç temel gruba ayrılır?",
-      "explanation": "Fiilimsiler: İsim-fiil (Mameışmak), Sıfat-fiil (Anasımezardikekmiş) ve Zarf-fiil olmak üzere 3 gruba ayrılır.",
+      "subTopic": "Cümlede Anlam (Neden - Sonuç)",
+      "text": "Aşağıdaki cümlelerin hangisinde \"neden-sonuç (sebep-sonuç)\" ilişkisi vardır?",
+      "explanation": "Yolların kapanması bir sonuç, karın yağması ise bunun gerçekleşmiş gerekçesidir (nedenidir).",
       "imageUrl": null,
       "options": [
-        "2",
-        "3",
-        "4",
-        "5"
+        "Ders çalışmak için odasına çekildi.",
+        "Kar yağdığı için yollar kapandı.",
+        "Erken yatarsa sabah dinç uyanır.",
+        "Kitap okumayı çok seviyor."
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-TUR-E-005",
-      "subTopic": "Cümlenin Temel Ögeleri",
-      "text": "Bir cümlenin iki temel ögesi aşağıdakilerden hangisidir?",
-      "explanation": "Yargıyı bildiren yüklem ve işi yapan özne cümlenin iki temel ögesidir.",
+      "subTopic": "Cümlede Anlam (Öznel - Nesnel)",
+      "text": "Aşağıdaki cümlelerden hangisi kanıtlanabilirlik açısından \"nesnel\" bir yargıdır?",
+      "explanation": "Başkentin Ankara olması kişiden kişiye değişmeyen, doğruluğu kanıtlanabilir nesnel bir bilgidir.",
       "imageUrl": null,
       "options": [
-        "Özne ve Nesne",
-        "Yüklem ve Zarf Tümleci",
-        "Özne ve Yüklem",
-        "Nesne ve Yüklem"
+        "En güzel mevsim sonbahardır.",
+        "Türkiye'nin başkenti Ankara'dır.",
+        "Bu roman herkesi derinden etkiler.",
+        "Mavi renk insana huzur verir."
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-TUR-E-006",
-      "subTopic": "Noktalama İşaretleri",
-      "text": "Tamamlanmış, yargı bildiren cümlelerin sonuna hangi noktalama işareti konur?",
-      "explanation": "Tamamlanmış cümlelerin sonuna nokta konur.",
+      "subTopic": "Fiilimsiler (İsim-Fiil)",
+      "text": "Aşağıdaki altı çizili sözcüklerden hangisi bir \"isim-fiil\"dir (mastar)?",
+      "explanation": "\"Gülüşü\" sözcüğündeki -üş eki isim-fiil ekidir (-ma, -ış, -mak).",
       "imageUrl": null,
       "options": [
-        "Nokta",
-        "Virgül",
-        "Ünlem",
-        "İki nokta"
+        "Gülüşü herkese neşe saçıyordu.",
+        "Koşan çocuk yere düştü.",
+        "Gidip hemen geri döndü.",
+        "Yıkılmış binalar gördük."
       ],
       "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-TUR-E-007",
-      "subTopic": "Yazım Kuralları (Büyük Harfler)",
-      "text": "Aşağıdaki cümlelerin hangisinde büyük harflerin yazımıyla ilgili bir YANLIŞLIK yapılmıştır?",
-      "explanation": "\"Van Gölü\" özel isim olduğundan her iki sözcük de büyük harfle başlamalıdır.",
+      "subTopic": "Noktalama İşaretleri (Nokta ve Virgül)",
+      "text": "Aşağıdaki cümlelerin hangisinde virgül (,) eş görevli sözcükleri ayırmak için kullanılmıştır?",
+      "explanation": "Elma, armut ve portakal aynı görevdeki nesnelerdir; virgül bunları ayırmıştır.",
       "imageUrl": null,
       "options": [
-        "Ahmet Bey geldi.",
-        "Türkçe dersini seviyorum.",
-        "van gölü çok büyüktür.",
-        "Ankara başkentimizdir."
-      ],
-      "correctOptionIndex": 2
-    },
-    {
-      "externalId": "LGS-TUR-E-008",
-      "subTopic": "Deyimler",
-      "text": "\"Çok sevinmek, sevinçten taşkınlık göstermek\" anlamındaki deyim hangisidir?",
-      "explanation": "Etekleri zil çalmak çok sevinmek anlamındadır; etekleri tutuşmak ise telaşlanmaktır.",
-      "imageUrl": null,
-      "options": [
-        "Etekleri tutuşmak",
-        "Etekleri zil çalmak",
-        "Göze girmek",
-        "Kulak kabartmak"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-TUR-E-009",
-      "subTopic": "Atasözleri",
-      "text": "\"Damlaya damlaya ... olur.\" atasözündeki boşluğa hangi kelime gelmelidir?",
-      "explanation": "Atasözünün doğrusu \"Damlaya damlaya göl olur\" biçimindedir.",
-      "imageUrl": null,
-      "options": [
-        "göl",
-        "deniz",
-        "sel",
-        "dere"
+        "Pazardan elma, armut, portakal aldık.",
+        "Ali, dün bize geleceğini söylemişti.",
+        "Evet, bu teklifi kabul ediyorum.",
+        "Akşam, yine akşam, yine akşam..."
       ],
       "correctOptionIndex": 0
     },
     {
-      "externalId": "LGS-TUR-E-010",
-      "subTopic": "Paragrafta Ana Fikir",
-      "text": "Bir metinde yazarın okuyucuya vermek istediği en temel mesaja ne ad verilir?",
-      "explanation": "Yazarın iletmek istediği asıl düşünce ana fikirdir.",
+      "externalId": "LGS-TUR-E-008",
+      "subTopic": "Yazım Kuralları (de / da Bağlacı)",
+      "text": "Aşağıdaki cümlelerin hangisinde \"de / da\"nın yazımı DOĞRUDUR?",
+      "explanation": "\"Ahmet de\" cümlesinde \"de\" bağlaçtır ve ayrı yazılması kurala uygundur.",
       "imageUrl": null,
       "options": [
-        "Konu",
-        "Ana düşünce (Ana fikir)",
-        "Yardımcı düşünce",
-        "Başlık"
+        "Sende bizimle gelsene.",
+        "Kitap da çok güzel bilgiler var.",
+        "Ahmet de bu yarışmaya katılacak.",
+        "Ev de hiç tuz kalmamış."
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-E-009",
+      "subTopic": "Cümlenin Ögeleri (Yüklem ve Özne)",
+      "text": "\"Küçük çocuk bahçede neşeyle koşuyordu.\" cümlesinin öznesi aşağıdakilerden hangisidir?",
+      "explanation": "Koşan kim? \"Küçük çocuk\" cümlenin öznesidir.",
+      "imageUrl": null,
+      "options": [
+        "Bahçede",
+        "Neşeyle",
+        "Küçük çocuk",
+        "Koşuyordu"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-E-010",
+      "subTopic": "Metin Türleri (Hikâye / Öykü)",
+      "text": "Olmuş ya da olması mümkün olayların kişi, yer ve zamana bağlı olarak anlatıldığı kısa metin türü hangisidir?",
+      "explanation": "Olay, kişi, zaman ve mekân unsurlarını içeren edebi metin hikayedir.",
+      "imageUrl": null,
+      "options": [
+        "Makale",
+        "Hikâye (Öykü)",
+        "Deneme",
+        "Fıkra"
       ],
       "correctOptionIndex": 1
     }

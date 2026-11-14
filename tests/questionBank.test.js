@@ -129,6 +129,27 @@ test('LGS kademesi ve difficultyMode parametreleri soru bankasında doğru çal�
     assert.equal(q.examType, 'LGS');
   }
 
+  // LGS müfredat branşları: Türkçe, Matematik, Fen, Sosyal
+  const pickedFen = selectMatchQuestions(bank, {
+    examType: 'LGS',
+    commonSubjects: ['fen'],
+    count: 5,
+  });
+  assert.equal(pickedFen.length, 5);
+  for (const q of pickedFen) {
+    assert.equal(q.examType, 'LGS');
+  }
+
+  const pickedSosyal = selectMatchQuestions(bank, {
+    examType: 'LGS',
+    commonSubjects: ['sosyal'],
+    count: 5,
+  });
+  assert.equal(pickedSosyal.length, 5);
+  for (const q of pickedSosyal) {
+    assert.equal(q.examType, 'LGS');
+  }
+
   // difficultyMode = 'easy'
   const distEasy = getDifficultyDistribution(1200, 'easy');
   assert.deepEqual(distEasy, { EASY: 4, MEDIUM: 1, HARD: 0 });

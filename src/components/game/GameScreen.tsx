@@ -237,14 +237,44 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     };
 
     setLastRoundResult(roundRes);
-    setRoundResultsHistory(prev => [...prev, { question: currentQuestion, result: roundRes }]);
+    const updatedHistory = [...roundResultsHistory, { question: currentQuestion, result: roundRes }];
+    setRoundResultsHistory(updatedHistory);
 
-    // 800ms sonra intermission ekranına geçiş yap
-    transitionTimeoutRef.current = setTimeout(() => {
-      setGameState('intermission');
-    }, 800);
+    const isLastQuestion = currentQuestionIndex + 1 >= questions.length;
+    if (isLastQuestion) {
+      // Son soru tamamlandığında ara bekleme (intermission) olmadan doğrudan Maç Sonu ekranına geç!
+      if (playerId) {
+        const mappedHistory = updatedHistory.map(({ question, result }, idx) => ({
+          questionIndex: idx,
+          externalId: question.id,
+          subject: question.subject,
+          subTopic: question.topic,
+          difficulty: question.difficulty.toUpperCase(),
+          text: question.prompt,
+          explanation: question.explanation || null,
+          interactiveQuestion: question,
+          answerA: { isCorrect: result.player1Correct, score: result.player1Points },
+          answerB: { isCorrect: result.player2Correct, score: result.player2Points },
+        }));
+        fetch('/api/revision/record-local', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ playerId, roundHistory: mappedHistory, examType: 'TYT' }),
+        }).catch(() => {});
+      }
+      setGameState('matchEnd');
+    } else {
+      // 800ms sonra intermission ekranına geçiş yap
+      transitionTimeoutRef.current = setTimeout(() => {
+        setGameState('intermission');
+      }, 800);
+    }
   }, [
     currentQuestion,
+    currentQuestionIndex,
+    questions.length,
+    playerId,
+    roundResultsHistory,
     players.currentPlayer.id,
     players.opponentPlayer.id,
     p1Streak,
@@ -355,9 +385,17 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     p1AnswerResultRef.current = { result, timeMs: elapsedMs };
     setP1Answered(true);
 
-    // Eğer rakip zaten cevap vermişse veya rakip bekleniyorsa:
-    // Kullanıcı deneyimi için oyuncu cevap verdikten hemen sonra (veya rakip de verdiyse) raundu bitir
-    if (opponentAnswered) {
+    const isLastQ = currentQuestionIndex + 1 >= questions.length;
+
+    // Kullanıcı son soruyu tamamladığı anda rakibi beklemeden anında hesapla ve bitir
+    if (isLastQ) {
+      if (opponentTimeoutRef.current) clearTimeout(opponentTimeoutRef.current);
+      if (!p2AnswerResultRef.current) {
+        p2AnswerResultRef.current = simulateOpponentAnswer(currentQuestion);
+      }
+      setOpponentAnswered(true);
+      finishCurrentRound();
+    } else if (opponentAnswered) {
       finishCurrentRound();
     } else {
       // Oyuncu cevapladı ama rakip henüz vermediyse en fazla 1 saniye bekle veya rakibi tamamla

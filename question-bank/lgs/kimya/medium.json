@@ -8,143 +8,143 @@
   "questions": [
     {
       "externalId": "LGS-KIM-M-001",
-      "subTopic": "Atom Numarası ve Katman Dizilimi",
-      "text": "Nötr bir atomun elektron katman dizilimi 2 - 8 - 3 şeklindedir. Bu element periyodik tabloda nerededir?",
-      "explanation": "Katman sayısı periyodu (3 katman ⇒ 3. periyot), son katmandaki elektron grubu (3A) verir.",
+      "subTopic": "Periyodik Sistemde Değişimler",
+      "text": "Periyodik tabloda aynı periyotta soldan sağa doğru gidildikçe ametallik özellik ve atom numarası nasıl değişir?",
+      "explanation": "Soldan sağa proton sayısı (atom no) ve elektronegatiflik/ametallik özellik artar.",
       "imageUrl": null,
       "options": [
-        "2. periyot 3A",
-        "3. periyot 3A",
-        "3. periyot 8A",
-        "4. periyot 3A"
+        "Ametallik artar, atom numarası artar",
+        "Ametallik azalır, atom numarası artar",
+        "İkisi de azalır",
+        "Ametallik artar, atom numarası azalır"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-KIM-M-002",
-      "subTopic": "Tepkime Grafiği ve Kütle Korunumu",
-      "text": "A + B → C tepkimesinde 12 gram A ile bir miktar B artansız tepkimeye girerek 40 gram C oluşturuyor. Tepkimeye giren B kaç gramdır?",
-      "explanation": "Kütlenin korunumuna göre mA + mB = mC ⇒ 12 + mB = 40 ⇒ mB = 28 gram bulunur.",
+      "subTopic": "Asit ve Bazların Metallerle Tepkimesi",
+      "text": "Asitler metallerle tepkimeye girdiğinde aşağıdaki gazlardan hangisini açığa çıkarır?",
+      "explanation": "Asitler aktif metallerle (çinko, magnezyum vb.) tepkimeye girerek H₂ gazı oluşturur.",
       "imageUrl": null,
       "options": [
-        "18",
-        "24",
-        "28",
-        "32"
-      ],
-      "correctOptionIndex": 2
-    },
-    {
-      "externalId": "LGS-KIM-M-003",
-      "subTopic": "Asit ve Baz Nötralleşmesi",
-      "text": "Asit ve baz çözeltileri uygun oranlarda karıştırıldığında hangi iki madde oluşur?",
-      "explanation": "Asit + Baz → Tuz + Su (Nötralleşme tepkimesi).",
-      "imageUrl": null,
-      "options": [
-        "Tuz ve Su",
-        "Metal ve Gaz",
-        "Yalnız Tuz",
-        "Oksijen ve Asit"
-      ],
-      "correctOptionIndex": 0
-    },
-    {
-      "externalId": "LGS-KIM-M-004",
-      "subTopic": "Metallerin Asitlerle Tepkimesi",
-      "text": "Çinko (Zn) metali hidroklorik asit (HCl) içine atıldığında hangi gaz açığa çıkar?",
-      "explanation": "Aktif metaller asitlerle tepkimeye girerek hidrojen gazı (H₂) açığa çıkarırlar.",
-      "imageUrl": null,
-      "options": [
-        "Oksijen (O₂)",
-        "Hidrojen (H₂)",
-        "Azot (N₂)",
-        "Karbondioksit (CO₂)"
+        "O₂ (Oksijen)",
+        "H₂ (Hidrojen)",
+        "CO₂ (Karbondioksit)",
+        "N₂ (Azot)"
       ],
       "correctOptionIndex": 1
     },
     {
-      "externalId": "LGS-KIM-M-005",
-      "subTopic": "Fiziksel Değişim Özellikleri",
-      "text": "Bir maddenin sadece dış görünüşünde meydana gelen, tanecik kimliğini değiştirmeyen olay hangisidir?",
-      "explanation": "Mumun erimesi bir hâl değişimidir ve fizikseldir; yanması ise kimyasaldır.",
+      "externalId": "LGS-KIM-M-003",
+      "subTopic": "Kimyasal Tepkime Grafiği",
+      "text": "Kapalı bir kapta gerçekleşen tepkimede maddelerin kütle-zaman grafiğinde miktarı azalan maddeler hangileridir?",
+      "explanation": "Tepkime süresince girenlerin kütlesi azalır, ürünlerin kütlesi artar.",
       "imageUrl": null,
       "options": [
-        "Sütün ekşimesi",
-        "Elmanın çürümesi",
-        "Mumun erimesi",
-        "Kâğıdın yanması"
+        "Ürünler",
+        "Tepkimeye girenler",
+        "Katalizör",
+        "Değişmeyenler"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-004",
+      "subTopic": "Soygazların Özellikleri",
+      "text": "Periyodik tablonun 8A grubunda bulunan soygazlar (asal gazlar) ile ilgili hangisi YANLIŞTIR?",
+      "explanation": "Soygazlar kararlı elektron dizilimine sahip oldukları için kural olarak bileşik oluşturmazlar.",
+      "imageUrl": null,
+      "options": [
+        "Son katmanları kararlıdır",
+        "Oda koşullarında tek atomlu gaz halindedirler",
+        "Bileşik oluşturmaya çok isteklidirler",
+        "Kimyasal tepkimelere karşı ilgisizdirler"
       ],
       "correctOptionIndex": 2
     },
     {
-      "externalId": "LGS-KIM-M-006",
-      "subTopic": "Periyodik Tabloda Grup Benzerliği",
-      "text": "Periyodik tabloda aynı grupta (aynı düşey sütunda) bulunan elementler için hangisi GENELLİKLE doğrudur?",
-      "explanation": "Aynı gruptaki elementlerin son katman elektron sayıları aynı olduğundan benzer kimyasal özellik taşırlar.",
+      "externalId": "LGS-KIM-M-005",
+      "subTopic": "Fiziksel-Kimyasal Değişim Örnekleri",
+      "text": "Aşağıdaki olaylardan hangisinde maddenin İÇ YAPISI (kimliği) değişir?",
+      "explanation": "Gümüşün havadaki kükürtle tepkimeye girip kararması kimyasal bir olaydır.",
       "imageUrl": null,
       "options": [
-        "Benzer kimyasal özellik gösterirler",
-        "Aynı sayıda katmana sahiptirler",
-        "Atom numaraları ardışıktır",
-        "Farklı değerlik elektronuna sahiptirler"
+        "Gümüşün kararması",
+        "Mumun erimesi",
+        "Şekerin ezilerek pudra şekeri yapılması",
+        "Gökkuşağı oluşumu"
       ],
       "correctOptionIndex": 0
     },
     {
-      "externalId": "LGS-KIM-M-007",
-      "subTopic": "Soygazların Kararlılığı",
-      "text": "Soygazların (8A) bileşik oluşturmaya karşı isteksiz ve kararlı olmalarının temel sebebi nedir?",
-      "explanation": "Helyum son katmanında 2 elektronla dublet, diğer soygazlar 8 elektronla oktet kuralını tamamlamıştır.",
+      "externalId": "LGS-KIM-M-006",
+      "subTopic": "Ayıraçlar ve Renk Değişimleri",
+      "text": "Metil oranj damlatıldığında sarı renk veren bir çözeltinin pH aralığı aşağıdakilerden hangisidir?",
+      "explanation": "Metil oranj asitlerde kırmızı, bazlarda sarı renk verir.",
       "imageUrl": null,
       "options": [
-        "Metallerle komşu olmaları",
-        "Son katmanlarının tamamen dolu olması",
-        "Gözle görülemez olmaları",
-        "Gaz hâlde bulunmaları"
+        "0 - 7 (Asidik)",
+        "7 - 14 (Bazik)",
+        "Yalnızca 7 (Nötr)",
+        "0 - 1 (Kuvvetli asit)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-007",
+      "subTopic": "Maddenin Isı İle Etkileşimi",
+      "text": "Isıca yalıtılmış bir kapta sıcaklıkları farklı iki sıvı karıştırıldığında ısı alışverişi ne zamana kadar devam eder?",
+      "explanation": "Isı alışverişi iki maddenin sıcaklıkları eşitlenip denge sıcaklığına ulaşıncaya kadar sürer.",
+      "imageUrl": null,
+      "options": [
+        "Sıvıların kütleleri eşitlenene kadar",
+        "Sıcaklıkları eşitlenene (ısıl dengeye ulaşana) kadar",
+        "Biri tamamen buharlaşana kadar",
+        "Öz ısıları eşitlenene kadar"
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-KIM-M-008",
-      "subTopic": "Isı Alışverişi Hesaplama",
-      "text": "Kütlesi 100 g olan suyun sıcaklığını 20 °C'den 40 °C'ye çıkarmak için gereken ısı kaç kaloridir? (c_su = 1 cal/g°C)",
-      "explanation": "Q = m · c · ΔT = 100 · 1 · (40 - 20) = 2000 cal bulunur.",
+      "subTopic": "Yarı Metallerin Kullanım Alanları",
+      "text": "Silisyum (Si) ve Germanyum (Ge) gibi yarı metaller teknolojide en çok hangi alanda kullanılır?",
+      "explanation": "Yarı iletken özellikleri sayesinde bilgisayar çipleri ve mikroelektronikte yaygın kullanılır.",
       "imageUrl": null,
       "options": [
-        "1000",
-        "2000",
-        "3000",
-        "4000"
+        "Elektronik devre ve mikroçip yapımında",
+        "İnşaat demiri üretiminde",
+        "Plastik ambalaj sanayisinde",
+        "Tekstil boyalarında"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-KIM-M-009",
-      "subTopic": "İndikatörler (Belirteçler)",
-      "text": "Fenolftalein indikatörü bazik ortama damlatıldığında hangi renge dönüşür?",
-      "explanation": "Fenolftalein asidik ortamda renksizdir, bazik ortamda ise pembe/menekşe renk alır.",
+      "subTopic": "Evsel Kimyasallar ve Tehlikeleri",
+      "text": "Tuz ruhu (HCl) ile çamaşır suyunun (NaClO) karıştırılması sonucu açığa çıkan son derece zehirli gaz hangisidir?",
+      "explanation": "Tuz ruhu ve çamaşır suyu karıştırılırsa ölümcül zehirli klor gazı (Cl₂) açığa çıkar.",
       "imageUrl": null,
       "options": [
-        "Sarı",
-        "Renksiz kalır",
-        "Pembe / Menekşe",
-        "Mavi"
+        "Klor gazı (Cl₂)",
+        "Oksijen gazı (O₂)",
+        "Helyum gazı (He)",
+        "Metan gazı (CH₄)"
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-KIM-M-010",
-      "subTopic": "Yarı Metaller",
-      "text": "Periyodik tabloda metaller ile ametaller arasında yer alan Bor (B) ve Silisyum (Si) hangi sınıfa aittir?",
-      "explanation": "Fiziksel olarak metallere, kimyasal olarak ametallere benzeyen bu elementler yarı metallerdir.",
+      "subTopic": "Kütlenin Korunumu ve Atom Türü",
+      "text": "Kapalı kapta gerçekleşen kimyasal bir tepkimede aşağıdakilerden hangisi DEĞİŞEBİLİR?",
+      "explanation": "Atom sayısı, atom türü ve kütle daima korunur; ancak molekül sayısı değişebilir.",
       "imageUrl": null,
       "options": [
-        "Ametaller",
-        "Yarı metaller",
-        "Soygazlar",
-        "Alkali metaller"
+        "Toplam kütle",
+        "Atom türü",
+        "Toplam atom sayısı",
+        "Molekül sayısı"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 3
     }
   ]
 }

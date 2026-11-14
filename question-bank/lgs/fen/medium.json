@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "fen",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-FEN-M-001",
+      "subTopic": "Sıvı Basıncı ve Pascal Prensibi",
+      "text": "Durgun sıvıların kap tabanına uyguladığı basınç formülü P = h · d · g olduğuna göre, sıvı basıncı hangi iki nicelikle doğru orantılıdır?",
+      "explanation": "Sıvı basıncı derinlik ve sıvının yoğunluğu ile doğrudan doğru orantılıdır.",
+      "imageUrl": null,
+      "options": [
+        "Kabın şekli ve sıvı hacmi",
+        "Sıvı derinliği (h) ve sıvı yoğunluğu (d)",
+        "Kabın taban alanı ve sıvı rengi",
+        "Sıvının kütlesi ve atmosfer basıncı"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-002",
+      "subTopic": "Kalıtım ve Çaprazlama",
+      "text": "Melez döl sarı tohumlu (Ss) iki bezelyenin çaprazlanması sonucu yeşil tohumlu (ss) bezelye oluşma olasılığı yüzde kaçtır?",
+      "explanation": "Ss × Ss çaprazlamasında genotipler: SS, Ss, Ss, ss (1/4 yani %25 saf çekinik yeşil).",
+      "imageUrl": null,
+      "options": [
+        "%0",
+        "%25",
+        "%50",
+        "%75"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-003",
+      "subTopic": "Kimyasal Tepkimelerde Kütlenin Korunumu",
+      "text": "A + B → C + D kapalı kapta gerçekleşen tepkimede 12 g A ile 28 g B tamamen birleştiğinde 16 g C oluşmuştur. Oluşan D maddesi kaç gramdır?",
+      "explanation": "Kütlenin korunumuna göre: 12 + 28 = 16 + m(D) ⇒ 40 = 16 + m(D) ⇒ m(D) = 24 g.",
+      "imageUrl": null,
+      "options": [
+        "20 g",
+        "24 g",
+        "28 g",
+        "32 g"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-004",
+      "subTopic": "Basit Makineler (Eğik Düzlem)",
+      "text": "Boyu L = 6 m, yüksekliği h = 2 m olan sürtünmesiz bir eğik düzlemde kuvvet kazancı kaçtır?",
+      "explanation": "Eğik düzlemde kuvvet kazancı = L / h = 6 / 2 = 3'tür.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-005",
+      "subTopic": "Rüzgâr ve Basınç Alanları",
+      "text": "Komşu iki bölgeden K bölgesinde alçaltıcı hava hareketi (yüksek basınç), L bölgesinde ise yükseltici hava hareketi (alçak basınç) görülmektedir. Rüzgârın yönü nasıldır?",
+      "explanation": "Rüzgâr daima yüksek basınç (K) alanından alçak basınç (L) alanına doğru yatay yönde eser.",
+      "imageUrl": null,
+      "options": [
+        "L'den K'ye doğrudur",
+        "K'den L'ye doğrudur",
+        "Rüzgâr esmez",
+        "Aşağıdan yukarıya doğrudur"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-006",
+      "subTopic": "Mutasyon ve Modifikasyon",
+      "text": "Çuha çiçeğinin 15-25 °C'de kırmızı, 25-35 °C'de beyaz çiçek açması hangi biyolojik kavramla açıklanır?",
+      "explanation": "Çevre etkisiyle genlerin işleyişinin değişmesi modifikasyondur; kalıtsal değildir.",
+      "imageUrl": null,
+      "options": [
+        "Mutasyon",
+        "Modifikasyon",
+        "Adaptasyon",
+        "Klonlama"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-007",
+      "subTopic": "Asit-Baz Belirteçleri",
+      "text": "Fenolftalein damlatıldığında pembe renge dönen ve pH değeri 7'den büyük olan sulu çözelti aşağıdakilerden hangisi olabilir?",
+      "explanation": "Fenolftalein bazik ortamlarda pembe renk verir; sabunlu su baziktir.",
+      "imageUrl": null,
+      "options": [
+        "Limon suyu (pH 2.5)",
+        "Mide asidi (pH 1.5)",
+        "Sabunlu su (pH 9)",
+        "Saf su (pH 7)"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FEN-M-008",
+      "subTopic": "Kaldıraç Sistemleri",
+      "text": "Kuvvet kolu 120 cm, yük kolu 40 cm olan bir kaldıraçta kuvvet kazancı kaçtır?",
+      "explanation": "Kuvvet kazancı = Kuvvet Kolu / Yük Kolu = 120 / 40 = 3 kat kuvvet kazancı sağlar.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-009",
+      "subTopic": "Fotosentez Hızını Etkileyen Faktörler",
+      "text": "Bitkilerde fotosentez hızının en yüksek olduğu ışık renkleri hangileridir?",
+      "explanation": "Klorofil yeşil ışığı yansıttığı için yeşilde fotosentez en yavaş, kırmızı ve mor ışıkta ise en hızlıdır.",
+      "imageUrl": null,
+      "options": [
+        "Yeşil ve sarı",
+        "Kırmızı ve mor (mavi)",
+        "Yalnızca beyaz",
+        "Turuncu ve yeşil"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-M-010",
+      "subTopic": "Madde ve Isı (Öz Isı)",
+      "text": "Eşit kütleli su (c = 4.18 J/g°C) ve demir (c = 0.46 J/g°C) özdeş ısıtıcılarla eşit süre ısıtılırsa sıcaklık artışları nasıl olur?",
+      "explanation": "Öz ısısı küçük olan maddeler (demir) az ısıyla çok daha çabuk ısınır ve sıcaklığı daha fazla artar.",
+      "imageUrl": null,
+      "options": [
+        "Suyun sıcaklığı demirden daha çok artar",
+        "Demirin sıcaklığı sudan çok daha hızlı artar",
+        "İkisinin sıcaklık artışı eşit olur",
+        "Suyun sıcaklığı hiç değişmez"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { GameStore, getWeeklyBracket } = require('../src/engine/economyTournaments');
+const { GameStore, getWeeklyBracket, WEEKLY_MATCHES_THRESHOLD } = require('../src/engine/economyTournaments');
 
 test('getWeeklyBracket returns correct tier and weekly Coins', () => {
   assert.equal(getWeeklyBracket(1150).weeklyCoins, 100);
@@ -11,6 +11,7 @@ test('getWeeklyBracket returns correct tier and weekly Coins', () => {
 });
 
 test('GameStore enforces 15 weekly matches before claiming weekly Coins and converts 5000 Coins = 10 Isler Points', () => {
+  assert.equal(WEEKLY_MATCHES_THRESHOLD, 15);
   const store = new GameStore();
   const p = store.getPlayer('p1');
   p.weeklyMatchesPlayed = 10;
@@ -106,4 +107,53 @@ test('GameStore distinguishes wrong answers and groups them under revisionTopics
   const cleared = store.markTopicReviewed('p1', 'Üslü Sayılar');
   assert.equal(cleared.ok, true);
   assert.equal(store.getPlayer('p1').revisionTopics.length, 0);
+});
+
+test('p1 and p2 have completed daily quests and mini games by default', () => {
+  const store = new GameStore();
+  const p1 = store.getPlayer('p1');
+  const p2 = store.getPlayer('p2');
+  const p3 = store.getPlayer('p3');
+
+  assert.equal(p1.dailyCompleted, true);
+  assert.equal(p1.dailyQuestDone, true);
+  assert.equal(p1.completedMiniGames.length, 6);
+
+  assert.equal(p2.dailyCompleted, true);
+  assert.equal(p2.dailyQuestDone, true);
+  assert.equal(p2.completedMiniGames.length, 6);
+
+  assert.equal(p3.dailyCompleted, false);
+  assert.equal(p3.dailyQuestDone, false);
+  assert.equal(p3.completedMiniGames.length, 0);
+});
+
+test('p1 and p2 are High School (YKS / TYT-AYT) while p3 and p4 are Middle School (LGS) and exempt from daily quest', () => {
+  const store = new GameStore();
+  const p1 = store.getPlayer('p1');
+  const p2 = store.getPlayer('p2');
+  const p3 = store.getPlayer('p3');
+  const p4 = store.getPlayer('p4');
+
+  // p1 and p2: High School (Lise)
+  assert.equal(p1.educationLevel, 'lise');
+  assert.deepEqual(p1.allowedExamTypes, ['TYT', 'AYT']);
+  assert.equal(p1.allowedExamTypes.includes('LGS'), false);
+
+  assert.equal(p2.educationLevel, 'lise');
+  assert.deepEqual(p2.allowedExamTypes, ['TYT', 'AYT']);
+  assert.equal(p2.allowedExamTypes.includes('LGS'), false);
+
+  // p3 and p4: Middle School (Ortaokul / LGS)
+  assert.equal(p3.educationLevel, 'ortaokul');
+  assert.deepEqual(p3.allowedExamTypes, ['LGS']);
+  assert.equal(p3.allowedExamTypes.includes('TYT'), false);
+  assert.equal(p3.allowedExamTypes.includes('AYT'), false);
+  assert.equal(p3.dailyQuestExempt, true);
+
+  assert.equal(p4.educationLevel, 'ortaokul');
+  assert.deepEqual(p4.allowedExamTypes, ['LGS']);
+  assert.equal(p4.allowedExamTypes.includes('TYT'), false);
+  assert.equal(p4.allowedExamTypes.includes('AYT'), false);
+  assert.equal(p4.dailyQuestExempt, true);
 });

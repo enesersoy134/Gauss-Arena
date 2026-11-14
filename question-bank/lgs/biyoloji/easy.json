@@ -9,142 +9,142 @@
     {
       "externalId": "LGS-BIY-E-001",
       "subTopic": "DNA ve Genetik Kod",
-      "text": "Hücre çekirdeğinde bulunan genetik yapıların basitten karmaşığa (küçükten büyüğe) doğru sıralanışı nasıldır?",
-      "explanation": "Kedigeni kodlaması: Nükleotid < Gen < DNA < Kromozom şeklindedir.",
+      "text": "DNA molekülünün çift zincirli sarmal yapısında Adenin (A) bazının karşısına daima hangi baz gelir?",
+      "explanation": "DNA'da Adenin ile Timin (A=T), Guanin ile Sitozin (G≡C) eşleşir.",
       "imageUrl": null,
       "options": [
-        "Nükleotid < Gen < DNA < Kromozom",
-        "Kromozom < DNA < Gen < Nükleotid",
-        "Gen < Nükleotid < DNA < Kromozom",
-        "Nükleotid < DNA < Gen < Kromozom"
-      ],
-      "correctOptionIndex": 0
-    },
-    {
-      "externalId": "LGS-BIY-E-002",
-      "subTopic": "DNA Nükleotid Eşleşmesi",
-      "text": "DNA molekülünde Adenin (A) nükleotidinin karşısına daima hangi nükleotid gelir?",
-      "explanation": "DNA çift zincirinde Adenin karşısına Timin (A=T), Guanin karşısına Sitozin (G≡C) gelir.",
-      "imageUrl": null,
-      "options": [
-        "Guanin",
-        "Sitozin",
-        "Timin",
-        "Urasil"
+        "Guanin (G)",
+        "Sitozin (C)",
+        "Timin (T)",
+        "Urasil (U)"
       ],
       "correctOptionIndex": 2
     },
     {
-      "externalId": "LGS-BIY-E-003",
-      "subTopic": "Fotosentez Temelleri",
-      "text": "Fotosentez olayının gerçekleşebilmesi için aşağıdakilerden hangisi GEREKLİ DEĞİLDİR?",
-      "explanation": "Oksijen fotosentezin girdisi değil, atmosfere verilen çıktısıdır (ürünüdür).",
+      "externalId": "LGS-BIY-E-002",
+      "subTopic": "DNA Nükleotid Eşleşmesi",
+      "text": "Bir nükleotidin yapısında aşağıdakilerden hangisi KESİNLİKLE bulunmaz?",
+      "explanation": "Nükleotid = Fosfat + Deoksiriboz Şekeri + Azotlu Organik Baz formülünden oluşur.",
       "imageUrl": null,
       "options": [
-        "Güneş ışığı",
-        "Klorofil",
-        "Karbondioksit ve su",
-        "Oksijen gazı"
+        "Fosfat grubu",
+        "Deoksiriboz şekeri",
+        "Organik baz",
+        "Ribozom organeli"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-BIY-E-003",
+      "subTopic": "Fotosentez Temelleri",
+      "text": "Yeşil bitkilerin fotosentez yapabilmesi için aşağıdakilerden hangisine ihtiyacı YOKTUR?",
+      "explanation": "Bitkiler fotosentezde CO₂ ve su kullanarak besin ve oksijen üretir; oksijen tüketmezler.",
+      "imageUrl": null,
+      "options": [
+        "Işık enerjisi",
+        "Karbondioksit (CO₂)",
+        "Su (H₂O)",
+        "Oksijen gazı tüketimi"
       ],
       "correctOptionIndex": 3
     },
     {
       "externalId": "LGS-BIY-E-004",
       "subTopic": "Besin Zinciri Üreticileri",
-      "text": "Bir besin zincirinin ilk basamağında daima hangi canlı grubu yer alır?",
-      "explanation": "Güneş enerjisini kimyasal bağ enerjisine çeviren üreticiler daima ilk basamaktadır.",
+      "text": "Aşağıdaki canlılardan hangisi bir besin zincirinde \"üretici\" canlı basamağında yer alır?",
+      "explanation": "Yeşil yapraklı buğday bitkisi klorofili sayesinde fotosentez yapan bir üreticidir.",
       "imageUrl": null,
       "options": [
-        "Otçullar",
-        "Etçiller",
-        "Üreticiler (Bitkiler)",
-        "Ayrıştırıcılar"
+        "Çekirge",
+        "Buğday bitkisi",
+        "Kurbağa",
+        "Yılan"
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-BIY-E-005",
       "subTopic": "Mendel Genetiği (Baskın Gen)",
-      "text": "Hem anne hem babadan aynı aleli alan (örn: AA veya aa) bireylere ne ad verilir?",
-      "explanation": "Aynı alelleri taşıyan genotipe homozigot (saf döl), farklı olanlara (Aa) heterozigot denir.",
+      "text": "Canlılarda etkisini hem saf döl (homozigot) hem de melez (heterozigot) durumda gösteren genlere ne ad verilir?",
+      "explanation": "Baskın genler büyük harfle gösterilir ve her durumda dış görünüşte etkisini gösterir.",
       "imageUrl": null,
       "options": [
-        "Heterozigot (Melez)",
-        "Homozigot (Saf döl)",
-        "Mutasyon",
-        "Fenotip"
+        "Baskın (Dominant) gen",
+        "Çekinik (Resesif) gen",
+        "Mutasyona uğramış gen",
+        "Modifiye gen"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-E-006",
-      "subTopic": "Mutasyon Örnekleri",
-      "text": "Aşağıdakilerden hangisi bir mutasyon örneğidir?",
-      "explanation": "Göz renklerinin farklı olması genetik yapının bozulmasıyla oluşan bir mutasyondur.",
+      "subTopic": "Adaptasyon Kavramı",
+      "text": "Kutup ayılarının beyaz kürk rengine ve kalın yağ tabakasına sahip olması hangi kavrama örnektir?",
+      "explanation": "Canlının yaşadığı çevreye uyum sağlayarak yaşama ve üreme şansını artıran kalıtsal özellik adaptasyondur.",
       "imageUrl": null,
       "options": [
-        "Spor yapan kişinin kaslarının gelişmesi",
-        "Van kedisinin gözlerinin farklı renk olması",
-        "Bukalemunun renk değiştirmesi",
-        "Kutup ayısının beyaz kürkünün olması"
+        "Adaptasyon",
+        "Modifikasyon",
+        "Mutasyon",
+        "Yapay seçilim"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-007",
+      "subTopic": "Besin Zincirinde Ayrıştırıcılar",
+      "text": "Besin zincirinde ölü canlı atıklarını parçalayarak inorganik maddelere dönüştüren canlılar kimlerdir?",
+      "explanation": "Ayrıştırıcılar besin zincirinin her basamağında görev alır ve madde döngüsünü tamamlar.",
+      "imageUrl": null,
+      "options": [
+        "Ayrıştırıcılar (Mantar ve bakteriler)",
+        "Birincil tüketiciler",
+        "Otçullar",
+        "Yalnızca etçil memeliler"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-008",
+      "subTopic": "Kromozom Sayısı ve Gelişmişlik",
+      "text": "Farklı canlı türlerinin kromozom sayıları ile gelişmişlik düzeyleri arasında nasıl bir ilişki vardır?",
+      "explanation": "Örn: Eğrelti otunun 500, insanın 46 kromozomu vardır; kromozom sayısı gelişmişlik ölçütü değildir.",
+      "imageUrl": null,
+      "options": [
+        "Kromozom sayısı fazla olan canlı daha gelişmiştir",
+        "Kromozom sayısı ile canlının gelişmişliği arasında doğrudan bir ilişki yoktur",
+        "Kromozom sayısı az olan daha gelişmiştir",
+        "Tüm canlıların kromozom sayısı aynıdır"
       ],
       "correctOptionIndex": 1
     },
     {
-      "externalId": "LGS-BIY-E-007",
-      "subTopic": "Adaptasyon Kavramı",
-      "text": "Canlıların belirli bir çevrede yaşama ve üreme şansını artıran kalıtsal özelliklerine ne ad verilir?",
-      "explanation": "Canlının çevreye kalıtsal uyum sağlayarak hayatta kalma şansını artırması adaptasyondur.",
-      "imageUrl": null,
-      "options": [
-        "Modifikasyon",
-        "Mutasyon",
-        "Adaptasyon",
-        "Varyasyon"
-      ],
-      "correctOptionIndex": 2
-    },
-    {
-      "externalId": "LGS-BIY-E-008",
-      "subTopic": "Modifikasyon Örneği",
-      "text": "Himalaya tavşanının beyaz kürkünün kazınıp yerine buz konulduğunda siyah kürk çıkması neye örnektir?",
-      "explanation": "Çevre etkisiyle genin işleyişinin değişmesi modifikasyondur; kalıtsal değildir.",
-      "imageUrl": null,
-      "options": [
-        "Adaptasyon",
-        "Doğal Seçilim",
-        "Modifikasyon",
-        "Klonlama"
-      ],
-      "correctOptionIndex": 2
-    },
-    {
       "externalId": "LGS-BIY-E-009",
-      "subTopic": "Hücresel Solunum Amacı",
-      "text": "Canlıların oksijenli veya oksijensiz solunum yapmalarının temel amacı nedir?",
-      "explanation": "Solunumun temel amacı besinleri parçalayarak hücresel enerji (ATP) üretmektir.",
+      "subTopic": "Solunum Çeşitleri",
+      "text": "Hücrelerin besin maddelerini oksijen kullanarak parçalayıp enerji (ATP) üretmesine ne ad verilir?",
+      "explanation": "Besinlerin mitokondride O₂ yardımıyla parçalanması oksijenli solunumdur.",
       "imageUrl": null,
       "options": [
-        "ATP (Enerji) üretmek",
-        "Glikoz üretmek",
-        "Oksijen depolamak",
-        "Büyümeyi durdurmak"
+        "Oksijenli solunum",
+        "Oksijensiz solunum (Fermantasyon)",
+        "Fotosentez",
+        "Terleme"
       ],
       "correctOptionIndex": 0
     },
     {
       "externalId": "LGS-BIY-E-010",
-      "subTopic": "Biyoteknoloji Uygulamaları",
-      "text": "Bakterilere insan geni aktarılarak şeker hastaları için İnsülin hormonu üretilmesi hangi alanın başarısıdır?",
-      "explanation": "Gen aktarımı yöntemiyle insülin üretimi biyoteknolojinin en yaygın uygulamalarındandır.",
+      "subTopic": "Biyoteknoloji Örnekleri",
+      "text": "İnsülin hormonunun bakterilere ürettirilmesi hangi bilimsel alanın başarısıdır?",
+      "explanation": "Gen aktarımı yöntemiyle bakterilere insan insülini ürettirmek biyoteknolojinin en temel örneğidir.",
       "imageUrl": null,
       "options": [
-        "Geleneksel ıslah",
-        "Genetik Mühendisliği ve Biyoteknoloji",
-        "Doğal seleksiyon",
-        "Fosil bilimi"
+        "Biyoteknoloji ve Gen Mühendisliği",
+        "Fiziksel coğrafya",
+        "Astronomi",
+        "Meteoroloji"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 0
     }
   ]
 }

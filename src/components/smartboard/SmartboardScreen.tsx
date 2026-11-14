@@ -86,7 +86,7 @@ function pickSmartboardQuestions(
   pool: Question[],
   options: {
     examType: 'LGS' | 'TYT' | 'AYT' | 'Karma';
-    difficulty: 'Adaptif' | 'Kolay' | 'Orta' | 'Zor';
+    difficulty: 'Karışık' | 'Kolay' | 'Orta' | 'Zor';
     subject: string;
     questionCount: number;
   }
@@ -108,20 +108,23 @@ function pickSmartboardQuestions(
     }
   }
 
-  // 2. Zorluk Seviyesi Filtresi
-  if (options.difficulty !== 'Adaptif') {
+  // 2. Zorluk Seviyesi Filtresi ('Karışık' seçildiğinde tüm seviyeler karma alınır)
+  if (options.difficulty !== 'Karışık') {
     const diffTarget = options.difficulty.toLowerCase();
-    const byDiff = candidates.filter((q) => {
+    const isMatchingDiff = (q: Question) => {
       const qDiff = String(q.difficulty || '').toLowerCase();
-      if (diffTarget === 'kolay') return qDiff === 'kolay' || qDiff === 'easy' || qDiff === '1';
-      if (diffTarget === 'orta') return qDiff === 'orta' || qDiff === 'medium' || qDiff === '2';
-      if (diffTarget === 'zor') return qDiff === 'zor' || qDiff === 'hard' || qDiff === '3';
-      return true;
-    });
+      const qDiffNum = q.difficultyNumber;
+      if (diffTarget === 'kolay') return qDiff === 'kolay' || qDiff === 'easy' || qDiff === '1' || qDiffNum === 1;
+      if (diffTarget === 'orta') return qDiff === 'orta' || qDiff === 'medium' || qDiff === '2' || qDiffNum === 2;
+      if (diffTarget === 'zor') return qDiff === 'zor' || qDiff === 'hard' || qDiff === '3' || qDiffNum === 3;
+      return false;
+    };
+
+    const byDiff = candidates.filter(isMatchingDiff);
     if (byDiff.length >= options.questionCount) {
       candidates = byDiff;
     } else if (byDiff.length > 0) {
-      const rest = candidates.filter((q) => !byDiff.includes(q));
+      const rest = candidates.filter((q) => !isMatchingDiff(q));
       candidates = [...byDiff, ...rest];
     }
   }
@@ -180,7 +183,7 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
   const [redTeamName, setRedTeamName] = useState<string>('Kırmızı Takım');
   const [blueTeamName, setBlueTeamName] = useState<string>('Mavi Takım');
   const [selectedExamType, setSelectedExamType] = useState<'LGS' | 'TYT' | 'AYT' | 'Karma'>('Karma');
-  const [selectedDifficulty, setSelectedDifficulty] = useState<'Adaptif' | 'Kolay' | 'Orta' | 'Zor'>('Adaptif');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<'Karışık' | 'Kolay' | 'Orta' | 'Zor'>('Karışık');
   const [selectedSubject, setSelectedSubject] = useState<string>('all');
   const [questionCount, setQuestionCount] = useState<number>(5);
   const [questionMode, setQuestionMode] = useState<'interactive14' | 'mixed'>('interactive14');
@@ -676,31 +679,51 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
   // =========================================================================
   if (phase === 'setup') {
     return (
-      <div className="min-h-screen bg-[#110712] text-white flex flex-col justify-between p-4 sm:p-8 relative overflow-x-hidden font-sans">
+      <div
+        className={
+          boardMode === 'kahoot'
+            ? 'h-screen max-h-screen bg-[#110712] text-white flex flex-col p-2 sm:p-4 select-none relative overflow-hidden font-sans'
+            : 'min-h-screen bg-[#110712] text-white flex flex-col justify-between p-4 sm:p-8 select-none relative overflow-x-hidden font-sans'
+        }
+      >
         {/* Glow & Ambiyans */}
         <div className="hero-button-blur -top-24 -left-24 opacity-35 pointer-events-none" />
         <div className="hero-button-blur -bottom-24 -right-24 opacity-30 pointer-events-none" />
 
         {/* Üst Bar: Başlık & Çıkış */}
-        <header className="flex items-center justify-between gap-4 max-w-6xl mx-auto w-full border-b border-orange-500/20 pb-4">
+        <header className="flex items-center justify-between gap-4 max-w-6xl mx-auto w-full border-b border-orange-500/20 pb-3 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-600 to-[#F14E13] flex items-center justify-center shadow-lg shadow-[#F14E13]/30">
-              <Swords className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-orange-600 to-[#F14E13] flex items-center justify-center shadow-lg shadow-[#F14E13]/30">
+              {boardMode === 'kahoot' ? (
+                <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              ) : (
+                <Swords className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              )}
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                  SINIF İÇİ CANLI YARIŞMA
+                  {boardMode === 'kahoot' ? 'CANLI SINIF ETKİLEŞİMİ' : 'SINIF İÇİ CANLI YARIŞMA'}
                 </span>
                 <span className="text-xs font-mono text-[#B5CBC8]">/tahta</span>
               </div>
-              <h1 className="font-poppins font-black text-xl sm:text-2xl text-white tracking-tight">
-                🖥️ İŞLER AKILLI TAHTA DÜELLO MODU
+              <h1 className="font-poppins font-black text-lg sm:text-2xl text-white tracking-tight">
+                {boardMode === 'kahoot' ? '📱 CANLI SINIF YARIŞMASI' : '🖥️ İŞLER AKILLI TAHTA DÜELLO MODU'}
               </h1>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {boardMode === 'kahoot' && (
+              <button
+                onClick={() => setBoardMode('duel')}
+                className="p-2 sm:px-3 sm:py-2 rounded-xl border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 text-orange-300 flex items-center gap-1.5 text-xs font-semibold transition-all"
+                title="2 Takım Tahtada Düello Moduna Geç"
+              >
+                <Swords className="w-4 h-4 text-orange-400" />
+                <span className="hidden sm:inline">Düello Moduna Dön</span>
+              </button>
+            )}
             <button
               onClick={() => {
                 soundEngine.toggleMute();
@@ -731,37 +754,31 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
           </div>
         </header>
 
-        {/* 2'li Sekme Seçici: 2 Takım Düello vs Canlı Sınıf Kahoot Modu */}
-        <div className="max-w-6xl mx-auto w-full pt-4">
-          <div className="grid grid-cols-2 gap-3 p-1.5 rounded-2xl bg-[#0F0510] border border-white/10 max-w-2xl mx-auto w-full shadow-lg">
-            <button
-              onClick={() => setBoardMode('duel')}
-              className={`py-3 px-4 rounded-xl font-poppins font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all ${
-                boardMode === 'duel'
-                  ? 'bg-gradient-to-r from-orange-600 to-[#F14E13] text-white shadow-lg shadow-[#F14E13]/30'
-                  : 'text-zinc-400 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Swords className="w-4 h-4 shrink-0" />
-              <span>⚔️ 2 Takım Tahtada Düello</span>
-            </button>
-            <button
-              onClick={() => setBoardMode('kahoot')}
-              className={`py-3 px-4 rounded-xl font-poppins font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all ${
-                boardMode === 'kahoot'
-                  ? 'bg-gradient-to-r from-orange-600 to-[#F14E13] text-white shadow-lg shadow-[#F14E13]/30'
-                  : 'text-zinc-400 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Smartphone className="w-4 h-4 shrink-0" />
-              <span>📱 QR ile Canlı Sınıf (Kahoot Modu)</span>
-            </button>
+        {/* 2'li Sekme Seçici: 2 Takım Düello vs Canlı Sınıf Yarışması (Yarışma seçildiğinde ekrandan kalkar) */}
+        {boardMode === 'duel' && (
+          <div className="max-w-6xl mx-auto w-full pt-4 animate-fade-in shrink-0">
+            <div className="grid grid-cols-2 gap-3 p-1.5 rounded-2xl bg-[#0F0510] border border-white/10 max-w-2xl mx-auto w-full shadow-lg">
+              <button
+                onClick={() => setBoardMode('duel')}
+                className="py-3 px-4 rounded-xl font-poppins font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-orange-600 to-[#F14E13] text-white shadow-lg shadow-[#F14E13]/30"
+              >
+                <Swords className="w-4 h-4 shrink-0" />
+                <span>2 Takım Tahtada Düello</span>
+              </button>
+              <button
+                onClick={() => setBoardMode('kahoot')}
+                className="py-3 px-4 rounded-xl font-poppins font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all text-zinc-400 hover:text-white hover:bg-white/5"
+              >
+                <Smartphone className="w-4 h-4 shrink-0 text-orange-400" />
+                <span>Canlı Sınıf Yarışması</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* MOD 2: KAHOOT CANLI SINIF YARIŞMASI */}
+        {/* MOD 2: CANLI SINIF YARIŞMASI */}
         {boardMode === 'kahoot' ? (
-          <main className="max-w-6xl mx-auto w-full py-6 flex-1 flex flex-col justify-center">
+          <main className="max-w-6xl mx-auto w-full py-2 sm:py-3 flex-1 flex flex-col justify-start min-h-0 overflow-y-auto sm:overflow-hidden">
             <KahootHostView onBackToDuel={() => setBoardMode('duel')} />
           </main>
         ) : (
@@ -837,7 +854,12 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
                       {(['LGS', 'TYT', 'AYT', 'Karma'] as const).map((t) => (
                         <button
                           key={t}
-                          onClick={() => setSelectedExamType(t)}
+                          onClick={() => {
+                            setSelectedExamType(t);
+                            if (t === 'LGS' && ['fizik', 'kimya', 'biyoloji', 'geometri'].includes(selectedSubject)) {
+                              setSelectedSubject('all');
+                            }
+                          }}
                           className={`py-2 rounded-xl text-xs font-bold transition-all ${
                             selectedExamType === t
                               ? 'bg-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
@@ -856,7 +878,7 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
                       Öğrenci Seviyesi / Zorluk
                     </label>
                     <div className="grid grid-cols-4 gap-1.5 bg-[#0F0510] p-1.5 rounded-2xl border border-white/5">
-                      {(['Adaptif', 'Kolay', 'Orta', 'Zor'] as const).map((d) => (
+                      {(['Karışık', 'Kolay', 'Orta', 'Zor'] as const).map((d) => (
                         <button
                           key={d}
                           onClick={() => setSelectedDifficulty(d)}
@@ -883,11 +905,23 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
                       className="w-full px-3 py-2.5 rounded-2xl bg-[#0F0510] border border-white/10 text-white text-xs font-bold focus:outline-none focus:border-[#F14E13]"
                     >
                       <option value="all">Tüm Dersler (Karma Havuz)</option>
-                      <option value="matematik">Matematik</option>
-                      <option value="fizik">Fizik</option>
-                      <option value="kimya">Kimya</option>
-                      <option value="biyoloji">Biyoloji</option>
-                      <option value="turkce">Türkçe</option>
+                      {selectedExamType === 'LGS' ? (
+                        <>
+                          <option value="turkce">Türkçe</option>
+                          <option value="matematik">Matematik</option>
+                          <option value="sosyal">Sosyal Bilgiler (Sosyal)</option>
+                          <option value="fen">Fen Bilimleri (Fen)</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="matematik">Matematik</option>
+                          <option value="fizik">Fizik</option>
+                          <option value="kimya">Kimya</option>
+                          <option value="biyoloji">Biyoloji</option>
+                          <option value="geometri">Geometri</option>
+                          <option value="turkce">Türkçe</option>
+                        </>
+                      )}
                     </select>
                   </div>
 
@@ -945,7 +979,7 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
                 className="w-full py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-red-600 text-white font-poppins font-black text-lg sm:text-xl shadow-2xl shadow-[#F14E13]/40 hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-3 tracking-wide border border-white/20"
               >
                 <Play className="w-6 h-6 fill-white" />
-                <span>🖥️ AKILLI TAHTA DÜELLOSUNU BAŞLAT ({questionCount} SORU)</span>
+                <span>AKILLI TAHTA DÜELLOSUNU BAŞLAT ({questionCount} SORU)</span>
               </button>
             </footer>
           </>
@@ -1392,12 +1426,12 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
               </>
             ) : isLastQuestion ? (
               <>
-                <span>🏆 Sonuçları Gör</span>
+                <span>Sonuçları Gör</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </>
             ) : (
               <>
-                <span>⏭️ Sonraki Soruya Geç</span>
+                <span>Sonraki Soruya Geç</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </>
             )}
@@ -1540,7 +1574,7 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
               >
                 <Shield className="w-3.5 h-3.5" />
                 <span className="hidden xl:inline">
-                  {antiCheatMode ? '🕵️ Kopya Koruması: Açık' : 'Kopya Koruması: Kapalı'}
+                  {antiCheatMode ? 'Kopya Koruması: Açık' : 'Kopya Koruması: Kapalı'}
                 </span>
               </button>
 

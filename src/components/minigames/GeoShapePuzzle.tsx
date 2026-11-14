@@ -279,9 +279,9 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
   const polygonPointsStr = vertices.map((v) => `${v.x.toFixed(1)},${v.y.toFixed(1)}`).join(' ');
 
   return (
-    <div className="flex flex-col gap-3.5">
+    <div className="flex flex-col gap-2 sm:gap-2.5">
       {/* ÜST SEKMELER: Çokgen Seçici (Başlangıç: Düzgün Altıgen) */}
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
         {POLYGON_STAGES.map((stg, idx) => {
           const isCurrent = idx === stageIdx;
           const isDone = completedStages.includes(stg.id);
@@ -290,7 +290,7 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
               key={stg.id}
               type="button"
               onClick={() => handleSelectStage(idx)}
-              className={`p-3 rounded-2xl border text-left transition-all flex items-center justify-between gap-2 ${
+              className={`p-2 sm:p-2.5 rounded-xl sm:rounded-2xl border text-left transition-all flex items-center justify-between gap-1.5 ${
                 isCurrent
                   ? 'bg-purple-500/20 border-purple-400 text-white shadow-md shadow-purple-500/15'
                   : isDone
@@ -299,38 +299,119 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
               }`}
             >
               <div className="min-w-0">
-                <div className="text-[10px] font-mono uppercase opacity-80">
-                  n = {stg.n} Kenarlı Çokgen
+                <div className="text-[9px] sm:text-[10px] font-mono uppercase opacity-80">
+                  n = {stg.n} Kenarlı
                 </div>
-                <div className="font-poppins font-black text-sm sm:text-base text-white truncate mt-0.5">
+                <div className="font-poppins font-black text-xs sm:text-sm text-white truncate mt-0.5">
                   {stg.name}{' '}
-                  <span className="font-mono font-bold text-xs text-purple-300">
+                  <span className="font-mono font-bold text-[11px] sm:text-xs text-purple-300">
                     ({stg.n - 2} Üçgen)
                   </span>
                 </div>
               </div>
-              {isDone && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+              {isDone && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
             </button>
           );
         })}
       </div>
 
+      {/* =====================================================================
+       * VURGULU GÖREV SENARYOSU & BAŞMİMAR BRİFİNGİ (KUBBE İNŞAATI)
+       * Ekranda anında fark edilecek, yüksek kontrastlı ve neon mor/amber vurgulu kart
+       * ===================================================================== */}
+      <div
+        className={`rounded-xl sm:rounded-2xl border-2 p-2.5 sm:p-3 transition-all relative overflow-hidden shadow-lg ${
+          feedback.type === 'warning'
+            ? 'bg-gradient-to-r from-amber-950/80 via-[#1C0F22] to-orange-950/70 border-amber-400 ring-1 ring-amber-400/40 shadow-amber-500/20'
+            : feedback.type === 'success'
+            ? 'bg-gradient-to-r from-emerald-950/80 via-[#1C0F22] to-[#120815] border-emerald-400 ring-1 ring-emerald-400/40 shadow-emerald-500/20'
+            : 'bg-gradient-to-r from-purple-950/80 via-[#1A0E1C] to-[#120815] border-purple-500/80 ring-1 ring-purple-400/40 shadow-purple-500/20'
+        }`}
+      >
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 relative z-10">
+          <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+            {/* Karakter Avatarı & Canlı Halka */}
+            <div className="relative shrink-0">
+              <div
+                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl border-2 flex items-center justify-center text-2xl shadow-md transition-transform duration-300 ${
+                  feedback.type === 'warning'
+                    ? 'border-amber-400 bg-amber-500/25 animate-bounce'
+                    : feedback.type === 'success'
+                    ? 'border-emerald-400 bg-emerald-500/25 scale-105'
+                    : 'border-purple-400 bg-purple-500/20'
+                }`}
+              >
+                {feedback.type === 'warning'
+                  ? '🙅‍♂️'
+                  : feedback.type === 'success'
+                  ? '👑'
+                  : drawnTargets.length > 0
+                  ? '✨'
+                  : '🏛️'}
+              </div>
+              <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-purple-500 border border-black text-[8px] font-bold text-white items-center justify-center">📐</span>
+              </span>
+            </div>
+
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-poppins font-black text-[10px] tracking-wide uppercase shadow-sm flex items-center gap-1">
+                  🏛️ MİMARİ BRİFİNG
+                </span>
+                <span className="text-[10px] font-mono font-bold text-purple-200 bg-purple-500/25 px-2 py-0.5 rounded-md border border-purple-400/50">
+                  {stage.name} (n = {n})
+                </span>
+                <span className="text-[10px] font-mono text-white/90 bg-white/10 px-1.5 py-0.5 rounded-md border border-white/10">
+                  Formül: <strong className="text-amber-300 font-bold">n - 3 = {maxDiagonals} Kiriş</strong> ➔ <strong className="text-emerald-300 font-bold">n - 2 = {maxTriangles} Üçgen</strong>
+                </span>
+              </div>
+
+              <div className="text-xs text-white font-medium leading-tight">
+                <strong className="text-purple-300 font-bold">Başmimar Kaan: </strong>
+                <span>&ldquo;{feedback.text}&rdquo;</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Aksiyon Hedef Rozeti */}
+          <div className="shrink-0 bg-black/50 border border-purple-500/40 rounded-xl px-3 py-1.5 sm:py-2 flex flex-col items-center sm:items-end justify-center self-stretch sm:self-auto min-w-[170px] shadow-inner">
+            <div className="text-[9px] font-mono uppercase text-purple-300 font-black flex items-center gap-1">
+              <span>🎯 NE YAPMALISIN?</span>
+            </div>
+            <div className="text-[11px] font-mono font-black text-white text-center sm:text-right mt-0.5">
+              {isStageComplete ? (
+                <span className="text-emerald-400 font-bold">✓ Kubbe Çelik Kafesi Tam!</span>
+              ) : (
+                <span className="text-amber-200">{drawnTargets.length} / {maxDiagonals} Kiriş Çekildi</span>
+              )}
+            </div>
+            <div className="text-[9px] text-zinc-300 text-center sm:text-right mt-0.5 font-mono">
+              Şekildeki A&apos;dan hedeflere tıkla/çiz
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ORTA BÖLÜM: SOLDA İNTERAKTİF ÇOKGEN ÇİZİM ALANI, SAĞDA VURGULU FORMÜL KARTI */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-3">
         {/* SOL (7 Sütun): İnteraktif Köşegen Çizim Tuvali */}
         <div
-          className={`lg:col-span-7 rounded-3xl border-2 p-4 flex flex-col items-center justify-between transition-all ${
+          className={`lg:col-span-7 rounded-2xl sm:rounded-3xl border-2 p-2.5 sm:p-3 flex flex-col items-center justify-between transition-all ${
             isStageComplete
               ? 'bg-gradient-to-b from-emerald-950/50 via-[#150A16] to-[#0F0510] border-emerald-400/60'
               : 'bg-gradient-to-b from-[#1E1022] via-[#150A16] to-[#0F0510] border-purple-500/40'
           }`}
         >
-          <div className="flex items-center justify-between w-full text-xs font-mono px-1">
-            <span className="text-purple-300 font-bold flex items-center gap-1.5">
-              <Compass className="w-4 h-4 text-purple-400" />
-              <span>Başlangıç Köşesi: A (Sürükle veya Hedef Köşeye Tıkla)</span>
+          <div className="flex items-center justify-between w-full text-[11px] font-mono px-1">
+            <span className="text-purple-300 font-bold flex items-center gap-1">
+              <Compass className="w-3.5 h-3.5 text-purple-400" />
+              <span>A&apos;dan sarı hedef köşelere tıkla veya sürükle</span>
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold">
+            <span className="px-2 py-0.5 rounded-full bg-white/10 text-white font-bold text-[10px]">
               {formedTriangles.length} / {maxTriangles} Üçgen
             </span>
           </div>
@@ -341,7 +422,7 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
             onPointerMove={handlePointerMoveSvg}
             onPointerUp={handlePointerUpSvg}
             onPointerLeave={handlePointerUpSvg}
-            className="w-full max-w-[330px] h-[255px] select-none touch-none overflow-visible my-1"
+            className="w-full max-w-[290px] sm:max-w-[310px] h-[220px] sm:h-[240px] select-none touch-none overflow-visible my-1"
           >
             {/* Çokgen Ana Gövdesi */}
             <polygon
@@ -498,112 +579,75 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
               );
             })}
           </svg>
-
-          {/* Hızlı Köşegen Çekme Butonları (Dokunmatik / Tıklama Kolaylığı) */}
-          <div className="flex items-center justify-center gap-2 flex-wrap w-full pt-1">
-            {vertices
-              .filter((v) => v.isValidDiagonalTarget)
-              .map((v) => {
-                const isDrawn = drawnTargets.includes(v.idx);
-                return (
-                  <button
-                    key={v.idx}
-                    type="button"
-                    onClick={() => attemptConnectVertex(v.idx)}
-                    disabled={isDrawn}
-                    className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold border transition-all flex items-center gap-1.5 ${
-                      isDrawn
-                        ? 'bg-emerald-500/20 border-emerald-400 text-emerald-200'
-                        : 'bg-amber-500/15 hover:bg-amber-500/30 border-amber-400/60 text-amber-200 hover:scale-105'
-                    }`}
-                  >
-                    <span>
-                      {isDrawn ? `✓ [A${v.label}] Köşegeni` : `✏️ A ➔ ${v.label} Çizgi Çek`}
-                    </span>
-                  </button>
-                );
-              })}
-          </div>
         </div>
 
         {/* SAĞ (5 Sütun): VURGULANAN GEOMETRİ FORMÜL KARTI */}
-        <div className="lg:col-span-5 bg-[#0F0510] border-2 border-amber-500/40 rounded-3xl p-4 sm:p-5 flex flex-col justify-between gap-3 shadow-xl">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+        <div className="lg:col-span-5 bg-[#0F0510] border-2 border-amber-500/40 rounded-2xl sm:rounded-3xl p-3 sm:p-3.5 flex flex-col justify-between gap-2 shadow-xl">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300">
+                <span className="text-[9px] font-mono uppercase tracking-wider text-amber-300">
                   TEMEL ÇOKGEN FORMÜLÜ
                 </span>
-                <h3 className="font-poppins font-black text-base text-white mt-0.5">
+                <h3 className="font-poppins font-black text-sm sm:text-base text-white">
                   Köşegen & Üçgen İlişkisi
                 </h3>
               </div>
-              <span className="px-3 py-1 rounded-xl bg-purple-500/20 border border-purple-400/50 font-mono font-black text-sm text-purple-200">
+              <span className="px-2.5 py-0.5 rounded-lg bg-purple-500/20 border border-purple-400/50 font-mono font-black text-xs text-purple-200">
                 n = {n}
               </span>
             </div>
 
             {/* 1. FORMÜL: BİR KÖŞEDEN ÇİZİLEN KÖŞEGEN SAYISI (n - 3) */}
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-3.5">
-              <div className="flex items-center justify-between text-xs font-poppins font-semibold text-[#B5CBC8]">
+            <div className="rounded-xl bg-white/[0.04] border border-white/10 p-2.5">
+              <div className="flex items-center justify-between text-[11px] font-poppins font-semibold text-[#B5CBC8]">
                 <span>1 Köşeden Çizilen Köşegen:</span>
-                <span className="font-mono font-black text-amber-300 text-sm">n - 3</span>
+                <span className="font-mono font-black text-amber-300 text-xs">n - 3</span>
               </div>
-              <div className="font-mono font-black text-base sm:text-lg text-white mt-1">
+              <div className="font-mono font-black text-sm text-white mt-0.5">
                 {n} - 3 ={' '}
                 <span className="text-amber-400 underline decoration-amber-400/60">
                   {maxDiagonals} Köşegen
                 </span>
+                <span className="text-[10px] text-amber-300 font-normal ml-2">
+                  ({drawnTargets.length}/{maxDiagonals} Çizildi)
+                </span>
               </div>
-              <p className="text-[11px] text-[#B5CBC8] mt-1 leading-relaxed">
-                A köşesinden kendisi (1) ve komşuları B ile {vertices[n - 1].label} (2) hariç{' '}
-                <strong className="text-white">n - 3</strong> köşeye çizgi çekilebilir (Şu an:{' '}
-                <strong className="text-amber-300">
-                  {drawnTargets.length}/{maxDiagonals}
-                </strong>
-                ).
-              </p>
             </div>
 
             {/* 2. ANA VURGULU FORMÜL: OLUŞAN ÜÇGEN SAYISI (n - 2) */}
             <div
-              className={`rounded-2xl border-2 p-3.5 transition-all ${
+              className={`rounded-xl border-2 p-2.5 transition-all ${
                 isStageComplete
-                  ? 'bg-emerald-500/20 border-emerald-400 shadow-lg shadow-emerald-500/15'
+                  ? 'bg-emerald-500/20 border-emerald-400 shadow-md shadow-emerald-500/15'
                   : 'bg-gradient-to-br from-amber-500/20 via-purple-500/15 to-transparent border-amber-400'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-poppins font-black uppercase tracking-wide text-amber-300 flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Oluşan Üçgen Sayısı Formülü:</span>
+                <span className="text-[11px] font-poppins font-black uppercase tracking-wide text-amber-300 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  <span>Oluşan Üçgen Sayısı:</span>
                 </span>
-                <span className="px-2 py-0.5 rounded-lg bg-amber-400 text-black font-mono font-black text-sm">
+                <span className="px-1.5 py-0.5 rounded bg-amber-400 text-black font-mono font-black text-xs">
                   n - 2
                 </span>
               </div>
 
-              <div className="font-mono font-black text-xl sm:text-2xl text-white mt-1.5">
+              <div className="font-mono font-black text-base sm:text-lg text-white mt-0.5">
                 {n} - 2 ={' '}
                 <span className="text-emerald-300">
                   {maxTriangles} Adet Üçgen!
                 </span>
               </div>
-
-              <p className="text-xs text-white/90 mt-1 leading-relaxed">
-                Çizilen her <strong className="text-amber-300">{maxDiagonals} köşegen</strong>,{' '}
-                {stage.name.toLowerCase()}i tam{' '}
-                <strong className="text-emerald-300">n - 2 = {maxTriangles} üçgene</strong> böler.
-              </p>
             </div>
 
             {/* 3. FORMÜL: İÇ AÇILAR TOPLAMI (n - 2) × 180° */}
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-3.5">
-              <div className="flex items-center justify-between text-xs font-poppins font-semibold text-[#B5CBC8]">
+            <div className="rounded-xl bg-white/[0.04] border border-white/10 p-2.5">
+              <div className="flex items-center justify-between text-[11px] font-poppins font-semibold text-[#B5CBC8]">
                 <span>Çokgenin İç Açılar Toplamı:</span>
-                <span className="font-mono font-black text-cyan-300 text-sm">(n - 2) × 180°</span>
+                <span className="font-mono font-black text-cyan-300 text-xs">(n - 2) × 180°</span>
               </div>
-              <div className="font-mono font-black text-base sm:text-lg text-white mt-1">
+              <div className="font-mono font-black text-sm text-white mt-0.5">
                 {maxTriangles} Üçgen × 180° ={' '}
                 <span className="text-cyan-300">{maxTriangles * 180}°</span>
               </div>
@@ -611,13 +655,13 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
           </div>
 
           {/* Alt Aksiyon Butonları */}
-          <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/10">
+          <div className="flex items-center justify-between gap-2 pt-1.5 border-t border-white/10">
             <button
               type="button"
               onClick={handleReset}
-              className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5"
+              className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-3 h-3" />
               <span>Çizgileri Temizle</span>
             </button>
 
@@ -625,54 +669,19 @@ export const GeoShapePuzzle: React.FC<GeoShapePuzzleProps> = ({
               <button
                 type="button"
                 onClick={onNextSubject}
-                className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
+                className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
               >
                 <span>
                   {nextSubjectName === 'Çıkış'
-                    ? 'Tüm Dersler Bitti - Çıkış'
+                    ? 'Tamamla & Çıkış'
                     : nextSubjectName
-                    ? `Sonraki Ders (${nextSubjectName}) →`
-                    : 'Sonraki Ders (Türkçe) →'}
+                    ? `Sonraki (${nextSubjectName})`
+                    : 'Sonraki Ders'}
                 </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
-        </div>
-      </div>
-
-      {/* HİKAYE KARAKTERİ: BAŞMİMAR KAAN'IN KUBBE İNŞA GÜNLÜĞÜ */}
-      <div
-        className={`p-3.5 rounded-2xl border-2 flex items-center gap-3.5 transition-all ${
-          feedback.type === 'warning'
-            ? 'bg-amber-950/60 border-amber-400 text-amber-100'
-            : feedback.type === 'success'
-            ? 'bg-emerald-950/60 border-emerald-400 text-emerald-100'
-            : 'bg-[#170B19] border-purple-500/40 text-[#B5CBC8]'
-        }`}
-      >
-        <div
-          className={`w-12 h-12 rounded-2xl border flex items-center justify-center text-2xl shrink-0 ${
-            feedback.type === 'warning'
-              ? 'border-amber-400 bg-amber-500/20 animate-bounce'
-              : feedback.type === 'success'
-              ? 'border-emerald-400 bg-emerald-500/20'
-              : 'border-purple-400/50 bg-purple-500/15'
-          }`}
-        >
-          {feedback.type === 'warning'
-            ? '🙅‍♂️'
-            : feedback.type === 'success'
-            ? '👑'
-            : drawnTargets.length > 0
-            ? '✨'
-            : '🏛️'}
-        </div>
-        <div className="min-w-0 flex-1 text-xs leading-relaxed">
-          <div className="font-poppins font-bold text-white">
-            Başmimar Kaan (Kubbe & Vitray Ustası)
-          </div>
-          <div className="mt-0.5 text-white/90">{feedback.text}</div>
         </div>
       </div>
     </div>

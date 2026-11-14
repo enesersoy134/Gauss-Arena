@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "fen",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-FEN-E-001",
+      "subTopic": "Mevsimlerin Oluşumu",
+      "text": "Dünya'nın Güneş etrafında dolanması ve 23° 27'lik eksen eğikliği aşağıdakilerden hangisine doğrudan neden olur?",
+      "explanation": "Dünya'nın eksen eğikliği ve Güneş etrafındaki dolanma hareketi mevsimlerin oluşmasını sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Gece ve gündüzün ardalanmasına",
+        "Mevsimlerin oluşumuna",
+        "Güneş patlamalarına",
+        "Ay tutulmasına"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-E-002",
+      "subTopic": "DNA ve Genetik Kod",
+      "text": "DNA'nın temel yapı birimi aşağıdakilerden hangisidir?",
+      "explanation": "DNA'nın temel yapı birimi nükleotiddir. Görev birimi ise gendir.",
+      "imageUrl": null,
+      "options": [
+        "Gen",
+        "Kromozom",
+        "Nükleotid",
+        "Organik baz"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FEN-E-003",
+      "subTopic": "Katı Basıncı",
+      "text": "Katı cisimlerin zemine uyguladığı basıncı artırmak için aşağıdakilerden hangisi yapılmalıdır?",
+      "explanation": "P = G/S formülüne göre temas yüzey alanı küçüldükçe katı basıncı artar (örn. bıçağın bilenmesi).",
+      "imageUrl": null,
+      "options": [
+        "Ağırlık sabitken temas yüzey alanını küçültmek",
+        "Temas yüzeyini büyütmek",
+        "Ağırlığı azaltmak",
+        "Cismin hacmini artırıp kütlesini azaltmak"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-FEN-E-004",
+      "subTopic": "Periyodik Sistem",
+      "text": "Periyodik tablonun aynı grubunda (aynı düşey sütununda) yukarıdan aşağıya doğru inildikçe genellikle ne artar?",
+      "explanation": "Aynı grupta yukarıdan aşağı inildikçe katman sayısı (periyot numarası) her adımda 1 artar.",
+      "imageUrl": null,
+      "options": [
+        "Katman (periyot) sayısı",
+        "Değerlik elektron sayısı",
+        "Ametallik özellik",
+        "İyonlaşma enerjisi"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-FEN-E-005",
+      "subTopic": "Fiziksel ve Kimyasal Değişimler",
+      "text": "Aşağıdaki olaylardan hangisi kimyasal bir değişime örnektir?",
+      "explanation": "Demirin paslanması oksijenle tepkimeye girdiği için kimyasal değişimdir; maddenin kimliği değişir.",
+      "imageUrl": null,
+      "options": [
+        "Yoğurttan ayran yapılması",
+        "Kağıdın yırtılması",
+        "Demirin paslanması",
+        "Buzun erimesi"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FEN-E-006",
+      "subTopic": "Asitler ve Bazlar",
+      "text": "Kırmızı turnusol kâğıdını maviye çeviren ve sulu çözeltisinde OH⁻ iyonu oluşturan maddeler hangisidir?",
+      "explanation": "Bazlar kırmızı turnusolu maviye çevirir, tatları acıdır ve ele kayganlık hissi verir.",
+      "imageUrl": null,
+      "options": [
+        "Asitler",
+        "Bazlar",
+        "Tuzlar",
+        "Nötr sıvılar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-E-007",
+      "subTopic": "Basit Makineler (Makaralar)",
+      "text": "Sürtünmesiz bir sabit makara ile ilgili aşağıdakilerden hangisi doğrudur?",
+      "explanation": "Sabit makaralarda kuvvet kazancı yoktur; kuvvetin yönünü değiştirerek iş kolaylığı sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Kuvvetten 2 kat kazanç sağlar",
+        "Kuvvetin yönünü değiştirerek iş kolaylığı sağlar",
+        "Yoldan kazanç sağlar",
+        "İşten kazanç sağlar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-E-008",
+      "subTopic": "İklim ve Hava Olayları",
+      "text": "Dar bir alanda, kısa süre içerisinde değişkenlik gösteren atmosfer olaylarına ne ad verilir?",
+      "explanation": "Kısa süreli ve anlık atmosfer olaylarına hava durumu, uzun yıllar ortalamasına iklim denir.",
+      "imageUrl": null,
+      "options": [
+        "İklim",
+        "Hava durumu (olayları)",
+        "Küresel ısınma",
+        "Sera etkisi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-E-009",
+      "subTopic": "Canlılar ve Enerji İlişkileri",
+      "text": "Bir besin zincirinin ilk basamağında (üreticiler) daima hangi canlı grubu yer alır?",
+      "explanation": "Besin zincirinin tabanında Güneş ışığını kullanarak besin üreten üreticiler (klorofilli canlılar/bitkiler) bulunur.",
+      "imageUrl": null,
+      "options": [
+        "Otçul hayvanlar",
+        "Etçil hayvanlar",
+        "Kendi besinini üreten fotosentetik canlılar",
+        "Ayrıştırıcı mantarlar"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FEN-E-010",
+      "subTopic": "Elektrik Yükleri ve Elektriklenme",
+      "text": "Yün kumaşa sürtülen ebonit (plastik) çubuk hangi cins elektrik yüküyle yüklenir?",
+      "explanation": "Ebonit çubuk yün kumaşa sürtüldüğünde yün kumaştan elektron alarak negatif (-) yükle yüklenir.",
+      "imageUrl": null,
+      "options": [
+        "Pozitif (+)",
+        "Negatif (-)",
+        "Nötr kalır",
+        "Önce +, sonra -"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

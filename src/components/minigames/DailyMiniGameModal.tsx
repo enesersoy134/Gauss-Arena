@@ -137,40 +137,45 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-      <div className="w-full max-w-5xl bg-[#150A16] border-2 border-[#F14E13]/50 rounded-3xl shadow-2xl shadow-[#F14E13]/20 flex flex-col max-h-[95vh] overflow-hidden my-auto">
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-3 overflow-y-auto">
+      <div className="w-full max-w-5xl xl:max-w-6xl bg-[#150A16] border-2 border-[#F14E13]/50 rounded-2xl sm:rounded-3xl shadow-2xl shadow-[#F14E13]/20 flex flex-col max-h-[96vh] sm:max-h-[92vh] overflow-hidden my-auto">
         {/* ÜST BAR: Başlık, Kilit Rozeti & 6 Branş Seçici */}
-        <div className="bg-[#1A0E1C] border-b border-white/10 px-4 sm:px-6 py-3 flex flex-col gap-2.5 shrink-0">
+        <div className="bg-[#1A0E1C] border-b border-white/10 px-3 sm:px-5 py-2 sm:py-2.5 flex flex-col gap-1.5 shrink-0">
           <div className="flex items-center justify-between gap-2 flex-wrap">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#F14E13] to-amber-500 flex items-center justify-center shadow-md shrink-0">
-                <Gamepad2 className="w-5 h-5 text-white" />
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#F14E13] to-amber-500 flex items-center justify-center shadow-md shrink-0">
+                <Gamepad2 className="w-4 h-4 text-white" />
               </div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="font-poppins font-black text-sm sm:text-base text-white">
-                  GÜNLÜK GÖREV
-                </h2>
+                <div className="flex items-center gap-1.5">
+                  <h2 className="font-poppins font-black text-xs sm:text-sm text-white tracking-wide">
+                    GÜNLÜK GÖREV
+                  </h2>
+                  <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-mono font-black px-2 py-0.5 rounded-full bg-[#F14E13]/25 text-orange-300 border border-[#F14E13]/50 shadow-sm">
+                    🎯 KRİZ BRİFİNGLERİ
+                  </span>
+                </div>
                 {isCompetitiveUnlocked ? (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                    <Unlock className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                    <Unlock className="w-2.5 h-2.5" />
                     <span>1v1 Arena Açık ({completedMiniGames.length}/6)</span>
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                    <Lock className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                    <Lock className="w-2.5 h-2.5" />
                     <span>1v1 Kilidini Açmak İçin 1 Oyun Tamamla</span>
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               {onResetLockDemo && isCompetitiveUnlocked && (
                 <button
                   onClick={onResetLockDemo}
-                  className="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/15 border border-white/10 text-[11px] font-mono text-[#B5CBC8] hover:text-red-300 flex items-center gap-1 transition-all"
+                  className="px-2 py-1 rounded-lg bg-white/5 hover:bg-red-500/15 border border-white/10 text-[10px] font-mono text-[#B5CBC8] hover:text-red-300 flex items-center gap-1 transition-all"
                 >
-                  <RotateCcw className="w-3 h-3" />
+                  <RotateCcw className="w-2.5 h-2.5" />
                   <span className="hidden sm:inline">Kilidi Sıfırla</span>
                 </button>
               )}
@@ -178,25 +183,25 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
               {isCompetitiveUnlocked && (
                 <button
                   onClick={onProceedToArena}
-                  className="btn-primary !py-1.5 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
+                  className="btn-primary !py-1 !px-2.5 text-[11px] font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500"
                 >
-                  <Swords className="w-3.5 h-3.5" />
-                  <span>1v1 Arenaya Geç</span>
+                  <Swords className="w-3 h-3" />
+                  <span>1v1 Arena</span>
                 </button>
               )}
 
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#B5CBC8] hover:text-white transition-all"
+                className="p-1 sm:p-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[#B5CBC8] hover:text-white transition-all"
                 title="Kapat"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
           {/* 6 Branş Sekme Barı */}
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 pt-1">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 pt-0.5">
             {MINI_GAME_SUBJECTS.map((subj) => {
               const isActive = activeSubject === subj.id;
               const isDone = completedMiniGames.includes(subj.id);
@@ -205,7 +210,7 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
                 <button
                   key={subj.id}
                   onClick={() => setActiveSubject(subj.id)}
-                  className={`px-2.5 py-2 rounded-xl border text-left transition-all flex items-center justify-between gap-1.5 ${
+                  className={`px-2 py-1.5 rounded-lg sm:rounded-xl border text-left transition-all flex items-center justify-between gap-1 ${
                     isActive
                       ? 'bg-[#F14E13] border-[#F14E13] text-white shadow-md shadow-[#F14E13]/30'
                       : isDone
@@ -214,11 +219,11 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
                   }`}
                 >
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <span className="text-base shrink-0">{subj.icon}</span>
+                    <span className="text-sm shrink-0">{subj.icon}</span>
                     <div className="min-w-0">
-                      <div className="font-poppins font-bold text-xs truncate">{subj.label}</div>
+                      <div className="font-poppins font-bold text-[11px] sm:text-xs truncate">{subj.label}</div>
                       <div
-                        className={`text-[10px] truncate ${
+                        className={`text-[9px] truncate ${
                           isActive ? 'text-white/90' : 'text-[#B5CBC8]/75'
                         }`}
                       >
@@ -228,7 +233,7 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
                   </div>
                   {isDone && (
                     <CheckCircle2
-                      className={`w-3.5 h-3.5 shrink-0 ${
+                      className={`w-3 h-3 shrink-0 ${
                         isActive ? 'text-white' : 'text-emerald-400'
                       }`}
                     />
@@ -240,63 +245,43 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
         </div>
 
         {/* ORTA ALAN: Aktif Mini Oyun Sahnesi */}
-        <div ref={scrollContainerRef} className="p-4 sm:p-5 overflow-y-auto flex-1 flex flex-col gap-3">
-          {/* O DERS BİTTİĞİNDE: SONRAKİ DERSE GEÇ BARI */}
+        <div ref={scrollContainerRef} className="p-2.5 sm:p-3.5 overflow-y-auto flex-1 flex flex-col gap-2">
+          {/* O DERS BİTTİĞİNDE: BAŞARI BRİFİNGİ */}
           {isCurrentDone && (
-            <div className="bg-gradient-to-r from-emerald-950/80 via-[#1A0E1C] to-emerald-950/80 border-2 border-emerald-400 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl shadow-emerald-950/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center text-xl shrink-0">
+            <div className="bg-gradient-to-r from-emerald-950/80 via-[#1A0E1C] to-emerald-950/80 border border-emerald-400/80 rounded-xl px-3 py-2 flex items-center justify-between gap-2.5 shadow-md">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center text-sm shrink-0">
                   🎉
                 </div>
                 <div>
-                  <div className="font-poppins font-black text-xs sm:text-sm text-white flex items-center gap-2">
-                    <span>{MINI_GAME_SUBJECTS[currentIndex].label} Dersi Başarıyla Tamamlandı!</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                  <div className="font-poppins font-black text-xs text-white flex items-center gap-2">
+                    <span>{MINI_GAME_SUBJECTS[currentIndex].label} Dersi Tamamlandı!</span>
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                       {completedMiniGames.length}/6 Bitti
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#B5CBC8] mt-0.5">
-                    Tebrikler! Sıradaki öğretici oyuna geçebilir veya 1v1 Arenaya katılabilirsin.
+                  <p className="text-[10px] text-[#B5CBC8] mt-0.5">
+                    Tebrikler! Alttaki sabit çubuktan sıradaki derse geçebilir veya 1v1 Arenaya katılabilirsin.
                   </p>
                 </div>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
-                {nextUnsolvedSubject ? (
-                  <button
-                    onClick={handleNextSubject}
-                    className="btn-primary !py-2.5 !px-5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-600/30 w-full sm:w-auto"
-                  >
-                    <span>Sıradaki Çözülmemiş Derse Geç ({nextUnsolvedSubject.icon} {nextUnsolvedSubject.label})</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                ) : (
-                  <button
-                    onClick={onClose}
-                    className="btn-primary !py-2.5 !px-5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 !bg-purple-600 hover:!bg-purple-500 shadow-lg shadow-purple-600/30 w-full sm:w-auto"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span>Tüm Dersler Tamamlandı - Çıkış Yap</span>
-                  </button>
-                )}
               </div>
             </div>
           )}
 
           {isCompetitiveUnlocked && !isCurrentDone && (
-            <div className="bg-emerald-500/15 border border-emerald-500/40 rounded-2xl px-4 py-2.5 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-xs text-emerald-200">
-                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="bg-emerald-500/15 border border-emerald-500/40 rounded-xl px-3 py-1.5 flex items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2 text-[11px] text-emerald-200">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span>
                   <strong className="text-white">1v1 Rekabetçi Arena Açıldı!</strong> Hemen maça geçebilir veya üstten diğer dersleri deneyebilirsin.
                 </span>
               </div>
               <button
                 onClick={onProceedToArena}
-                className="btn-primary !py-1.5 !px-3.5 text-xs font-bold shrink-0 !bg-emerald-600 hover:!bg-emerald-500 flex items-center gap-1"
+                className="btn-primary !py-1 !px-2.5 text-[11px] font-bold shrink-0 !bg-emerald-600 hover:!bg-emerald-500 flex items-center gap-1"
               >
-                <Swords className="w-3.5 h-3.5" />
-                <span>Düelloya Başla →</span>
+                <Swords className="w-3 h-3" />
+                <span>Düelloya Başla</span>
               </button>
             </div>
           )}
@@ -350,14 +335,14 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
          * Modalın en altına sabitlenir, kullanıcı anında bir sonrakine geçer.
          * ===================================================================== */}
         {isCurrentDone && (
-          <aside aria-label="Günlük Görev Aksiyonu" className="bg-[#180A1A]/98 backdrop-blur-md border-t-2 border-emerald-400 px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] z-30 animate-slide-up">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <span className="text-xl shrink-0">🎉</span>
+          <aside aria-label="Günlük Görev Aksiyonu" className="bg-[#180A1A]/98 backdrop-blur-md border-t-2 border-emerald-400 px-3 sm:px-4 py-2 sm:py-2.5 flex flex-col sm:flex-row items-center justify-between gap-2 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] z-30 animate-slide-up">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-lg shrink-0">🎉</span>
               <div className="min-w-0">
                 <span className="font-poppins font-black text-xs sm:text-sm text-white block truncate">
                   {MINI_GAME_SUBJECTS[currentIndex].label} Dersi Tamamlandı! ({completedMiniGames.length}/6 Bitti)
                 </span>
-                <span className="text-[11px] text-emerald-300/80 font-mono hidden sm:block truncate">
+                <span className="text-[10px] text-emerald-300/80 font-mono hidden sm:block truncate">
                   {nextUnsolvedSubject
                     ? `Sıradaki çözülmemiş derse (${nextUnsolvedSubject.label}) tek tıkla geçebilirsiniz.`
                     : 'Tüm mini oyunlar tamamlandı!'}
@@ -365,21 +350,21 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 shrink-0">
               {nextUnsolvedSubject ? (
                 <button
                   type="button"
                   onClick={handleNextSubject}
-                  className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center justify-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-600/30 active:scale-95 animate-pulse"
+                  className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center justify-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-600/30 active:scale-95 animate-pulse"
                 >
-                  <span>Sıradaki Derse Geç ({nextUnsolvedSubject.icon} {nextUnsolvedSubject.label})</span>
+                  <span>Sıradaki Derse Geç ({nextUnsolvedSubject.label})</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={onClose}
-                  className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center justify-center gap-1.5 !bg-purple-600 hover:!bg-purple-500 shadow-lg shadow-purple-600/30 active:scale-95"
+                  className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center justify-center gap-1 !bg-purple-600 hover:!bg-purple-500 shadow-md shadow-purple-600/30 active:scale-95"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Tamamla & Çıkış</span>
@@ -390,10 +375,10 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
                 <button
                   type="button"
                   onClick={onProceedToArena}
-                  className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-mono text-white flex items-center gap-1.5 transition-all active:scale-95"
+                  className="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-mono text-white flex items-center gap-1 transition-all active:scale-95"
                 >
-                  <Swords className="w-3.5 h-3.5 text-amber-400" />
-                  <span className="hidden sm:inline">1v1 Arenaya Geç</span>
+                  <Swords className="w-3 h-3 text-amber-400" />
+                  <span className="hidden sm:inline">1v1 Arena</span>
                 </button>
               )}
             </div>

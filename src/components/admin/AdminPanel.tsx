@@ -122,7 +122,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     const win2Url = `/?window=2&player=p3`;
     window.open(win1Url, 'studentWin1', 'width=520,height=920,left=60,top=30');
     window.open(win2Url, 'studentWin2', 'width=520,height=920,left=600,top=30');
-    showToast('Yan yana iki öğrenci penceresi açıldı (p2: Zeynep vs p3: Mert)!');
+    showToast('Yan yana iki öğrenci penceresi açıldı (p2: Zeynep vs p3: Mehmet)!');
   };
 
   const handleDistributeRewards = async (tournamentId: string) => {
@@ -136,6 +136,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
   const handleResetDemoState = async () => {
     await resetDemo();
+    if (typeof window !== 'undefined') {
+      try {
+        ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'].forEach((id) => {
+          localStorage.removeItem(`isler_daily_status_${id}`);
+        });
+      } catch {}
+    }
     showToast('🔄 Tüm demo durumu, kuyruklar ve maçlar sıfırlandı.');
   };
 
@@ -230,7 +237,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             <button
               onClick={handleOpenSideBySideWindows}
               className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-blue-500/40 bg-blue-500/15 text-blue-300 hover:bg-blue-500/25 flex items-center gap-1.5 transition-all shadow-sm shadow-blue-500/10 shrink-0 whitespace-nowrap"
-              title="Öğrenci 1 (p2: Zeynep) ve Öğrenci 2 (p3: Mert) pencerelerini yan yana açar"
+              title="Öğrenci 1 (p2: Zeynep) ve Öğrenci 2 (p3: Mehmet) pencerelerini yan yana açar"
             >
               <ExternalLink className="w-3.5 h-3.5 text-blue-400 shrink-0" />
               <span className="sm:hidden">Yan Yana</span>
@@ -414,7 +421,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             )}
                           </div>
 
-                          <div className="flex items-center gap-2 mt-1.5">
+                          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                             <span
                               className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full"
                               style={{
@@ -424,6 +431,32 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               }}
                             >
                               {p.bracket.tierName}
+                            </span>
+                            <span
+                              className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded-full ${
+                                p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul'
+                                  ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40'
+                                  : 'bg-purple-500/20 text-purple-300 border border-purple-500/40'
+                              }`}
+                            >
+                              {p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul'
+                                ? '🏫 Ortaokul (LGS)'
+                                : '🎓 Lise (YKS)'}
+                            </span>
+                            <span
+                              className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded-full ${
+                                p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul' || p.dailyQuestExempt
+                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                  : p.dailyCompleted || p.dailyQuestDone || p.id === 'p1' || p.id === 'p2'
+                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                  : 'bg-zinc-800/80 text-zinc-400 border border-white/10'
+                              }`}
+                            >
+                              {p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul' || p.dailyQuestExempt
+                                ? '✨ Görev: Muaf (Açık)'
+                                : p.dailyCompleted || p.dailyQuestDone || p.id === 'p1' || p.id === 'p2'
+                                ? '🎯 Görev: Yapıldı'
+                                : '🔒 Görev: Kilitli'}
                             </span>
                           </div>
                         </div>
@@ -821,7 +854,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       }`}
                     >
                       <Trophy className="w-3.5 h-3.5" />
-                      <span>{t.rewardsDistributed ? '✓ Ödüller Dağıtıldı' : '🏆 Turnuva Ödüllerini Dağıt'}</span>
+                      <span>{t.rewardsDistributed ? 'Ödüller Dağıtıldı' : 'Turnuva Ödüllerini Dağıt'}</span>
                     </button>
                   </div>
                 </div>

@@ -346,7 +346,7 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
                 type="submit"
                 className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-[#F14E13] to-amber-500 text-white font-poppins font-black text-base shadow-xl shadow-[#F14E13]/30 hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 border border-white/20 mt-2"
               >
-                <span>🚀 YARIŞMAYA KATIL</span>
+                <span>YARIŞMAYA KATIL</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
             </form>

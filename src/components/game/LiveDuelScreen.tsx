@@ -344,6 +344,19 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
 
     const isLastQ = activeDuel.currentQuestionIndex + 1 >= activeDuel.totalQuestions;
 
+    // Son sorudan sonra ara mola (intermission) ekranına takılmadan doğrudan maç sonucuna geç
+    if (isLastQ) {
+      return (
+        <div className="min-h-screen bg-[#150A16] text-white flex flex-col items-center justify-center p-4">
+          <div className="p-6 rounded-2xl bg-[#1C0F24] border border-amber-500/40 text-center flex flex-col items-center gap-3 shadow-xl">
+            <span className="w-8 h-8 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" />
+            <h3 className="text-lg font-bold text-white">⚡ Karşılaşma Tamamlandı!</h3>
+            <p className="text-sm text-zinc-400">Sonuç ekranı yükleniyor...</p>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="min-h-screen bg-[#150A16] text-white flex flex-col justify-center py-6">
         <IntermissionScreen
@@ -523,7 +536,9 @@ export const LiveDuelScreen: React.FC<LiveDuelScreenProps> = ({
             <div className="mt-3 sm:mt-4 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 to-orange-500/10 border border-amber-500/40 flex items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm text-amber-200 animate-pulse shadow-lg shadow-amber-500/5">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping shrink-0" />
               <span className="font-semibold text-center">
-                ⏳ Hamlen kaydedildi! Rakibin ({cleanPlayerName(opponentPlayer.name)}) soruyu tamamlaması veya geçmesi bekleniyor...
+                {activeDuel.currentQuestionIndex + 1 >= activeDuel.totalQuestions
+                  ? '⚡ Son soru tamamlandı! Maç sonucu hesaplanıyor...'
+                  : `⏳ Hamlen kaydedildi! Rakibin (${cleanPlayerName(opponentPlayer.name)}) soruyu tamamlaması veya geçmesi bekleniyor...`}
               </span>
             </div>
           )}

@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "sosyal",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-SOS-M-001",
+      "subTopic": "I. Dünya Savaşı ve Osmanlı Devleti",
+      "text": "Osmanlı Devleti'nin I. Dünya Savaşı'nda İngiltere'nin sömürgelerine giden yolları kesmek amacıyla açtığı taarruz cephesi hangisidir?",
+      "explanation": "Kanal Cephesi ve Kafkas Cephesi Osmanlı'nın taarruz cepheleridir; Kanal Cephesi Süveyş Kanalı ve Mısır'ı hedeflemiştir.",
+      "imageUrl": null,
+      "options": [
+        "Çanakkale Cephesi",
+        "Kanal (Süveyş) Cephesi",
+        "Irak Cephesi",
+        "Kafkas Cephesi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-M-002",
+      "subTopic": "Kuvâ-yı Millîye Ruhu",
+      "text": "Mondros Ateşkes Antlaşması'ndan sonra yurdun işgal edilmesi ve Osmanlı ordusunun terhis edilmesi üzerine halkın kurduğu bölgesel silahlı direniş birliklerine ne ad verilir?",
+      "explanation": "Kuvâ-yı Millîye, işgallere karşı halkın vatanı savunmak için oluşturduğu milis kuvvetlerdir.",
+      "imageUrl": null,
+      "options": [
+        "Nizam-ı Cedid",
+        "Kuvâ-yı Millîye",
+        "Eşkinci Ocağı",
+        "Sekban-ı Cedid"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-M-003",
+      "subTopic": "Erzurum Kongresi",
+      "text": "Erzurum Kongresi'nin toplanış şekli bakımından bölgesel, aldığı kararlar bakımından ulusal nitelikte olmasının temel kanıtı nedir?",
+      "explanation": "Doğu illerinden temsilcilerle toplanmasına rağmen tüm yurdu ilgilendiren kararlar almıştır.",
+      "imageUrl": null,
+      "options": [
+        "Sadece Doğu illerinden delegelerin katılması ancak \"Millî sınırlar içinde vatan bir bütündür, bölünemez\" kararının alınması",
+        "İstanbul Hükûmeti'nin kongreyi desteklemesi",
+        "Padişahın kongreye başkanlık etmesi",
+        "Yalnızca Ermeni tehlikesinin görüşülmesi"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-M-004",
+      "subTopic": "Misak-ı Millî Kararları",
+      "text": "Son Osmanlı Mebusan Meclisi tarafından 28 Ocak 1920'de kabul edilen ve Türk milletinin bağımsızlık sınırlarını çizen tarihî belge hangisidir?",
+      "explanation": "Misak-ı Millî, kapitülasyonların reddedildiği ve vatanın bölünmez sınırlarının çizildiği milli anddır.",
+      "imageUrl": null,
+      "options": [
+        "Teşkilat-ı Esasiye",
+        "Misak-ı Millî (Millî Ant)",
+        "Kânûn-ı Esâsî",
+        "Sened-i İttifak"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-M-005",
+      "subTopic": "Doğu Cephesi ve Gümrü Antlaşması",
+      "text": "TBMM Hükûmeti'nin uluslararası alandaki ilk askerî ve siyasî başarısı olup Ermenistan ile imzalanan antlaşma hangisidir?",
+      "explanation": "Kazım Karabekir komutasındaki 15. Kolordu'nun zaferi sonrası imzalanan Gümrü Antlaşması TBMM'nin ilk diplomatik zaferidir.",
+      "imageUrl": null,
+      "options": [
+        "Moskova Antlaşması",
+        "Kars Antlaşması",
+        "Gümrü Antlaşması",
+        "Ankara Antlaşması"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-SOS-M-006",
+      "subTopic": "Tekâlif-i Milliye Emirleri",
+      "text": "Mustafa Kemal, Kütahya-Eskişehir Muharebeleri sonrası ordunun acil ihtiyaçlarını karşılamak amacıyla geniş yetkilerine dayanarak hangi emirleri yayımlamıştır?",
+      "explanation": "Başkomutan Mustafa Kemal, Türk milletini topyekûn seferber eden Tekâlif-i Milliye emirlerini yayımlamıştır.",
+      "imageUrl": null,
+      "options": [
+        "Teşvik-i Sanayi Emirleri",
+        "Tekâlif-i Milliye Emirleri",
+        "Misak-ı İktisadi Kararları",
+        "Vilayat-ı Sitte Kanunu"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-M-007",
+      "subTopic": "Atatürk İlkeleri (Halkçılık)",
+      "text": "Toplumda hiçbir zümreye, aileye veya sınıfa ayrıcalık tanınmamasını, kanun önünde eşitliği ve sosyal adaleti savunan Atatürk ilkesi hangisidir?",
+      "explanation": "Aşar vergisinin kaldırılması, Soyadı Kanunu ve kadınlara seçme-seçilme hakkı verilmesi doğrudan Halkçılık ilkesiyle ilgilidir.",
+      "imageUrl": null,
+      "options": [
+        "Halkçılık",
+        "Devletçilik",
+        "İnkılapçılık",
+        "Milliyetçilik"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-M-008",
+      "subTopic": "Eğitim Alanında İnkılaplar (Tevhid-i Tedrisat)",
+      "text": "3 Mart 1924 tarihinde çıkarılan Tevhid-i Tedrisat Kanunu ile eğitim sisteminde ne amaçlanmıştır?",
+      "explanation": "Tevhid-i Tedrisat ile medreseler kapatılmış, tüm okullar MEB çatısı altında birleştirilerek eğitimde ikilik sona erdirilmiştir.",
+      "imageUrl": null,
+      "options": [
+        "Tüm eğitim kurumlarının Millî Eğitim Bakanlığı'na bağlanarak eğitimin birleştirilmesi ve millileştirilmesi",
+        "Yalnızca askeri okulların açılması",
+        "Eğitimin ücretli hale getirilmesi",
+        "Yabancı okullara ayrıcalık tanınması"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-M-009",
+      "subTopic": "Ekonomi Alanında İnkılaplar (Kabotaj Kanunu)",
+      "text": "1 Temmuz 1926'da yürürlüğe giren Kabotaj Kanunu ile Türk denizlerinde yük ve yolcu taşıma hakkı kime devredilmiştir?",
+      "explanation": "Kabotaj Kanunu Türk karasularındaki egemenliğimizi pekiştirmiş ve Milliyetçilik ilkesini yansıtmıştır.",
+      "imageUrl": null,
+      "options": [
+        "Yabancı şirketlere",
+        "Yalnızca Türk denizcilerine ve Türk bayraklı gemilere",
+        "Liman işletmelerine",
+        "Osmanlı Bankası'na"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-M-010",
+      "subTopic": "Atatürk Dönemi Dış Politika (Montrö)",
+      "text": "1936 yılında imzalanan Montrö Boğazlar Sözleşmesi ile Türkiye hangi büyük kazanımı elde etmiştir?",
+      "explanation": "Montrö ile Boğazlar Komisyonu kaldırılmış ve Türk ordusu Boğazlar bölgesine girerek tam egemenlik sağlamıştır.",
+      "imageUrl": null,
+      "options": [
+        "Boğazlar Komisyonu kaldırılarak Boğazların yönetimi ve savunması tamamen Türkiye'ye geçmiştir",
+        "Boğazlar uluslararası yönetime bırakılmıştır",
+        "Boğazlar tamamen ulaşıma kapatılmıştır",
+        "Yabancı devletlere üs verilmiştir"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

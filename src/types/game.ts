@@ -3,7 +3,7 @@
  * Kaynak: soru_tasarimlari/soru_tipleri.md & sahsi/tasarim_dili.md
  */
 
-export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce';
+export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce' | 'fen' | 'sosyal' | 'geometri';
 export type DifficultyLevel = 'kolay' | 'orta' | 'zor';
 
 export type QuestionType =
@@ -36,6 +36,9 @@ export interface RevisionDetail {
   failedQuestionIds: string[];
 }
 
+export type EducationLevel = 'lise' | 'ortaokul';
+export type ExamCategory = 'TYT' | 'AYT' | 'LGS';
+
 /**
  * Oyuncu Bilgi Modeli
  */
@@ -45,9 +48,16 @@ export interface PlayerInfo {
   elo: number;
   avatarUrl: string;
   streak: number;
+  educationLevel?: EducationLevel;
+  gradeLevel?: string;
+  allowedExamTypes?: ExamCategory[];
+  dailyQuestExempt?: boolean;
   coins?: number;
   islerPoints?: number;
   weeklyLeaguePoints?: number;
+  dailyCompleted?: boolean;
+  dailyQuestDone?: boolean;
+  completedMiniGames?: string[];
   revisionTopics?: Array<{
     topic: string;
     subject: string;

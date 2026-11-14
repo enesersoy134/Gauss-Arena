@@ -289,7 +289,7 @@ const RAW_INTERACTIVE_QUESTIONS = [
     prompt: 'Paralel bağlandıklarında eşdeğer direnci 4 Ω yapan İKİ direnci seçin:',
     explanation: 'Paralel bağlı 6 Ω ve 12 Ω için eşdeğer direnç: (6 × 12) / (6 + 12) = 72 / 18 = 4 Ω olur.',
     payload: {
-      targetBadge: 'Hedef Reş = 4 Ω',
+      targetBadge: 'Hedef: Eşdeğer Direnç = 4 Ω',
       ruleHint: 'Paralel bağlandığında 4 Ω veren 2 direnci seçin',
       options: [
         { id: 'r1', label: '2 Ω' },
@@ -902,6 +902,146 @@ const RAW_INTERACTIVE_QUESTIONS = [
       ],
     },
   },
+  {
+    id: 'q_lgs_041',
+    examType: 'LGS',
+    subject: 'sosyal',
+    topic: 'Atatürk İlkeleri ve İnkılaplar',
+    type: 'pair_matching',
+    difficulty: 'orta',
+    timeLimitSeconds: 25,
+    points: 150,
+    prompt: 'Verilen inkılap ve gelişmeleri doğrudan ilişkili olduğu Atatürk İlkesi ile eşleştirin.',
+    explanation: 'TBMM\'nin açılması -> Cumhuriyetçilik, Türk Dil Kurumu -> Milliyetçilik, Medreselerin kapatılması -> Laiklik ile doğrudan ilgilidir.',
+    payload: {
+      leftColumnTitle: 'İnkılap / Gelişme',
+      rightColumnTitle: 'Atatürk İlkesi',
+      pairs: [
+        { pairId: 's_1', leftText: 'TBMM\'nin Açılması ve Saltanatın Kaldırılması', rightText: 'Cumhuriyetçilik' },
+        { pairId: 's_2', leftText: 'Türk Dil ve Türk Tarih Kurumunun Kurulması', rightText: 'Milliyetçilik' },
+        { pairId: 's_3', leftText: 'Medreselerin ve Tekke-Zaviyelerin Kapatılması', rightText: 'Laiklik' },
+      ],
+    },
+  },
+  {
+    id: 'q_lgs_042',
+    examType: 'LGS',
+    subject: 'sosyal',
+    topic: 'Millî Mücadele Hazırlık Dönemi Kronolojisi',
+    type: 'ordering_and_formula',
+    difficulty: 'orta',
+    timeLimitSeconds: 20,
+    points: 130,
+    prompt: 'Kurtuluş Savaşı hazırlık dönemindeki tarihi olayları kronolojik sıraya (eskiden yeniye) dizin:',
+    explanation: 'Kronolojik sıra: Samsun\'a Çıkış (19 Mayıs 1919) -> Amasya Genelgesi -> Erzurum Kongresi -> Sivas Kongresi -> TBMM\'nin Açılışı.',
+    payload: {
+      mode: 'sequence',
+      directionLabel: 'Kronolojik Sıra (Geçmişten Günümüze)',
+      items: [
+        'TBMM\'nin Ankara\'da Açılması',
+        'Amasya Genelgesi',
+        'Mustafa Kemal\'in Samsun\'a Çıkışı',
+        'Sivas Kongresi',
+        'Erzurum Kongresi',
+      ],
+      correctOrder: [
+        'Mustafa Kemal\'in Samsun\'a Çıkışı',
+        'Amasya Genelgesi',
+        'Erzurum Kongresi',
+        'Sivas Kongresi',
+        'TBMM\'nin Ankara\'da Açılması',
+      ],
+    },
+  },
+  {
+    id: 'q_lgs_043',
+    examType: 'LGS',
+    subject: 'sosyal',
+    topic: 'I. Dünya Savaşı İttifak ve İtilaf Blokları',
+    type: 'swipe_grouping',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 100,
+    prompt: 'I. Dünya Savaşı\'ndaki devletleri İtilaf (Anlaşma) ve İttifak (Bağlaşma) bloklarına göre kaydırarak gruplayın:',
+    explanation: 'İtilaf Devletleri: İngiltere, Fransa. İttifak Devletleri: Osmanlı Devleti, Almanya.',
+    payload: {
+      leftCategory: { id: 'left', label: '⬅️ İtilaf (Anlaşma)', colorHex: '#3B82F6' },
+      rightCategory: { id: 'right', label: 'İttifak (Bağlaşma) ➡️', colorHex: '#EF4444' },
+      cards: [
+        { id: 'c1', text: 'İngiltere', correctCategory: 'left' },
+        { id: 'c2', text: 'Osmanlı Devleti', correctCategory: 'right' },
+        { id: 'c3', text: 'Fransa', correctCategory: 'left' },
+        { id: 'c4', text: 'Almanya', correctCategory: 'right' },
+      ],
+    },
+  },
+  {
+    id: 'q_lgs_044',
+    examType: 'LGS',
+    subject: 'sosyal',
+    topic: 'Millî Mücadele Genelgeleri',
+    type: 'universal_choice',
+    difficulty: 'kolay',
+    timeLimitSeconds: 15,
+    points: 80,
+    prompt: '"Milletin bağımsızlığını yine milletin azim ve kararı kurtaracaktır." ilkesi Kurtuluş Savaşı\'nın amacı ve yöntemi olarak ilk kez hangi tarihî belgede ilan edilmiştir?',
+    explanation: '22 Haziran 1919 tarihli Amasya Genelgesi\'nde bu karar alınarak millî egemenlik ve ihtilal vurgulanmıştır.',
+    payload: {
+      variant: 'test',
+      optionCount: 4,
+      options: [
+        'Havza Genelgesi',
+        'Amasya Genelgesi',
+        'Erzurum Kongresi',
+        'Misak-ı Millî Kararları',
+      ],
+      correctIndex: 1,
+      shuffleOptions: false,
+    },
+  },
+  {
+    id: 'q_lgs_045',
+    examType: 'LGS',
+    subject: 'biyoloji',
+    topic: 'DNA ve Nükleotid Eşleşmesi',
+    type: 'pair_matching',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 110,
+    prompt: 'DNA molekülündeki nükleotid bazlarını ve temel bileşenlerini doğru eşleşmeleriyle birleştirin:',
+    explanation: 'DNA\'da Adenin karşısına Timin, Guanin karşısına Sitozin gelir. Deoksiriboz 5 karbonlu şekerdir.',
+    payload: {
+      leftColumnTitle: 'DNA Bileşeni',
+      rightColumnTitle: 'Eşleşen Karşılık',
+      pairs: [
+        { pairId: 'dna_1', leftText: 'Adenin (A) bazı', rightText: 'Timin (T) bazı' },
+        { pairId: 'dna_2', leftText: 'Guanin (G) bazı', rightText: 'Sitozin (C) bazı' },
+        { pairId: 'dna_3', leftText: 'Deoksiriboz', rightText: '5 Karbonlu Şeker' },
+      ],
+    },
+  },
+  {
+    id: 'q_lgs_046',
+    examType: 'LGS',
+    subject: 'kimya',
+    topic: 'Fiziksel ve Kimyasal Değişimler',
+    type: 'swipe_grouping',
+    difficulty: 'kolay',
+    timeLimitSeconds: 20,
+    points: 100,
+    prompt: 'Günlük hayattaki olayları Fiziksel Değişim ve Kimyasal Değişim olarak kaydırarak gruplayın:',
+    explanation: 'Buzun erimesi ve şekerin çözünmesi fizikseldir (iç yapı değişmez). Demirin paslanması ve sütün mayalanması kimyasaldır.',
+    payload: {
+      leftCategory: { id: 'left', label: '⬅️ Fiziksel Değişim', colorHex: '#10B981' },
+      rightCategory: { id: 'right', label: 'Kimyasal Değişim ➡️', colorHex: '#F59E0B' },
+      cards: [
+        { id: 'fc1', text: 'Buzun erimesi', correctCategory: 'left' },
+        { id: 'fc2', text: 'Demirin paslanması', correctCategory: 'right' },
+        { id: 'fc3', text: 'Şekerin suda çözünmesi', correctCategory: 'left' },
+        { id: 'fc4', text: 'Sütten yoğurt yapılması', correctCategory: 'right' },
+      ],
+    },
+  },
 ];
 
 function normalizeInteractiveQuestion(q, examTypeOverride) {
@@ -928,10 +1068,25 @@ function normalizeInteractiveQuestion(q, examTypeOverride) {
 
   const difficultyNum = diffNorm === 'EASY' ? 1 : diffNorm === 'HARD' ? 3 : 2;
 
+  const rawSubj = (q.subject || '').toLowerCase();
+  let normalizedSubject = rawSubj;
+  if (rawSubj === 'fen') {
+    const t = (q.topic || '').toLowerCase();
+    if (t.includes('dna') || t.includes('genetik') || t.includes('nükleotid') || t.includes('hücre') || t.includes('biyo')) {
+      normalizedSubject = 'biyoloji';
+    } else if (t.includes('asit') || t.includes('baz') || t.includes('kimya') || t.includes('periyodik')) {
+      normalizedSubject = 'kimya';
+    } else {
+      normalizedSubject = 'fizik';
+    }
+  } else if (rawSubj === 'sosyal' || rawSubj === 'tarih') {
+    normalizedSubject = 'turkce';
+  }
+
   return {
     externalId: q.id,
     examType,
-    subject: q.subject.toLowerCase(),
+    subject: normalizedSubject,
     difficulty: diffNorm,
     difficultyNumber: difficultyNum,
     subTopic: q.topic || '',
@@ -944,6 +1099,7 @@ function normalizeInteractiveQuestion(q, examTypeOverride) {
     rawDurationMs: (q.timeLimitSeconds || 20) * 1000,
     interactiveQuestion: {
       ...q,
+      subject: normalizedSubject,
       difficulty: q.difficulty,
       difficultyNumber: difficultyNum,
     },
@@ -954,10 +1110,12 @@ function normalizeInteractiveQuestion(q, examTypeOverride) {
 const INTERACTIVE_QUESTIONS = [
   // LGS soruları
   ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType === 'LGS').map((q) => normalizeInteractiveQuestion(q, 'LGS')),
-  // TYT soruları
-  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType !== 'LGS').map((q) => normalizeInteractiveQuestion(q, 'TYT')),
+  // TYT soruları (q.examType === 'TYT' veya examType atanmamış olanlar; AYT türev/alan soruları TYT'ye sızmaz)
+  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType === 'TYT' || !q.examType).map((q) => normalizeInteractiveQuestion(q, 'TYT')),
   // AYT soruları
-  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType !== 'LGS').map((q) => ({
+  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => q.examType === 'AYT').map((q) => normalizeInteractiveQuestion(q, 'AYT')),
+  // TYT ortak temel derslerden AYT'ye aktarılabilen fen ve matematik soruları
+  ...RAW_INTERACTIVE_QUESTIONS.filter((q) => (q.examType === 'TYT' || !q.examType) && q.subject !== 'turkce').map((q) => ({
     ...normalizeInteractiveQuestion(q, 'AYT'),
     externalId: `${q.id}_ayt`,
   })),

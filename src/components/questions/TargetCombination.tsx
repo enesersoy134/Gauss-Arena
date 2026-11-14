@@ -76,7 +76,7 @@ export default function TargetCombination({
                 : 'text-isler-primary animate-pulse'
             }`}
           />
-          <span className="font-mono text-2xl md:text-3xl font-black text-white tracking-wider">
+          <span className="font-mono text-xl sm:text-2xl md:text-3xl font-black text-white tracking-wider">
             {targetBadge}
           </span>
         </div>

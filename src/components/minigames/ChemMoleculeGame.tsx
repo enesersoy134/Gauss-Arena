@@ -569,9 +569,9 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
     : 'from-white/5 to-white/10 border-white/10';
 
   return (
-    <div ref={rootRef} className="flex flex-col gap-4">
+    <div ref={rootRef} className="flex flex-col gap-2 sm:gap-2.5">
       {/* ÜST SENTEZ SEÇİCİ (3 FARKLI HEDEF ÇÖZELTİ) */}
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
         {FORMULA_STAGES.map((stg, idx) => {
           const isCurrent = idx === stageIdx;
           const isDone = completedStages.includes(idx);
@@ -579,7 +579,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
             <button
               key={stg.targetFormula}
               onClick={() => handleSelectStage(idx)}
-              className={`p-3 rounded-2xl border text-left transition-all flex items-center justify-between gap-2 ${
+              className={`p-2 sm:p-2.5 rounded-xl border text-left transition-all flex items-center justify-between gap-1.5 ${
                 isCurrent
                   ? 'bg-cyan-500/20 border-cyan-400 text-white shadow-md shadow-cyan-500/15'
                   : isDone
@@ -588,102 +588,119 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
               }`}
             >
               <div className="min-w-0">
-                <div className="text-[10px] font-mono uppercase opacity-80">
+                <div className="text-[9px] sm:text-[10px] font-mono uppercase opacity-80">
                   Sentez {stg.stageNumber}/3 • {stg.reactionType}
                 </div>
-                <div className="font-mono font-black text-sm sm:text-base text-white truncate mt-0.5">
+                <div className="font-mono font-black text-xs sm:text-sm text-white truncate mt-0.5">
                   {stg.targetCommonName}{' '}
-                  <span className="font-poppins font-semibold text-xs text-cyan-300">
+                  <span className="font-poppins font-semibold text-[11px] sm:text-xs text-cyan-300">
                     ({stg.targetFormula})
                   </span>
                 </div>
               </div>
-              {isDone && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+              {isDone && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
             </button>
           );
         })}
       </div>
 
-      {/* HİKAYE KARAKTERİ SİPARİŞ & ANLIK TEPKİ BALONU */}
+      {/* =====================================================================
+       * VURGULU GÖREV SENARYOSU & LABORATUVAR KRİZ BRİFİNGİ (KİMYA SENTEZİ)
+       * Ekranda anında fark edilecek, yüksek kontrastlı ve neon cyan/amber vurgulu kart
+       * ===================================================================== */}
       <div
-        className={`rounded-2xl border-2 p-3.5 flex items-center gap-3.5 transition-all duration-300 ${
+        className={`rounded-xl sm:rounded-2xl border-2 p-2.5 sm:p-3 transition-all duration-300 relative overflow-hidden shadow-lg ${
           isWrongCombination
             ? wrongOutcome?.isDangerous
-              ? 'bg-red-950/60 border-red-400 shadow-lg shadow-red-500/20'
-              : 'bg-amber-950/60 border-amber-400 shadow-lg shadow-amber-500/20'
+              ? 'bg-gradient-to-r from-red-950/85 via-[#1E0D1A] to-[#120815] border-red-400 ring-1 ring-red-400/40 shadow-red-500/25'
+              : 'bg-gradient-to-r from-amber-950/85 via-[#1E112A] to-orange-950/70 border-amber-400 ring-1 ring-amber-400/40 shadow-amber-500/25'
             : isSuccess
-            ? 'bg-emerald-950/60 border-emerald-400 shadow-lg shadow-emerald-500/20'
-            : 'bg-[#170B19] border-cyan-500/40'
+            ? 'bg-gradient-to-r from-emerald-950/85 via-[#101E1C] to-[#0A1215] border-emerald-400 ring-1 ring-emerald-400/40 shadow-emerald-500/25'
+            : 'bg-gradient-to-r from-cyan-950/80 via-[#150A16] to-[#0A161E] border-cyan-400/80 ring-1 ring-cyan-400/40 shadow-cyan-500/20'
         }`}
       >
-        {/* Karakter Avatarı (Duruma Göre Yüz İfadesi Değişir) */}
-        <div
-          className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center text-3xl shrink-0 transition-transform duration-300 ${
-            isWrongCombination
-              ? 'border-red-400 bg-red-500/20 animate-bounce'
-              : isSuccess
-              ? 'border-emerald-400 bg-emerald-500/20 scale-105'
-              : 'border-cyan-400/50 bg-cyan-500/15'
-          }`}
-        >
-          {isWrongCombination
-            ? wrongOutcome?.isDangerous
-              ? currentStage.story.dangerAvatar
-              : currentStage.story.wrongAvatar
-            : isSuccess
-            ? currentStage.story.successAvatar
-            : currentStage.story.idleAvatar}
-        </div>
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Karakter Konuşma Balonu */}
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-poppins font-black text-xs sm:text-sm text-white">
-              {currentStage.story.characterName}
-            </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-cyan-200">
-              {currentStage.story.roleTitle}
-            </span>
-            <span
-              className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ml-auto ${
-                isWrongCombination
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 relative z-10">
+          <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+            {/* Karakter Avatarı & Canlı Halka */}
+            <div className="relative shrink-0">
+              <div
+                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl border-2 flex items-center justify-center text-2xl shadow-md transition-transform duration-300 ${
+                  isWrongCombination
+                    ? 'border-red-400 bg-red-500/25 animate-bounce'
+                    : isSuccess
+                    ? 'border-emerald-400 bg-emerald-500/25 scale-105 shadow-emerald-500/30'
+                    : 'border-cyan-400 bg-cyan-500/20'
+                }`}
+              >
+                {isWrongCombination
                   ? wrongOutcome?.isDangerous
-                    ? 'bg-red-500/30 text-red-200 border border-red-400/50'
-                    : 'bg-amber-500/30 text-amber-200 border border-amber-400/50'
+                    ? currentStage.story.dangerAvatar
+                    : currentStage.story.wrongAvatar
                   : isSuccess
-                  ? 'bg-emerald-500/30 text-emerald-200 border border-emerald-400/50'
-                  : 'bg-cyan-500/20 text-cyan-200 border border-cyan-400/40'
-              }`}
-            >
-              {isWrongCombination
-                ? wrongOutcome?.isDangerous
-                  ? '☠️ PANİK: Zehirli Tepkime!'
-                  : '⚠️ ŞİKAYET: Yanlış Bileşik!'
-                : isSuccess
-                ? '🎉 SİPARİŞ TESLİM EDİLDİ!'
-                : `🧪 İSTEK: ${currentStage.targetCommonName} (${currentStage.targetFormula})`}
-            </span>
+                  ? currentStage.story.successAvatar
+                  : currentStage.story.idleAvatar}
+              </div>
+              <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-cyan-500 border border-black text-[8px] font-bold text-black items-center justify-center">🧪</span>
+              </span>
+            </div>
+
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 text-black font-poppins font-black text-[10px] tracking-wide uppercase shadow-sm flex items-center gap-1">
+                  📋 LABORATUVAR BRİFİNGİ
+                </span>
+                <span className="text-[10px] font-mono font-bold text-cyan-200 bg-cyan-500/25 px-2 py-0.5 rounded-md border border-cyan-400/50">
+                  {currentStage.story.characterName}
+                </span>
+                <span className="text-[10px] font-mono font-bold text-white bg-white/10 px-1.5 py-0.5 rounded-md border border-white/10">
+                  Hedef: <strong className="text-cyan-300">{currentStage.targetCommonName} ({currentStage.targetFormula})</strong>
+                </span>
+              </div>
+
+              <p className="text-xs text-white font-medium leading-tight">
+                &ldquo;
+                {isWrongCombination
+                  ? wrongOutcome?.isDangerous
+                    ? currentStage.story.dangerReactionQuote
+                    : currentStage.story.harmlessWrongQuote
+                  : isSuccess
+                  ? currentStage.story.successQuote
+                  : beakerItems.length === 1
+                  ? currentStage.story.halfwayQuote
+                  : currentStage.story.requestQuote}
+                &rdquo;
+              </p>
+            </div>
           </div>
 
-          <p className="text-xs text-white/95 mt-1 leading-relaxed font-medium">
-            &ldquo;
-            {isWrongCombination
-              ? wrongOutcome?.isDangerous
-                ? currentStage.story.dangerReactionQuote
-                : currentStage.story.harmlessWrongQuote
-              : isSuccess
-              ? currentStage.story.successQuote
-              : beakerItems.length === 1
-              ? currentStage.story.halfwayQuote
-              : currentStage.story.requestQuote}
-            &rdquo;
-          </p>
+          {/* Aksiyon Hedef Rozeti */}
+          <div className="shrink-0 bg-black/50 border border-cyan-500/40 rounded-xl px-2.5 py-1.5 flex flex-col items-center sm:items-end justify-center self-stretch sm:self-auto min-w-[150px] shadow-inner">
+            <div className="text-[9px] font-mono uppercase text-cyan-300 font-black flex items-center gap-1">
+              <span>🎯 NE YAPMALISIN?</span>
+            </div>
+            <div className="text-[11px] font-mono font-black text-white text-center sm:text-right mt-0.5">
+              {isSuccess ? (
+                <span className="text-emerald-400 font-bold">✓ Sentez Başarılı!</span>
+              ) : isWrongCombination ? (
+                <span className="text-red-300 font-bold">⚠️ Boşalt & Tekrar Dene</span>
+              ) : (
+                <span className="text-cyan-200">{beakerItems.length} / 2 Çözelti Eklendi</span>
+              )}
+            </div>
+            <div className="text-[9px] text-zinc-300 text-center sm:text-right mt-0.5 font-mono">
+              Alttan 2 doğru şişeye tıkla
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ORTA MERKEZİ TEK BEHERGLAS & SIVI DÖKME SAHNESİ */}
       <div
-        className={`relative rounded-3xl border-2 px-6 py-5 flex flex-col items-center justify-between min-h-[295px] overflow-hidden transition-all duration-500 ${
+        className={`relative rounded-2xl sm:rounded-3xl border-2 px-4 py-3 flex flex-col items-center justify-between min-h-[195px] sm:min-h-[220px] overflow-hidden transition-all duration-500 ${
           isWrongCombination
             ? wrongOutcome?.isDangerous
               ? 'bg-gradient-to-b from-red-950/60 via-[#150A16] to-[#0F0510] border-red-500/60'
@@ -694,19 +711,16 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
         }`}
       >
         {/* Hedef Başlığı */}
-        <div className="text-xs font-mono text-cyan-300 text-center z-10">
-          Hedef Çözelti Sentezi:{' '}
-          <strong className="text-white">
-            {currentStage.targetCommonName} ({currentStage.targetFormula})
-          </strong>
+        <div className="text-[11px] font-mono text-cyan-300 text-center z-10">
+          Hedef: <strong className="text-white">{currentStage.targetCommonName} ({currentStage.targetFormula})</strong>
         </div>
 
         {/* Tek Merkez Beherglas ve Canlı Dökülme Efekti */}
-        <div className="relative flex flex-col items-center justify-end pt-10 pb-2 my-1">
-          {/* Tepkime Sonuç Rozeti (Sentez veya Tehlike Uyarısı) */}
+        <div className="relative flex flex-col items-center justify-end pt-4 pb-1 my-0.5">
+          {/* Tepkime Sonuç Rozeti */}
           {isWrongCombination && wrongOutcome && (
             <div
-              className={`text-xs font-mono font-bold px-3.5 py-1 rounded-full animate-bounce mb-2 border shadow-lg z-20 ${
+              className={`text-[11px] font-mono font-bold px-3 py-0.5 rounded-full animate-bounce mb-1 border shadow-md z-20 ${
                 wrongOutcome.isDangerous
                   ? 'text-red-100 bg-red-600/40 border-red-400'
                   : 'text-amber-100 bg-amber-600/40 border-amber-400'
@@ -716,22 +730,21 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
             </div>
           )}
           {isSuccess && (
-            <div className="text-xs font-mono font-bold text-emerald-100 bg-emerald-500/35 border border-emerald-400 px-3.5 py-1 rounded-full animate-bounce mb-2 shadow-lg z-20 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
-              <span>✓ {currentStage.targetCommonName} ({currentStage.targetFormula}) Çözeltisi Hazır!</span>
+            <div className="text-[11px] font-mono font-bold text-emerald-100 bg-emerald-500/35 border border-emerald-400 px-3 py-0.5 rounded-full animate-bounce mb-1 shadow-md z-20 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-emerald-300" />
+              <span>✓ {currentStage.targetCommonName} ({currentStage.targetFormula}) Hazır!</span>
             </div>
           )}
 
           {/* DÖKÜLEN ŞİŞE & AKAN SIVI ANİMASYONU */}
           {pouringBottle && (
-            <div className="absolute -top-1 left-1/2 -translate-x-2 z-30 pointer-events-none flex flex-col items-center">
+            <div className="absolute -top-3 left-1/2 -translate-x-2 z-30 pointer-events-none flex flex-col items-center">
               {/* Eğik Çözelti Şişesi */}
               <div
                 className="flex items-center -rotate-[52deg] origin-bottom-left transition-transform duration-300 drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)]"
               >
-                {/* Şişe Gövdesi */}
                 <div
-                  className="w-16 h-11 rounded-xl border-2 border-white/60 bg-slate-900/90 relative overflow-hidden flex items-center justify-center shadow-inner"
+                  className="w-13 h-9 rounded-lg border-2 border-white/60 bg-slate-900/90 relative overflow-hidden flex items-center justify-center shadow-inner"
                   style={{ borderColor: pouringBottle.color }}
                 >
                   <div
@@ -740,39 +753,36 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
                       background: `linear-gradient(135deg, ${pouringBottle.color}, ${pouringBottle.color}55)`,
                     }}
                   />
-                  <span className="absolute font-mono font-black text-[10px] text-white drop-shadow">
+                  <span className="absolute font-mono font-black text-[9px] text-white drop-shadow">
                     {pouringBottle.name}
                   </span>
                 </div>
-                {/* Şişe Dar Boynu / Ağız Kısmı */}
-                <div className="w-4 h-4 border-y-2 border-r-2 border-white/60 bg-white/15 rounded-r-sm -ml-0.5" />
+                <div className="w-3 h-3 border-y-2 border-r-2 border-white/60 bg-white/15 rounded-r-sm -ml-0.5" />
               </div>
 
-              {/* Beherglasın İçine Akan Sıvı Sütunu & Damlalar */}
+              {/* Beherglasın İçine Akan Sıvı Sütunu */}
               <div
-                className="w-2.5 h-36 -mt-2 -ml-14 rounded-full animate-pulse"
+                className="w-2 h-28 -mt-2 -ml-12 rounded-full animate-pulse"
                 style={{
                   background: `linear-gradient(to bottom, ${pouringBottle.color}, ${pouringBottle.color}cc, transparent)`,
-                  boxShadow: `0 0 14px ${pouringBottle.color}`,
+                  boxShadow: `0 0 10px ${pouringBottle.color}`,
                 }}
               />
               <div
-                className="w-3 h-3 rounded-full animate-ping -mt-12 -ml-14"
+                className="w-2.5 h-2.5 rounded-full animate-ping -mt-10 -ml-12"
                 style={{ backgroundColor: pouringBottle.color }}
               />
             </div>
           )}
 
-          {/* ANA CAM BEHERGLAS (TEK MERKEZİ REAKSİYON KABI) */}
+          {/* ANA CAM BEHERGLAS */}
           <div className="relative flex items-center">
-            {/* Beherglas Ağız Çıkıntısı (Cam Dudak) */}
-            <div className="w-56 h-48 rounded-b-[32px] rounded-t-lg border-4 border-white/40 border-t-white/20 bg-slate-950/65 relative overflow-hidden flex flex-col justify-end shadow-[0_0_35px_rgba(6,182,212,0.15)] backdrop-blur-sm">
+            <div className="w-44 h-38 rounded-b-[26px] rounded-t-md border-3 border-white/40 border-t-white/20 bg-slate-950/65 relative overflow-hidden flex flex-col justify-end shadow-[0_0_25px_rgba(6,182,212,0.15)] backdrop-blur-sm">
               {/* Cam Parlama Yansıması */}
-              <div className="absolute right-3 top-3 bottom-5 w-2 rounded-full bg-gradient-to-b from-white/25 via-white/10 to-transparent pointer-events-none z-20" />
+              <div className="absolute right-2 top-2 bottom-4 w-1.5 rounded-full bg-gradient-to-b from-white/25 via-white/10 to-transparent pointer-events-none z-20" />
 
               {/* Mililitre Ölçek Çizgileri */}
-              <div className="absolute left-3 top-3.5 flex flex-col gap-3.5 text-[9px] font-mono text-white/40 z-20 pointer-events-none select-none">
-                <span>250ml ──</span>
+              <div className="absolute left-2.5 top-2.5 flex flex-col gap-2.5 text-[8px] font-mono text-white/40 z-20 pointer-events-none select-none">
                 <span>200ml ──</span>
                 <span>150ml ──</span>
                 <span>100ml ──</span>
@@ -781,83 +791,56 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
 
               {/* Beherglas Boşken Gösterilen Rehber */}
               {beakerItems.length === 0 && !pouringBottle && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none">
-                  <Droplets className="w-7 h-7 text-cyan-400/40 mb-1.5 animate-pulse" />
-                  <span className="text-xs font-poppins font-medium text-white/45">
-                    Alttaki çözelti şişelerine tıklayarak beherglasa dök!
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+                  <Droplets className="w-5 h-5 text-cyan-400/40 mb-1 animate-pulse" />
+                  <span className="text-[11px] font-poppins font-medium text-white/45">
+                    Alttaki şişelere tıklayarak dök!
                   </span>
                 </div>
               )}
 
               {/* Beherglas İçindeki Sıvı Katmanı */}
               <div
-                className={`w-full bg-gradient-to-t border-t-2 transition-all duration-700 ease-out relative flex flex-col items-center justify-center px-3 ${liquidColor}`}
+                className={`w-full bg-gradient-to-t border-t-2 transition-all duration-700 ease-out relative flex flex-col items-center justify-center px-2 ${liquidColor}`}
                 style={{ height: `${liquidHeightPercent}%` }}
               >
-                {/* Sıvı Yüzeyi Dalgalanma / Köpük Çizgisi */}
+                {/* Sıvı Yüzeyi Dalgalanma */}
                 {beakerItems.length > 0 && (
-                  <div className="absolute -top-1.5 inset-x-0 h-2.5 bg-white/25 blur-[1px] animate-pulse" />
+                  <div className="absolute -top-1 inset-x-0 h-2 bg-white/25 blur-[1px] animate-pulse" />
                 )}
 
-                {/* Sıvı İçi Yükselen Kabarcık Efektleri */}
-                {beakerItems.length > 0 && (
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <span className="absolute bottom-2 left-1/4 w-2 h-2 rounded-full bg-white/45 animate-ping" />
-                    <span
-                      className="absolute bottom-4 left-1/2 w-2.5 h-2.5 rounded-full bg-white/40 animate-bounce"
-                      style={{ animationDuration: '1.3s' }}
-                    />
-                    <span
-                      className="absolute bottom-3 right-1/4 w-1.5 h-1.5 rounded-full bg-white/50 animate-ping"
-                      style={{ animationDuration: '1.7s' }}
-                    />
-                    {(isTwoCombined || pouringBottle) && (
-                      <>
-                        <span
-                          className="absolute bottom-6 left-1/3 w-3 h-3 rounded-full bg-white/50 animate-bounce"
-                          style={{ animationDuration: '0.9s' }}
-                        />
-                        <span
-                          className="absolute bottom-5 right-1/3 w-2.5 h-2.5 rounded-full bg-white/60 animate-ping"
-                          style={{ animationDuration: '1.1s' }}
-                        />
-                      </>
-                    )}
-                  </div>
-                )}
-
-                {/* Beherglasın İçine Dökülmüş Çözeltiler (Tıklayıp Geri Çıkarma Etiketleri) */}
+                {/* Beherglas İçine Dökülmüş Çözeltiler */}
                 {addedBottles.length > 0 && (
-                  <div className="relative z-20 flex flex-col items-center gap-1.5 w-full">
-                    <div className="flex flex-wrap items-center justify-center gap-1.5">
+                  <div className="relative z-20 flex flex-col items-center gap-1 w-full">
+                    <div className="flex flex-wrap items-center justify-center gap-1">
                       {addedBottles.map((b) => (
                         <button
                           key={b.id}
                           onClick={() => handleToggleBottle(b)}
-                          title="Bu çözeltiyi kaptan boşaltmak için tıkla"
-                          className="px-2.5 py-1 rounded-full bg-black/45 hover:bg-black/65 border border-white/30 text-[11px] font-poppins font-semibold text-white flex items-center gap-1.5 shadow transition-all"
+                          title="Geri almak için tıkla"
+                          className="px-2 py-0.5 rounded-full bg-black/45 hover:bg-black/65 border border-white/30 text-[10px] font-poppins font-semibold text-white flex items-center gap-1 shadow transition-all"
                         >
                           <span
-                            className="w-2 h-2 rounded-full shrink-0"
+                            className="w-1.5 h-1.5 rounded-full shrink-0"
                             style={{ backgroundColor: b.color }}
                           />
-                          <span>{b.name} Çözeltisi</span>
-                          <span className="text-[10px] font-mono text-cyan-200/90">
+                          <span>{b.name}</span>
+                          <span className="text-[9px] font-mono text-cyan-200/90">
                             ({b.formula})
                           </span>
                           {!isSuccess && (
-                            <span className="text-[10px] text-amber-300 ml-0.5">✕</span>
+                            <span className="text-[9px] text-amber-300 ml-0.5">✕</span>
                           )}
                         </button>
                       ))}
                     </div>
 
-                    <span className="font-mono font-bold text-[11px] text-white/95 drop-shadow text-center">
+                    <span className="font-mono font-bold text-[10px] text-white/95 drop-shadow text-center">
                       {isSuccess
-                        ? `✨ ${currentStage.targetCommonName} (${currentStage.targetFormula}) Çözeltisi Oluştu!`
+                        ? `✨ ${currentStage.targetCommonName} (${currentStage.targetFormula}) Hazır!`
                         : isWrongCombination && wrongOutcome
                         ? wrongOutcome.productBadge
-                        : '100ml Çözelti Eklendi • 2. Çözeltiyi Dök'}
+                        : '100ml Eklendi • 2. Çözeltiyi Dök'}
                     </span>
                   </div>
                 )}
@@ -868,7 +851,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
 
         {/* Alt Bilimsel Geri Bildirim Bandı */}
         <div
-          className={`mt-2 px-4 py-2.5 rounded-xl text-xs font-medium text-center border max-w-3xl leading-relaxed z-10 ${
+          className={`mt-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-center border max-w-2xl leading-tight z-10 ${
             isWrongCombination
               ? wrongOutcome?.isDangerous
                 ? 'bg-red-500/20 border-red-500/50 text-red-100'
@@ -883,26 +866,26 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
             : isSuccess
             ? `${currentStage.successNote} (${currentStage.equationText})`
             : beakerItems.length === 1
-            ? `Beherglasa "${addedBottles[0]?.name} (${addedBottles[0]?.formula})" çözeltisi döküldü. Tepkimeyi başlatmak için alttan 2. çözelti şişesini dök!`
-            : `Alttaki laboratuvar çözeltilerinden "${currentStage.targetCommonName} (${currentStage.targetFormula})" sentezi için gereken 2 doğru çözeltiyi beherglasa dök!`}
+            ? `"${addedBottles[0]?.name} (${addedBottles[0]?.formula})" döküldü. 2. çözeltiyi seç!`
+            : `"${currentStage.targetCommonName} (${currentStage.targetFormula})" için gereken 2 doğru çözeltiyi beherglasa dök!`}
         </div>
       </div>
 
       {/* ALT LABORATUVAR ÇÖZELTİ ŞİŞELERİ RAF BARI */}
-      <div className="bg-[#0F0510] border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
-        <div className="flex items-center justify-between flex-wrap gap-2">
+      <div className="bg-[#0F0510] border border-white/10 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 flex flex-col gap-2">
+        <div className="flex items-center justify-between flex-wrap gap-1.5">
           <span className="text-xs font-mono font-bold text-[#B5CBC8] flex items-center gap-1.5">
             <Droplets className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Laboratuvar Çözeltileri (Beherglasa Dökmek İçin Şişeye Tıkla):</span>
+            <span>Laboratuvar Çözeltileri:</span>
           </span>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 shrink-0">
             {isSuccess && (
               <>
                 {stageIdx < FORMULA_STAGES.length - 1 && (
                   <button
                     onClick={handleNextStage}
-                    className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500"
+                    className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500"
                   >
                     <span>Sonraki Sentez ({stageIdx + 2}/3)</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -911,14 +894,14 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
                 {onNextSubject && (
                   <button
                     onClick={onNextSubject}
-                    className="btn-primary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
+                    className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
                   >
                     <span>
                       {nextSubjectName === 'Çıkış'
-                        ? 'Tüm Dersler Bitti - Çıkış'
+                        ? 'Tamamla & Çıkış'
                         : nextSubjectName
-                        ? `Sonraki Ders (${nextSubjectName}) →`
-                        : 'Sonraki Ders (Fizik) →'}
+                        ? `Sonraki (${nextSubjectName})`
+                        : 'Sonraki Ders'}
                     </span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
@@ -927,16 +910,16 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
             )}
             <button
               onClick={handleReset}
-              className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5"
+              className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Beherglası Boşalt</span>
+              <RotateCcw className="w-3 h-3" />
+              <span>Boşalt</span>
             </button>
           </div>
         </div>
 
         {/* 4 Çözelti Şişesi Kartı */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {currentStage.bottles.map((bottle) => {
             const isAdded = beakerItems.includes(bottle.id);
             const isPouringThis = pouringBottle?.id === bottle.id;
@@ -945,73 +928,55 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
                 key={bottle.id}
                 onClick={() => handleToggleBottle(bottle)}
                 disabled={isSuccess}
-                className={`group relative p-3 rounded-2xl border text-left transition-all flex items-center gap-3 ${
+                className={`group relative p-2 rounded-xl border text-left transition-all flex items-center gap-2.5 ${
                   isAdded
                     ? 'bg-cyan-500/15 border-cyan-400/80 text-white shadow-md shadow-cyan-500/10'
-                    : 'bg-white/[0.04] border-white/15 text-[#B5CBC8] hover:text-white hover:border-cyan-400/50 hover:bg-white/[0.08] hover:-translate-y-0.5'
+                    : 'bg-white/[0.04] border-white/15 text-[#B5CBC8] hover:text-white hover:border-cyan-400/50 hover:bg-white/[0.08]'
                 }`}
               >
-                {/* Görsel Cam Çözelti Şişesi (Beher / Erlenmayer) */}
+                {/* Görsel Cam Çözelti Şişesi */}
                 <div
                   className={`relative flex flex-col items-center shrink-0 transition-transform duration-300 ${
                     isPouringThis
-                      ? '-rotate-45 -translate-y-2 scale-110'
+                      ? '-rotate-45 -translate-y-1.5 scale-105'
                       : isAdded
                       ? '-rotate-12 opacity-85'
                       : 'group-hover:-rotate-12'
                   }`}
                 >
-                  {/* Şişe Ağzı & Tıpa */}
-                  <div className="w-5 h-1.5 rounded-t bg-white/40 border border-white/50" />
-                  <div className="w-3.5 h-2.5 bg-slate-900/80 border-x-2 border-white/40" />
+                  <div className="w-4 h-1 rounded-t bg-white/40 border border-white/50" />
+                  <div className="w-2.5 h-2 bg-slate-900/80 border-x border-white/40" />
 
-                  {/* Şişe Cam Gövdesi & İçindeki Renkli Çözelti */}
-                  <div className="w-11 h-14 rounded-b-xl rounded-t-md border-2 border-white/45 bg-slate-950/80 relative overflow-hidden flex flex-col justify-end shadow-inner">
-                    {/* Cam Ölçek Çizgileri */}
-                    <div className="absolute left-1 top-2 flex flex-col gap-1.5 text-[6px] font-mono text-white/35 z-10">
-                      <span>—</span>
-                      <span>—</span>
-                      <span>—</span>
-                    </div>
-
-                    {/* Şişe İçindeki Sıvı (Döküldüğünde Seviyesi Azalır) */}
+                  <div className="w-9 h-11 rounded-b-lg rounded-t-sm border border-white/45 bg-slate-950/80 relative overflow-hidden flex flex-col justify-end shadow-inner">
                     <div
                       className="w-full transition-all duration-500 relative"
                       style={{
                         height: isAdded ? '22%' : '76%',
                         background: `linear-gradient(to top, ${bottle.color}ee, ${bottle.color}88)`,
-                        borderTop: `2px solid ${bottle.color}`,
+                        borderTop: `1.5px solid ${bottle.color}`,
                       }}
-                    >
-                      {/* Çözelti İçi Minik Kabarcıklar */}
-                      {!isAdded && (
-                        <>
-                          <span className="absolute bottom-1.5 left-2 w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse" />
-                          <span className="absolute bottom-3.5 right-2 w-1 h-1 rounded-full bg-white/45" />
-                        </>
-                      )}
-                    </div>
+                    />
                   </div>
                 </div>
 
                 {/* Çözelti Etiketi Bilgileri */}
                 <div className="min-w-0 flex-1">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-cyan-300/90 truncate">
+                  <div className="text-[9px] font-mono uppercase tracking-wider text-cyan-300/90 truncate">
                     {bottle.tag}
                   </div>
-                  <div className="font-poppins font-bold text-sm text-white truncate mt-0.5">
+                  <div className="font-poppins font-bold text-xs sm:text-sm text-white truncate">
                     {bottle.name}
                   </div>
-                  <div className="flex items-center justify-between gap-1 mt-1">
-                    <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/40 text-white/80 border border-white/10">
-                      {bottle.formula} (aq)
+                  <div className="flex items-center justify-between gap-1 mt-0.5">
+                    <span className="text-[10px] font-mono font-bold px-1 py-0.2 rounded bg-black/40 text-white/80 border border-white/10">
+                      {bottle.formula}
                     </span>
                     <span
-                      className={`text-[10px] font-mono font-bold ${
+                      className={`text-[9px] font-mono font-bold ${
                         isAdded ? 'text-amber-300' : 'text-cyan-300 group-hover:underline'
                       }`}
                     >
-                      {isAdded ? 'Geri Al ✕' : 'Dök 💧'}
+                      {isAdded ? 'Geri ✕' : 'Dök 💧'}
                     </span>
                   </div>
                 </div>

@@ -8,143 +8,143 @@
   "questions": [
     {
       "externalId": "LGS-TUR-M-001",
-      "subTopic": "İsim-Fiil Ekleri (Ma-ış-mak)",
-      "text": "Aşağıdaki cümlelerin hangisinde isim-fiil (mastar) kullanılmıştır?",
-      "explanation": "\"Okumak\" sözcüğündeki -mak eki isim-fiil ekidir.",
+      "subTopic": "Fiilimsiler (Sıfat-Fiil ve Zarf-Fiil)",
+      "text": "\"Sararmış yapraklar rüzgâr estikçe etrafa savruluyordu.\" cümlesindeki fiilimsilerin türü sırasıyla nedir?",
+      "explanation": "\"Sararmış yaprak\" sıfat-fiil (-miş), \"estikçe\" zarf-fiildir (-dıkça).",
       "imageUrl": null,
       "options": [
-        "Gülerek yanıma geldi.",
-        "Kitap okumak ufku genişletir.",
-        "Koşan çocuk düştü.",
-        "Yarın erkenden yola çıkacağız."
+        "İsim-fiil, Sıfat-fiil",
+        "Sıfat-fiil, Zarf-fiil",
+        "Zarf-fiil, İsim-fiil",
+        "Sıfat-fiil, İsim-fiil"
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-TUR-M-002",
-      "subTopic": "Sıfat-Fiil (Ortaç)",
-      "text": "\"Dönülmez akşamın ufkundayız, vakit çok geç.\" dizesindeki sıfat-fiil hangisidir?",
-      "explanation": "\"Dönülmez akşam\" tamlamasında -mez eki almış \"dönülmez\" sözcüğü sıfat-fiildir.",
+      "subTopic": "Cümle Türleri (Yapısına Göre)",
+      "text": "İçinde en az bir fiilimsi bulunan ve tek yüklemi olan cümlelere ne ad verilir?",
+      "explanation": "Tek yüklemli olup içinde fiilimsi barındıran cümleler birleşik (fiilimsili) cümlelerdir.",
       "imageUrl": null,
       "options": [
-        "Dönülmez",
-        "Akşamın",
-        "Ufkundayız",
-        "Geç"
+        "Basit cümle",
+        "Fiilimsi bulunan (Birleşik) cümle",
+        "Sıralı cümle",
+        "Bağlı cümle"
       ],
-      "correctOptionIndex": 0
+      "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-TUR-M-003",
-      "subTopic": "Zarf-Fiil (Bağ-Fiil)",
-      "text": "Aşağıdaki cümlelerin hangisindeki zarf-fiil cümleye ZAMAN anlamı katmıştır?",
-      "explanation": "\"Çıkar çıkmaz\" (-r ... -mez) fiilimsisi \"Ne zaman geldi?\" sorusuna yanıt vererek zaman anlamı katar.",
+      "subTopic": "Cümlenin Ögeleri (Nesne ve Tümleçler)",
+      "text": "\"Öğretmenimiz dün sınıfta bize çok güzel bir kitap okudu.\" cümlesinde aşağıdaki ögelerden hangisi YOKTUR?",
+      "explanation": "Cümlede fiilimsi (zarf fiil) bulunmamaktadır. Ögeler: Özne, Zarf T., Yer T., Dolaylı T., Nesne, Yüklem.",
       "imageUrl": null,
       "options": [
-        "Gülerek cevap verdi.",
-        "Soruları koşa koşa çözdü.",
-        "Okuldan çıkar çıkmaz eve geldi.",
-        "Ağlaya ağlaya anlattı."
-      ],
-      "correctOptionIndex": 2
-    },
-    {
-      "externalId": "LGS-TUR-M-004",
-      "subTopic": "Cümlenin Ögeleri (Nesne Bulma)",
-      "text": "\"Ali dün akşam güzel bir roman okudu.\" cümlesindeki belirtisiz nesne hangisidir?",
-      "explanation": "Yükleme sorulan \"Ali ne okudu?\" sorusunun cevabı \"güzel bir roman\" belirtisiz nesnedir.",
-      "imageUrl": null,
-      "options": [
-        "Dün akşam",
-        "Güzel bir roman",
-        "Ali",
-        "Okudu"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-TUR-M-005",
-      "subTopic": "Noktalı Virgül Kullanımı",
-      "text": "Ögeleri arasında virgül bulunan sıralı cümleleri birbirinden ayırmak için hangi noktalama işareti kullanılır?",
-      "explanation": "İçinde virgül bulunan sıralı cümleleri ayırmak için noktalı virgül (;) kullanılır.",
-      "imageUrl": null,
-      "options": [
-        "İki nokta",
-        "Noktalı virgül",
-        "Üç nokta",
-        "Kısa çizgi"
-      ],
-      "correctOptionIndex": 1
-    },
-    {
-      "externalId": "LGS-TUR-M-006",
-      "subTopic": "Yazım Kuralları (de / da Bağlacı)",
-      "text": "Aşağıdaki cümlelerin hangisinde \"de / da\" bağlacının yazımıyla ilgili bir YANLIŞLIK vardır?",
-      "explanation": "Doğru yazım \"O da gitti de gelmedi\" olup ayrı yazılmalıdır; ancak cümlede bitişik yazım hatası aranırsa kural gereği bağlaçlar ayrı yazılır.",
-      "imageUrl": null,
-      "options": [
-        "Sen de bizimle gel.",
-        "Evde kimse yoktu.",
-        "Kitapta güzel resimler var.",
-        "O da gitti de gelmedi."
+        "Özne",
+        "Zarf Tamlayıcısı",
+        "Yer Tamlayıcısı",
+        "Zarf Fiil"
       ],
       "correctOptionIndex": 3
     },
     {
-      "externalId": "LGS-TUR-M-007",
-      "subTopic": "Metin Türleri (Deneme - Makale)",
-      "text": "Yazarın kanıtlama amacı gütmeden, samimi bir dille, kendi kendisiyle konuşur gibi yazdığı düşünce yazısı hangisidir?",
-      "explanation": "Kanıtlama amacı gütmeyen, içtenlikle yazılan türe deneme denir; kanıtlama varsa makaledir.",
+      "externalId": "LGS-TUR-M-004",
+      "subTopic": "Cümlede Vurgu",
+      "text": "Fiil cümlelerinde vurgu kural olarak hangi ögenin üzerindedir?",
+      "explanation": "Yüklemi fiil olan cümlelerde vurgu yüklemden bir önceki ögededir.",
       "imageUrl": null,
       "options": [
-        "Makale",
-        "Deneme",
-        "Biyografi",
-        "Fıkra (Köşe Yazısı)"
+        "Yüklemden hemen önceki ögede",
+        "Cümlenin ilk ögesinde",
+        "Öznede",
+        "Yüklemin kendisinde"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-M-005",
+      "subTopic": "Söz Sanatları (Teşhis ve Teşbih)",
+      "text": "\"Hırçın bir rüzgâr dağların ardından öfkeyle haykırıyordu.\" cümlesinde hangi söz sanatı ağır basmaktadır?",
+      "explanation": "İnsana özgü öfkelenme ve haykırma özelliği rüzgara aktarılarak kişileştirme yapılmıştır.",
+      "imageUrl": null,
+      "options": [
+        "Teşhis (Kişileştirme)",
+        "Tezat (Karşıtlık)",
+        "Abartma (Mübalağa)",
+        "Benzetme (Teşbih)"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-M-006",
+      "subTopic": "Metinde Ana Fikir (Ana Düşünce)",
+      "text": "Bir paragrafta yazarın okuyucuya vermek istediği asıl iletiye veya mesaja ne ad verilir?",
+      "explanation": "Yazarın metni yazma amacı ve temel iletisi ana fikirdir.",
+      "imageUrl": null,
+      "options": [
+        "Konu",
+        "Ana düşünce (Ana fikir)",
+        "Başlık",
+        "Yardımcı düşünce"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-007",
+      "subTopic": "Noktalama İşaretleri (Noktalı Virgül ve İki Nokta)",
+      "text": "Kendisinden sonra örnek verilecek veya açıklama yapılacak cümlenin sonuna hangi noktalama işareti konur?",
+      "explanation": "Açıklama veya örnek verilecek yerlerde iki nokta (:) kullanılır.",
+      "imageUrl": null,
+      "options": [
+        "Noktalı virgül (;)",
+        "İki nokta (:)",
+        "Üç nokta (...)",
+        "Virgül (,)"
       ],
       "correctOptionIndex": 1
     },
     {
       "externalId": "LGS-TUR-M-008",
-      "subTopic": "Söz Sanatları (Kişileştirme)",
-      "text": "\"Rüzgâr dağların ardından şarkı söyleyerek geliyordu.\" cümlesindeki söz sanatı nedir?",
-      "explanation": "Şarkı söylemek insana ait bir özelliktir, rüzgâra aktarılarak kişileştirme yapılmıştır.",
+      "subTopic": "Yazım Kuralları (Büyük Harflerin Kullanımı)",
+      "text": "Aşağıdaki cümlelerin hangisinde büyük harflerin yazımıyla ilgili bir YANLIŞLIK yapılmıştır?",
+      "explanation": "Kişi adlarından sonra gelen unvan ve saygı sözcükleri büyük harfle başlar: \"Ahmet Bey\" olmalıdır.",
       "imageUrl": null,
       "options": [
-        "Benzetme (Teşbih)",
-        "Kişileştirme (Teşhis)",
-        "Abartma (Mübalağa)",
-        "Tezat (Karşıtlık)"
+        "Van Gölü Türkiye'nin en büyük gölüdür.",
+        "Her yıl 29 Ekim Cumhuriyet Bayramı coşkuyla kutlanır.",
+        "Bu akşam Ay tutulması izlenecek.",
+        "Dün ahmet bey ile görüştük."
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-TUR-M-009",
+      "subTopic": "Paragrafta Anlatım Biçimleri",
+      "text": "Bir yerin, kişinin veya nesnenin ayırt edici özelliklerinin kelimelerle resim çizer gibi anlatıldığı biçim hangisidir?",
+      "explanation": "Göz önünde canlandırma ve niteleyici sözcüklerle resim çizme betimlemedir.",
+      "imageUrl": null,
+      "options": [
+        "Öyküleme",
+        "Betimleme (Tasvir)",
+        "Tartışma",
+        "Açıklama"
       ],
       "correctOptionIndex": 1
     },
     {
-      "externalId": "LGS-TUR-M-009",
-      "subTopic": "Cümlede Anlam (Örtülü Anlam)",
-      "text": "\"Toplantıya Ahmet de katıldı.\" cümlesinden kesin olarak çıkarılabilecek örtülü anlam nedir?",
-      "explanation": "\"de\" bağlacı başkalarının da toplantıya katıldığını örtülü olarak ifade eder.",
-      "imageUrl": null,
-      "options": [
-        "Toplantıya sadece Ahmet katılmıştır",
-        "Ahmet toplantıyı yönetmiştir",
-        "Toplantıya Ahmet dışında başkaları da katılmıştır",
-        "Toplantı iptal edilmiştir"
-      ],
-      "correctOptionIndex": 2
-    },
-    {
       "externalId": "LGS-TUR-M-010",
       "subTopic": "Fiilde Çatı (Geçişli - Geçişsiz)",
-      "text": "Aşağıdaki yüklemlerden hangisi nesne alabilen (GEÇİŞLİ) bir fiildir?",
-      "explanation": "\"Onu yazmak\" anlamlıdır ve nesne alabilir (geçişlidir); onu uyumak veya onu gülmek denemez.",
+      "text": "Başına \"onu\" kelimesi getirilebilen ve nesne alabilen fiillere ne ad verilir?",
+      "explanation": "Nesne alan veya nesne alabilen fiiller geçişli fiillerdir (Örn: Onu okudu).",
       "imageUrl": null,
       "options": [
-        "Uyumak",
-        "Gülmek",
-        "Yazmak",
-        "Oturmak"
+        "Geçişli fiil",
+        "Geçişsiz fiil",
+        "Etken fiil",
+        "Edilgen fiil"
       ],
-      "correctOptionIndex": 2
+      "correctOptionIndex": 0
     }
   ]
 }

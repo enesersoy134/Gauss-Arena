@@ -68,7 +68,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#EF4444',
         slotLabel: 'Yönetim Yuvası',
         slotHint: 'DNA ve genetik kontrol merkezi',
-        positionClass: 'top-6 left-6 sm:left-10',
+        positionClass: 'top-2.5 left-2 sm:left-6',
       },
       {
         id: 'anim-mito',
@@ -79,7 +79,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#F59E0B',
         slotLabel: 'Enerji Yuvası',
         slotHint: 'Oksijenli solunumla ATP üretir',
-        positionClass: 'top-6 right-6 sm:right-10',
+        positionClass: 'top-2.5 right-2 sm:right-6',
       },
       {
         id: 'anim-centro',
@@ -90,7 +90,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#38BDF8',
         slotLabel: 'Bölünme Yuvası',
         slotHint: 'Hayvan hücresinde iğ ipliği üretir',
-        positionClass: 'bottom-6 left-6 sm:left-10',
+        positionClass: 'bottom-2.5 left-2 sm:left-6',
       },
       {
         id: 'anim-golgi',
@@ -101,7 +101,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#10B981',
         slotLabel: 'Salgı Yuvası',
         slotHint: 'Proteinleri paketler ve salgılar',
-        positionClass: 'bottom-6 right-6 sm:right-10',
+        positionClass: 'bottom-2.5 right-2 sm:right-6',
       },
     ],
     // 7 Organel Seçeneği (Karışık sırada: 4 doğru + 3 çeldirici)
@@ -187,7 +187,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#EF4444',
         slotLabel: 'Fotosentez Yuvası',
         slotHint: 'Güneş ışığıyla besin ve O₂ üretir',
-        positionClass: 'top-6 left-6 sm:left-10',
+        positionClass: 'top-2.5 left-2 sm:left-6',
       },
       {
         id: 'plant-vacuole',
@@ -198,7 +198,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#3B82F6',
         slotLabel: 'Turgor Yuvası',
         slotHint: 'Bitki hücresine özgü büyük su kesesi',
-        positionClass: 'top-6 right-6 sm:right-10',
+        positionClass: 'top-2.5 right-2 sm:right-6',
       },
       {
         id: 'plant-nucleus',
@@ -209,7 +209,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#F59E0B',
         slotLabel: 'Yönetim Yuvası',
         slotHint: 'DNA ve genetik kontrol merkezi',
-        positionClass: 'bottom-6 left-6 sm:left-10',
+        positionClass: 'bottom-2.5 left-2 sm:left-6',
       },
       {
         id: 'plant-mito',
@@ -220,7 +220,7 @@ const CELL_STAGES: CellStage[] = [
         pinColor: '#EC4899',
         slotLabel: 'Enerji Yuvası',
         slotHint: 'Hücresel solunumla ATP üretir',
-        positionClass: 'bottom-6 right-6 sm:right-10',
+        positionClass: 'bottom-2.5 right-2 sm:right-6',
       },
     ],
     // 7 Organel Seçeneği (Karışık sırada: 4 doğru + 3 çeldirici)
@@ -608,9 +608,9 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
   };
 
   return (
-    <div ref={rootRef} className="flex flex-col gap-4">
+    <div ref={rootRef} className="flex flex-col gap-2 sm:gap-2.5">
       {/* ÜST BÖLÜM SEÇİCİ: 1. HAYVAN HÜCRESİ / 2. BİTKİ HÜCRESİ */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-2">
         {CELL_STAGES.map((stg, idx) => {
           const isCurrent = idx === stageIdx;
           const pinnedCount = (pinnedByStage[idx] || []).length;
@@ -620,7 +620,7 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
             <button
               key={stg.stageNumber}
               onClick={() => switchStage(idx)}
-              className={`p-3 rounded-2xl border text-left transition-all flex items-center justify-between gap-2 ${
+              className={`p-2 sm:p-2.5 rounded-xl border text-left transition-all flex items-center justify-between gap-1.5 ${
                 isCurrent
                   ? stg.cellType === 'animal'
                     ? 'bg-pink-500/20 border-pink-400 text-white shadow-md'
@@ -631,7 +631,7 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
               }`}
             >
               <div>
-                <div className="text-[10px] font-mono uppercase opacity-80">
+                <div className="text-[9px] font-mono uppercase opacity-80">
                   {stg.cellType === 'animal'
                     ? '🔴 Yuvarlak / Esnek Zarlı'
                     : '🟢 Köşeli / Selüloz Çeperli'}
@@ -640,85 +640,106 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
                   {stg.title} ({pinnedCount}/4 İğnelendi)
                 </div>
               </div>
-              {isDone && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+              {isDone && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
             </button>
           );
         })}
       </div>
 
-      {/* HİKAYE KARAKTERİ & ACİL LABORATUVAR GÖREV BALONU */}
+      {/* =====================================================================
+       * VURGULU GÖREV SENARYOSU & ACİL LABORATUVAR BRİFİNGİ (HÜCRE ONARIMI)
+       * Ekranda anında fark edilecek, yüksek kontrastlı ve neon pembe/yeşil vurgulu kart
+       * ===================================================================== */}
       <div
-        className={`rounded-2xl border-2 p-3.5 flex items-center gap-3.5 transition-all duration-300 ${
+        className={`rounded-xl sm:rounded-2xl border-2 p-2.5 sm:p-3 transition-all duration-300 relative overflow-hidden shadow-lg ${
           statusMsg.type === 'error'
-            ? 'bg-red-950/60 border-red-400 shadow-lg shadow-red-500/20'
+            ? 'bg-gradient-to-r from-red-950/85 via-[#1E0D1A] to-[#120815] border-red-400 ring-1 ring-red-400/40 shadow-red-500/25'
             : isCurrentCellWorking
-            ? 'bg-emerald-950/60 border-emerald-400 shadow-lg shadow-emerald-500/20'
-            : 'bg-[#170B19] border-pink-500/40'
+            ? 'bg-gradient-to-r from-emerald-950/85 via-[#101E1C] to-[#0A1215] border-emerald-400 ring-1 ring-emerald-400/40 shadow-emerald-500/25'
+            : 'bg-gradient-to-r from-pink-950/80 via-[#1A0E1C] to-[#120815] border-pink-500/80 ring-1 ring-pink-400/40 shadow-pink-500/20'
         }`}
       >
-        <div
-          className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center text-3xl shrink-0 transition-transform duration-300 ${
-            statusMsg.type === 'error'
-              ? 'border-red-400 bg-red-500/20 animate-bounce'
-              : isCurrentCellWorking
-              ? 'border-emerald-400 bg-emerald-500/20 scale-105'
-              : 'border-pink-400/50 bg-pink-500/15'
-          }`}
-        >
-          {statusMsg.type === 'error'
-            ? '🚨'
-            : isCurrentCellWorking
-            ? '🤩'
-            : currentStage.cellType === 'animal'
-            ? '👩‍🔬'
-            : '🧑‍🌾'}
-        </div>
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-pink-500/15 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-poppins font-black text-xs sm:text-sm text-white">
-              {currentStage.cellType === 'animal'
-                ? 'Genetik Uzmanı Dr. Elif'
-                : 'Mars Botanikçisi Prof. Çınar'}
-            </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-pink-200">
-              {currentStage.cellType === 'animal'
-                ? 'Acil Hücre Onarım Birimi'
-                : 'Biyo-Sera Oksijen Üssü'}
-            </span>
-            <span
-              className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ml-auto ${
-                statusMsg.type === 'error'
-                  ? 'bg-red-500/30 text-red-200 border border-red-400/50'
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 relative z-10">
+          <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+            {/* Karakter Avatarı & Canlı Halka */}
+            <div className="relative shrink-0">
+              <div
+                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl border-2 flex items-center justify-center text-2xl shadow-md transition-transform duration-300 ${
+                  statusMsg.type === 'error'
+                    ? 'border-red-400 bg-red-500/25 animate-bounce'
+                    : isCurrentCellWorking
+                    ? 'border-emerald-400 bg-emerald-500/25 scale-105 shadow-emerald-500/30'
+                    : 'border-pink-400 bg-pink-500/20'
+                }`}
+              >
+                {statusMsg.type === 'error'
+                  ? '🚨'
                   : isCurrentCellWorking
-                  ? 'bg-emerald-500/30 text-emerald-200 border border-emerald-400/50'
-                  : 'bg-pink-500/20 text-pink-200 border border-pink-400/40'
-              }`}
-            >
-              {statusMsg.type === 'error'
-                ? '⚠️ DOKU UYUŞMAZLIĞI!'
-                : isCurrentCellWorking
-                ? '🎉 HÜCRE KURTARILDI!'
-                : `🦠 GÖREV: ${currentPinnedIds.length}/4 Organel Nakli`}
-            </span>
+                  ? '🤩'
+                  : currentStage.cellType === 'animal'
+                  ? '👩‍🔬'
+                  : '🧑‍🌾'}
+              </div>
+              <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-pink-500 border border-black text-[8px] font-bold text-white items-center justify-center">🧬</span>
+              </span>
+            </div>
+
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-poppins font-black text-[10px] tracking-wide uppercase shadow-sm flex items-center gap-1">
+                  🚨 DOKU BRİFİNGİ
+                </span>
+                <span className="text-[10px] font-mono font-bold text-pink-200 bg-pink-500/25 px-2 py-0.5 rounded-md border border-pink-400/50">
+                  {currentStage.cellType === 'animal'
+                    ? 'Dr. Elif'
+                    : 'Prof. Çınar'}
+                </span>
+                <span className="text-[10px] font-mono font-bold text-white bg-white/10 px-1.5 py-0.5 rounded-md border border-white/10">
+                  {currentStage.cellType === 'animal' ? 'Hayvan Hücresi' : 'Bitki Hücresi'}
+                </span>
+              </div>
+
+              <p className="text-xs text-white font-medium leading-tight">
+                {statusMsg.type === 'info' && currentPinnedIds.length === 0
+                  ? currentStage.cellType === 'animal'
+                    ? '“Tepsideki bitki organellerine aldanmadan hayvan hücresine ait 4 doğru organeli yuvalarına iğnele!”'
+                    : '“Bitki hücresine özgü 4 doğru organeli hemen yuvalarına yerleştir!”'
+                  : statusMsg.text}
+              </p>
+            </div>
           </div>
 
-          <p className="text-xs text-white/95 mt-1 leading-relaxed font-medium">
-            {statusMsg.type === 'info' && currentPinnedIds.length === 0
-              ? currentStage.cellType === 'animal'
-                ? '“Acil vaka! Yaralı hayvan dokusu hücresi ATP üretemiyor ve bölünemiyor! Tepsideki bitki organellerine aldanmadan hayvan hücresine ait 4 doğru organeli yuvalarına iğnele!”'
-                : '“Uzay seramızdaki bitki hücresi solmak üzere! Fotosentezi ve turgor basıncını başlatmak için bitki hücresine özgü 4 doğru organeli hemen yuvalarına yerleştir!”'
-              : statusMsg.text}
-          </p>
+          {/* Aksiyon Hedef Rozeti */}
+          <div className="shrink-0 bg-black/50 border border-pink-500/40 rounded-xl px-2.5 py-1.5 flex flex-col items-center sm:items-end justify-center self-stretch sm:self-auto min-w-[150px] shadow-inner">
+            <div className="text-[9px] font-mono uppercase text-pink-300 font-black flex items-center gap-1">
+              <span>🎯 NE YAPMALISIN?</span>
+            </div>
+            <div className="text-[11px] font-mono font-black text-white text-center sm:text-right mt-0.5">
+              {isCurrentCellWorking ? (
+                <span className="text-emerald-400 font-bold">✓ Hücre Kurtarıldı!</span>
+              ) : statusMsg.type === 'error' ? (
+                <span className="text-red-300 font-bold">⚠️ Yanlış Organel</span>
+              ) : (
+                <span className="text-pink-200">{currentPinnedIds.length} / 4 İğnelendi</span>
+              )}
+            </div>
+            <div className="text-[9px] text-zinc-300 text-center sm:text-right mt-0.5 font-mono">
+              Tepsiden seç ➔ Yuvaya tıkla
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ORTA BÜYÜK GÖRSEL HÜCRE SAHNESİ */}
-      <div className="relative rounded-3xl border-2 border-white/15 bg-gradient-to-b from-[#1D0F22] via-[#140917] to-[#0B040D] p-4 sm:p-6 flex flex-col items-center justify-center min-h-[340px] overflow-hidden">
+      <div className="relative rounded-2xl sm:rounded-3xl border-2 border-white/15 bg-gradient-to-b from-[#1D0F22] via-[#140917] to-[#0B040D] p-2.5 sm:p-3 flex flex-col items-center justify-center min-h-[210px] sm:min-h-[235px] overflow-hidden">
         {isCurrentCellWorking && (
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             <div
-              className={`w-72 h-72 rounded-full blur-2xl animate-pulse ${
+              className={`w-60 h-60 rounded-full blur-2xl animate-pulse ${
                 currentStage.cellType === 'animal'
                   ? 'bg-pink-500/20'
                   : 'bg-emerald-500/25'
@@ -728,8 +749,8 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
         )}
 
         <div
-          className={`relative w-full max-w-xl h-[270px] sm:h-[290px] flex items-center justify-center transition-transform duration-700 ${
-            isCurrentCellWorking ? 'scale-[1.02]' : ''
+          className={`relative w-full max-w-xl h-[190px] sm:h-[210px] flex items-center justify-center transition-transform duration-700 ${
+            isCurrentCellWorking ? 'scale-[1.01]' : ''
           }`}
         >
           {/* ARKA PLAN SVG: HAYVAN HÜCRESİ VEYA BİTKİ HÜCRESİ */}
@@ -864,8 +885,8 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
           </svg>
 
           {isCurrentCellWorking && (
-            <div className="z-20 px-3.5 py-1.5 rounded-full bg-emerald-500/90 text-white font-poppins font-black text-xs shadow-lg shadow-emerald-500/40 animate-bounce flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4" />
+            <div className="z-20 px-3 py-1 rounded-full bg-emerald-500/90 text-white font-poppins font-black text-xs shadow-md shadow-emerald-500/40 animate-bounce flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5" />
               <span>
                 {currentStage.cellType === 'animal'
                   ? '⚡ ATP & Protein Üretiliyor!'
@@ -882,10 +903,10 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
               <button
                 key={slotOrg.id}
                 onClick={() => handlePinSlotClick(slotOrg)}
-                className={`absolute ${slotOrg.positionClass} w-44 sm:w-48 p-2.5 rounded-2xl transition-all flex items-center gap-2.5 text-left z-10 ${
+                className={`absolute ${slotOrg.positionClass} w-36 sm:w-42 p-1.5 sm:p-2 rounded-xl transition-all flex items-center gap-2 text-left z-10 ${
                   isPinned
-                    ? 'bg-black/65 border-2 border-emerald-400/80 shadow-xl scale-105'
-                    : 'bg-black/45 border-2 border-dashed border-white/30 hover:border-[#F14E13] hover:bg-[#F14E13]/20 hover:scale-105'
+                    ? 'bg-black/65 border-2 border-emerald-400/80 shadow-md scale-105'
+                    : 'bg-black/45 border border-dashed border-white/30 hover:border-[#F14E13] hover:bg-[#F14E13]/20 hover:scale-105'
                 }`}
               >
                 {isPinned ? (
@@ -896,24 +917,24 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
                       isWorking={isCurrentCellWorking}
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="font-poppins font-bold text-xs text-white truncate">
+                      <div className="font-poppins font-bold text-[11px] sm:text-xs text-white truncate">
                         {slotOrg.name}
                       </div>
-                      <div className="text-[10px] text-emerald-300 font-mono leading-tight mt-0.5 truncate">
+                      <div className="text-[9px] text-emerald-300 font-mono leading-tight mt-0.5 truncate">
                         {slotOrg.roleShort}
                       </div>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="w-11 h-11 rounded-full border-2 border-dashed border-amber-400/70 bg-amber-500/10 flex items-center justify-center shrink-0">
-                      <div className="w-3 h-3 rounded-full bg-amber-400 animate-ping" />
+                    <div className="w-8 h-8 rounded-full border border-dashed border-amber-400/70 bg-amber-500/10 flex items-center justify-center shrink-0">
+                      <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="font-poppins font-bold text-xs text-amber-200 truncate">
+                      <div className="font-poppins font-bold text-[11px] sm:text-xs text-amber-200 truncate">
                         {slotOrg.slotLabel}
                       </div>
-                      <div className="text-[10px] text-[#B5CBC8] leading-tight mt-0.5">
+                      <div className="text-[9px] text-[#B5CBC8] leading-tight truncate">
                         {slotOrg.slotHint}
                       </div>
                     </div>
@@ -926,7 +947,7 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
 
         {/* Alt Durum Mesajı */}
         <div
-          className={`mt-3 px-4 py-2 rounded-xl text-xs font-medium text-center border max-w-2xl ${
+          className={`mt-1.5 px-3 py-1 rounded-lg text-xs font-medium text-center border max-w-xl ${
             statusMsg.type === 'error'
               ? 'bg-red-500/20 border-red-500/50 text-red-200'
               : statusMsg.type === 'success'
@@ -939,16 +960,16 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
       </div>
 
       {/* ALT ORGANEL TEPSİSİ (7 SEÇENEK: 4 DOĞRU + 3 ÇELDİRİCİ) */}
-      <div className="bg-[#0F0510] border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
-        <div className="flex items-center justify-between flex-wrap gap-2">
+      <div className="bg-[#0F0510] border border-white/10 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 flex flex-col gap-2">
+        <div className="flex items-center justify-between flex-wrap gap-1.5">
           <span className="text-xs font-mono font-bold text-[#B5CBC8]">
-            Organel Tepsisi (7 Organelden Bu Hücreye Ait 4 Tanesini Seç & İğnele):
+            Organel Tepsisi (7 Organelden Doğru 4 Tanesini Seç & İğnele):
           </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {isCurrentCellWorking && stageIdx === 0 && (
               <button
                 onClick={() => switchStage(1)}
-                className="btn-primary !py-1.5 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg"
+                className="btn-primary !py-1 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md"
               >
                 <span>2. Bölüm: Bitki Hücresi</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -957,13 +978,13 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
             {isCurrentCellWorking && (stageIdx === 1 || areAllStagesDone) && onNextSubject && (
               <button
                 onClick={onNextSubject}
-                className="btn-primary !py-1.5 !px-3.5 text-xs font-bold flex items-center gap-1.5 !bg-emerald-600 hover:!bg-emerald-500 shadow-lg shadow-emerald-500/20"
+                className="btn-primary !py-1 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
               >
                 <span>
                   {nextSubjectName === 'Çıkış'
-                    ? 'Tüm Dersler Bitti - Çıkış'
+                    ? 'Tamamla & Çıkış'
                     : nextSubjectName
-                    ? `Sonraki Çözülmemiş Ders (${nextSubjectName})`
+                    ? `Sonraki (${nextSubjectName})`
                     : 'Sonraki Ders'}
                 </span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -971,15 +992,15 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
             )}
             <button
               onClick={handleReset}
-              className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1.5"
+              className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-3 h-3" />
               <span>İğneleri Sök</span>
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5">
           {currentStage.trayOptions.map((org) => {
             const isPinned = currentPinnedIds.includes(org.id);
             const isSelected = selectedOrgId === org.id && !isPinned;
@@ -997,11 +1018,11 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
                   }
                 }}
                 disabled={isPinned}
-                className={`p-2.5 rounded-xl font-poppins font-bold text-xs flex items-center gap-2 border transition-all text-left ${
+                className={`p-1.5 sm:p-2 rounded-xl font-poppins font-bold text-xs flex items-center gap-1.5 border transition-all text-left ${
                   isPinned
                     ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 opacity-50 cursor-default'
                     : isSelected
-                    ? 'scale-105 shadow-lg text-white'
+                    ? 'scale-105 shadow-md text-white'
                     : 'bg-white/5 border-white/15 text-[#B5CBC8] hover:text-white hover:border-white/30'
                 }`}
                 style={
@@ -1014,14 +1035,14 @@ export const BioCellGame: React.FC<BioCellGameProps> = ({
                 }
               >
                 <span
-                  className="w-3 h-3 rounded-full shrink-0 border border-white"
+                  className="w-2.5 h-2.5 rounded-full shrink-0 border border-white"
                   style={{ backgroundColor: org.pinColor }}
                 />
                 <div className="min-w-0 flex-1">
-                  <div className="text-white truncate text-[11px]">{org.name}</div>
+                  <div className="text-white truncate text-[10px] sm:text-[11px]">{org.name}</div>
                   <div className="text-[9px] font-mono opacity-80 truncate">{org.roleShort}</div>
                 </div>
-                {isPinned && <span className="text-xs shrink-0">📍</span>}
+                {isPinned && <span className="text-[10px] shrink-0">📍</span>}
               </button>
             );
           })}
