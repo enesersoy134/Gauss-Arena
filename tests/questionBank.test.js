@@ -56,6 +56,12 @@ test('selectMatchQuestions enriches questions with interactiveQuestion and suppo
     (q) => q.interactiveQuestion && (q.interactiveQuestion.type !== 'universal_choice' || (q.externalId && q.externalId.startsWith('q_')))
   ).length;
   assert.ok(richCount >= 2, `En az 2 interaktif soru seçilmeli, bulunan: ${richCount}`);
+
+  // Düellolarda matrix_toggle türü soru gelmemeli
+  const matrixToggleQuestions = questions.filter(
+    (q) => q.type === 'matrix_toggle' || (q.interactiveQuestion && q.interactiveQuestion.type === 'matrix_toggle')
+  );
+  assert.equal(matrixToggleQuestions.length, 0, 'Düellolarda matrix_toggle sorusu çıkmamalı');
 });
 
 test('all questions in questionBank have clean human-readable text without raw LaTeX or control characters', () => {
