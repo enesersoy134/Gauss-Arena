@@ -447,7 +447,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
   nextSubjectName,
 }) => {
   const [stageIdx, setStageIdx] = useState<number>(0);
-  const [beakerItems, setBeakerItems] = useState<string[]>([]);
+  const [beakersByStage, setBeakersByStage] = useState<Record<number, string[]>>({});
   const [completedStages, setCompletedStages] = useState<number[]>([]);
   const [pouringBottle, setPouringBottle] = useState<BottleDef | null>(null);
   const pourTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -459,6 +459,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
     };
   }, []);
 
+  const beakerItems = beakersByStage[stageIdx] || [];
   const currentStage = FORMULA_STAGES[stageIdx];
   const correctIds = currentStage.bottles
     .filter((b) => b.isCorrectIngredient)
@@ -475,16 +476,16 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
     correctIds.every((id) => beakerItems.includes(id));
 
   const isWrongCombination = isTwoCombined && Boolean(wrongOutcome);
+  const isAllStagesDone = FORMULA_STAGES.every((_, idx) => completedStages.includes(idx));
 
   const handleSelectStage = (idx: number) => {
     if (pourTimerRef.current) clearTimeout(pourTimerRef.current);
     setPouringBottle(null);
     setStageIdx(idx);
-    setBeakerItems([]);
   };
 
   const handleToggleBottle = (bottle: BottleDef) => {
-    if (isSuccess) return;
+    if (isSuccess && !beakerItems.includes(bottle.id)) return;
 
     let next: string[];
     const isRemoving = beakerItems.includes(bottle.id);
@@ -493,9 +494,13 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
       next = beakerItems.filter((i) => i !== bottle.id);
       setPouringBottle(null);
       playLiquidPourSfx(1, true);
+      if (completedStages.includes(stageIdx)) {
+        setCompletedStages((prev) => prev.filter((i) => i !== stageIdx));
+      }
     } else {
       if (beakerItems.length >= 2) {
-        next = [beakerItems[1], bottle.id];
+        // İki madde varken başka bir maddeye tıklanırsa 2. maddeyi yenisiyle değiştir
+        next = [beakerItems[0], bottle.id];
       } else {
         next = [...beakerItems, bottle.id];
       }
@@ -509,7 +514,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
       }, 720);
     }
 
-    setBeakerItems(next);
+    setBeakersByStage((prev) => ({ ...prev, [stageIdx]: next }));
 
     if (!isRemoving && next.length === 2) {
       const nextPairKey = makePairKey(next[0], next[1]);
@@ -520,19 +525,37 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
           : [...completedStages, stageIdx];
         setCompletedStages(updatedCompleted);
         setTimeout(() => soundEngine.playCorrect(), 380);
-        onComplete();
+
+        // 3/3 Sentez Kontrolü: Yalnızca 3 sentezin tamamı çözüldüğünde ders tamamlanır
+        if (FORMULA_STAGES.every((_, i) => updatedCompleted.includes(i))) {
+          setTimeout(() => {
+            onComplete();
+          }, 450);
+        }
       } else if (nextWrong) {
         setTimeout(() => soundEngine.playWrong(), 380);
       }
     }
   };
 
+  // Sıradaki çözülmemiş sentezi bul
+  const nextUnsolvedStageIdx = FORMULA_STAGES.findIndex(
+    (_, idx) => !completedStages.includes(idx) && idx !== stageIdx
+  );
+
   const handleNextStage = () => {
     if (pourTimerRef.current) clearTimeout(pourTimerRef.current);
     setPouringBottle(null);
-    if (stageIdx < FORMULA_STAGES.length - 1) {
-      setStageIdx(stageIdx + 1);
-      setBeakerItems([]);
+
+    let targetIdx = -1;
+    if (nextUnsolvedStageIdx !== -1) {
+      targetIdx = nextUnsolvedStageIdx;
+    } else if (stageIdx < FORMULA_STAGES.length - 1) {
+      targetIdx = stageIdx + 1;
+    }
+
+    if (targetIdx !== -1) {
+      setStageIdx(targetIdx);
 
       // Üste yumuşak kaydır
       const scrollParent = rootRef.current?.closest('.overflow-y-auto');
@@ -550,7 +573,10 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
     if (beakerItems.length > 0) {
       playLiquidPourSfx(1, true);
     }
-    setBeakerItems([]);
+    setBeakersByStage((prev) => ({ ...prev, [stageIdx]: [] }));
+    if (completedStages.includes(stageIdx)) {
+      setCompletedStages((prev) => prev.filter((i) => i !== stageIdx));
+    }
   };
 
   const addedBottles = beakerItems
@@ -603,6 +629,32 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
           );
         })}
       </div>
+
+      {/* 3/3 TÜM SENTEZLER TAMAMLANDIĞINDA ÇIKAN KUTLAMA ŞERİDİ */}
+      {isAllStagesDone && (
+        <div className="bg-emerald-500/20 border-2 border-emerald-400 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-2 shadow-lg shadow-emerald-500/20 animate-slide-up">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="text-2xl shrink-0">🏆</span>
+            <div className="min-w-0">
+              <div className="font-poppins font-black text-xs sm:text-sm text-emerald-300">
+                Tebrikler! 3/3 Kimya Sentezi Başarıyla Tamamlandı!
+              </div>
+              <div className="text-[10px] sm:text-[11px] font-mono text-emerald-100/90 truncate">
+                Revir (NaClO), Yemekhane (NaCl) ve Kantin (NaHCO₃) kurtarıldı.
+              </div>
+            </div>
+          </div>
+          {onNextSubject && (
+            <button
+              onClick={onNextSubject}
+              className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-500 hover:!bg-emerald-400 shrink-0 shadow-md shadow-emerald-500/30"
+            >
+              <span>{nextSubjectName === 'Çıkış' ? 'Çıkış' : 'Sonraki Ders'}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+      )}
 
       {/* =====================================================================
        * VURGULU GÖREV SENARYOSU & LABORATUVAR KRİZ BRİFİNGİ (KİMYA SENTEZİ)
@@ -684,7 +736,9 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
             </div>
             <div className="text-[11px] font-mono font-black text-white text-center sm:text-right mt-0.5">
               {isSuccess ? (
-                <span className="text-emerald-400 font-bold">✓ Sentez Başarılı!</span>
+                <span className="text-emerald-400 font-bold">
+                  ✓ Sentez Başarılı! ({completedStages.length}/3)
+                </span>
               ) : isWrongCombination ? (
                 <span className="text-red-300 font-bold">⚠️ Boşalt & Tekrar Dene</span>
               ) : (
@@ -692,7 +746,11 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
               )}
             </div>
             <div className="text-[9px] text-zinc-300 text-center sm:text-right mt-0.5 font-mono">
-              Alttan 2 doğru şişeye tıkla
+              {isSuccess
+                ? isAllStagesDone
+                  ? '3/3 Sentez Tamamlandı!'
+                  : 'Sıradaki senteze geç'
+                : 'Alttan 2 doğru şişeye tıkla'}
             </div>
           </div>
         </div>
@@ -738,13 +796,13 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
 
           {/* DÖKÜLEN ŞİŞE & AKAN SIVI ANİMASYONU */}
           {pouringBottle && (
-            <div className="absolute -top-3 left-1/2 -translate-x-2 z-30 pointer-events-none flex flex-col items-center">
+            <div className="absolute -top-4 left-1/2 -translate-x-2 z-30 pointer-events-none flex flex-col items-center">
               {/* Eğik Çözelti Şişesi */}
               <div
                 className="flex items-center -rotate-[52deg] origin-bottom-left transition-transform duration-300 drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)]"
               >
                 <div
-                  className="w-13 h-9 rounded-lg border-2 border-white/60 bg-slate-900/90 relative overflow-hidden flex items-center justify-center shadow-inner"
+                  className="w-14 h-9 rounded-lg border-2 border-white/60 bg-slate-900/90 relative overflow-hidden flex items-center justify-center shadow-inner"
                   style={{ borderColor: pouringBottle.color }}
                 >
                   <div
@@ -762,14 +820,14 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
 
               {/* Beherglasın İçine Akan Sıvı Sütunu */}
               <div
-                className="w-2 h-28 -mt-2 -ml-12 rounded-full animate-pulse"
+                className="w-2 h-24 -mt-2 -ml-10 rounded-full animate-pulse"
                 style={{
                   background: `linear-gradient(to bottom, ${pouringBottle.color}, ${pouringBottle.color}cc, transparent)`,
                   boxShadow: `0 0 10px ${pouringBottle.color}`,
                 }}
               />
               <div
-                className="w-2.5 h-2.5 rounded-full animate-ping -mt-10 -ml-12"
+                className="w-2.5 h-2.5 rounded-full animate-ping -mt-8 -ml-10"
                 style={{ backgroundColor: pouringBottle.color }}
               />
             </div>
@@ -777,7 +835,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
 
           {/* ANA CAM BEHERGLAS */}
           <div className="relative flex items-center">
-            <div className="w-44 h-38 rounded-b-[26px] rounded-t-md border-3 border-white/40 border-t-white/20 bg-slate-950/65 relative overflow-hidden flex flex-col justify-end shadow-[0_0_25px_rgba(6,182,212,0.15)] backdrop-blur-sm">
+            <div className="w-44 h-40 sm:h-44 rounded-b-[26px] rounded-t-md border-2 border-white/40 border-t-white/20 bg-slate-950/65 relative overflow-hidden flex flex-col justify-end shadow-[0_0_25px_rgba(6,182,212,0.15)] backdrop-blur-sm">
               {/* Cam Parlama Yansıması */}
               <div className="absolute right-2 top-2 bottom-4 w-1.5 rounded-full bg-gradient-to-b from-white/25 via-white/10 to-transparent pointer-events-none z-20" />
 
@@ -882,16 +940,18 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
           <div className="flex items-center gap-1.5 shrink-0">
             {isSuccess && (
               <>
-                {stageIdx < FORMULA_STAGES.length - 1 && (
+                {!isAllStagesDone && (
                   <button
                     onClick={handleNextStage}
-                    className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500"
+                    className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center gap-1 !bg-cyan-600 hover:!bg-cyan-500 shadow-md shadow-cyan-500/20"
                   >
-                    <span>Sonraki Sentez ({stageIdx + 2}/3)</span>
+                    <span>
+                      Sonraki Sentez ({((nextUnsolvedStageIdx !== -1 ? nextUnsolvedStageIdx : stageIdx + 1) % FORMULA_STAGES.length) + 1}/3)
+                    </span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 )}
-                {onNextSubject && (
+                {isAllStagesDone && onNextSubject && (
                   <button
                     onClick={onNextSubject}
                     className="btn-primary !py-1.5 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
@@ -968,7 +1028,7 @@ export const ChemMoleculeGame: React.FC<ChemMoleculeGameProps> = ({
                     {bottle.name}
                   </div>
                   <div className="flex items-center justify-between gap-1 mt-0.5">
-                    <span className="text-[10px] font-mono font-bold px-1 py-0.2 rounded bg-black/40 text-white/80 border border-white/10">
+                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/40 text-white/80 border border-white/10">
                       {bottle.formula}
                     </span>
                     <span

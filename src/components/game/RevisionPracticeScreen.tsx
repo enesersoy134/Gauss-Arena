@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Question } from '../../types/game';
+import { normalizeQuestion } from '../../data/allQuestions';
 import { AnswerResult } from '../questions/questionProps';
 import QuestionRenderer from '../questions/QuestionRenderer';
 import { getRecommendationsForTopic } from '../../utils/resourceRecommendations';
@@ -42,7 +43,8 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
   onComplete,
   onExit,
 }) => {
-  const [questions, setQuestions] = useState<Question[]>(initialQuestions);
+  const normalizedInitial = (initialQuestions || []).map(normalizeQuestion);
+  const [questions, setQuestions] = useState<Question[]>(normalizedInitial);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [hasAnswered, setHasAnswered] = useState<boolean>(false);
   const [lastResult, setLastResult] = useState<AnswerResult | null>(null);
@@ -51,6 +53,20 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
   const [correctQuestionIds, setCorrectQuestionIds] = useState<Set<string>>(new Set());
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const feedbackRef = useRef<HTMLDivElement>(null);
+
+  // Gelen sorular değiştiğinde ekranı ve soru durumlarını baştan senkronize et
+  useEffect(() => {
+    if (initialQuestions && initialQuestions.length > 0) {
+      setQuestions(initialQuestions.map(normalizeQuestion));
+      setCurrentIndex(0);
+      setHasAnswered(false);
+      setLastResult(null);
+      setRetryCount(0);
+      setCorrectCount(0);
+      setCorrectQuestionIds(new Set());
+      setIsFinished(false);
+    }
+  }, [initialQuestions]);
 
   // Yeni soruya geçildiğinde otomatik en üste yumuşak kaydır
   useEffect(() => {
@@ -402,18 +418,18 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
           <div className="flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-lg bg-orange-600/20 border border-orange-500/40 text-[#FF7A45] font-black uppercase tracking-wider text-[11px]">
-                {currentQ.subject}
+                {currentQ.subject || 'Ders'}
               </span>
-              <span className="text-zinc-300 font-semibold">{currentQ.topic}</span>
+              <span className="text-zinc-300 font-semibold">{currentQ.topic || (currentQ as any).subTopic || 'Genel Konu'}</span>
             </div>
 
             <span className="text-[11px] text-zinc-400 uppercase">
-              {currentQ.difficulty} Seviye
+              {currentQ.difficulty || 'Orta'} Seviye
             </span>
           </div>
 
           <h2 className="font-poppins font-bold text-base sm:text-lg text-white leading-relaxed mt-1">
-            {currentQ.prompt}
+            {currentQ.prompt || (currentQ as any).text}
           </h2>
         </div>
 

@@ -13,7 +13,13 @@ export default function UniversalChoice({
   onSubmit,
   disabled,
 }: QuestionComponentProps<UniversalChoiceQuestion>) {
-  const { payload } = question;
+  const payload = question.payload || {
+    variant: 'test',
+    optionCount: 0,
+    options: [],
+    correctIndex: 0,
+    shuffleOptions: false,
+  };
   const [selectedOriginalIndex, setSelectedOriginalIndex] = useState<number | null>(null);
 
   // Soru değiştiğinde seçimi sıfırla

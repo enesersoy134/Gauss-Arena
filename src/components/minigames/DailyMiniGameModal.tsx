@@ -6,7 +6,6 @@ import {
   Swords,
   CheckCircle2,
   X,
-  RotateCcw,
   Gamepad2,
   ArrowRight,
   LogOut,
@@ -170,16 +169,6 @@ export const DailyMiniGameModal: React.FC<DailyMiniGameModalProps> = ({
             </div>
 
             <div className="flex items-center gap-1.5">
-              {onResetLockDemo && isCompetitiveUnlocked && (
-                <button
-                  onClick={onResetLockDemo}
-                  className="px-2 py-1 rounded-lg bg-white/5 hover:bg-red-500/15 border border-white/10 text-[10px] font-mono text-[#B5CBC8] hover:text-red-300 flex items-center gap-1 transition-all"
-                >
-                  <RotateCcw className="w-2.5 h-2.5" />
-                  <span className="hidden sm:inline">Kilidi Sıfırla</span>
-                </button>
-              )}
-
               {isCompetitiveUnlocked && (
                 <button
                   onClick={onProceedToArena}

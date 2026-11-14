@@ -158,12 +158,34 @@ export const QuestionRenderer: React.FC<QuestionComponentProps<Question>> = ({
         />
       );
 
-    default:
+    default: {
+      const qAny = question as any;
+      const fallbackOptions = qAny?.payload?.options || qAny?.options;
+      if (Array.isArray(fallbackOptions) && fallbackOptions.length > 0) {
+        const normalized = {
+          ...qAny,
+          type: 'universal_choice' as const,
+          payload: qAny?.payload || {
+            variant: 'test',
+            optionCount: fallbackOptions.length,
+            options: fallbackOptions,
+            correctIndex: qAny?.correctOptionIndex ?? qAny?.correctIndex ?? 0,
+            shuffleOptions: false,
+          },
+        };
+        return (
+          <UniversalChoice
+            {...commonProps}
+            question={normalized as any}
+          />
+        );
+      }
       return (
         <div className="p-6 text-center text-game-wrong bg-isler-surface rounded-2xl border border-game-wrong/40 font-mono">
           Desteklenmeyen soru tipi: {(question as { type?: string })?.type}
         </div>
       );
+    }
   }
 };
 

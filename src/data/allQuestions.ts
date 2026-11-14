@@ -13930,12 +13930,164 @@ export const ALL_QUESTIONS: Question[] = [
 export interface QuestionFilterOptions {
   examType?: 'LGS' | 'TYT' | 'AYT' | 'KARMA' | string;
   subjects?: string[];
-  difficultyMode?: 'adaptive' | 'easy' | 'medium' | 'hard' | string;
+  difficultyMode?: 'adaptive' | 'easy' | 'medium' | 'hard' | 'kolay' | 'orta' | 'zor' | string;
   count?: number;
+}
+
+export interface RevisionQuestionOptions {
+  topics?: string[];
+  failedQuestionIds?: string[];
+  subjects?: string[];
+  examType?: 'LGS' | 'TYT' | 'AYT' | string;
+  targetCount?: number;
 }
 
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
+}
+
+function normalizeText(text?: string): string {
+  return (text || '')
+    .toLowerCase()
+    .replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function getKeywords(text?: string): string[] {
+  const stopWords = new Set(['ve', 'ile', 'veya', 'bir', 'bu', 'da', 'de', 'ta', 'te', 'için', 'göre', 'olan', 'olarak', 'sorusu']);
+  return normalizeText(text)
+    .split(' ')
+    .filter((w) => w.length > 2 && !stopWords.has(w));
+}
+
+function matchTopicScore(qTopic?: string, targetTopic?: string): number {
+  const qNorm = normalizeText(qTopic);
+  const tNorm = normalizeText(targetTopic);
+  if (!qNorm || !tNorm) return 0;
+  if (qNorm === tNorm) return 20;
+  if (qNorm.includes(tNorm) || tNorm.includes(qNorm)) return 10;
+
+  const qWords = getKeywords(qTopic);
+  const tWords = getKeywords(targetTopic);
+  if (qWords.length === 0 || tWords.length === 0) return 0;
+
+  let matchCount = 0;
+  for (const tw of tWords) {
+    if (qWords.some((qw) => qw.includes(tw) || tw.includes(qw))) {
+      matchCount++;
+    }
+  }
+  return matchCount;
+}
+
+function isSubjectCompatible(qSubj: string, targetSubj: string, isLgs = false): boolean {
+  const qs = String(qSubj || '').toLowerCase();
+  const ts = String(targetSubj || '').toLowerCase();
+  if (qs === ts) return true;
+  if (isLgs && ts === 'fen' && ['fen', 'fizik', 'kimya', 'biyoloji'].includes(qs)) return true;
+  if (isLgs && ts === 'sosyal' && ['sosyal', 'tarih', 'cografya'].includes(qs)) return true;
+  if (ts === 'geometri' && qs === 'matematik') return true;
+  return false;
+}
+
+/**
+ * Herhangi bir soru nesnesini (backend, socket, question-bank veya interaktif)
+ * RevisionPracticeScreen ve QuestionRenderer bileşenlerinin firesiz ve hatasız
+ * render edebileceği standart Question modeline dönüştürür.
+ */
+export function normalizeQuestion(raw: any): Question {
+  if (!raw) {
+    return {
+      id: 'fallback_' + Math.random().toString(36).slice(2),
+      examType: 'TYT',
+      subject: 'matematik',
+      topic: 'Genel Soru',
+      type: 'universal_choice',
+      difficulty: 'orta',
+      timeLimitSeconds: 20,
+      points: 100,
+      prompt: 'Soru metni yüklenemedi.',
+      explanation: 'Soru yüklenirken bir sorun oluştu.',
+      payload: {
+        variant: 'test',
+        optionCount: 2,
+        options: ['A', 'B'],
+        correctIndex: 0,
+        shuffleOptions: false,
+      },
+    } as Question;
+  }
+
+  // 1. interactiveQuestion sarmalaması varsa onu temel al
+  const base = raw.interactiveQuestion || raw;
+
+  const id = String(base.id || raw.externalId || raw.id || `q_${Math.random().toString(36).slice(2)}`);
+  const examType = base.examType || raw.examType || 'TYT';
+  const subject = base.subject || raw.subject || 'matematik';
+  const topic = base.topic || base.subTopic || raw.subTopic || raw.topic || 'Genel Kavramlar';
+  const difficulty = (base.difficulty || raw.difficulty || 'orta').toLowerCase();
+  const timeLimitSeconds = Number(base.timeLimitSeconds || raw.timeLimitSeconds || 20);
+  const points = Number(base.points || raw.points || 100);
+  const prompt = base.prompt || base.text || raw.prompt || raw.text || 'Soru metni bulunamadı.';
+  const explanation = base.explanation || raw.explanation || '';
+  const type = base.type || raw.type || 'universal_choice';
+
+  // Eğer zaten geçerli ve eksiksiz bir payload varsa
+  if (base.payload && typeof base.payload === 'object') {
+    return {
+      ...base,
+      id,
+      examType,
+      subject,
+      topic,
+      difficulty,
+      timeLimitSeconds,
+      points,
+      prompt,
+      explanation,
+      type,
+      payload: {
+        ...base.payload,
+        options: Array.isArray(base.payload.options) ? base.payload.options : [],
+        correctIndex: typeof base.payload.correctIndex === 'number' ? base.payload.correctIndex : 0,
+      },
+    } as Question;
+  }
+
+  // Ham soru bankası formatı (options + correctOptionIndex / correctIndex)
+  const rawOptions = Array.isArray(base.options)
+    ? base.options
+    : Array.isArray(raw.options)
+    ? raw.options
+    : ['Seçenek A', 'Seçenek B', 'Seçenek C', 'Seçenek D'];
+
+  const correctOptionIndex =
+    base.correctOptionIndex ??
+    raw.correctOptionIndex ??
+    base.correctIndex ??
+    raw.correctIndex ??
+    0;
+
+  return {
+    id,
+    examType,
+    subject,
+    topic,
+    difficulty,
+    timeLimitSeconds,
+    points,
+    prompt,
+    explanation,
+    type: 'universal_choice',
+    payload: {
+      variant: 'test',
+      optionCount: rawOptions.length,
+      options: rawOptions,
+      correctIndex: Number(correctOptionIndex) || 0,
+      shuffleOptions: false,
+    },
+  } as Question;
 }
 
 /**
@@ -13944,32 +14096,59 @@ function shuffle<T>(arr: T[]): T[] {
  */
 export function filterAppQuestions(options: QuestionFilterOptions): Question[] {
   const normExam = (options.examType || 'TYT').toUpperCase();
-  const subjects = (options.subjects && options.subjects.length > 0 ? options.subjects : ['matematik']).map((s) => s.toLowerCase());
-  const diffMode = options.difficultyMode || 'adaptive';
+  const isLgs = normExam === 'LGS';
+  const subjects = (
+    options.subjects && options.subjects.length > 0
+      ? options.subjects
+      : isLgs
+      ? ['turkce', 'matematik', 'sosyal', 'fen']
+      : ['matematik']
+  ).map((s) => s.toLowerCase());
+  const diffMode = String(options.difficultyMode || 'adaptive').toLowerCase();
   const targetCount = options.count && options.count > 0 ? options.count : 5;
+
+  const isMatchingSubj = (qSubj: string) => {
+    return subjects.some((ts) => isSubjectCompatible(qSubj, ts, isLgs));
+  };
+
+  const isGeometrySubject = subjects.includes('geometri');
 
   // 1. İstenen sınav ve branşa ait tüm sorular
   const matchingExamAndSubject = ALL_QUESTIONS.filter((q) => {
     const qExam = (q.examType || 'TYT').toUpperCase();
     const examOk = normExam === 'KARMA' || qExam === normExam;
-    const subjOk = subjects.includes((q.subject || '').toLowerCase());
-    return examOk && subjOk;
+    const subjOk = isMatchingSubj(q.subject || '');
+    if (!examOk || !subjOk) return false;
+
+    if (isGeometrySubject && q.subject === 'matematik') {
+      const isGeoTopic = /geometri|üçgen|açı|çember|dörtgen|alan|analitik|katı cisim|trigonometri/i.test(q.topic || '');
+      return isGeoTopic || subjects.includes('matematik');
+    }
+    return true;
   });
+
+  const isDiffMatch = (qDiff: string, targetDiff: string) => {
+    const qd = String(qDiff || '').toLowerCase();
+    if (targetDiff === 'easy' || targetDiff === 'kolay') return qd === 'kolay' || qd === 'easy';
+    if (targetDiff === 'medium' || targetDiff === 'orta') return qd === 'orta' || qd === 'medium';
+    if (targetDiff === 'hard' || targetDiff === 'zor') return qd === 'zor' || qd === 'hard';
+    return true;
+  };
 
   // 2. Zorluk önceliğine göre sırala
   let primaryPool: Question[] = [];
-  if (diffMode === 'easy') {
-    const easy = matchingExamAndSubject.filter((q) => q.difficulty === 'kolay');
-    const medium = matchingExamAndSubject.filter((q) => q.difficulty === 'orta');
+  if (diffMode === 'easy' || diffMode === 'kolay') {
+    const easy = matchingExamAndSubject.filter((q) => isDiffMatch(q.difficulty, 'easy'));
+    const medium = matchingExamAndSubject.filter((q) => isDiffMatch(q.difficulty, 'medium'));
     primaryPool = [...shuffle(easy), ...shuffle(medium)];
-  } else if (diffMode === 'medium') {
-    const medium = matchingExamAndSubject.filter((q) => q.difficulty === 'orta');
-    const easy = matchingExamAndSubject.filter((q) => q.difficulty === 'kolay');
-    const hard = matchingExamAndSubject.filter((q) => q.difficulty === 'zor');
+  } else if (diffMode === 'medium' || diffMode === 'orta') {
+    const medium = matchingExamAndSubject.filter((q) => isDiffMatch(q.difficulty, 'medium'));
+    const easy = matchingExamAndSubject.filter((q) => isDiffMatch(q.difficulty, 'easy'));
+    const hard = matchingExamAndSubject.filter((q) => isDiffMatch(q.difficulty, 'hard'));
     primaryPool = [...shuffle(medium), ...shuffle(easy), ...shuffle(hard)];
-  } else if (diffMode === 'hard') {
-    const hard = matchingExamAndSubject.filter((q) => q.difficulty === 'zor');
-    const medium = matchingExamAndSubject.filter((q) => q.difficulty === 'orta');
+  } else if (diffMode === 'hard' || diffMode === 'zor') {
+    const hard = matchingExamAndSubject.filter((q) => isDiffMatch(q.difficulty, 'hard'));
+    const medium = matchingExamAndSubject.filter((q) => isDiffMatch(q.difficulty, 'medium'));
     primaryPool = [...shuffle(hard), ...shuffle(medium)];
   } else {
     primaryPool = shuffle(matchingExamAndSubject);
@@ -13997,11 +14176,13 @@ export function filterAppQuestions(options: QuestionFilterOptions): Question[] {
     }
   }
 
-  // 4. Fallback 2: Seçilen branşı ASLA değiştirmeden diğer sınavlardan aynı branş sorularını ekle
+  // 4. Fallback 2: Diğer sınavlardan aynı branş sorularını ekle (LGS ise sadece LGS havuzunda kal!)
   if (selected.length < targetCount) {
-    const sameSubjectOtherExams = ALL_QUESTIONS.filter(
-      (q) => subjects.includes((q.subject || '').toLowerCase()) && !usedIds.has(q.id)
-    );
+    const sameSubjectOtherExams = ALL_QUESTIONS.filter((q) => {
+      const qExam = (q.examType || 'TYT').toUpperCase();
+      const examOk = isLgs ? qExam === 'LGS' : qExam !== 'LGS';
+      return examOk && isMatchingSubj(q.subject || '') && !usedIds.has(q.id);
+    });
     for (const q of shuffle(sameSubjectOtherExams)) {
       if (selected.length >= targetCount) break;
       selected.push(q);
@@ -14011,10 +14192,13 @@ export function filterAppQuestions(options: QuestionFilterOptions): Question[] {
 
   // 5. Fallback 3: Aynı branşta tekil soru tükendiyse döngüsel olarak aynı branştan tamamla
   if (selected.length < targetCount) {
-    const cycleSubject = ALL_QUESTIONS.filter((q) => subjects.includes((q.subject || '').toLowerCase()));
-    if (cycleSubject.length > 0) {
+    const cyclePool =
+      matchingExamAndSubject.length > 0
+        ? matchingExamAndSubject
+        : ALL_QUESTIONS.filter((q) => (q.examType || 'TYT').toUpperCase() === normExam);
+    if (cyclePool.length > 0) {
       while (selected.length < targetCount) {
-        for (const q of shuffle(cycleSubject)) {
+        for (const q of shuffle(cyclePool)) {
           if (selected.length >= targetCount) break;
           selected.push({ ...q, id: `${q.id}_rep_${selected.length}` });
         }
@@ -14022,5 +14206,132 @@ export function filterAppQuestions(options: QuestionFilterOptions): Question[] {
     }
   }
 
-  return selected.slice(0, targetCount);
+  // 6. Fallback 4: Havuz hala boşsa o sınav kategorisindeki herhangi bir sorudan tamamla
+  if (selected.length < targetCount) {
+    const broadExamPool = ALL_QUESTIONS.filter(
+      (q) => ((q.examType || 'TYT').toUpperCase() === normExam) && !usedIds.has(q.id)
+    );
+    for (const q of shuffle(broadExamPool)) {
+      if (selected.length >= targetCount) break;
+      selected.push(q);
+      usedIds.add(q.id);
+    }
+  }
+
+  // 7. Acil Durum Fallback: Asla boş dönmez
+  if (selected.length === 0) {
+    const broadPool = ALL_QUESTIONS.filter((q) => (q.examType || 'TYT').toUpperCase() === normExam);
+    const pool = broadPool.length > 0 ? broadPool : ALL_QUESTIONS;
+    selected.push(...pool.slice(0, targetCount));
+  }
+
+  return selected.slice(0, targetCount).map(normalizeQuestion);
+}
+
+/**
+ * Eksik Konu Pekiştirme (Revision Practice) için zeki ve adaptif soru seçici.
+ * Başarısız olunan soruları, konu semantik benzerliğini ve sınav kademesini harmanlar.
+ */
+export function getRevisionQuestionsForTopics(options: RevisionQuestionOptions): Question[] {
+  const normExam = String(options.examType || 'TYT').toUpperCase();
+  const isLgs = normExam === 'LGS';
+  const targetSubjects = (options.subjects || []).map((s) => String(s).toLowerCase());
+  const topics = options.topics || [];
+  const failedIdSet = new Set((options.failedQuestionIds || []).filter(Boolean));
+  const targetCount = options.targetCount && options.targetCount > 0 ? options.targetCount : 5;
+
+  const selected: Question[] = [];
+  const usedIds = new Set<string>();
+
+  // 1. Doğrudan başarısız olunan soru ID'leri
+  if (failedIdSet.size > 0) {
+    for (const q of ALL_QUESTIONS) {
+      if (selected.length >= targetCount) break;
+      const qExt = (q as any).externalId || q.id;
+      if ((failedIdSet.has(q.id) || failedIdSet.has(qExt)) && !usedIds.has(q.id)) {
+        selected.push(q);
+        usedIds.add(q.id);
+      }
+    }
+  }
+
+  // 2. Konu semantik eşleşmesi (Puanlı sıralama)
+  if (selected.length < targetCount && topics.length > 0) {
+    const scoredCandidates: { q: Question; score: number }[] = [];
+
+    for (const q of ALL_QUESTIONS) {
+      if (usedIds.has(q.id)) continue;
+      const qExam = String(q.examType || 'TYT').toUpperCase();
+      const examMatch = isLgs ? qExam === 'LGS' : qExam !== 'LGS';
+      if (!examMatch) continue;
+
+      let bestScore = 0;
+      for (const top of topics) {
+        const s = matchTopicScore(q.topic, top);
+        if (s > bestScore) bestScore = s;
+      }
+
+      const subjMatch =
+        targetSubjects.length === 0 ||
+        targetSubjects.some((ts) => isSubjectCompatible(q.subject, ts, isLgs));
+
+      if (bestScore > 0 || subjMatch) {
+        scoredCandidates.push({
+          q,
+          score: bestScore * 2 + (subjMatch ? 5 : 0),
+        });
+      }
+    }
+
+    scoredCandidates.sort((a, b) => b.score - a.score);
+    for (const item of scoredCandidates) {
+      if (selected.length >= targetCount) break;
+      if (!usedIds.has(item.q.id)) {
+        selected.push(item.q);
+        usedIds.add(item.q.id);
+      }
+    }
+  }
+
+  // 3. Fallback: İlgili branş havuzundan tamamla
+  if (selected.length < targetCount) {
+    const pool = ALL_QUESTIONS.filter((q) => {
+      if (usedIds.has(q.id)) return false;
+      const qExam = String(q.examType || 'TYT').toUpperCase();
+      const examMatch = isLgs ? qExam === 'LGS' : qExam !== 'LGS';
+      const subjMatch =
+        targetSubjects.length === 0 ||
+        targetSubjects.some((ts) => isSubjectCompatible(q.subject, ts, isLgs));
+      return examMatch && subjMatch;
+    });
+
+    for (const q of shuffle(pool)) {
+      if (selected.length >= targetCount) break;
+      selected.push(q);
+      usedIds.add(q.id);
+    }
+  }
+
+  // 4. Fallback: İlgili sınav kategorisindeki genel havuzdan tamamla
+  if (selected.length < targetCount) {
+    const examPool = ALL_QUESTIONS.filter((q) => {
+      if (usedIds.has(q.id)) return false;
+      const qExam = String(q.examType || 'TYT').toUpperCase();
+      return isLgs ? qExam === 'LGS' : qExam !== 'LGS';
+    });
+    for (const q of shuffle(examPool)) {
+      if (selected.length >= targetCount) break;
+      selected.push(q);
+      usedIds.add(q.id);
+    }
+  }
+
+  // 5. Acil durum döngüsel tamamlayıcı (Asla boş dönmez)
+  if (selected.length === 0) {
+    const broadPool = ALL_QUESTIONS.filter((q) => (q.examType || 'TYT').toUpperCase() === normExam);
+    const pool = broadPool.length > 0 ? broadPool : ALL_QUESTIONS;
+    selected.push(...pool.slice(0, targetCount));
+  }
+
+  return selected.slice(0, targetCount).map(normalizeQuestion);
 }

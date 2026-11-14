@@ -43,6 +43,8 @@ class MatchmakingQueue {
     this.entries = new Map(); // playerId -> QueueEntry
     this.pairwiseMatches = []; // { pairKey, playerAId, playerBId, timestamp }
     this.enableGhost = options.enableGhost !== undefined ? options.enableGhost : true;
+    // Günlük eşleşme sınırı: Kullanıcı talebiyle sınır kaldırıldı (varsayılan: null / limitsiz).
+    this.dailyMatchLimit = options.dailyMatchLimit !== undefined ? options.dailyMatchLimit : null;
   }
 
   enqueue(ticket) {
@@ -117,10 +119,10 @@ class MatchmakingQueue {
     }
 
     const pairwiseCount = this.getPairwiseMatchCountLast24h(a.playerId, b.playerId, now);
-    if (pairwiseCount >= 2) {
+    if (this.dailyMatchLimit !== null && pairwiseCount >= this.dailyMatchLimit) {
       return {
         compatible: false,
-        reason: `24 saatlik ikili maç sınırı doldu (${pairwiseCount}/2 - Win-Trading Koruması)`,
+        reason: `24 saatlik ikili maç sınırı doldu (${pairwiseCount}/${this.dailyMatchLimit} - Win-Trading Koruması)`,
         pairwiseCount,
       };
     }

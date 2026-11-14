@@ -528,13 +528,14 @@ class GameStore {
       },
       p3: {
         topics: [
-          { topic: 'Optik ve Kırılma', subject: 'fizik', examType: 'TYT', mistakeCount: 3, failedIds: ['q_pb_014', 'q_sl_020'], attempts: 4 },
-          { topic: 'Paragrafta Anlam', subject: 'turkce', examType: 'TYT', mistakeCount: 2, failedIds: ['q_mb_025', 'q_pm_023'], attempts: 5 },
+          { topic: 'Basınç (Katı ve Sıvı Basıncı)', subject: 'fen', examType: 'LGS', mistakeCount: 3, failedIds: ['LGS-FEN-E-001'], attempts: 4 },
+          { topic: 'Paragrafta Anlatım Biçimleri', subject: 'turkce', examType: 'LGS', mistakeCount: 2, failedIds: ['q_mb_025'], attempts: 5 },
         ],
       },
       p4: {
         topics: [
-          { topic: 'Elektrik ve Manyetizma', subject: 'fizik', examType: 'AYT', mistakeCount: 2, failedIds: ['q_uc_comp_032'], attempts: 6 },
+          { topic: 'Çarpanlar ve Katlar', subject: 'matematik', examType: 'LGS', mistakeCount: 2, failedIds: ['LGS-MAT-E-001'], attempts: 4 },
+          { topic: 'Mevsimlerin Oluşumu', subject: 'fen', examType: 'LGS', mistakeCount: 2, failedIds: ['LGS-FEN-E-002'], attempts: 5 },
         ],
       },
       p5: {

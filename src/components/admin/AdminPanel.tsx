@@ -738,7 +738,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           </div>
                           <div>
                             <span className="text-zinc-500 block">24s Maç Sayısı:</span>
-                            <span className="text-white font-bold">{diag.recentMatches ?? 0}</span>
+                            <span className="text-white font-bold">{diag.recentMatches ?? 0} (Sınırsız)</span>
                           </div>
                         </div>
 
