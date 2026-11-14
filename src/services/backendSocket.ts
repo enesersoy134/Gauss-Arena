@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { BACKEND_GAME_DATA } from '../data/backendMockData';
-import { Question } from '../types/game';
+import { Question, RevisionDetail } from '../types/game';
 import { ResourceRecommendation } from '../utils/resourceRecommendations';
 
 export interface RevisionWrongQuestion {
@@ -31,6 +31,10 @@ export interface BackendPlayer {
   elo: number;
   streak: number;
   effectiveMmr: number;
+  educationLevel?: 'lise' | 'ortaokul';
+  gradeLevel?: string;
+  allowedExamTypes?: ('TYT' | 'AYT' | 'LGS')[];
+  dailyQuestExempt?: boolean;
   bracket: {
     tierName: string;
     minElo: number;
@@ -42,7 +46,11 @@ export interface BackendPlayer {
   islerPoints: number;
   weeklyMatchesPlayed: number;
   weeklyRewardClaimed: boolean;
+  dailyCompleted?: boolean;
+  dailyQuestDone?: boolean;
+  completedMiniGames?: ('biyoloji' | 'kimya' | 'fizik' | 'matematik' | 'geometri' | 'turkce')[];
   revisionTopics?: RevisionTopicItem[];
+  revisionDetails?: RevisionDetail[];
   coupons: Array<{
     code: string;
     discountPercent: number;
@@ -72,7 +80,7 @@ export interface TournamentParticipant {
 export interface Tournament {
   id: string;
   title: string;
-  examType: 'TYT' | 'AYT';
+  examType: 'TYT' | 'AYT' | 'LGS';
   allowedSubjects: string[];
   status: 'ACTIVE' | 'FINISHED';
   prizePoolDesc: string;
@@ -85,10 +93,11 @@ export interface QueueEntry {
   name: string;
   elo: number;
   streak: number;
-  examType: 'TYT' | 'AYT';
+  examType: 'TYT' | 'AYT' | 'LGS' | string;
   subjects: string[];
   mode: 'ranked' | 'tournament';
   tournamentId: string | null;
+  difficultyMode?: 'adaptive' | 'easy' | 'medium' | 'hard' | string;
   enqueuedAt: number;
   waitSeconds?: number;
 }
@@ -267,16 +276,23 @@ function createFallbackPlayers(): BackendPlayer[] {
     {
       id: 'p1',
       name: 'Ahmet Yılmaz (Standart)',
-      roleTag: 'Dengeli Oyuncu',
+      roleTag: 'Dengeli Oyuncu (12. Sınıf YKS)',
       avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Ahmet&backgroundColor=f14e13',
       elo: 1250,
       streak: 0,
       effectiveMmr: 1250,
+      educationLevel: 'lise',
+      gradeLevel: '12. Sınıf (YKS)',
+      allowedExamTypes: ['TYT', 'AYT'],
+      dailyQuestExempt: false,
       bracket: { tierName: 'Gümüş Lig', minElo: 1200, maxElo: 1399.9, weeklyCoins: 250, badgeColor: '#94a3b8' },
       coins: 320,
       islerPoints: 45,
       weeklyMatchesPlayed: 14,
       weeklyRewardClaimed: false,
+      dailyCompleted: true,
+      dailyQuestDone: true,
+      completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
       coupons: [],
     },
     {
@@ -287,41 +303,62 @@ function createFallbackPlayers(): BackendPlayer[] {
       elo: 1200,
       streak: 5,
       effectiveMmr: 1324,
+      educationLevel: 'lise',
+      gradeLevel: '12. Sınıf (YKS)',
+      allowedExamTypes: ['TYT', 'AYT'],
+      dailyQuestExempt: false,
       bracket: { tierName: 'Gümüş Lig', minElo: 1200, maxElo: 1399.9, weeklyCoins: 250, badgeColor: '#94a3b8' },
       coins: 450,
       islerPoints: 60,
       weeklyMatchesPlayed: 8,
       weeklyRewardClaimed: false,
+      dailyCompleted: true,
+      dailyQuestDone: true,
+      completedMiniGames: ['fizik', 'kimya', 'biyoloji', 'matematik', 'geometri', 'turkce'],
       coupons: [],
     },
     {
       id: 'p3',
-      name: 'Mert Demir (Üst Orta Bant)',
-      roleTag: 'Sağlam Rakip (1340 ELO, S=+1)',
-      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Mert&backgroundColor=c0aede',
+      name: 'Mehmet Demir (8. Sınıf LGS)',
+      roleTag: 'Ortaokul Kademesi (8. Sınıf LGS)',
+      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Mehmet&backgroundColor=c0aede',
       elo: 1340,
       streak: 1,
       effectiveMmr: 1340,
+      educationLevel: 'ortaokul',
+      gradeLevel: '8. Sınıf (LGS)',
+      allowedExamTypes: ['LGS'],
+      dailyQuestExempt: true,
       bracket: { tierName: 'Gümüş Lig', minElo: 1200, maxElo: 1399.9, weeklyCoins: 250, badgeColor: '#94a3b8' },
       coins: 580,
       islerPoints: 80,
       weeklyMatchesPlayed: 15,
       weeklyRewardClaimed: false,
+      dailyCompleted: false,
+      dailyQuestDone: false,
+      completedMiniGames: [],
       coupons: [],
     },
     {
       id: 'p4',
-      name: 'Elif Şahin (Üst Lig / Anti-Farm)',
-      roleTag: 'Yüksek ELO (1620 ELO, S=+3)',
-      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Elif&backgroundColor=ffd5dc',
+      name: 'Ayşe Çelik (8. Sınıf LGS)',
+      roleTag: 'Ortaokul Kademesi (8. Sınıf LGS)',
+      avatarUrl: 'https://api.dicebear.com/7.x/adventurer/svg?seed=Ayse&backgroundColor=ffd5dc',
       elo: 1620,
       streak: 3,
       effectiveMmr: 1634,
+      educationLevel: 'ortaokul',
+      gradeLevel: '8. Sınıf (LGS)',
+      allowedExamTypes: ['LGS'],
+      dailyQuestExempt: true,
       bracket: { tierName: 'Platin Lig', minElo: 1600, maxElo: 1799.9, weeklyCoins: 850, badgeColor: '#06b6d4' },
       coins: 940,
       islerPoints: 130,
       weeklyMatchesPlayed: 18,
       weeklyRewardClaimed: false,
+      dailyCompleted: false,
+      dailyQuestDone: false,
+      completedMiniGames: [],
       coupons: [],
     },
     {
@@ -337,6 +374,9 @@ function createFallbackPlayers(): BackendPlayer[] {
       islerPoints: 20,
       weeklyMatchesPlayed: 12,
       weeklyRewardClaimed: false,
+      dailyCompleted: false,
+      dailyQuestDone: false,
+      completedMiniGames: [],
       coupons: [],
     },
     {
@@ -352,6 +392,9 @@ function createFallbackPlayers(): BackendPlayer[] {
       islerPoints: 25,
       weeklyMatchesPlayed: 6,
       weeklyRewardClaimed: false,
+      dailyCompleted: false,
+      dailyQuestDone: false,
+      completedMiniGames: [],
       coupons: [],
     },
   ];
@@ -373,6 +416,12 @@ export function useBackendGame() {
     const params = new URLSearchParams(window.location.search);
     const playerParam = params.get('player');
     if (playerParam) return playerParam;
+    const pathMatch = window.location.pathname.match(/^\/?(p\d+)(?:\/|$)/i);
+    if (pathMatch) return pathMatch[1].toLowerCase();
+    try {
+      const stored = sessionStorage.getItem('isler_active_player_id');
+      if (stored) return stored;
+    } catch {}
     const win = params.get('window');
     return win === '2' ? 'p3' : 'p2';
   });
@@ -410,7 +459,20 @@ export function useBackendGame() {
           prizePoolDesc: '1.ye 1500 Coin + 150 İşler Puanı | 2.ye 900 Coin + 90 İşler Puanı | 3.ye 500 Coin + 50 İşler Puanı',
           rewardsDistributed: false,
           participants: [
-            { playerId: 'p4', name: 'Elif Şahin (Üst Lig / Anti-Farm)', points: 90, wins: 3, losses: 0, elo: 1620 },
+            { playerId: 'p1', name: 'Ahmet Yılmaz (Standart)', points: 90, wins: 3, losses: 0, elo: 1250 },
+          ],
+        },
+        {
+          id: 'tour-lgs-1',
+          title: 'Haftalık LGS 8. Sınıf Şampiyonası',
+          examType: 'LGS',
+          allowedSubjects: ['turkce', 'matematik', 'sosyal', 'fen'],
+          status: 'ACTIVE',
+          prizePoolDesc: '1.ye 1200 Coin + 120 İşler Puanı | 2.ye 700 Coin + 70 İşler Puanı | 3.ye 400 Coin + 40 İşler Puanı',
+          rewardsDistributed: false,
+          participants: [
+            { playerId: 'p4', name: 'Ayşe Çelik (8. Sınıf LGS)', points: 90, wins: 3, losses: 0, elo: 1620 },
+            { playerId: 'p3', name: 'Mehmet Demir (8. Sınıf LGS)', points: 60, wins: 2, losses: 1, elo: 1340 },
           ],
         },
       ],
@@ -437,7 +499,42 @@ export function useBackendGame() {
   // Oyuncu değiştirme
   const selectPlayer = useCallback((newPlayerId: string) => {
     setCurrentPlayerIdState(newPlayerId);
+    if (typeof window !== 'undefined') {
+      try {
+        sessionStorage.setItem('isler_active_player_id', newPlayerId);
+      } catch {}
+    }
     socketRef.current.emit('player:select', { playerId: newPlayerId });
+  }, []);
+
+  // Dinamik Rastgele Yeni Öğrenci Hesabı Oluşturma (/random)
+  const createRandomPlayer = useCallback(async (): Promise<BackendPlayer | null> => {
+    try {
+      const res = await fetch('/api/players/random', { method: 'POST' });
+      const data = await res.json();
+      if (data && data.ok && data.player) {
+        selectPlayer(data.player.id);
+        return data.player;
+      }
+    } catch (err) {
+      console.error('createRandomPlayer error:', err);
+    }
+    return null;
+  }, [selectPlayer]);
+
+  // Yanlış Soruları Tekrar Çözme Antrenmanını Tamamlama (+30 Coin)
+  const completeRevisionPractice = useCallback(async (playerId: string, solvedTopics?: string[]) => {
+    try {
+      const res = await fetch('/api/players/complete-revision-practice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ playerId, solvedTopics }),
+      });
+      return await res.json();
+    } catch (err) {
+      console.error('completeRevisionPractice error:', err);
+      return { ok: false, reason: 'Bağlantı hatası' };
+    }
   }, []);
 
   useEffect(() => {
@@ -531,7 +628,13 @@ export function useBackendGame() {
 
   // Kuyruk aksiyonları
   const joinQueue = useCallback(
-    (opts: { examType: 'TYT' | 'AYT'; subjects: string[]; mode: 'ranked' | 'tournament'; tournamentId?: string | null }) => {
+    (opts: {
+      examType: 'TYT' | 'AYT' | 'LGS' | string;
+      subjects: string[];
+      mode: 'ranked' | 'tournament';
+      tournamentId?: string | null;
+      difficultyMode?: 'adaptive' | 'easy' | 'medium' | 'hard' | string;
+    }) => {
       setQueueError(null);
       socketRef.current.emit('queue:join', {
         playerId: currentPlayerId,
@@ -539,6 +642,7 @@ export function useBackendGame() {
         subjects: opts.subjects,
         mode: opts.mode,
         tournamentId: opts.tournamentId || null,
+        difficultyMode: opts.difficultyMode || 'adaptive',
       });
     },
     [currentPlayerId]
@@ -741,5 +845,7 @@ export function useBackendGame() {
     updatePlayerDemo,
     resetDemo,
     clearRevisionTopic,
+    createRandomPlayer,
+    completeRevisionPractice,
   };
 }

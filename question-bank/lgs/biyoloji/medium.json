@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "biyoloji",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-BIY-M-001",
+      "subTopic": "DNA Replikasyon Aşamaları",
+      "text": "Hücre bölünmesi öncesinde DNA'nın kendini eşlemesi (replikasyon) sırasında gerçekleşen ilk olay nedir?",
+      "explanation": "İlk aşamada enzimler yardımıyla hidrojen bağları kopar ve DNA fermuar gibi iki ipliğe ayrılır.",
+      "imageUrl": null,
+      "options": [
+        "DNA sarmalının bir fermuar gibi ikiye açılması",
+        "Sitoplazmadaki serbest nükleotidlerin çekirdeğe girmesi",
+        "Kromozomların kutuplara çekilmesi",
+        "Hücre zarının boğumlanması"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-002",
+      "subTopic": "Kalıtım (Fenotip ve Genotip Oranları)",
+      "text": "Saf döl yuvarlak tohumlu (YY) bezelye ile buruşuk tohumlu (yy) bezelyenin çaprazlanmasından oluşan F1 dölünün genotip oranı nedir?",
+      "explanation": "YY × yy çaprazlamasında yavruların tamamı (%100) melez döl (Yy) olur.",
+      "imageUrl": null,
+      "options": [
+        "%100 Heterozigot (Yy)",
+        "%50 YY, %50 yy",
+        "%25 YY, %50 Yy, %25 yy",
+        "%100 Homozigot çekinik"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-003",
+      "subTopic": "Mutasyon Sebepleri",
+      "text": "Aşağıdakilerden hangisi canlılarda DNA yapısında kalıcı mutasyona yol açabilen çevresel faktörlerden biridir?",
+      "explanation": "Radyasyon, X ışınları ve kimyasal maddeler gen dizilimini bozarak mutasyon oluşturur.",
+      "imageUrl": null,
+      "options": [
+        "Radyasyon (X ışınları ve zararlı UV)",
+        "Sağlıklı beslenme",
+        "Egzersiz yapma",
+        "Temiz hava soluma"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-004",
+      "subTopic": "Doğal Seçilim Mekanizması",
+      "text": "Çevre şartlarına uyum sağlayan güçlü canlıların hayatta kalması, uyum sağlayamayan zayıfların ise elenip yok olması sürecine ne ad verilir?",
+      "explanation": "Darwin'in tanımladığı çevreye en iyi uyum sağlayanın hayatta kalması ilkesi doğal seçilimdir.",
+      "imageUrl": null,
+      "options": [
+        "Doğal seçilim",
+        "Yapay döllenme",
+        "Klonlama",
+        "Modifikasyon"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-005",
+      "subTopic": "Besin Piramidinde Enerji Akışı",
+      "text": "Üreticiden son tüketiciye doğru çıkıldıkça biyokütle ve aktarılan enerji miktarı nasıl değişir?",
+      "explanation": "Üst basamaklara çıktıkça toplam biyokütle ve basamaklar arası enerji miktarı azalır.",
+      "imageUrl": null,
+      "options": [
+        "Biyokütle azalır, aktarılan enerji azalır",
+        "Biyokütle artar, aktarılan enerji artar",
+        "Biyokütle azalır, aktarılan enerji artar",
+        "İkisi de değişmez"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-006",
+      "subTopic": "Fotosentez ve Solunum Karşılaştırması",
+      "text": "Fotosentez ile solunum arasındaki ilişki için aşağıdakilerden hangisi DOĞRUDUR?",
+      "explanation": "Fotosentezde üretilen besin (glikoz) ve oksijen, solunumda tüketilen temel maddelerdir.",
+      "imageUrl": null,
+      "options": [
+        "Fotosentezin ürünleri solunumun girenleridir",
+        "İkisi de yalnızca geceleri gerçekleşir",
+        "Fotosentezde ATP harcanmaz",
+        "Solunum yalnızca bitkilerde gerçekleşir"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-007",
+      "subTopic": "Azot Döngüsü ve Bakteriler",
+      "text": "Havadaki serbest azotu (N₂) bağlayarak baklagillerin kökünde bitkinin kullanabileceği forma dönüştüren canlılar hangileridir?",
+      "explanation": "Rhizobium cinsi azot bağlayıcı bakteriler baklagil köklerinde yaşayarak havadaki azotu bağlar.",
+      "imageUrl": null,
+      "options": [
+        "Azot bağlayıcı bakteriler",
+        "Ayrıştırıcı böcekler",
+        "Karasinekler",
+        "Memeli hayvanlar"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-008",
+      "subTopic": "Biyoteknolojinin Olumsuz Yönleri",
+      "text": "Aşağıdakilerden hangisi kontrolsüz biyoteknolojik uygulamaların potansiyel zararlarından biridir?",
+      "explanation": "GDO'lu tohumların yaygınlaşması doğal türleri tehdit edebilir ve alerjiye neden olabilir.",
+      "imageUrl": null,
+      "options": [
+        "Biyoçeşitliliğin azalması ve alerjik reaksiyon riskleri",
+        "Yeni aşıların geliştirilmesi",
+        "Daha dayanıklı tarım ürünleri üretilmesi",
+        "Hastalıkların erken teşhis edilmesi"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-009",
+      "subTopic": "Oksijensiz Solunum (Fermantasyon)",
+      "text": "Yoğurt mayalanması ve kaslarda yorgunluk hissi oluşması hangi fermantasyon çeşidi sonucunda gerçekleşir?",
+      "explanation": "Sütten yoğurt oluşumu ve çizgili kasların oksijensiz ortamda çalışması laktik asit fermantasyonudur.",
+      "imageUrl": null,
+      "options": [
+        "Laktik asit fermantasyonu",
+        "Etil alkol fermantasyonu",
+        "Oksijenli yanma",
+        "Fotosentez"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-M-010",
+      "subTopic": "Cinsiyet Kalıtımı",
+      "text": "İnsanda doğacak bir bebeğin cinsiyetinin kız veya erkek olma olasılığı her doğum için yüzde kaçtır?",
+      "explanation": "Babadan gelen spermin X veya Y taşıma ihtimali eşit olduğundan olasılık daima %50'dir.",
+      "imageUrl": null,
+      "options": [
+        "%25",
+        "%50",
+        "%75",
+        "%100"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

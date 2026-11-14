@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "kimya",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-KIM-M-001",
+      "subTopic": "Periyodik Sistemde Değişimler",
+      "text": "Periyodik tabloda aynı periyotta soldan sağa doğru gidildikçe ametallik özellik ve atom numarası nasıl değişir?",
+      "explanation": "Soldan sağa proton sayısı (atom no) ve elektronegatiflik/ametallik özellik artar.",
+      "imageUrl": null,
+      "options": [
+        "Ametallik artar, atom numarası artar",
+        "Ametallik azalır, atom numarası artar",
+        "İkisi de azalır",
+        "Ametallik artar, atom numarası azalır"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-M-002",
+      "subTopic": "Asit ve Bazların Metallerle Tepkimesi",
+      "text": "Asitler metallerle tepkimeye girdiğinde aşağıdaki gazlardan hangisini açığa çıkarır?",
+      "explanation": "Asitler aktif metallerle (çinko, magnezyum vb.) tepkimeye girerek H₂ gazı oluşturur.",
+      "imageUrl": null,
+      "options": [
+        "O₂ (Oksijen)",
+        "H₂ (Hidrojen)",
+        "CO₂ (Karbondioksit)",
+        "N₂ (Azot)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-003",
+      "subTopic": "Kimyasal Tepkime Grafiği",
+      "text": "Kapalı bir kapta gerçekleşen tepkimede maddelerin kütle-zaman grafiğinde miktarı azalan maddeler hangileridir?",
+      "explanation": "Tepkime süresince girenlerin kütlesi azalır, ürünlerin kütlesi artar.",
+      "imageUrl": null,
+      "options": [
+        "Ürünler",
+        "Tepkimeye girenler",
+        "Katalizör",
+        "Değişmeyenler"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-004",
+      "subTopic": "Soygazların Özellikleri",
+      "text": "Periyodik tablonun 8A grubunda bulunan soygazlar (asal gazlar) ile ilgili hangisi YANLIŞTIR?",
+      "explanation": "Soygazlar kararlı elektron dizilimine sahip oldukları için kural olarak bileşik oluşturmazlar.",
+      "imageUrl": null,
+      "options": [
+        "Son katmanları kararlıdır",
+        "Oda koşullarında tek atomlu gaz halindedirler",
+        "Bileşik oluşturmaya çok isteklidirler",
+        "Kimyasal tepkimelere karşı ilgisizdirler"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-M-005",
+      "subTopic": "Fiziksel-Kimyasal Değişim Örnekleri",
+      "text": "Aşağıdaki olaylardan hangisinde maddenin İÇ YAPISI (kimliği) değişir?",
+      "explanation": "Gümüşün havadaki kükürtle tepkimeye girip kararması kimyasal bir olaydır.",
+      "imageUrl": null,
+      "options": [
+        "Gümüşün kararması",
+        "Mumun erimesi",
+        "Şekerin ezilerek pudra şekeri yapılması",
+        "Gökkuşağı oluşumu"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-M-006",
+      "subTopic": "Ayıraçlar ve Renk Değişimleri",
+      "text": "Metil oranj damlatıldığında sarı renk veren bir çözeltinin pH aralığı aşağıdakilerden hangisidir?",
+      "explanation": "Metil oranj asitlerde kırmızı, bazlarda sarı renk verir.",
+      "imageUrl": null,
+      "options": [
+        "0 - 7 (Asidik)",
+        "7 - 14 (Bazik)",
+        "Yalnızca 7 (Nötr)",
+        "0 - 1 (Kuvvetli asit)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-007",
+      "subTopic": "Maddenin Isı İle Etkileşimi",
+      "text": "Isıca yalıtılmış bir kapta sıcaklıkları farklı iki sıvı karıştırıldığında ısı alışverişi ne zamana kadar devam eder?",
+      "explanation": "Isı alışverişi iki maddenin sıcaklıkları eşitlenip denge sıcaklığına ulaşıncaya kadar sürer.",
+      "imageUrl": null,
+      "options": [
+        "Sıvıların kütleleri eşitlenene kadar",
+        "Sıcaklıkları eşitlenene (ısıl dengeye ulaşana) kadar",
+        "Biri tamamen buharlaşana kadar",
+        "Öz ısıları eşitlenene kadar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-M-008",
+      "subTopic": "Yarı Metallerin Kullanım Alanları",
+      "text": "Silisyum (Si) ve Germanyum (Ge) gibi yarı metaller teknolojide en çok hangi alanda kullanılır?",
+      "explanation": "Yarı iletken özellikleri sayesinde bilgisayar çipleri ve mikroelektronikte yaygın kullanılır.",
+      "imageUrl": null,
+      "options": [
+        "Elektronik devre ve mikroçip yapımında",
+        "İnşaat demiri üretiminde",
+        "Plastik ambalaj sanayisinde",
+        "Tekstil boyalarında"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-M-009",
+      "subTopic": "Evsel Kimyasallar ve Tehlikeleri",
+      "text": "Tuz ruhu (HCl) ile çamaşır suyunun (NaClO) karıştırılması sonucu açığa çıkan son derece zehirli gaz hangisidir?",
+      "explanation": "Tuz ruhu ve çamaşır suyu karıştırılırsa ölümcül zehirli klor gazı (Cl₂) açığa çıkar.",
+      "imageUrl": null,
+      "options": [
+        "Klor gazı (Cl₂)",
+        "Oksijen gazı (O₂)",
+        "Helyum gazı (He)",
+        "Metan gazı (CH₄)"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-M-010",
+      "subTopic": "Kütlenin Korunumu ve Atom Türü",
+      "text": "Kapalı kapta gerçekleşen kimyasal bir tepkimede aşağıdakilerden hangisi DEĞİŞEBİLİR?",
+      "explanation": "Atom sayısı, atom türü ve kütle daima korunur; ancak molekül sayısı değişebilir.",
+      "imageUrl": null,
+      "options": [
+        "Toplam kütle",
+        "Atom türü",
+        "Toplam atom sayısı",
+        "Molekül sayısı"
+      ],
+      "correctOptionIndex": 3
+    }
+  ]
+}

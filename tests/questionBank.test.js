@@ -4,6 +4,7 @@ const path = require('node:path');
 const {
   loadQuestionBank,
   getDifficultyDistribution,
+  getDurationByDifficulty,
   selectMatchQuestions,
 } = require('../src/engine/questionBank');
 
@@ -109,4 +110,93 @@ test('both TYT and AYT include expanded questions across all 5 subjects and q_hs
   assert.ok(golgiQ, 'Golgi hotspot sorusu (q_hs_018) bulunmalı');
   assert.equal(golgiQ.interactiveQuestion.payload.imageUrl, '/eukaryotic-cell.svg');
 });
+
+test('LGS kademesi ve difficultyMode parametreleri soru bankasında doğru çalışır', () => {
+  const bank = loadQuestionBank(bankDir);
+
+  // 8 yeni LGS sorusu havuzda bulunmalı
+  const lgsQuestions = bank.allQuestions.filter((q) => q.examType === 'LGS');
+  assert.ok(lgsQuestions.length >= 8, `En az 8 LGS sorusu bulunmalı, bulunan: ${lgsQuestions.length}`);
+
+  // LGS matematik sorusu seçimi
+  const pickedLgs = selectMatchQuestions(bank, {
+    examType: 'LGS',
+    commonSubjects: ['matematik', 'fizik', 'kimya', 'biyoloji', 'turkce'],
+    count: 5,
+  });
+  assert.equal(pickedLgs.length, 5);
+  for (const q of pickedLgs) {
+    assert.equal(q.examType, 'LGS');
+  }
+
+  // LGS müfredat branşları: Türkçe, Matematik, Fen, Sosyal
+  const pickedFen = selectMatchQuestions(bank, {
+    examType: 'LGS',
+    commonSubjects: ['fen'],
+    count: 5,
+  });
+  assert.equal(pickedFen.length, 5);
+  for (const q of pickedFen) {
+    assert.equal(q.examType, 'LGS');
+  }
+
+  const pickedSosyal = selectMatchQuestions(bank, {
+    examType: 'LGS',
+    commonSubjects: ['sosyal'],
+    count: 5,
+  });
+  assert.equal(pickedSosyal.length, 5);
+  for (const q of pickedSosyal) {
+    assert.equal(q.examType, 'LGS');
+  }
+
+  // difficultyMode = 'easy'
+  const distEasy = getDifficultyDistribution(1200, 'easy');
+  assert.deepEqual(distEasy, { EASY: 4, MEDIUM: 1, HARD: 0 });
+
+  // difficultyMode = 'hard'
+  const distHard = getDifficultyDistribution(1200, 'hard');
+  assert.deepEqual(distHard, { EASY: 0, MEDIUM: 1, HARD: 4 });
+});
+
+test('getDurationByDifficulty and questionBank enforce dynamic 1v1 duel durations (15s, 20s, 25s, no 60s)', () => {
+  assert.equal(getDurationByDifficulty('easy'), 15000);
+  assert.equal(getDurationByDifficulty('kolay'), 15000);
+  assert.equal(getDurationByDifficulty('EASY'), 15000);
+  assert.equal(getDurationByDifficulty('medium'), 20000);
+  assert.equal(getDurationByDifficulty('orta'), 20000);
+  assert.equal(getDurationByDifficulty('MEDIUM'), 20000);
+  assert.equal(getDurationByDifficulty('hard'), 25000);
+  assert.equal(getDurationByDifficulty('zor'), 25000);
+  assert.equal(getDurationByDifficulty('HARD'), 25000);
+
+  const bank = loadQuestionBank(bankDir);
+
+  // Hiçbir soruda 60 saniye (60000ms) kalmamalı
+  const slowQuestions = bank.allQuestions.filter((q) => q.durationMs >= 60000 || (q.timeLimitSeconds && q.timeLimitSeconds >= 60));
+  assert.equal(slowQuestions.length, 0, `60 saniye süresi olan soru bulunmamalı: ${slowQuestions.map(q => q.externalId).join(', ')}`);
+
+  // İnteraktif sorularda 30 saniye kalan soru olmamalı (maksimum 20-25s olmalı)
+  const over25Questions = bank.allQuestions.filter(
+    (q) => (q.durationMs > 25000) || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds > 25)
+  );
+  assert.equal(over25Questions.length, 0, `25 saniyeden uzun soru bulunmamalı: ${over25Questions.map(q => q.externalId).join(', ')}`);
+
+  // Kolay, orta ve zor soruların süreleri doğru atanmış olmalı
+  const easySample = bank.byExamSubjectDifficulty.TYT.matematik.EASY[0];
+  assert.equal(easySample.durationMs, 15000);
+  assert.equal(easySample.timeLimitSeconds, 15);
+  assert.equal(easySample.interactiveQuestion.timeLimitSeconds, 15);
+
+  const medSample = bank.byExamSubjectDifficulty.TYT.matematik.MEDIUM[0];
+  assert.equal(medSample.durationMs, 20000);
+  assert.equal(medSample.timeLimitSeconds, 20);
+  assert.equal(medSample.interactiveQuestion.timeLimitSeconds, 20);
+
+  const hardSample = bank.byExamSubjectDifficulty.TYT.matematik.HARD[0];
+  assert.equal(hardSample.durationMs, 25000);
+  assert.equal(hardSample.timeLimitSeconds, 25);
+  assert.equal(hardSample.interactiveQuestion.timeLimitSeconds, 25);
+});
+
 

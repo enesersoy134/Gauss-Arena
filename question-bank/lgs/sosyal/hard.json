@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "sosyal",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-SOS-H-001",
+      "subTopic": "Mustafa Kemal'in Fikir Hayatını Etkileyenler",
+      "text": "Mustafa Kemal'in fikir hayatında \"vatan ve hürriyet şairi\" olarak andığı Namık Kemal ile \"Türkçülük ve milliyetçilik\" fikirlerini benimsediği Ziya Gökalp onun hangi yönünün gelişiminde belirleyici olmuştur?",
+      "explanation": "Namık Kemal vatan sevgisini, Ziya Gökalp ve Mehmet Emin Yurdakul ise Türk milliyetçiliği fikrini aşılamıştır.",
+      "imageUrl": null,
+      "options": [
+        "Batı müziğine ilgisinde",
+        "Vatanseverlik ve milliyetçilik bilincinin şekillenmesinde",
+        "Yalnızca fen bilimlerine yönelmesinde",
+        "Diplomatik dil öğrenmesinde"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-H-002",
+      "subTopic": "Mondros Ateşkes Antlaşması'nın 7. ve 24. Maddeleri",
+      "text": "Mondros'un \"İtilaf Devletleri güvenliklerini tehdit eden herhangi bir stratejik noktayı işgal edebilecektir\" (7. madde) ve \"Vilayat-ı Sitte'de karışıklık çıkarsa işgal edilecektir\" (24. madde) maddelerinin asıl gizli amacı nedir?",
+      "explanation": "7. madde tüm Anadolu işgalleri için bahane hazırlanmasını, 24. madde ise Doğu Anadolu'da Ermeni devleti kurulmasını hedeflemiştir.",
+      "imageUrl": null,
+      "options": [
+        "Anadolu'yu işgale açık hâle getirmek ve Doğu'da bir Ermeni devleti kurmak",
+        "Osmanlı'ya yardım etmek",
+        "Boğazları korumak",
+        "Demiryollarını geliştirmek"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-H-003",
+      "subTopic": "Amasya Görüşmeleri ve Temsil Heyeti",
+      "text": "İstanbul Hükûmeti'nin temsilcisi Salih Paşa ile Temsil Heyeti adına Mustafa Kemal arasında yapılan Amasya Görüşmeleri'nin (Ekim 1919) en önemli siyasî sonucu nedir?",
+      "explanation": "Amasya Görüşmeleri ile İstanbul Hükûmeti, Temsil Heyeti'nin varlığını resmen ve hukuken ilk kez kabul etmiştir.",
+      "imageUrl": null,
+      "options": [
+        "İstanbul Hükûmeti, Temsil Heyeti'ni hukuken ve resmen tanımıştır",
+        "İstanbul Hükûmeti istifa etmiştir",
+        "Kuvâ-yı Millîye feshedilmiştir",
+        "Lozan Antlaşması imzalanmıştır"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-H-004",
+      "subTopic": "Sevr Antlaşması'nın Hukuken Geçersizliği",
+      "text": "10 Ağustos 1920'de imzalanan Sevr Antlaşması'nın hukuken geçersiz (ölü doğmuş bir antlaşma) sayılmasının anayasal gerekçesi nedir?",
+      "explanation": "Kânûn-ı Esâsî'ye göre uluslararası antlaşmalar Mebusan Meclisi onayından geçmelidir; meclis kapalı olduğundan hukuken geçersizdir.",
+      "imageUrl": null,
+      "options": [
+        "Padişah tarafından imzalanmaması",
+        "Osmanlı Mebusan Meclisi tarafından onaylanmamış olması",
+        "Yunanistan'ın antlaşmayı reddetmesi",
+        "Fransa'nın çekilmesi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-H-005",
+      "subTopic": "I. İnönü Muharebesi'nin Sonuçları",
+      "text": "TBMM ordularının kazandığı I. İnönü Zaferi sonrası iç ve dış politikada yaşanan aşağıdaki gelişmelerden hangisi bu zaferin diplomatik sonucudur?",
+      "explanation": "Londra Konferansı ile İtilaf Devletleri TBMM'yi ilk kez resmen tanımış, Sovyet Rusya ile Moskova Antlaşması imzalanmıştır.",
+      "imageUrl": null,
+      "options": [
+        "İstiklal Marşı'nın kabul edilmesi",
+        "Teşkilat-ı Esasiye Kanunu'nun kabulü",
+        "Londra Konferansı'nın toplanması ve Moskova Antlaşması",
+        "Mustafa Kemal'e mareşallik unvanı verilmesi"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-SOS-H-006",
+      "subTopic": "Mudanya Ateşkes Antlaşması",
+      "text": "Mudanya Ateşkes Antlaşması ile Doğu Trakya, Boğazlar ve İstanbul savaş yapılmadan diplomatik yolla kurtarılmıştır. Bu durum aşağıdakilerden hangisini doğrudan kanıtlar?",
+      "explanation": "İstanbul ve Boğazların TBMM idaresine devredilmesiyle Osmanlı Devleti hukuken sona ermiştir.",
+      "imageUrl": null,
+      "options": [
+        "Osmanlı Hükûmeti'nin hukuken sona erdiğini ve askeri zaferin diplomatik zafere dönüştüğünü",
+        "Yunanistan'ın savaşı kazandığını",
+        "İtilaf Devletleri'nin Sevr'i uyguladığını",
+        "TBMM'nin kapitülasyonları kabul ettiğini"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-H-007",
+      "subTopic": "Çok Partili Hayata Geçiş ve Muhalefet Partileri",
+      "text": "Cumhuriyet döneminin ilk muhalefet partisi olan Terakkiperver Cumhuriyet Fırkası'nın kurucuları arasında kimler yer almıştır?",
+      "explanation": "Millî Mücadele komutanlarından Kazım Karabekir liderliğinde 1924'te Terakkiperver Cumhuriyet Fırkası kurulmuştur.",
+      "imageUrl": null,
+      "options": [
+        "Kazım Karabekir, Rauf Orbay, Refet Bele ve Ali Fuat Cebesoy",
+        "Fethi Okyar ve İsmet İnönü",
+        "Celal Bayar ve Adnan Menderes",
+        "Namık Kemal ve Şinasi"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-H-008",
+      "subTopic": "Atatürk İlkeleri (Devletçilik)",
+      "text": "Özel sektörün yetersiz kaldığı alanlarda büyük sanayi ve altyapı yatırımlarının bizzat devlet eliyle yapılmasını, I. Beş Yıllık Sanayi Planı'nın uygulanmasını esas alan ilke hangisidir?",
+      "explanation": "Devletçilik; özel teşebbüsü reddetmez ancak stratejik ve büyük yatırımları devlet eliyle yürütmeyi öngörür.",
+      "imageUrl": null,
+      "options": [
+        "Devletçilik",
+        "Cumhuriyetçilik",
+        "Laiklik",
+        "İnkılapçılık"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-H-009",
+      "subTopic": "Balkan Antantı ve Sadabat Paktı",
+      "text": "1930'lu yıllarda İtalya ve Almanya'nın saldırgan yayılmacı politikalarına karşı Türkiye'nin Batı ve Doğu sınırlarının güvenliğini sağlamak için imzaladığı uluslararası güvenlik antlaşmaları hangileridir?",
+      "explanation": "Türkiye 1934'te Balkan Antantı ile batı sınırını, 1937'de Sadabat Paktı ile doğu sınırını güvenceye almıştır.",
+      "imageUrl": null,
+      "options": [
+        "Balkan Antantı (Batı sınırı) ve Sadabat Paktı (Doğu sınırı)",
+        "Varşova Paktı ve NATO",
+        "Cenevre Sözleşmesi ve Paris Paktı",
+        "Gümrü ve Kars Antlaşmaları"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-H-010",
+      "subTopic": "Hatay'ın Anavatana Katılması (1939)",
+      "text": "Mustafa Kemal'in \"Kırk asırlık Türk yurdu düşman elinde esir kalamaz\" ve \"Şahsi meselem\" dediği diplomasi zaferi nedir?",
+      "explanation": "Mustafa Kemal'in yoğun çabalarıyla Hatay bağımsız olmuş ve 1939'da Meclis kararıyla Türkiye Cumhuriyeti'ne katılmıştır.",
+      "imageUrl": null,
+      "options": [
+        "Musul'un fethi",
+        "Hatay'ın anavatana katılması",
+        "Kıbrıs Barış Harekâtı",
+        "Batum'un alınması"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

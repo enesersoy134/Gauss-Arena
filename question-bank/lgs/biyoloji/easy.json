@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "biyoloji",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-BIY-E-001",
+      "subTopic": "DNA ve Genetik Kod",
+      "text": "DNA molekülünün çift zincirli sarmal yapısında Adenin (A) bazının karşısına daima hangi baz gelir?",
+      "explanation": "DNA'da Adenin ile Timin (A=T), Guanin ile Sitozin (G≡C) eşleşir.",
+      "imageUrl": null,
+      "options": [
+        "Guanin (G)",
+        "Sitozin (C)",
+        "Timin (T)",
+        "Urasil (U)"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-BIY-E-002",
+      "subTopic": "DNA Nükleotid Eşleşmesi",
+      "text": "Bir nükleotidin yapısında aşağıdakilerden hangisi KESİNLİKLE bulunmaz?",
+      "explanation": "Nükleotid = Fosfat + Deoksiriboz Şekeri + Azotlu Organik Baz formülünden oluşur.",
+      "imageUrl": null,
+      "options": [
+        "Fosfat grubu",
+        "Deoksiriboz şekeri",
+        "Organik baz",
+        "Ribozom organeli"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-BIY-E-003",
+      "subTopic": "Fotosentez Temelleri",
+      "text": "Yeşil bitkilerin fotosentez yapabilmesi için aşağıdakilerden hangisine ihtiyacı YOKTUR?",
+      "explanation": "Bitkiler fotosentezde CO₂ ve su kullanarak besin ve oksijen üretir; oksijen tüketmezler.",
+      "imageUrl": null,
+      "options": [
+        "Işık enerjisi",
+        "Karbondioksit (CO₂)",
+        "Su (H₂O)",
+        "Oksijen gazı tüketimi"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-BIY-E-004",
+      "subTopic": "Besin Zinciri Üreticileri",
+      "text": "Aşağıdaki canlılardan hangisi bir besin zincirinde \"üretici\" canlı basamağında yer alır?",
+      "explanation": "Yeşil yapraklı buğday bitkisi klorofili sayesinde fotosentez yapan bir üreticidir.",
+      "imageUrl": null,
+      "options": [
+        "Çekirge",
+        "Buğday bitkisi",
+        "Kurbağa",
+        "Yılan"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-E-005",
+      "subTopic": "Mendel Genetiği (Baskın Gen)",
+      "text": "Canlılarda etkisini hem saf döl (homozigot) hem de melez (heterozigot) durumda gösteren genlere ne ad verilir?",
+      "explanation": "Baskın genler büyük harfle gösterilir ve her durumda dış görünüşte etkisini gösterir.",
+      "imageUrl": null,
+      "options": [
+        "Baskın (Dominant) gen",
+        "Çekinik (Resesif) gen",
+        "Mutasyona uğramış gen",
+        "Modifiye gen"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-006",
+      "subTopic": "Adaptasyon Kavramı",
+      "text": "Kutup ayılarının beyaz kürk rengine ve kalın yağ tabakasına sahip olması hangi kavrama örnektir?",
+      "explanation": "Canlının yaşadığı çevreye uyum sağlayarak yaşama ve üreme şansını artıran kalıtsal özellik adaptasyondur.",
+      "imageUrl": null,
+      "options": [
+        "Adaptasyon",
+        "Modifikasyon",
+        "Mutasyon",
+        "Yapay seçilim"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-007",
+      "subTopic": "Besin Zincirinde Ayrıştırıcılar",
+      "text": "Besin zincirinde ölü canlı atıklarını parçalayarak inorganik maddelere dönüştüren canlılar kimlerdir?",
+      "explanation": "Ayrıştırıcılar besin zincirinin her basamağında görev alır ve madde döngüsünü tamamlar.",
+      "imageUrl": null,
+      "options": [
+        "Ayrıştırıcılar (Mantar ve bakteriler)",
+        "Birincil tüketiciler",
+        "Otçullar",
+        "Yalnızca etçil memeliler"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-008",
+      "subTopic": "Kromozom Sayısı ve Gelişmişlik",
+      "text": "Farklı canlı türlerinin kromozom sayıları ile gelişmişlik düzeyleri arasında nasıl bir ilişki vardır?",
+      "explanation": "Örn: Eğrelti otunun 500, insanın 46 kromozomu vardır; kromozom sayısı gelişmişlik ölçütü değildir.",
+      "imageUrl": null,
+      "options": [
+        "Kromozom sayısı fazla olan canlı daha gelişmiştir",
+        "Kromozom sayısı ile canlının gelişmişliği arasında doğrudan bir ilişki yoktur",
+        "Kromozom sayısı az olan daha gelişmiştir",
+        "Tüm canlıların kromozom sayısı aynıdır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-E-009",
+      "subTopic": "Solunum Çeşitleri",
+      "text": "Hücrelerin besin maddelerini oksijen kullanarak parçalayıp enerji (ATP) üretmesine ne ad verilir?",
+      "explanation": "Besinlerin mitokondride O₂ yardımıyla parçalanması oksijenli solunumdur.",
+      "imageUrl": null,
+      "options": [
+        "Oksijenli solunum",
+        "Oksijensiz solunum (Fermantasyon)",
+        "Fotosentez",
+        "Terleme"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-E-010",
+      "subTopic": "Biyoteknoloji Örnekleri",
+      "text": "İnsülin hormonunun bakterilere ürettirilmesi hangi bilimsel alanın başarısıdır?",
+      "explanation": "Gen aktarımı yöntemiyle bakterilere insan insülini ürettirmek biyoteknolojinin en temel örneğidir.",
+      "imageUrl": null,
+      "options": [
+        "Biyoteknoloji ve Gen Mühendisliği",
+        "Fiziksel coğrafya",
+        "Astronomi",
+        "Meteoroloji"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

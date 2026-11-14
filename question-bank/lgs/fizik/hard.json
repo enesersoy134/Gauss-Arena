@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "fizik",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-FIZ-H-001",
+      "subTopic": "Bileşik Basınç Problemi",
+      "text": "Taban alanı 2S olan h yüksekliğindeki d yoğunluklu sıvı tabana P basıncı yapmaktadır. Sıvının tamamı taban alanı S olan bir kaba dökülürse tabandaki sıvı basıncı kaç P olur?",
+      "explanation": "Hacim V = 2S · h. Taban alanı S olunca yeni yükseklik 2h olur. Yeni basınç P' = 2h·d·g = 2P olur.",
+      "imageUrl": null,
+      "options": [
+        "P",
+        "2P",
+        "3P",
+        "4P"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-H-002",
+      "subTopic": "Palanga Sistemleri",
+      "text": "Toplam 3 makaradan oluşan bir palanga sisteminde ip yukarı doğru çekilmektedir. 120 N yükü dengeleyen kuvvet kaç N'dur?",
+      "explanation": "İp yukarı çekiliyorsa yükü taşıyan ip sayısı n = 3 olur. F = G / 3 = 120 / 3 = 40 N bulunur.",
+      "imageUrl": null,
+      "options": [
+        "30",
+        "40",
+        "60",
+        "120"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-H-003",
+      "subTopic": "Vida Adımı Mekaniği",
+      "text": "Vida adımı a = 2 mm olan bir vida tornavida ile 10 tam tur döndürüldüğünde tahta blok içinde kaç mm ilerler?",
+      "explanation": "İlerleme miktarı h = n · a = 10 · 2 = 20 mm olur.",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "10",
+        "20",
+        "40"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FIZ-H-004",
+      "subTopic": "U Borusu Basınç Dengesi",
+      "text": "U borusunda birbirine karışmayan d₁ ve d₂ yoğunluklu sıvılar dengededir. h₁ = 10 cm ve h₂ = 15 cm olduğuna göre d₁ / d₂ oranı kaçtır?",
+      "explanation": "Taban hizasındaki basınçlar eşittir: h₁ · d₁ = h₂ · d₂ ⇒ 10 · d₁ = 15 · d₂ ⇒ d₁ / d₂ = 1.5 = 3/2 olur.",
+      "imageUrl": null,
+      "options": [
+        "2/3",
+        "3/2",
+        "4/9",
+        "9/4"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-H-005",
+      "subTopic": "Bileşik Basit Makineler",
+      "text": "Kuvvet kazancı 2 olan bir kaldıraç ile kuvvet kazancı 3 olan bir eğik düzlemin birleştirilmesiyle kurulan bileşik sistemde toplam kuvvet kazancı kaçtır?",
+      "explanation": "Bileşik makinelerde toplam kuvvet kazancı bileşenlerin kuvvet kazançlarının çarpımıdır: 2 · 3 = 6 olur.",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "6",
+        "8",
+        "9"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-H-006",
+      "subTopic": "Isı ve Sıcaklık Değişimi",
+      "text": "Öz ısısı büyük olan maddeler, öz ısısı küçük olan maddelere göre eşit ısı aldıklarında sıcaklıkları nasıl değişir?",
+      "explanation": "Q = m·c·ΔT bağıntısına göre öz ısısı (c) büyük olan maddeler geç ısınır ve geç soğur.",
+      "imageUrl": null,
+      "options": [
+        "Daha hızlı yükselir",
+        "Daha yavaş yükselir",
+        "Sıcaklığı hiç değişmez",
+        "Sıcaklığı düşer"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-H-007",
+      "subTopic": "Basınç ve Hal Değişimi",
+      "text": "Düdüklü tencerede suyun 100 °C yerine yaklaşık 120 °C'de kaynamasının nedeni nedir?",
+      "explanation": "Sıvı yüzeyindeki basınç arttıkça kaynama noktası yükselir; bu sayede yemekler daha yüksek sıcaklıkta pişer.",
+      "imageUrl": null,
+      "options": [
+        "İçerideki gaz basıncının açık hava basıncından yüksek olması",
+        "Isıtıcının gücünün yüksek olması",
+        "Sıvı hacminin azalması",
+        "Tencerenin metalden yapılmış olması"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-FIZ-H-008",
+      "subTopic": "Atmosfer Basıncı Yükseklik İlişkisi",
+      "text": "Deniz seviyesinden dağın zirvesine doğru çıkıldıkça açık hava basıncı ve suyun kaynama noktası nasıl değişir?",
+      "explanation": "Yükseklere çıkıldıkça açık hava basıncı azalır, basınca bağlı olarak kaynama noktası da 100 °C'nin altına düşer.",
+      "imageUrl": null,
+      "options": [
+        "Basınç artar, kaynama noktası artar",
+        "Basınç azalır, kaynama noktası azalır",
+        "Basınç azalır, kaynama noktası artar",
+        "Basınç değişmez, kaynama noktası azalır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-H-009",
+      "subTopic": "Dişli ve Kasnak Dönme Sayısı",
+      "text": "Yarıçapı 3r olan K dişlisi 2 tur attığında, ona bağlı r yarıçaplı L dişlisi kaç tur atar?",
+      "explanation": "n₁ · r₁ = n₂ · r₂ ⇒ 2 · 3r = n₂ · r ⇒ n₂ = 6 tur döner.",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "6",
+        "8",
+        "9"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-H-010",
+      "subTopic": "Eksen Eğikliği ve Gece-Gündüz",
+      "text": "21 Aralık tarihinde Güney Kutup Dairesi'nde (66.5° G) yaşanan gündüz süresi yaklaşık kaç saattir?",
+      "explanation": "21 Aralık'ta Güney Yarım Küre yazı yaşar ve Güney Kutup Dairesi'nde 24 saat kesintisiz gündüz yaşanır.",
+      "imageUrl": null,
+      "options": [
+        "0 saat",
+        "12 saat",
+        "18 saat",
+        "24 saat"
+      ],
+      "correctOptionIndex": 3
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "sosyal",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-SOS-E-001",
+      "subTopic": "Bir Kahraman Doğuyor (Selanik)",
+      "text": "Mustafa Kemal'in doğup büyüdüğü Selanik şehrinin zengin bir kültürel yapıya ve canlı bir ticaret ortamına sahip olmasının en önemli nedeni nedir?",
+      "explanation": "Selanik; işlek bir limana, Avrupa'ya bağlanan demir yoluna ve çok uluslu kozmopolit bir yapıya sahipti.",
+      "imageUrl": null,
+      "options": [
+        "Deniz kıyısında işlek bir limana ve Avrupa'ya bağlanan demiryoluna sahip olması",
+        "Yalnızca tarımla geçinmesi",
+        "Askeri okulların bulunmaması",
+        "Başkent olması"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-E-002",
+      "subTopic": "Mustafa Kemal'in Askerlik Hayatı (Trablusgarp)",
+      "text": "Mustafa Kemal'in sömürgeci İtalya'ya karşı Derne ve Tobruk'ta yerli halkı örgütleyerek kazandığı ilk askeri başarı hangi savaştır?",
+      "explanation": "1911 Trablusgarp Savaşı Mustafa Kemal'in ilk askeri başarısıdır ve teşkilatçılık yeteneğini gösterir.",
+      "imageUrl": null,
+      "options": [
+        "Balkan Savaşı",
+        "Trablusgarp Savaşı",
+        "Çanakkale Savaşı",
+        "Sakarya Meydan Muharebesi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-E-003",
+      "subTopic": "Millî Uyanış (Samsun'a Çıkış)",
+      "text": "Mustafa Kemal Millî Mücadele'yi fiilen başlatmak amacıyla hangi tarihte Samsun'a çıkmıştır?",
+      "explanation": "Mustafa Kemal, 19 Mayıs 1919'da 9. Ordu Müfettişi olarak Bandırma Vapuru ile Samsun'a çıkmıştır.",
+      "imageUrl": null,
+      "options": [
+        "23 Nisan 1920",
+        "19 Mayıs 1919",
+        "29 Ekim 1923",
+        "30 Ağustos 1922"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-E-004",
+      "subTopic": "Genelgeler (Amasya Genelgesi)",
+      "text": "\"Milletin bağımsızlığını yine milletin azim ve kararı kurtaracaktır.\" kararı ilk kez hangi belgede yer almıştır?",
+      "explanation": "Amasya Genelgesi (22 Haziran 1919), Kurtuluş Savaşı'nın gerekçesini, amacını ve yöntemini ilk kez belirten ihtilal beyannamesidir.",
+      "imageUrl": null,
+      "options": [
+        "Amasya Genelgesi",
+        "Havza Genelgesi",
+        "Erzurum Kongresi",
+        "Misak-ı Millî"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-E-005",
+      "subTopic": "Kongreler (Sivas Kongresi)",
+      "text": "Yurdun dört bir yanındaki Millî Mücadele cemiyetleri hangi kongrede \"Anadolu ve Rumeli Müdafaa-i Hukuk Cemiyeti\" adı altında birleştirilmiştir?",
+      "explanation": "Sivas Kongresi'nde tüm milli cemiyetler tek çatı altında birleştirilerek Millî Mücadele tek merkezden yönetilmiştir.",
+      "imageUrl": null,
+      "options": [
+        "Erzurum Kongresi",
+        "Amasya Genelgesi",
+        "Sivas Kongresi",
+        "Balıkesir Kongresi"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-SOS-E-006",
+      "subTopic": "TBMM'nin Açılışı",
+      "text": "Türkiye Büyük Millet Meclisi (TBMM) hangi tarihte Ankara'da açılarak millî iradeyi temsil etmeye başlamıştır?",
+      "explanation": "23 Nisan 1920 tarihinde TBMM Hacı Bayram Camii'nde kılınan cuma namazı sonrası dualarla açılmıştır.",
+      "imageUrl": null,
+      "options": [
+        "19 Mayıs 1919",
+        "23 Nisan 1920",
+        "29 Ekim 1923",
+        "12 Ocak 1920"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-E-007",
+      "subTopic": "Batı Cephesi (Sakarya)",
+      "text": "\"Hattı müdafaa yoktur, sathı müdafaa vardır. O satıh bütün vatandır.\" tarihi emri Mustafa Kemal tarafından hangi savaşta verilmiştir?",
+      "explanation": "Sakarya Meydan Muharebesi'nde (1921) Mustafa Kemal bu emri vererek topyekûn savunma taktiğini uygulamıştır.",
+      "imageUrl": null,
+      "options": [
+        "I. İnönü Muharebesi",
+        "II. İnönü Muharebesi",
+        "Sakarya Meydan Muharebesi",
+        "Büyük Taarruz"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-SOS-E-008",
+      "subTopic": "Atatürk İlkeleri (Cumhuriyetçilik)",
+      "text": "Egemenliğin kayıtsız şartsız millete ait olmasını, halkın kendi yöneticilerini seçimle belirlemesini esas alan Atatürk ilkesi hangisidir?",
+      "explanation": "Cumhuriyetçilik, devlet yönetiminde halk iradesini ve seçimi temel alan ilkedir.",
+      "imageUrl": null,
+      "options": [
+        "Cumhuriyetçilik",
+        "Devletçilik",
+        "Milliyetçilik",
+        "Laiklik"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-SOS-E-009",
+      "subTopic": "Atatürk İlkeleri (Laiklik)",
+      "text": "Din ve devlet işlerinin birbirinden ayrılmasını, akıl ve bilimin rehber edinilmesini savunan ilke hangisidir?",
+      "explanation": "Laiklik; vicdan özgürlüğünü, din ve devlet işlerinin ayrılmasını ve aklın egemenliğini öngörür.",
+      "imageUrl": null,
+      "options": [
+        "Halkçılık",
+        "Laiklik",
+        "Devletçilik",
+        "İnkılapçılık"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-SOS-E-010",
+      "subTopic": "Lozan Barış Antlaşması",
+      "text": "Yeni Türk devletinin bağımsızlığının ve sınırlarının dünya devletlerince resmen tanındığı uluslararası antlaşma hangisidir?",
+      "explanation": "24 Temmuz 1923'te imzalanan Lozan Antlaşması Türkiye Cumhuriyeti'nin tapu senedidir.",
+      "imageUrl": null,
+      "options": [
+        "Sevr Antlaşması",
+        "Mondros Ateşkesi",
+        "Lozan Barış Antlaşması",
+        "Gümrü Antlaşması"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

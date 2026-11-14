@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "biyoloji",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-BIY-H-001",
+      "subTopic": "DNA Nükleotid Sayısı Hesaplama",
+      "text": "1200 nükleotidden oluşan bir DNA molekülünde 200 adet Guanin nükleotidi olduğuna göre bu DNA'da kaç adet Timin nükleotidi bulunur?",
+      "explanation": "G = C = 200. Toplam G + C = 400. Kalan A + T = 1200 - 400 = 800. A = T olduğundan T = 400 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "200",
+        "400",
+        "600",
+        "800"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-H-002",
+      "subTopic": "Çaprazlama ve Olasılık Problemi",
+      "text": "Melez döl kahverengi gözlü (Bb) bir anne ile mavi gözlü (bb) bir babanın doğacak ilk çocuklarının mavi gözlü olma olasılığı nedir?",
+      "explanation": "Bb × bb çaprazlamasında genotipler: Bb, Bb, bb, bb (%50 melez kahverengi, %50 saf mavi).",
+      "imageUrl": null,
+      "options": [
+        "%0",
+        "%25",
+        "%50",
+        "%75"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-BIY-H-003",
+      "subTopic": "Akraba Evliliği ve Genetik Hastalıklar",
+      "text": "Akraba evliliklerinde kalıtsal hastalıkların görülme sıklığının yüksek olmasının temel bilimsel gerekçesi nedir?",
+      "explanation": "Kalıtsal hastalıkların çoğu çekinik genlerle taşınır; ortak atadan gelen çekinik genler birleşir.",
+      "imageUrl": null,
+      "options": [
+        "Akrabaların genetik benzerliğinin fazla olması nedeniyle çekinik hastalık genlerinin yan yana gelme olasılığının artması",
+        "Akrabaların aynı kan grubuna sahip olması",
+        "Akrabalarda mutasyon hızının daha yüksek olması",
+        "Akrabaların aynı çevrede yaşaması"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-H-004",
+      "subTopic": "Besin Piramidinde Biyolojik Birikim",
+      "text": "Ot → Çekirge → Kurbağa → Yılan → Kartal besin zincirinde dokularında tarım ilacı (DDT) ve ağır metal birikimi EN FAZLA olan canlı hangisidir?",
+      "explanation": "Biyolojik birikim (zehir oranı) besin piramidinin en üst basamağındaki son tüketicide (kartal) en fazladır.",
+      "imageUrl": null,
+      "options": [
+        "Ot",
+        "Çekirge",
+        "Kurbağa",
+        "Kartal"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-BIY-H-005",
+      "subTopic": "Klonlama Aşamaları (Dolly)",
+      "text": "Klonlanan bir canlının genetik ikizi, klonlama sürecinde hangi canlının genetik kopyasıdır?",
+      "explanation": "Genetik materyal (DNA) çekirdekte bulunur; çekirdeği aktarılan canlının birebir genetik kopyası oluşur.",
+      "imageUrl": null,
+      "options": [
+        "Çekirdeği alınan vücut hücresinin sahibinin",
+        "Yumurta hücresi bağışlayan dişinin",
+        "Taşıyıcı annenin",
+        "Yavrunun babasının"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-H-006",
+      "subTopic": "Karbon Döngüsü ve Küresel Isınma",
+      "text": "Atmosferdeki karbondioksit (CO₂) miktarını azaltan ve karbonu biyolojik yapıya katan YEGÂNE temel olay hangisidir?",
+      "explanation": "Atmosferdeki serbest CO₂ gazını bağlayarak organik maddeye dönüştüren tek süreç fotosentezdir.",
+      "imageUrl": null,
+      "options": [
+        "Fotosentez",
+        "Oksijenli solunum",
+        "Fosil yakıtların yakılması",
+        "Ayrıştırma faaliyetleri"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-H-007",
+      "subTopic": "Fermantasyon ve Gaz Çıkışı",
+      "text": "Hamurun mayalanması (maya mantarlarının etil alkol fermantasyonu) sırasında hamurun kabarmasını sağlayan gaz hangisidir?",
+      "explanation": "Etil alkol fermantasyonunda etil alkol ile birlikte CO₂ gazı açığa çıkar; kabarcıklar hamuru kabartır.",
+      "imageUrl": null,
+      "options": [
+        "O₂ (Oksijen)",
+        "CO₂ (Karbondioksit)",
+        "N₂ (Azot)",
+        "H₂ (Hidrojen)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-BIY-H-008",
+      "subTopic": "DNA Replikasyonunda İplik Dağılımı",
+      "text": "Kendini bir kez eşleyen bir DNA molekülünden oluşan iki yeni DNA molekülünün iplikleri nasıldır?",
+      "explanation": "DNA eşlenmesi yarı korunumlu (semikonservatif) gerçekleşir; ana zincir kalıp olarak kullanılır.",
+      "imageUrl": null,
+      "options": [
+        "Her iki DNA'da da biri eski, biri yeni sentezlenmiş iplik bulunur (Yarı korunumlu eşlenme)",
+        "Bir DNA tamamen eski, diğeri tamamen yenidir",
+        "İki iplik de tamamen parçalanıp yeniden yapılır",
+        "Yalnızca tek bir yeni iplik oluşur"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-H-009",
+      "subTopic": "Modifikasyon Örneklerinin Özellikleri",
+      "text": "Aşağıdakilerden hangisi modifikasyonların mutasyonlardan en temel farkıdır?",
+      "explanation": "Modifikasyon fenotipte görülür, genin işleyişi değişir ve kesinlikle sonraki nesle aktarılmaz.",
+      "imageUrl": null,
+      "options": [
+        "Döllere kalıtsal olarak aktarılmaması ve genin nükleotid yapısının değil sadece işleyişinin değişmesi",
+        "Yalnızca hayvanlarda görülmesi",
+        "Zararlı etkilerinin olmaması",
+        "Radyasyon sonucu ortaya çıkması"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-BIY-H-010",
+      "subTopic": "Işık Şiddeti ve Fotosentez Denge Noktası",
+      "text": "Bir bitkinin birim zamanda fotosentezle ürettiği oksijen miktarı, solunumla tükettiği oksijen miktarına eşit olduğunda ne gerçekleşir?",
+      "explanation": "Fotosentez hızı solunum hızına eşit olduğunda bitki dış ortamdan O₂ almaz ve dışarı O₂ vermez.",
+      "imageUrl": null,
+      "options": [
+        "Dış ortamla net gaz alışverişi sıfır olur (Denge noktası)",
+        "Bitki kurur",
+        "Fotosentez tamamen durur",
+        "Bitki anında ölür"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

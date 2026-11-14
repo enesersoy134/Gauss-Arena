@@ -62,6 +62,7 @@ class MatchmakingQueue {
       subjects,
       mode: ticket.mode || 'ranked',
       tournamentId: ticket.tournamentId || null,
+      difficultyMode: ticket.difficultyMode || 'adaptive',
       enqueuedAt: now,
     };
 
@@ -230,6 +231,7 @@ class MatchmakingQueue {
         examType: a.examType,
         mode: a.mode,
         tournamentId: a.tournamentId,
+        difficultyMode: a.difficultyMode || b.difficultyMode || 'adaptive',
         diagnostics: evalResult,
       });
     }
@@ -262,6 +264,7 @@ class MatchmakingQueue {
           examType: entry.examType,
           mode: entry.mode,
           tournamentId: entry.tournamentId,
+          difficultyMode: entry.difficultyMode || 'adaptive',
           diagnostics: {
             compatible: true,
             reason: '30sn Kuyruk Süresi Doldu -> Asenkron Ghost Rakip Atandı',

@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "turkce",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-TUR-M-001",
+      "subTopic": "Fiilimsiler (Sıfat-Fiil ve Zarf-Fiil)",
+      "text": "\"Sararmış yapraklar rüzgâr estikçe etrafa savruluyordu.\" cümlesindeki fiilimsilerin türü sırasıyla nedir?",
+      "explanation": "\"Sararmış yaprak\" sıfat-fiil (-miş), \"estikçe\" zarf-fiildir (-dıkça).",
+      "imageUrl": null,
+      "options": [
+        "İsim-fiil, Sıfat-fiil",
+        "Sıfat-fiil, Zarf-fiil",
+        "Zarf-fiil, İsim-fiil",
+        "Sıfat-fiil, İsim-fiil"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-002",
+      "subTopic": "Cümle Türleri (Yapısına Göre)",
+      "text": "İçinde en az bir fiilimsi bulunan ve tek yüklemi olan cümlelere ne ad verilir?",
+      "explanation": "Tek yüklemli olup içinde fiilimsi barındıran cümleler birleşik (fiilimsili) cümlelerdir.",
+      "imageUrl": null,
+      "options": [
+        "Basit cümle",
+        "Fiilimsi bulunan (Birleşik) cümle",
+        "Sıralı cümle",
+        "Bağlı cümle"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-003",
+      "subTopic": "Cümlenin Ögeleri (Nesne ve Tümleçler)",
+      "text": "\"Öğretmenimiz dün sınıfta bize çok güzel bir kitap okudu.\" cümlesinde aşağıdaki ögelerden hangisi YOKTUR?",
+      "explanation": "Cümlede fiilimsi (zarf fiil) bulunmamaktadır. Ögeler: Özne, Zarf T., Yer T., Dolaylı T., Nesne, Yüklem.",
+      "imageUrl": null,
+      "options": [
+        "Özne",
+        "Zarf Tamlayıcısı",
+        "Yer Tamlayıcısı",
+        "Zarf Fiil"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-TUR-M-004",
+      "subTopic": "Cümlede Vurgu",
+      "text": "Fiil cümlelerinde vurgu kural olarak hangi ögenin üzerindedir?",
+      "explanation": "Yüklemi fiil olan cümlelerde vurgu yüklemden bir önceki ögededir.",
+      "imageUrl": null,
+      "options": [
+        "Yüklemden hemen önceki ögede",
+        "Cümlenin ilk ögesinde",
+        "Öznede",
+        "Yüklemin kendisinde"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-M-005",
+      "subTopic": "Söz Sanatları (Teşhis ve Teşbih)",
+      "text": "\"Hırçın bir rüzgâr dağların ardından öfkeyle haykırıyordu.\" cümlesinde hangi söz sanatı ağır basmaktadır?",
+      "explanation": "İnsana özgü öfkelenme ve haykırma özelliği rüzgara aktarılarak kişileştirme yapılmıştır.",
+      "imageUrl": null,
+      "options": [
+        "Teşhis (Kişileştirme)",
+        "Tezat (Karşıtlık)",
+        "Abartma (Mübalağa)",
+        "Benzetme (Teşbih)"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-M-006",
+      "subTopic": "Metinde Ana Fikir (Ana Düşünce)",
+      "text": "Bir paragrafta yazarın okuyucuya vermek istediği asıl iletiye veya mesaja ne ad verilir?",
+      "explanation": "Yazarın metni yazma amacı ve temel iletisi ana fikirdir.",
+      "imageUrl": null,
+      "options": [
+        "Konu",
+        "Ana düşünce (Ana fikir)",
+        "Başlık",
+        "Yardımcı düşünce"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-007",
+      "subTopic": "Noktalama İşaretleri (Noktalı Virgül ve İki Nokta)",
+      "text": "Kendisinden sonra örnek verilecek veya açıklama yapılacak cümlenin sonuna hangi noktalama işareti konur?",
+      "explanation": "Açıklama veya örnek verilecek yerlerde iki nokta (:) kullanılır.",
+      "imageUrl": null,
+      "options": [
+        "Noktalı virgül (;)",
+        "İki nokta (:)",
+        "Üç nokta (...)",
+        "Virgül (,)"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-008",
+      "subTopic": "Yazım Kuralları (Büyük Harflerin Kullanımı)",
+      "text": "Aşağıdaki cümlelerin hangisinde büyük harflerin yazımıyla ilgili bir YANLIŞLIK yapılmıştır?",
+      "explanation": "Kişi adlarından sonra gelen unvan ve saygı sözcükleri büyük harfle başlar: \"Ahmet Bey\" olmalıdır.",
+      "imageUrl": null,
+      "options": [
+        "Van Gölü Türkiye'nin en büyük gölüdür.",
+        "Her yıl 29 Ekim Cumhuriyet Bayramı coşkuyla kutlanır.",
+        "Bu akşam Ay tutulması izlenecek.",
+        "Dün ahmet bey ile görüştük."
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-TUR-M-009",
+      "subTopic": "Paragrafta Anlatım Biçimleri",
+      "text": "Bir yerin, kişinin veya nesnenin ayırt edici özelliklerinin kelimelerle resim çizer gibi anlatıldığı biçim hangisidir?",
+      "explanation": "Göz önünde canlandırma ve niteleyici sözcüklerle resim çizme betimlemedir.",
+      "imageUrl": null,
+      "options": [
+        "Öyküleme",
+        "Betimleme (Tasvir)",
+        "Tartışma",
+        "Açıklama"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-M-010",
+      "subTopic": "Fiilde Çatı (Geçişli - Geçişsiz)",
+      "text": "Başına \"onu\" kelimesi getirilebilen ve nesne alabilen fiillere ne ad verilir?",
+      "explanation": "Nesne alan veya nesne alabilen fiiller geçişli fiillerdir (Örn: Onu okudu).",
+      "imageUrl": null,
+      "options": [
+        "Geçişli fiil",
+        "Geçişsiz fiil",
+        "Etken fiil",
+        "Edilgen fiil"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

@@ -1,0 +1,1055 @@
+import React, { useState, useRef } from 'react';
+import { CheckCircle2, RotateCcw, ArrowRight, Sparkles } from 'lucide-react';
+import soundEngine from '../../utils/soundEngine';
+
+export interface BioCellGameProps {
+  onComplete: () => void;
+  onNextSubject?: () => void;
+  nextSubjectName?: string;
+}
+
+type OrganelleSvgType =
+  | 'nucleus'
+  | 'mitochondria'
+  | 'centrosome'
+  | 'golgi'
+  | 'chloroplast'
+  | 'vacuole'
+  | 'lysosome'
+  | 'flagellum';
+
+interface CellSlotOrganelle {
+  id: string;
+  name: string;
+  roleShort: string;
+  svgType: OrganelleSvgType;
+  color: string;
+  pinColor: string;
+  slotLabel: string;
+  slotHint: string;
+  positionClass: string;
+}
+
+interface TrayOrganelleOption {
+  id: string;
+  name: string;
+  roleShort: string;
+  color: string;
+  pinColor: string;
+  isValidForCell: boolean;
+  invalidCellReason?: string;
+}
+
+interface CellStage {
+  stageNumber: 1 | 2;
+  title: string;
+  subtitle: string;
+  cellType: 'animal' | 'plant';
+  activeAnimationText: string;
+  slots: CellSlotOrganelle[];
+  trayOptions: TrayOrganelleOption[];
+}
+
+const CELL_STAGES: CellStage[] = [
+  {
+    stageNumber: 1,
+    title: '1. Bölüm: Hayvan Hücresi',
+    subtitle: '7 Organel Arasından Hayvan Hücresine Ait 4 Doğru Organeli Seçip İğnele',
+    cellType: 'animal',
+    activeAnimationText:
+      '⚡ HAYVAN HÜCRESİ ÇALIŞIYOR! Mitokondri ATP pompalıyor, Çekirdek yönetiyor, Sentrozom ve Golgi aktif!',
+    slots: [
+      {
+        id: 'anim-nucleus',
+        name: 'Çekirdek',
+        roleShort: 'DNA & Yönetim',
+        svgType: 'nucleus',
+        color: '#A855F7',
+        pinColor: '#EF4444',
+        slotLabel: 'Yönetim Yuvası',
+        slotHint: 'DNA ve genetik kontrol merkezi',
+        positionClass: 'top-2.5 left-2 sm:left-6',
+      },
+      {
+        id: 'anim-mito',
+        name: 'Mitokondri',
+        roleShort: 'ATP Enerji Santrali',
+        svgType: 'mitochondria',
+        color: '#F97316',
+        pinColor: '#F59E0B',
+        slotLabel: 'Enerji Yuvası',
+        slotHint: 'Oksijenli solunumla ATP üretir',
+        positionClass: 'top-2.5 right-2 sm:right-6',
+      },
+      {
+        id: 'anim-centro',
+        name: 'Sentrozom',
+        roleShort: 'İğ İpliği & Bölünme',
+        svgType: 'centrosome',
+        color: '#3B82F6',
+        pinColor: '#38BDF8',
+        slotLabel: 'Bölünme Yuvası',
+        slotHint: 'Hayvan hücresinde iğ ipliği üretir',
+        positionClass: 'bottom-2.5 left-2 sm:left-6',
+      },
+      {
+        id: 'anim-golgi',
+        name: 'Golgi Cisimciği',
+        roleShort: 'Salgı & Paketleme',
+        svgType: 'golgi',
+        color: '#EC4899',
+        pinColor: '#10B981',
+        slotLabel: 'Salgı Yuvası',
+        slotHint: 'Proteinleri paketler ve salgılar',
+        positionClass: 'bottom-2.5 right-2 sm:right-6',
+      },
+    ],
+    // 7 Organel Seçeneği (Karışık sırada: 4 doğru + 3 çeldirici)
+    trayOptions: [
+      {
+        id: 'dist-chloro',
+        name: 'Kloroplast',
+        roleShort: 'Fotosentez',
+        color: '#10B981',
+        pinColor: '#10B981',
+        isValidForCell: false,
+        invalidCellReason:
+          '❌ BİYOLOJİ UYARISI: Kloroplast sadece Bitki Hücrelerinde (ve alglerde) bulunur! Hayvan hücreleri fotosentez yapamaz.',
+      },
+      {
+        id: 'anim-nucleus',
+        name: 'Çekirdek',
+        roleShort: 'DNA & Yönetim',
+        color: '#A855F7',
+        pinColor: '#EF4444',
+        isValidForCell: true,
+      },
+      {
+        id: 'dist-vacuole',
+        name: 'Merkezi Büyük Koful',
+        roleShort: 'Turgor Kesesi',
+        color: '#06B6D4',
+        pinColor: '#06B6D4',
+        isValidForCell: false,
+        invalidCellReason:
+          '❌ BİYOLOJİ UYARISI: Merkezi Büyük Koful bitki hücrelerine özgüdür! Hayvan hücrelerinde kofullar küçük ve çok sayıdadır.',
+      },
+      {
+        id: 'anim-mito',
+        name: 'Mitokondri',
+        roleShort: 'ATP Santrali',
+        color: '#F97316',
+        pinColor: '#F59E0B',
+        isValidForCell: true,
+      },
+      {
+        id: 'anim-centro',
+        name: 'Sentrozom',
+        roleShort: 'Sentriyol Çifti',
+        color: '#3B82F6',
+        pinColor: '#38BDF8',
+        isValidForCell: true,
+      },
+      {
+        id: 'dist-cellwall',
+        name: 'Selüloz Çeper',
+        roleShort: 'Sert Dış Duvar',
+        color: '#84CC16',
+        pinColor: '#84CC16',
+        isValidForCell: false,
+        invalidCellReason:
+          '❌ BİYOLOJİ UYARISI: Hayvan hücrelerinde Selüloz Hücre Çeperi (Duvarı) bulunmaz; sadece esnek hücre zarı vardır!',
+      },
+      {
+        id: 'anim-golgi',
+        name: 'Golgi Cisimciği',
+        roleShort: 'Salgı & Paketleme',
+        color: '#EC4899',
+        pinColor: '#10B981',
+        isValidForCell: true,
+      },
+    ],
+  },
+  {
+    stageNumber: 2,
+    title: '2. Bölüm: Bitki Hücresi',
+    subtitle: '7 Organel Arasından Bitki Hücresine Ait 4 Doğru Organeli Seçip İğnele',
+    cellType: 'plant',
+    activeAnimationText:
+      '🌿 BİTKİ HÜCRESİ ÇALIŞIYOR! Kloroplast ışıkla fotosentez yapıyor, Koful turgor sağlıyor, ATP üretiliyor!',
+    slots: [
+      {
+        id: 'plant-chloro',
+        name: 'Kloroplast',
+        roleShort: 'Fotosentez (Besin & O₂)',
+        svgType: 'chloroplast',
+        color: '#10B981',
+        pinColor: '#EF4444',
+        slotLabel: 'Fotosentez Yuvası',
+        slotHint: 'Güneş ışığıyla besin ve O₂ üretir',
+        positionClass: 'top-2.5 left-2 sm:left-6',
+      },
+      {
+        id: 'plant-vacuole',
+        name: 'Merkezi Koful',
+        roleShort: 'Turgor & Su Deposu',
+        svgType: 'vacuole',
+        color: '#06B6D4',
+        pinColor: '#3B82F6',
+        slotLabel: 'Turgor Yuvası',
+        slotHint: 'Bitki hücresine özgü büyük su kesesi',
+        positionClass: 'top-2.5 right-2 sm:right-6',
+      },
+      {
+        id: 'plant-nucleus',
+        name: 'Çekirdek',
+        roleShort: 'DNA & Yönetim',
+        svgType: 'nucleus',
+        color: '#A855F7',
+        pinColor: '#F59E0B',
+        slotLabel: 'Yönetim Yuvası',
+        slotHint: 'DNA ve genetik kontrol merkezi',
+        positionClass: 'bottom-2.5 left-2 sm:left-6',
+      },
+      {
+        id: 'plant-mito',
+        name: 'Mitokondri',
+        roleShort: 'ATP Enerji Santrali',
+        svgType: 'mitochondria',
+        color: '#F97316',
+        pinColor: '#EC4899',
+        slotLabel: 'Enerji Yuvası',
+        slotHint: 'Hücresel solunumla ATP üretir',
+        positionClass: 'bottom-2.5 right-2 sm:right-6',
+      },
+    ],
+    // 7 Organel Seçeneği (Karışık sırada: 4 doğru + 3 çeldirici)
+    trayOptions: [
+      {
+        id: 'dist-plant-centro',
+        name: 'Sentrozom',
+        roleShort: 'Sentriyol Çifti',
+        color: '#3B82F6',
+        pinColor: '#38BDF8',
+        isValidForCell: false,
+        invalidCellReason:
+          '❌ BİYOLOJİ UYARISI: Gelişmiş Bitki Hücrelerinde Sentrozom BULUNMAZ! İğ iplikleri sitoplazmadaki mikrotübül proteinleriyle oluşturulur.',
+      },
+      {
+        id: 'plant-chloro',
+        name: 'Kloroplast',
+        roleShort: 'Fotosentez',
+        color: '#10B981',
+        pinColor: '#EF4444',
+        isValidForCell: true,
+      },
+      {
+        id: 'dist-plant-lyso',
+        name: 'Lizozom',
+        roleShort: 'Sindirim Kesesi',
+        color: '#F43F5E',
+        pinColor: '#F43F5E',
+        isValidForCell: false,
+        invalidCellReason:
+          '❌ BİYOLOJİ UYARISI: Gelişmiş bitki hücrelerinde Lizozom bulunmaz ve hücre çeperi olduğu için fagositoz yapamazlar!',
+      },
+      {
+        id: 'plant-vacuole',
+        name: 'Merkezi Koful',
+        roleShort: 'Turgor & Su Deposu',
+        color: '#06B6D4',
+        pinColor: '#3B82F6',
+        isValidForCell: true,
+      },
+      {
+        id: 'plant-nucleus',
+        name: 'Çekirdek',
+        roleShort: 'DNA & Yönetim',
+        color: '#A855F7',
+        pinColor: '#F59E0B',
+        isValidForCell: true,
+      },
+      {
+        id: 'dist-plant-flag',
+        name: 'Kamçı (Flagellum)',
+        roleShort: 'Aktif Hareket',
+        color: '#EAB308',
+        pinColor: '#EAB308',
+        isValidForCell: false,
+        invalidCellReason:
+          '❌ BİYOLOJİ UYARISI: Çeperli gelişmiş bitki hücrelerinde aktif hareket sağlayan Kamçı (Flagellum) bulunmaz!',
+      },
+      {
+        id: 'plant-mito',
+        name: 'Mitokondri',
+        roleShort: 'ATP Santrali',
+        color: '#F97316',
+        pinColor: '#EC4899',
+        isValidForCell: true,
+      },
+    ],
+  },
+];
+
+/**
+ * Gerçekçi Organel SVG Çizimi + Üzerine Saplanmış Toplu İğne (Pin) Görseli
+ */
+const PinnedOrganelleIllustration: React.FC<{
+  svgType: OrganelleSvgType;
+  pinColor: string;
+  isWorking: boolean;
+}> = ({ svgType, pinColor, isWorking }) => {
+  return (
+    <div
+      className={`relative w-16 h-16 flex items-center justify-center ${
+        isWorking ? 'animate-bounce' : ''
+      }`}
+    >
+      {/* ÜSTTEN SAPLANMIŞ TOPLU İĞNE (RAPTİYE / DİSEKSİYON İĞNESİ) */}
+      <svg
+        viewBox="0 0 40 40"
+        className="w-8 h-8 absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 drop-shadow-md pointer-events-none"
+      >
+        <ellipse cx="20" cy="34" rx="5" ry="2" fill="rgba(0,0,0,0.45)" />
+        <line
+          x1="20"
+          y1="14"
+          x2="20"
+          y2="34"
+          stroke="#E2E8F0"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        <circle cx="20" cy="10" r="7" fill={pinColor} stroke="#FFFFFF" strokeWidth="1.5" />
+        <circle cx="17.5" cy="7.5" r="2.2" fill="rgba(255,255,255,0.75)" />
+      </svg>
+
+      {/* ORGANELİN KENDİ GÖRSEL ÇİZİMİ */}
+      <svg viewBox="0 0 70 70" className="w-14 h-14 drop-shadow-lg">
+        {svgType === 'nucleus' && (
+          <g>
+            <circle
+              cx="35"
+              cy="38"
+              r="24"
+              fill="#7E22CE"
+              stroke="#E9D5FF"
+              strokeWidth="2.5"
+              strokeDasharray="5 2"
+            />
+            <circle cx="35" cy="38" r="10" fill="#C084FC" />
+            <path
+              d="M22,30 Q35,20 48,32 M24,48 Q36,55 47,44"
+              stroke="#F3E8FF"
+              strokeWidth="2"
+              fill="none"
+            />
+          </g>
+        )}
+
+        {svgType === 'mitochondria' && (
+          <g>
+            <rect
+              x="10"
+              y="20"
+              width="50"
+              height="32"
+              rx="16"
+              fill="#EA580C"
+              stroke="#FED7AA"
+              strokeWidth="2.5"
+            />
+            <path
+              d="M 16 36 L 23 26 L 29 46 L 36 26 L 43 46 L 49 26 L 54 36"
+              fill="none"
+              stroke="#FFEDD5"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </g>
+        )}
+
+        {svgType === 'centrosome' && (
+          <g>
+            <line
+              x1="35"
+              y1="14"
+              x2="35"
+              y2="60"
+              stroke="#93C5FD"
+              strokeWidth="1.5"
+              strokeDasharray="3 3"
+            />
+            <line
+              x1="12"
+              y1="38"
+              x2="58"
+              y2="38"
+              stroke="#93C5FD"
+              strokeWidth="1.5"
+              strokeDasharray="3 3"
+            />
+            <rect
+              x="20"
+              y="24"
+              width="14"
+              height="26"
+              rx="4"
+              fill="#2563EB"
+              stroke="#BFDBFE"
+              strokeWidth="2"
+            />
+            <rect
+              x="30"
+              y="32"
+              width="24"
+              height="14"
+              rx="4"
+              fill="#3B82F6"
+              stroke="#BFDBFE"
+              strokeWidth="2"
+            />
+          </g>
+        )}
+
+        {svgType === 'golgi' && (
+          <g>
+            <path
+              d="M16,26 Q35,20 54,26"
+              stroke="#F472B6"
+              strokeWidth="5"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <path
+              d="M14,36 Q35,30 56,36"
+              stroke="#EC4899"
+              strokeWidth="5"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <path
+              d="M18,46 Q35,40 52,46"
+              stroke="#DB2777"
+              strokeWidth="5"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <circle cx="14" cy="52" r="4" fill="#FBCFE8" />
+            <circle cx="55" cy="24" r="3.5" fill="#FBCFE8" />
+          </g>
+        )}
+
+        {svgType === 'chloroplast' && (
+          <g>
+            <rect
+              x="10"
+              y="20"
+              width="50"
+              height="32"
+              rx="16"
+              fill="#059669"
+              stroke="#A7F3D0"
+              strokeWidth="2.5"
+            />
+            <ellipse cx="25" cy="30" rx="6" ry="3" fill="#34D399" />
+            <ellipse cx="25" cy="36" rx="6" ry="3" fill="#10B981" />
+            <ellipse cx="25" cy="42" rx="6" ry="3" fill="#34D399" />
+            <ellipse cx="44" cy="31" rx="6" ry="3" fill="#34D399" />
+            <ellipse cx="44" cy="37" rx="6" ry="3" fill="#10B981" />
+            <ellipse cx="44" cy="43" rx="6" ry="3" fill="#34D399" />
+            <line x1="31" y1="36" x2="38" y2="37" stroke="#A7F3D0" strokeWidth="2" />
+          </g>
+        )}
+
+        {svgType === 'vacuole' && (
+          <g>
+            <path
+              d="M16,28 Q20,16 38,18 Q56,20 54,38 Q52,56 34,54 Q14,52 16,28 Z"
+              fill="rgba(6,182,212,0.75)"
+              stroke="#CFFAFE"
+              strokeWidth="2.5"
+            />
+            <path
+              d="M24,32 Q34,26 44,32"
+              stroke="#FFFFFF"
+              strokeWidth="2"
+              fill="none"
+              opacity="0.7"
+            />
+          </g>
+        )}
+      </svg>
+    </div>
+  );
+};
+
+export const BioCellGame: React.FC<BioCellGameProps> = ({
+  onComplete,
+  onNextSubject,
+  nextSubjectName,
+}) => {
+  const [stageIdx, setStageIdx] = useState<number>(0);
+  const currentStage = CELL_STAGES[stageIdx];
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Kullanıcı kendisi seçene kadar hiçbir organel seçili başlamaz
+  const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
+  const [pinnedByStage, setPinnedByStage] = useState<Record<number, string[]>>({
+    0: [],
+    1: [],
+  });
+  const [statusMsg, setStatusMsg] = useState<{
+    type: 'info' | 'error' | 'success';
+    text: string;
+  }>({
+    type: 'info',
+    text: 'Alttaki tepsiden bir organel seç, ardından hücre üzerindeki ilgili iğne yuvasına tıkla!',
+  });
+
+  const currentPinnedIds = pinnedByStage[stageIdx] || [];
+  const isCurrentCellWorking = currentPinnedIds.length === currentStage.slots.length;
+  const areAllStagesDone =
+    (pinnedByStage[0] || []).length === CELL_STAGES[0].slots.length &&
+    (pinnedByStage[1] || []).length === CELL_STAGES[1].slots.length;
+
+  const switchStage = (newIdx: number) => {
+    setStageIdx(newIdx);
+    setSelectedOrgId(null);
+    setStatusMsg({
+      type: 'info',
+      text: `${CELL_STAGES[newIdx].title}: Alttaki 7 organel arasından birini seç, ardından hücre üzerindeki doğru yuvaya tıkla!`,
+    });
+
+    // Üste yumuşak kaydır
+    const scrollParent = rootRef.current?.closest('.overflow-y-auto');
+    if (scrollParent) {
+      scrollParent.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handlePinSlotClick = (slotOrg: CellSlotOrganelle) => {
+    if (currentPinnedIds.includes(slotOrg.id)) return;
+
+    if (!selectedOrgId) {
+      setStatusMsg({
+        type: 'error',
+        text: `⚠️ Önce alttaki tepsiden bir organel seçmelisin! (Hedef: "${slotOrg.slotLabel}" - ${slotOrg.slotHint})`,
+      });
+      return;
+    }
+
+    const chosenOption = currentStage.trayOptions.find((o) => o.id === selectedOrgId);
+    if (!chosenOption) return;
+
+    // 1. Bu hücre tipinde hiç bulunmayan çeldirici organel mi?
+    if (!chosenOption.isValidForCell) {
+      soundEngine.playWrong();
+      setStatusMsg({
+        type: 'error',
+        text:
+          currentStage.cellType === 'animal'
+            ? `🚨 Dr. Elif: "DUR! Hayvan hücresine ${chosenOption.name} takamazsın! Hastayı fotosentez yapan yeşil bir bitkiye mi dönüştüreceksin?! (${chosenOption.invalidCellReason})"`
+            : `🥀 Prof. Çınar: "Olmaz! Gelişmiş bitki hücresinde ${chosenOption.name} ne arar?! Bitkiyi yürütecek misin?! (${chosenOption.invalidCellReason})"`,
+      });
+      return;
+    }
+
+    // 2. Hücreye ait ama yanlış yuvaya mı tıklandı?
+    if (chosenOption.id !== slotOrg.id) {
+      soundEngine.playWrong();
+      setStatusMsg({
+        type: 'error',
+        text: `🧐 ${
+          currentStage.cellType === 'animal' ? 'Dr. Elif' : 'Prof. Çınar'
+        }: "Organel doğru ama yuva yanlış! Burası '${slotOrg.slotLabel}' (${slotOrg.slotHint}). Seçtiğin '${chosenOption.name}' organelini kendi görev yuvasına iğnele!"`,
+      });
+      return;
+    }
+
+    // 3. Doğru organel ve doğru yuva!
+    const nextPinned = [...currentPinnedIds, slotOrg.id];
+    const nextMap = { ...pinnedByStage, [stageIdx]: nextPinned };
+    setPinnedByStage(nextMap);
+    // Asla otomatik sıradaki organeli seçme - öğrenci kendi seçsin
+    setSelectedOrgId(null);
+
+    if (nextPinned.length === currentStage.slots.length) {
+      soundEngine.playCorrect();
+      setStatusMsg({
+        type: 'success',
+        text:
+          currentStage.cellType === 'animal'
+            ? '🤩 Dr. Elif: "Harikasın! Mitokondri ATP pompalıyor, Sentrozom bölünmeyi başlattı, Çekirdek ve Golgi aktif! Yaralı hayvan hücresini hayata döndürdün!"'
+            : '🌿 Prof. Çınar: "Muhteşem! Kloroplastlar güneş ışığıyla O₂ üretiyor, Merkezi Koful turgor basıncıyla bitkiyi dimdik ayağa kaldırdı! Sera kurtuldu!"',
+      });
+      onComplete();
+    } else {
+      soundEngine.playPartial();
+      setStatusMsg({
+        type: 'success',
+        text: `📍 ${
+          currentStage.cellType === 'animal' ? 'Dr. Elif' : 'Prof. Çınar'
+        }: "Süper! ${slotOrg.name} yuvasına oturdu (${nextPinned.length}/4). Hemen sıradaki organeli tepsiden seç!"`,
+      });
+    }
+  };
+
+  const handleReset = () => {
+    setPinnedByStage((prev) => ({ ...prev, [stageIdx]: [] }));
+    setSelectedOrgId(null);
+    setStatusMsg({
+      type: 'info',
+      text: 'Hücre üzerindeki iğneler çıkarıldı. Tepsiden bir organel seçip doğru yuvaya iğnele!',
+    });
+  };
+
+  return (
+    <div ref={rootRef} className="flex flex-col gap-2 sm:gap-2.5">
+      {/* ÜST BÖLÜM SEÇİCİ: 1. HAYVAN HÜCRESİ / 2. BİTKİ HÜCRESİ */}
+      <div className="grid grid-cols-2 gap-2">
+        {CELL_STAGES.map((stg, idx) => {
+          const isCurrent = idx === stageIdx;
+          const pinnedCount = (pinnedByStage[idx] || []).length;
+          const isDone = pinnedCount === stg.slots.length;
+
+          return (
+            <button
+              key={stg.stageNumber}
+              onClick={() => switchStage(idx)}
+              className={`p-2 sm:p-2.5 rounded-xl border text-left transition-all flex items-center justify-between gap-1.5 ${
+                isCurrent
+                  ? stg.cellType === 'animal'
+                    ? 'bg-pink-500/20 border-pink-400 text-white shadow-md'
+                    : 'bg-emerald-500/20 border-emerald-400 text-white shadow-md'
+                  : isDone
+                  ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-200'
+                  : 'bg-[#0F0510] border-white/10 text-[#B5CBC8] hover:border-white/25 hover:text-white'
+              }`}
+            >
+              <div>
+                <div className="text-[9px] font-mono uppercase opacity-80">
+                  {stg.cellType === 'animal'
+                    ? '🔴 Yuvarlak / Esnek Zarlı'
+                    : '🟢 Köşeli / Selüloz Çeperli'}
+                </div>
+                <div className="font-poppins font-black text-xs sm:text-sm text-white mt-0.5">
+                  {stg.title} ({pinnedCount}/4 İğnelendi)
+                </div>
+              </div>
+              {isDone && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* =====================================================================
+       * VURGULU GÖREV SENARYOSU & ACİL LABORATUVAR BRİFİNGİ (HÜCRE ONARIMI)
+       * Ekranda anında fark edilecek, yüksek kontrastlı ve neon pembe/yeşil vurgulu kart
+       * ===================================================================== */}
+      <div
+        className={`rounded-xl sm:rounded-2xl border-2 p-2.5 sm:p-3 transition-all duration-300 relative overflow-hidden shadow-lg ${
+          statusMsg.type === 'error'
+            ? 'bg-gradient-to-r from-red-950/85 via-[#1E0D1A] to-[#120815] border-red-400 ring-1 ring-red-400/40 shadow-red-500/25'
+            : isCurrentCellWorking
+            ? 'bg-gradient-to-r from-emerald-950/85 via-[#101E1C] to-[#0A1215] border-emerald-400 ring-1 ring-emerald-400/40 shadow-emerald-500/25'
+            : 'bg-gradient-to-r from-pink-950/80 via-[#1A0E1C] to-[#120815] border-pink-500/80 ring-1 ring-pink-400/40 shadow-pink-500/20'
+        }`}
+      >
+        <div className="absolute -top-10 -right-10 w-48 h-48 bg-pink-500/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 relative z-10">
+          <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+            {/* Karakter Avatarı & Canlı Halka */}
+            <div className="relative shrink-0">
+              <div
+                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl border-2 flex items-center justify-center text-2xl shadow-md transition-transform duration-300 ${
+                  statusMsg.type === 'error'
+                    ? 'border-red-400 bg-red-500/25 animate-bounce'
+                    : isCurrentCellWorking
+                    ? 'border-emerald-400 bg-emerald-500/25 scale-105 shadow-emerald-500/30'
+                    : 'border-pink-400 bg-pink-500/20'
+                }`}
+              >
+                {statusMsg.type === 'error'
+                  ? '🚨'
+                  : isCurrentCellWorking
+                  ? '🤩'
+                  : currentStage.cellType === 'animal'
+                  ? '👩‍🔬'
+                  : '🧑‍🌾'}
+              </div>
+              <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-pink-500 border border-black text-[8px] font-bold text-white items-center justify-center">🧬</span>
+              </span>
+            </div>
+
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-poppins font-black text-[10px] tracking-wide uppercase shadow-sm flex items-center gap-1">
+                  🚨 DOKU BRİFİNGİ
+                </span>
+                <span className="text-[10px] font-mono font-bold text-pink-200 bg-pink-500/25 px-2 py-0.5 rounded-md border border-pink-400/50">
+                  {currentStage.cellType === 'animal'
+                    ? 'Dr. Elif'
+                    : 'Prof. Çınar'}
+                </span>
+                <span className="text-[10px] font-mono font-bold text-white bg-white/10 px-1.5 py-0.5 rounded-md border border-white/10">
+                  {currentStage.cellType === 'animal' ? 'Hayvan Hücresi' : 'Bitki Hücresi'}
+                </span>
+              </div>
+
+              <p className="text-xs text-white font-medium leading-tight">
+                {statusMsg.type === 'info' && currentPinnedIds.length === 0
+                  ? currentStage.cellType === 'animal'
+                    ? '“Tepsideki bitki organellerine aldanmadan hayvan hücresine ait 4 doğru organeli yuvalarına iğnele!”'
+                    : '“Bitki hücresine özgü 4 doğru organeli hemen yuvalarına yerleştir!”'
+                  : statusMsg.text}
+              </p>
+            </div>
+          </div>
+
+          {/* Aksiyon Hedef Rozeti */}
+          <div className="shrink-0 bg-black/50 border border-pink-500/40 rounded-xl px-2.5 py-1.5 flex flex-col items-center sm:items-end justify-center self-stretch sm:self-auto min-w-[150px] shadow-inner">
+            <div className="text-[9px] font-mono uppercase text-pink-300 font-black flex items-center gap-1">
+              <span>🎯 NE YAPMALISIN?</span>
+            </div>
+            <div className="text-[11px] font-mono font-black text-white text-center sm:text-right mt-0.5">
+              {isCurrentCellWorking ? (
+                <span className="text-emerald-400 font-bold">✓ Hücre Kurtarıldı!</span>
+              ) : statusMsg.type === 'error' ? (
+                <span className="text-red-300 font-bold">⚠️ Yanlış Organel</span>
+              ) : (
+                <span className="text-pink-200">{currentPinnedIds.length} / 4 İğnelendi</span>
+              )}
+            </div>
+            <div className="text-[9px] text-zinc-300 text-center sm:text-right mt-0.5 font-mono">
+              Tepsiden seç ➔ Yuvaya tıkla
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ORTA BÜYÜK GÖRSEL HÜCRE SAHNESİ */}
+      <div className="relative rounded-2xl sm:rounded-3xl border-2 border-white/15 bg-gradient-to-b from-[#1D0F22] via-[#140917] to-[#0B040D] p-2.5 sm:p-3 flex flex-col items-center justify-center min-h-[210px] sm:min-h-[235px] overflow-hidden">
+        {isCurrentCellWorking && (
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+            <div
+              className={`w-60 h-60 rounded-full blur-2xl animate-pulse ${
+                currentStage.cellType === 'animal'
+                  ? 'bg-pink-500/20'
+                  : 'bg-emerald-500/25'
+              }`}
+            />
+          </div>
+        )}
+
+        <div
+          className={`relative w-full max-w-xl h-[190px] sm:h-[210px] flex items-center justify-center transition-transform duration-700 ${
+            isCurrentCellWorking ? 'scale-[1.01]' : ''
+          }`}
+        >
+          {/* ARKA PLAN SVG: HAYVAN HÜCRESİ VEYA BİTKİ HÜCRESİ */}
+          <svg
+            viewBox="0 0 560 300"
+            className="w-full h-full absolute inset-0 pointer-events-none drop-shadow-2xl"
+          >
+            {currentStage.cellType === 'animal' ? (
+              <g>
+                <ellipse
+                  cx="280"
+                  cy="150"
+                  rx="255"
+                  ry="132"
+                  fill="rgba(236, 72, 153, 0.14)"
+                  stroke={isCurrentCellWorking ? '#F472B6' : '#BE185D'}
+                  strokeWidth="6"
+                />
+                <ellipse
+                  cx="280"
+                  cy="150"
+                  rx="240"
+                  ry="118"
+                  fill="rgba(168, 85, 247, 0.12)"
+                  stroke="rgba(244, 114, 182, 0.35)"
+                  strokeWidth="2"
+                  strokeDasharray="8 6"
+                />
+                <path
+                  d="M 90 150 Q 280 90 470 150 M 120 200 Q 280 240 440 190"
+                  stroke="rgba(255,255,255,0.08)"
+                  strokeWidth="2"
+                  fill="none"
+                />
+                <text
+                  x="280"
+                  y="154"
+                  textAnchor="middle"
+                  fill="rgba(255,255,255,0.22)"
+                  fontSize="14"
+                  fontFamily="monospace"
+                  fontWeight="bold"
+                >
+                  {isCurrentCellWorking ? '⚡ SİTOPLAZMA AKTİF ⚡' : 'HAYVAN HÜCRESİ SİTOPLAZMASI'}
+                </text>
+              </g>
+            ) : (
+              <g>
+                <polygon
+                  points="65,20 495,20 545,150 495,280 65,280 15,150"
+                  fill="rgba(16, 185, 129, 0.15)"
+                  stroke={isCurrentCellWorking ? '#34D399' : '#059669'}
+                  strokeWidth="9"
+                  strokeLinejoin="round"
+                />
+                <polygon
+                  points="80,34 480,34 525,150 480,266 80,266 35,150"
+                  fill="rgba(6, 182, 212, 0.10)"
+                  stroke="#6EE7B7"
+                  strokeWidth="2.5"
+                  strokeDasharray="6 4"
+                />
+                <text
+                  x="280"
+                  y="154"
+                  textAnchor="middle"
+                  fill="rgba(167,243,208,0.28)"
+                  fontSize="14"
+                  fontFamily="monospace"
+                  fontWeight="bold"
+                >
+                  {isCurrentCellWorking
+                    ? '🌿 FOTOSENTEZ & TURGOR AKTİF 🌿'
+                    : 'BİTKİ HÜCRESİ (SELÜLOZ ÇEPERLİ)'}
+                </text>
+              </g>
+            )}
+
+            {isCurrentCellWorking && (
+              <g>
+                <line
+                  x1="150"
+                  y1="85"
+                  x2="410"
+                  y2="85"
+                  stroke="#FBBF24"
+                  strokeWidth="3"
+                  strokeDasharray="6 6"
+                  className="animate-pulse"
+                />
+                <line
+                  x1="150"
+                  y1="85"
+                  x2="150"
+                  y2="215"
+                  stroke="#34D399"
+                  strokeWidth="3"
+                  strokeDasharray="6 6"
+                  className="animate-pulse"
+                />
+                <line
+                  x1="410"
+                  y1="85"
+                  x2="410"
+                  y2="215"
+                  stroke="#38BDF8"
+                  strokeWidth="3"
+                  strokeDasharray="6 6"
+                  className="animate-pulse"
+                />
+                <line
+                  x1="150"
+                  y1="215"
+                  x2="410"
+                  y2="215"
+                  stroke="#F472B6"
+                  strokeWidth="3"
+                  strokeDasharray="6 6"
+                  className="animate-pulse"
+                />
+                <circle
+                  cx="280"
+                  cy="150"
+                  r="34"
+                  fill="rgba(16,185,129,0.2)"
+                  stroke="#34D399"
+                  strokeWidth="2.5"
+                  strokeDasharray="5 5"
+                />
+              </g>
+            )}
+          </svg>
+
+          {isCurrentCellWorking && (
+            <div className="z-20 px-3 py-1 rounded-full bg-emerald-500/90 text-white font-poppins font-black text-xs shadow-md shadow-emerald-500/40 animate-bounce flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>
+                {currentStage.cellType === 'animal'
+                  ? '⚡ ATP & Protein Üretiliyor!'
+                  : '☀️ O₂ & Glikoz Üretiliyor!'}
+              </span>
+            </div>
+          )}
+
+          {/* HÜCRE ÜZERİNDEKİ 4 İĞNE YUVASI */}
+          {currentStage.slots.map((slotOrg) => {
+            const isPinned = currentPinnedIds.includes(slotOrg.id);
+
+            return (
+              <button
+                key={slotOrg.id}
+                onClick={() => handlePinSlotClick(slotOrg)}
+                className={`absolute ${slotOrg.positionClass} w-36 sm:w-42 p-1.5 sm:p-2 rounded-xl transition-all flex items-center gap-2 text-left z-10 ${
+                  isPinned
+                    ? 'bg-black/65 border-2 border-emerald-400/80 shadow-md scale-105'
+                    : 'bg-black/45 border border-dashed border-white/30 hover:border-[#F14E13] hover:bg-[#F14E13]/20 hover:scale-105'
+                }`}
+              >
+                {isPinned ? (
+                  <>
+                    <PinnedOrganelleIllustration
+                      svgType={slotOrg.svgType}
+                      pinColor={slotOrg.pinColor}
+                      isWorking={isCurrentCellWorking}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="font-poppins font-bold text-[11px] sm:text-xs text-white truncate">
+                        {slotOrg.name}
+                      </div>
+                      <div className="text-[9px] text-emerald-300 font-mono leading-tight mt-0.5 truncate">
+                        {slotOrg.roleShort}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-8 h-8 rounded-full border border-dashed border-amber-400/70 bg-amber-500/10 flex items-center justify-center shrink-0">
+                      <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-poppins font-bold text-[11px] sm:text-xs text-amber-200 truncate">
+                        {slotOrg.slotLabel}
+                      </div>
+                      <div className="text-[9px] text-[#B5CBC8] leading-tight truncate">
+                        {slotOrg.slotHint}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Alt Durum Mesajı */}
+        <div
+          className={`mt-1.5 px-3 py-1 rounded-lg text-xs font-medium text-center border max-w-xl ${
+            statusMsg.type === 'error'
+              ? 'bg-red-500/20 border-red-500/50 text-red-200'
+              : statusMsg.type === 'success'
+              ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-200'
+              : 'bg-white/5 border-white/10 text-[#B5CBC8]'
+          }`}
+        >
+          {statusMsg.text}
+        </div>
+      </div>
+
+      {/* ALT ORGANEL TEPSİSİ (7 SEÇENEK: 4 DOĞRU + 3 ÇELDİRİCİ) */}
+      <div className="bg-[#0F0510] border border-white/10 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 flex flex-col gap-2">
+        <div className="flex items-center justify-between flex-wrap gap-1.5">
+          <span className="text-xs font-mono font-bold text-[#B5CBC8]">
+            Organel Tepsisi (7 Organelden Doğru 4 Tanesini Seç & İğnele):
+          </span>
+          <div className="flex items-center gap-1.5">
+            {isCurrentCellWorking && stageIdx === 0 && (
+              <button
+                onClick={() => switchStage(1)}
+                className="btn-primary !py-1 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md"
+              >
+                <span>2. Bölüm: Bitki Hücresi</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+            {isCurrentCellWorking && (stageIdx === 1 || areAllStagesDone) && onNextSubject && (
+              <button
+                onClick={onNextSubject}
+                className="btn-primary !py-1 !px-3 text-xs font-bold flex items-center gap-1 !bg-emerald-600 hover:!bg-emerald-500 shadow-md shadow-emerald-500/20"
+              >
+                <span>
+                  {nextSubjectName === 'Çıkış'
+                    ? 'Tamamla & Çıkış'
+                    : nextSubjectName
+                    ? `Sonraki (${nextSubjectName})`
+                    : 'Sonraki Ders'}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+            <button
+              onClick={handleReset}
+              className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-[#B5CBC8] hover:text-white flex items-center gap-1"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>İğneleri Sök</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5">
+          {currentStage.trayOptions.map((org) => {
+            const isPinned = currentPinnedIds.includes(org.id);
+            const isSelected = selectedOrgId === org.id && !isPinned;
+
+            return (
+              <button
+                key={org.id}
+                onClick={() => {
+                  if (!isPinned) {
+                    setSelectedOrgId(org.id);
+                    setStatusMsg({
+                      type: 'info',
+                      text: `Seçildi: "${org.name}" (${org.roleShort}). Şimdi hücre üzerindeki ilgili iğne yuvasına tıkla!`,
+                    });
+                  }
+                }}
+                disabled={isPinned}
+                className={`p-1.5 sm:p-2 rounded-xl font-poppins font-bold text-xs flex items-center gap-1.5 border transition-all text-left ${
+                  isPinned
+                    ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 opacity-50 cursor-default'
+                    : isSelected
+                    ? 'scale-105 shadow-md text-white'
+                    : 'bg-white/5 border-white/15 text-[#B5CBC8] hover:text-white hover:border-white/30'
+                }`}
+                style={
+                  isSelected
+                    ? {
+                        backgroundColor: `${org.color}35`,
+                        borderColor: '#fff',
+                      }
+                    : undefined
+                }
+              >
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0 border border-white"
+                  style={{ backgroundColor: org.pinColor }}
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="text-white truncate text-[10px] sm:text-[11px]">{org.name}</div>
+                  <div className="text-[9px] font-mono opacity-80 truncate">{org.roleShort}</div>
+                </div>
+                {isPinned && <span className="text-[10px] shrink-0">📍</span>}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BioCellGame;

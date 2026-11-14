@@ -3,7 +3,7 @@
     "examType": "TYT",
     "subject": "biyoloji",
     "difficulty": "EASY",
-    "defaultDurationMs": 60000
+    "defaultDurationMs": 15000
   },
   "questions": [
     {

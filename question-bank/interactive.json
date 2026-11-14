@@ -1,9 +1,8 @@
 {
   "meta": {
-    "examType": "TYT & AYT",
-    "totalCount": 32,
-    "interactiveTypesCount": 14,
-    "description": "İşler Arena 14 İnteraktif Soru Tipi Havuzu (TYT & AYT Matematik, Fizik, Kimya, Biyoloji, Türkçe)"
+    "examType": "TYT, AYT & LGS",
+    "totalCount": 46,
+    "description": "İşler Arena İnteraktif Soru Havuzu"
   },
   "questions": [
     {
@@ -166,7 +165,7 @@
       "topic": "Temel Türev Alma Kuralları",
       "type": "pair_matching",
       "difficulty": "orta",
-      "timeLimitSeconds": 30,
+      "timeLimitSeconds": 25,
       "points": 200,
       "prompt": "Sol sütundaki fonksiyonları sağ sütundaki birinci türevleriyle eşleştirin.",
       "explanation": "(x³)' = 3x², (sin x)' = cos x, (ln x)' = 1/x, (eˣ)' = eˣ türev kurallarıdır.",
@@ -204,7 +203,7 @@
       "topic": "Fiziksel Büyüklükler (Skaler vs Vektörel)",
       "type": "swipe_grouping",
       "difficulty": "kolay",
-      "timeLimitSeconds": 25,
+      "timeLimitSeconds": 20,
       "points": 200,
       "prompt": "Gelen fiziksel büyüklükleri SOLA (Skaler) veya SAĞA (Vektörel) kaydırarak sınıflandır!",
       "explanation": "Yönü olan büyüklükler vektörel (Kuvvet, Yer Değiştirme, Hız); yönü olmayan sadece sayı ve birimle ifade edilenler skalerdir (Kütle, Sıcaklık, Enerji).",
@@ -468,7 +467,7 @@
       "prompt": "Paralel bağlandıklarında eşdeğer direnci 4 Ω yapan İKİ direnci seçin:",
       "explanation": "Paralel bağlı 6 Ω ve 12 Ω için eşdeğer direnç: (6 × 12) / (6 + 12) = 72 / 18 = 4 Ω olur.",
       "payload": {
-        "targetBadge": "Hedef Reş = 4 Ω",
+        "targetBadge": "Hedef: Eşdeğer Direnç = 4 Ω",
         "ruleHint": "Paralel bağlandığında 4 Ω veren 2 direnci seçin",
         "options": [
           {
@@ -712,7 +711,7 @@
       "topic": "Cumhuriyet Dönemi Roman ve Yazar Eşleştirmesi",
       "type": "pair_matching",
       "difficulty": "orta",
-      "timeLimitSeconds": 30,
+      "timeLimitSeconds": 25,
       "points": 200,
       "prompt": "Sol sütundaki başyapıt romanları sağ sütundaki yazarlarımızla eşleştirin.",
       "explanation": "Tutunamayanlar -> Oğuz Atay, Saatleri Ayarlama Enstitüsü -> Ahmet Hamdi Tanpınar, İnce Memed -> Yaşar Kemal, Kürk Mantolu Madonna -> Sabahattin Ali.",
@@ -1208,6 +1207,483 @@
         ],
         "correctIndex": 2,
         "shuffleOptions": false
+      }
+    },
+    {
+      "id": "q_lgs_033",
+      "examType": "LGS",
+      "subject": "matematik",
+      "topic": "Üslü İfadeler ve Bilimsel Gösterim",
+      "type": "numpad_closest",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 100,
+      "prompt": "2⁵ · 5³ işleminin sonucu kaçtır?",
+      "explanation": "2⁵ = 32 ve 5³ = 125'tir. 32 · 125 = 4000 (veya 2² · (2·5)³ = 4 · 10³ = 4000) bulunur.",
+      "payload": {
+        "correctAnswer": 4000,
+        "unit": "",
+        "allowDecimals": false,
+        "allowNegative": false,
+        "min": 0,
+        "max": 10000
+      }
+    },
+    {
+      "id": "q_lgs_034",
+      "examType": "LGS",
+      "subject": "matematik",
+      "topic": "Karekök Tahmini",
+      "type": "slider",
+      "difficulty": "orta",
+      "timeLimitSeconds": 20,
+      "points": 100,
+      "prompt": "√150 sayısı sayı doğrusunda hangi ondalıklı değere en yakındır? Sürgüyü ayarlayın.",
+      "explanation": "12² = 144 ve 13² = 169'dur. 150 sayısı 144'e çok daha yakın olduğundan √150 ≈ 12.24'tür (yaklaşık 12.2).",
+      "payload": {
+        "min": 10,
+        "max": 15,
+        "step": 0.1,
+        "initialValue": 10,
+        "unit": "",
+        "targetValue": 12.2,
+        "tolerance": 0.3
+      }
+    },
+    {
+      "id": "q_lgs_035",
+      "examType": "LGS",
+      "subject": "fizik",
+      "topic": "Basınç (Katı ve Sıvı Basıncı)",
+      "type": "matrix_toggle",
+      "difficulty": "orta",
+      "timeLimitSeconds": 25,
+      "points": 120,
+      "prompt": "Katı ve sıvı basıncı özelliklerini tablodaki hücrelere dokunarak (✓ / ✗) doldurun:",
+      "explanation": "Katı basıncı yüzey alanı arttıkça azalır (ters orantı). Sıvı basıncı ise sıvının yoğunluğu ve derinliği arttıkça artar (P = h·d·g).",
+      "payload": {
+        "tablePrompt": "Her hücreyi ✓ (Doğru) veya ✗ (Yanlış) olarak işaretleyin:",
+        "rows": [
+          {
+            "id": "r_kati",
+            "title": "Katı Basıncı"
+          },
+          {
+            "id": "r_sivi",
+            "title": "Sıvı Basıncı"
+          }
+        ],
+        "columns": [
+          {
+            "id": "c_alan",
+            "title": "Yüzey Alanı Büyürse Azalır"
+          },
+          {
+            "id": "c_derinlik",
+            "title": "Derinlik Arttıkça Artar"
+          }
+        ],
+        "answers": [
+          {
+            "rowId": "r_kati",
+            "colId": "c_alan",
+            "expectedBool": true
+          },
+          {
+            "rowId": "r_kati",
+            "colId": "c_derinlik",
+            "expectedBool": false
+          },
+          {
+            "rowId": "r_sivi",
+            "colId": "c_alan",
+            "expectedBool": false
+          },
+          {
+            "rowId": "r_sivi",
+            "colId": "c_derinlik",
+            "expectedBool": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_036",
+      "examType": "LGS",
+      "subject": "kimya",
+      "topic": "Asitler, Bazlar ve pH Ölçeği",
+      "type": "swipe_grouping",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 100,
+      "prompt": "Günlük hayattaki maddeleri Asit (pH < 7) ve Baz (pH > 7) özelliklerine göre kaydırarak gruplayın:",
+      "explanation": "Limon suyu ve sirke asidiktir (pH < 7). Sabunlu su ve çamaşır suyu baziktir (pH > 7).",
+      "payload": {
+        "leftCategory": {
+          "id": "left",
+          "label": "⬅️ Asit (pH < 7)",
+          "colorHex": "#EF4444"
+        },
+        "rightCategory": {
+          "id": "right",
+          "label": "Baz (pH > 7) ➡️",
+          "colorHex": "#3B82F6"
+        },
+        "cards": [
+          {
+            "id": "c1",
+            "text": "Limon Suyu",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c2",
+            "text": "Sabunlu Su",
+            "correctCategory": "right"
+          },
+          {
+            "id": "c3",
+            "text": "Sirke",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c4",
+            "text": "Çamaşır Suyu",
+            "correctCategory": "right"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_037",
+      "examType": "LGS",
+      "subject": "biyoloji",
+      "topic": "DNA ve Genetik Kod",
+      "type": "ordering_and_formula",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 120,
+      "prompt": "Kalıtsal yapıları basitten karmaşığa (küçükten büyüğe) doğru sıralayın:",
+      "explanation": "Kalıtsal yapılar küçükten büyüğe: Organik Baz -> Nükleotid -> Gen -> DNA -> Kromozom (KediGen kuralı).",
+      "payload": {
+        "mode": "sequence",
+        "directionLabel": "Basitten Karmaşığa (Küçükten Büyüğe)",
+        "items": [
+          "Kromozom",
+          "Gen",
+          "Organik Baz",
+          "DNA",
+          "Nükleotid"
+        ],
+        "correctOrder": [
+          "Organik Baz",
+          "Nükleotid",
+          "Gen",
+          "DNA",
+          "Kromozom"
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_038",
+      "examType": "LGS",
+      "subject": "biyoloji",
+      "topic": "Mevsimlerin Oluşumu ve İklim",
+      "type": "universal_choice",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 15,
+      "points": 80,
+      "prompt": "21 Haziran tarihinde Güneş ışınları Yengeç Dönencesi'ne dik gelir. Bu tarihte Kuzey Yarım Küre'de hangi mevsim başlar?",
+      "explanation": "21 Haziran Kuzey Yarım Küre için yaz gündönümüdür ve en uzun gündüz yaşanarak yaz mevsimi başlar.",
+      "payload": {
+        "variant": "test",
+        "optionCount": 4,
+        "options": [
+          "İlkbahar",
+          "Yaz",
+          "Sonbahar",
+          "Kış"
+        ],
+        "correctIndex": 1,
+        "shuffleOptions": false
+      }
+    },
+    {
+      "id": "q_lgs_039",
+      "examType": "LGS",
+      "subject": "turkce",
+      "topic": "Fiilimsiler (Eylemsiler)",
+      "type": "pair_matching",
+      "difficulty": "orta",
+      "timeLimitSeconds": 25,
+      "points": 150,
+      "prompt": "Sol sütundaki altı çizili sözcükleri sağ sütundaki fiilimsi türleriyle eşleştirin.",
+      "explanation": "Kitap okumayı -> İsim-fiil (-ma), Yıkılası dünya -> Sıfat-fiil (-ası), Güneş doğarken -> Zarf-fiil (-ken).",
+      "payload": {
+        "leftColumnTitle": "Cümle / İfade",
+        "rightColumnTitle": "Fiilimsi Türü",
+        "pairs": [
+          {
+            "pairId": "f_1",
+            "leftText": "Kitap okumayı çok seviyor",
+            "rightText": "İsim-fiil (-ma)"
+          },
+          {
+            "pairId": "f_2",
+            "leftText": "Yıkılası dünyada gülmedi",
+            "rightText": "Sıfat-fiil (-ası)"
+          },
+          {
+            "pairId": "f_3",
+            "leftText": "Güneş doğarken yola çıktık",
+            "rightText": "Zarf-fiil (-ken)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_040",
+      "examType": "LGS",
+      "subject": "matematik",
+      "topic": "Doğrusal Denklemler ve Eğim",
+      "type": "chain_conversion",
+      "difficulty": "orta",
+      "timeLimitSeconds": 25,
+      "points": 160,
+      "prompt": "2y - 6x = 12 doğrusunun denklemini adım adım sadeleştirerek doğrunun eğimini bulun:",
+      "explanation": "2y = 6x + 12 eşitliğinde her iki taraf 2'ye bölünürse y = 3x + 6 elde edilir. Doğru denkleminde y yalnızken x'in katsayısı eğim olduğundan m = 3'tür.",
+      "payload": {
+        "startEntity": "2y - 6x = 12 Denklemi",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "arrowLabel": "y'yi yalnız bırak (2'ye böl)",
+            "correctValue": "y = 3x + 6"
+          },
+          {
+            "stepNumber": 2,
+            "arrowLabel": "x'in katsayısı (Eğim m)",
+            "correctValue": "m = 3"
+          }
+        ],
+        "poolOptions": [
+          "y = 3x + 6",
+          "m = 3",
+          "y = -3x + 6",
+          "m = -3",
+          "m = 6"
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_041",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "Atatürk İlkeleri ve İnkılaplar",
+      "type": "pair_matching",
+      "difficulty": "orta",
+      "timeLimitSeconds": 25,
+      "points": 150,
+      "prompt": "Verilen inkılap ve gelişmeleri doğrudan ilişkili olduğu Atatürk İlkesi ile eşleştirin.",
+      "explanation": "TBMM'nin açılması -> Cumhuriyetçilik, Türk Dil Kurumu -> Milliyetçilik, Medreselerin kapatılması -> Laiklik ile doğrudan ilgilidir.",
+      "payload": {
+        "leftColumnTitle": "İnkılap / Gelişme",
+        "rightColumnTitle": "Atatürk İlkesi",
+        "pairs": [
+          {
+            "pairId": "s_1",
+            "leftText": "TBMM'nin Açılması ve Saltanatın Kaldırılması",
+            "rightText": "Cumhuriyetçilik"
+          },
+          {
+            "pairId": "s_2",
+            "leftText": "Türk Dil ve Türk Tarih Kurumunun Kurulması",
+            "rightText": "Milliyetçilik"
+          },
+          {
+            "pairId": "s_3",
+            "leftText": "Medreselerin ve Tekke-Zaviyelerin Kapatılması",
+            "rightText": "Laiklik"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_042",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "Millî Mücadele Hazırlık Dönemi Kronolojisi",
+      "type": "ordering_and_formula",
+      "difficulty": "orta",
+      "timeLimitSeconds": 20,
+      "points": 130,
+      "prompt": "Kurtuluş Savaşı hazırlık dönemindeki tarihi olayları kronolojik sıraya (eskiden yeniye) dizin:",
+      "explanation": "Kronolojik sıra: Samsun'a Çıkış (19 Mayıs 1919) -> Amasya Genelgesi -> Erzurum Kongresi -> Sivas Kongresi -> TBMM'nin Açılışı.",
+      "payload": {
+        "mode": "sequence",
+        "directionLabel": "Kronolojik Sıra (Geçmişten Günümüze)",
+        "items": [
+          "TBMM'nin Ankara'da Açılması",
+          "Amasya Genelgesi",
+          "Mustafa Kemal'in Samsun'a Çıkışı",
+          "Sivas Kongresi",
+          "Erzurum Kongresi"
+        ],
+        "correctOrder": [
+          "Mustafa Kemal'in Samsun'a Çıkışı",
+          "Amasya Genelgesi",
+          "Erzurum Kongresi",
+          "Sivas Kongresi",
+          "TBMM'nin Ankara'da Açılması"
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_043",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "I. Dünya Savaşı İttifak ve İtilaf Blokları",
+      "type": "swipe_grouping",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 100,
+      "prompt": "I. Dünya Savaşı'ndaki devletleri İtilaf (Anlaşma) ve İttifak (Bağlaşma) bloklarına göre kaydırarak gruplayın:",
+      "explanation": "İtilaf Devletleri: İngiltere, Fransa. İttifak Devletleri: Osmanlı Devleti, Almanya.",
+      "payload": {
+        "leftCategory": {
+          "id": "left",
+          "label": "⬅️ İtilaf (Anlaşma)",
+          "colorHex": "#3B82F6"
+        },
+        "rightCategory": {
+          "id": "right",
+          "label": "İttifak (Bağlaşma) ➡️",
+          "colorHex": "#EF4444"
+        },
+        "cards": [
+          {
+            "id": "c1",
+            "text": "İngiltere",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c2",
+            "text": "Osmanlı Devleti",
+            "correctCategory": "right"
+          },
+          {
+            "id": "c3",
+            "text": "Fransa",
+            "correctCategory": "left"
+          },
+          {
+            "id": "c4",
+            "text": "Almanya",
+            "correctCategory": "right"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_044",
+      "examType": "LGS",
+      "subject": "sosyal",
+      "topic": "Millî Mücadele Genelgeleri",
+      "type": "universal_choice",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 15,
+      "points": 80,
+      "prompt": "\"Milletin bağımsızlığını yine milletin azim ve kararı kurtaracaktır.\" ilkesi Kurtuluş Savaşı'nın amacı ve yöntemi olarak ilk kez hangi tarihî belgede ilan edilmiştir?",
+      "explanation": "22 Haziran 1919 tarihli Amasya Genelgesi'nde bu karar alınarak millî egemenlik ve ihtilal vurgulanmıştır.",
+      "payload": {
+        "variant": "test",
+        "optionCount": 4,
+        "options": [
+          "Havza Genelgesi",
+          "Amasya Genelgesi",
+          "Erzurum Kongresi",
+          "Misak-ı Millî Kararları"
+        ],
+        "correctIndex": 1,
+        "shuffleOptions": false
+      }
+    },
+    {
+      "id": "q_lgs_045",
+      "examType": "LGS",
+      "subject": "fen",
+      "topic": "DNA ve Nükleotid Eşleşmesi",
+      "type": "pair_matching",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 110,
+      "prompt": "DNA molekülündeki nükleotid bazlarını ve temel bileşenlerini doğru eşleşmeleriyle birleştirin:",
+      "explanation": "DNA'da Adenin karşısına Timin, Guanin karşısına Sitozin gelir. Deoksiriboz 5 karbonlu şekerdir.",
+      "payload": {
+        "leftColumnTitle": "DNA Bileşeni",
+        "rightColumnTitle": "Eşleşen Karşılık",
+        "pairs": [
+          {
+            "pairId": "dna_1",
+            "leftText": "Adenin (A) bazı",
+            "rightText": "Timin (T) bazı"
+          },
+          {
+            "pairId": "dna_2",
+            "leftText": "Guanin (G) bazı",
+            "rightText": "Sitozin (C) bazı"
+          },
+          {
+            "pairId": "dna_3",
+            "leftText": "Deoksiriboz",
+            "rightText": "5 Karbonlu Şeker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "q_lgs_046",
+      "examType": "LGS",
+      "subject": "fen",
+      "topic": "Fiziksel ve Kimyasal Değişimler",
+      "type": "swipe_grouping",
+      "difficulty": "kolay",
+      "timeLimitSeconds": 20,
+      "points": 100,
+      "prompt": "Günlük hayattaki olayları Fiziksel Değişim ve Kimyasal Değişim olarak kaydırarak gruplayın:",
+      "explanation": "Buzun erimesi ve şekerin çözünmesi fizikseldir (iç yapı değişmez). Demirin paslanması ve sütün mayalanması kimyasaldır.",
+      "payload": {
+        "leftCategory": {
+          "id": "left",
+          "label": "⬅️ Fiziksel Değişim",
+          "colorHex": "#10B981"
+        },
+        "rightCategory": {
+          "id": "right",
+          "label": "Kimyasal Değişim ➡️",
+          "colorHex": "#F59E0B"
+        },
+        "cards": [
+          {
+            "id": "fc1",
+            "text": "Buzun erimesi",
+            "correctCategory": "left"
+          },
+          {
+            "id": "fc2",
+            "text": "Demirin paslanması",
+            "correctCategory": "right"
+          },
+          {
+            "id": "fc3",
+            "text": "Şekerin suda çözünmesi",
+            "correctCategory": "left"
+          },
+          {
+            "id": "fc4",
+            "text": "Sütten yoğurt yapılması",
+            "correctCategory": "right"
+          }
+        ]
       }
     }
   ]

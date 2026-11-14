@@ -7,7 +7,8 @@ const { Server } = require('socket.io');
 const { calculateEffectiveMMR } = require('./engine/eloMomentum');
 const { loadQuestionBank, selectMatchQuestions, getDifficultyDistribution } = require('./engine/questionBank');
 const { MatchmakingQueue } = require('./engine/matchmakingQueue');
-const { GameStore, WEEKLY_BRACKETS } = require('./engine/economyTournaments');
+const { GameStore, WEEKLY_BRACKETS, getWeeklyBracket } = require('./engine/economyTournaments');
+const { getRecommendationsForTopic } = require('./engine/resourceRecommendations');
 const { DuelSession } = require('./engine/duelSession');
 const { RAW_INTERACTIVE_QUESTIONS, normalizeInteractiveQuestion } = require('./engine/interactiveQuestionPool');
 
@@ -30,6 +31,18 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
     : [];
   const normalizedExam = String(examType || 'KARMA').toUpperCase();
 
+  const isSubjectMatch = (qSubj) => {
+    if (normSubjects.length === 0) return true;
+    if (normSubjects.includes(qSubj)) return true;
+    if (normalizedExam === 'LGS') {
+      if (normSubjects.includes('fen') && ['fen', 'fizik', 'kimya', 'biyoloji'].includes(qSubj)) return true;
+      if (['fizik', 'kimya', 'biyoloji'].includes(qSubj) && normSubjects.includes('fen')) return true;
+    } else if (normalizedExam === 'TYT' || normalizedExam === 'AYT') {
+      if (normSubjects.includes('geometri') && qSubj === 'matematik') return true;
+    }
+    return false;
+  };
+
   const candidatePool = [];
 
   // 1. RAW_INTERACTIVE_QUESTIONS havuzundan filtreye uyanları al
@@ -38,7 +51,7 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
     const qSubj = String(rawQ.subject || '').toLowerCase();
 
     const examMatches = normalizedExam === 'KARMA' || qExam === normalizedExam;
-    const subjMatches = normSubjects.length === 0 || normSubjects.includes(qSubj);
+    const subjMatches = isSubjectMatch(qSubj);
 
     if (examMatches && subjMatches) {
       candidatePool.push(normalizeInteractiveQuestion(rawQ, qExam));
@@ -51,7 +64,7 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
       const qExam = String(q.examType || 'TYT').toUpperCase();
       const qSubj = String(q.subject || '').toLowerCase();
       const examMatches = normalizedExam === 'KARMA' || qExam === normalizedExam;
-      const subjMatches = normSubjects.length === 0 || normSubjects.includes(qSubj);
+      const subjMatches = isSubjectMatch(qSubj);
 
       if (examMatches && subjMatches) {
         const id = q.id || q.externalId;
@@ -62,7 +75,21 @@ function selectKahootQuestions(questionBank, { examType = 'KARMA', subjects = []
     }
   }
 
-  // 3. Hala yetersizse filtreleri esneterek RAW_INTERACTIVE_QUESTIONS havuzundan tamamla
+  // 3. Hala yetersizse filtreleri esneterek önce aynı sınav türünden tamamla
+  if (candidatePool.length < count) {
+    for (const rawQ of RAW_INTERACTIVE_QUESTIONS) {
+      const qExam = String(rawQ.examType || 'TYT').toUpperCase();
+      if (normalizedExam !== 'KARMA' && qExam !== normalizedExam) continue;
+      const norm = normalizeInteractiveQuestion(rawQ, rawQ.examType || 'TYT');
+      const id = norm.id || norm.externalId;
+      if (!candidatePool.some((c) => (c.id || c.externalId) === id)) {
+        candidatePool.push(norm);
+      }
+      if (candidatePool.length >= count) break;
+    }
+  }
+
+  // 4. Genel fallback
   if (candidatePool.length < count) {
     for (const rawQ of RAW_INTERACTIVE_QUESTIONS) {
       const norm = normalizeInteractiveQuestion(rawQ, rawQ.examType || 'TYT');
@@ -119,6 +146,19 @@ function getPublicRoomState(room) {
   const currentQuestion = room.questions[room.currentQuestionIndex] || null;
   const leaderboard = Array.from(room.players.values()).sort((a, b) => b.score - a.score);
 
+  let topicAnalytics = [];
+  if (room.topicStats && room.topicStats.size > 0) {
+    topicAnalytics = Array.from(room.topicStats.values())
+      .map((s) => ({
+        topic: s.topic,
+        subject: s.subject,
+        totalAttempts: s.totalAttempts,
+        wrongAttempts: s.wrongAttempts,
+        wrongPercent: Math.round((s.wrongAttempts / Math.max(1, s.totalAttempts)) * 100),
+      }))
+      .sort((a, b) => b.wrongPercent - a.wrongPercent);
+  }
+
   return {
     pin: room.pin,
     status: room.status,
@@ -132,6 +172,7 @@ function getPublicRoomState(room) {
     answeredCount: room.currentAnswers.size,
     totalPlayers: room.players.size,
     leaderboard,
+    topicAnalytics,
   };
 }
 
@@ -163,6 +204,7 @@ function createAppServer(listenPort = null) {
   const bankDir = path.join(__dirname, '..', 'question-bank');
   const questionBank = loadQuestionBank(bankDir);
   const store = new GameStore();
+  store.initDefaultRevisions();
   const queue = new MatchmakingQueue({ enableGhost: false });
 
   const activeDuels = new Map(); // matchId -> { session: DuelSession, advancing: boolean }
@@ -201,6 +243,42 @@ function createAppServer(listenPort = null) {
         player.streak = 0;
         player.wrongCount += 1;
       }
+    }
+
+    // QR Sınıf Yarışması Sonu Analitiği için konu başarı istatistiklerini güncelle
+    const q = room.questions[room.currentQuestionIndex];
+    if (q) {
+      room.topicStats = room.topicStats || new Map();
+      const topic = String(
+        q.topic || (q.interactiveQuestion && q.interactiveQuestion.topic) || q.subTopic || q.subject || 'Genel Konu'
+      ).trim();
+      const subject = String(
+        q.subject || (q.interactiveQuestion && q.interactiveQuestion.subject) || 'genel'
+      ).toLowerCase();
+      const key = `${subject}:${topic.toLowerCase()}`;
+
+      let stat = room.topicStats.get(key);
+      if (!stat) {
+        stat = {
+          topic,
+          subject,
+          totalAttempts: 0,
+          wrongAttempts: 0,
+        };
+        room.topicStats.set(key, stat);
+      }
+
+      const totalPlayersCount = Math.max(1, room.players.size);
+      stat.totalAttempts += totalPlayersCount;
+
+      let roundWrongCount = 0;
+      for (const player of room.players.values()) {
+        const ans = room.currentAnswers.get(player.id);
+        if (!ans || !ans.isCorrect) {
+          roundWrongCount += 1;
+        }
+      }
+      stat.wrongAttempts += roundWrongCount;
     }
 
     room.status = 'INTERMISSION';
@@ -245,33 +323,49 @@ function createAppServer(listenPort = null) {
 
   const INTERMISSION_MS = listenPort === 0 ? 2600 : 5000;
 
+  function generateImmediateOpponentAnswer(duel, opponentPlayer) {
+    const q = duel.getCurrentQuestion();
+    if (!q) return 0;
+    const isCorrectRoll = Math.random() < 0.72;
+    let chosenIdx = q.correctOptionIndex;
+    if (!isCorrectRoll) {
+      const wrongOptions = [0, 1, 2, 3].filter((idx) => idx !== q.correctOptionIndex);
+      chosenIdx = wrongOptions.length > 0
+        ? wrongOptions[Math.floor(Math.random() * wrongOptions.length)]
+        : 0;
+    }
+
+    if (q.interactiveQuestion && q.interactiveQuestion.type !== 'universal_choice') {
+      return {
+        isCorrect: isCorrectRoll,
+        accuracy: isCorrectRoll ? 1 : 0,
+        selectedOptionIndex: chosenIdx,
+      };
+    }
+    return chosenIdx;
+  }
+
   function scheduleGhostAnswerIfNeeded(duel) {
     if (!duel.playerB.isGhost || duel.status !== 'IN_PROGRESS') return;
     const qIdx = duel.currentQuestionIndex;
     const q = duel.getCurrentQuestion();
     if (!q) return;
 
+    const entry = activeDuels.get(duel.matchId);
+
     // Simulate Ghost answering within 4-7 seconds with ~75% accuracy
     const delayMs = 3800 + Math.floor(Math.random() * 3000);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       if (duel.status !== 'IN_PROGRESS' || duel.currentQuestionIndex !== qIdx) return;
-      const isCorrectRoll = Math.random() < 0.72;
-      let chosenIdx = q.correctOptionIndex;
-      if (!isCorrectRoll) {
-        const wrongOptions = [0, 1, 2, 3].filter((idx) => idx !== q.correctOptionIndex);
-        chosenIdx = wrongOptions[Math.floor(Math.random() * wrongOptions.length)];
-      }
-
-      if (q.interactiveQuestion && q.interactiveQuestion.type !== 'universal_choice') {
-        handleAnswerSubmission(duel.matchId, duel.playerB.id, qIdx, {
-          isCorrect: isCorrectRoll,
-          accuracy: isCorrectRoll ? 1 : 0,
-          selectedOptionIndex: chosenIdx,
-        });
-      } else {
-        handleAnswerSubmission(duel.matchId, duel.playerB.id, qIdx, chosenIdx);
-      }
+      if (duel.currentAnswers.has(duel.playerB.id)) return;
+      const oppAnswer = generateImmediateOpponentAnswer(duel, duel.playerB);
+      handleAnswerSubmission(duel.matchId, duel.playerB.id, qIdx, oppAnswer);
     }, delayMs);
+
+    if (entry) {
+      if (entry.ghostTimer) clearTimeout(entry.ghostTimer);
+      entry.ghostTimer = timer;
+    }
   }
 
   function startDuelFromMatch(matchInfo) {
@@ -282,6 +376,7 @@ function createAppServer(listenPort = null) {
       commonSubjects: matchInfo.commonSubjects,
       averageElo: avgElo,
       count: 5,
+      difficultyMode: matchInfo.difficultyMode || 'adaptive',
     });
 
     const duel = new DuelSession({
@@ -296,7 +391,7 @@ function createAppServer(listenPort = null) {
       diagnostics: {
         ...matchInfo.diagnostics,
         averageElo: Math.round(avgElo),
-        difficultyDistribution: getDifficultyDistribution(avgElo),
+        difficultyDistribution: getDifficultyDistribution(avgElo, matchInfo.difficultyMode || 'adaptive'),
       },
       startedAt: Date.now(),
     });
@@ -314,6 +409,17 @@ function createAppServer(listenPort = null) {
   }
 
   function finalizeDuel(duel) {
+    const entry = activeDuels.get(duel.matchId);
+    if (entry) {
+      if (entry.intermissionTimer) {
+        clearTimeout(entry.intermissionTimer);
+        entry.intermissionTimer = null;
+      }
+      if (entry.ghostTimer) {
+        clearTimeout(entry.ghostTimer);
+        entry.ghostTimer = null;
+      }
+    }
     const summary = duel.finalSummary;
     store.recordMatchOutcome(summary);
     if (!duel.playerB.isGhost) {
@@ -332,6 +438,10 @@ function createAppServer(listenPort = null) {
     if (entry.intermissionTimer) {
       clearTimeout(entry.intermissionTimer);
       entry.intermissionTimer = null;
+    }
+    if (entry.ghostTimer) {
+      clearTimeout(entry.ghostTimer);
+      entry.ghostTimer = null;
     }
     entry.readyPlayers = new Set();
     const next = duel.advanceToNextQuestion(Date.now());
@@ -352,17 +462,61 @@ function createAppServer(listenPort = null) {
     const res = duel.submitAnswer(playerId, questionIndex, answerInput, Date.now());
     if (!res.accepted) return;
 
+    const opponentPlayer = String(playerId) === String(duel.playerA.id) ? duel.playerB : duel.playerA;
+    const isLastQuestion = duel.currentQuestionIndex >= duel.questions.length - 1;
+
+    // 1. SON SORU KONTROLÜ:
+    // Kullanıcı kendi sorularını tamamladığı anda rakibin bitirmesini bekletmemek için:
+    // Rakip henüz cevap vermemiş olsa bile kalan hamlesi anında hesaplansın ve maç derhal sonuçlandırılsın.
+    if (isLastQuestion && !duel.currentAnswers.has(opponentPlayer.id)) {
+      if (entry.ghostTimer) {
+        clearTimeout(entry.ghostTimer);
+        entry.ghostTimer = null;
+      }
+      const oppAnswer = generateImmediateOpponentAnswer(duel, opponentPlayer);
+      duel.submitAnswer(opponentPlayer.id, duel.currentQuestionIndex, oppAnswer, Date.now());
+    }
+
+    // 2. ÖNCEKİ SORULARDA GHOST RAKİP HIZLANDIRMA:
+    // Eğer son soru değilse ve rakip bir ghost ise, kullanıcı cevap verdiğinde ghost'un 4-7 sn gereksiz bekletmesini
+    // engelleyip 350ms içinde yanıt vermesini sağla.
+    if (!isLastQuestion && opponentPlayer.isGhost && !duel.currentAnswers.has(opponentPlayer.id)) {
+      if (entry.ghostTimer) {
+        clearTimeout(entry.ghostTimer);
+        entry.ghostTimer = null;
+      }
+      entry.ghostTimer = setTimeout(() => {
+        if (duel.status !== 'IN_PROGRESS' || duel.currentQuestionIndex !== questionIndex) return;
+        if (duel.currentAnswers.has(opponentPlayer.id)) return;
+        const oppAnswer = generateImmediateOpponentAnswer(duel, opponentPlayer);
+        handleAnswerSubmission(duel.matchId, opponentPlayer.id, questionIndex, oppAnswer);
+      }, 350);
+    }
+
     io.emit('duel:state', duel.getCurrentPublicState());
 
-    if (res.bothAnswered && !entry.advancing) {
+    const bothAnswered = duel.currentAnswers.has(duel.playerA.id) && duel.currentAnswers.has(duel.playerB.id);
+
+    if (bothAnswered && !entry.advancing) {
       entry.advancing = true;
       entry.readyPlayers = new Set();
       if (duel.playerB.isGhost) {
         entry.readyPlayers.add(String(duel.playerB.id));
       }
+
+      // Son soru tamamlandığında ara bekleme (intermission) OLMADAN doğrudan maçı sonuçlandır!
+      if (isLastQuestion) {
+        if (entry.intermissionTimer) {
+          clearTimeout(entry.intermissionTimer);
+          entry.intermissionTimer = null;
+        }
+        advanceDuelRound(duel, entry);
+        return;
+      }
+
       io.emit('duel:roundResult', {
         matchId: duel.matchId,
-        roundResult: res.roundResult,
+        roundResult: duel.buildCurrentRoundResult(),
         publicState: duel.getCurrentPublicState(),
       });
 
@@ -396,7 +550,7 @@ function createAppServer(listenPort = null) {
       const { session: duel } = entry;
       if (duel.status !== 'IN_PROGRESS' || entry.advancing) continue;
       const q = duel.getCurrentQuestion();
-      const durationMs = q ? q.durationMs || 60000 : 60000;
+      const durationMs = q ? (q.durationMs || (q.interactiveQuestion && q.interactiveQuestion.timeLimitSeconds ? q.interactiveQuestion.timeLimitSeconds * 1000 : 20000)) : 20000;
       if (now - duel.questionStartedAt >= durationMs) {
         entry.advancing = true;
         entry.readyPlayers = new Set();
@@ -404,6 +558,11 @@ function createAppServer(listenPort = null) {
           entry.readyPlayers.add(String(duel.playerB.id));
         }
         const timeoutRes = duel.forceQuestionTimeout(now);
+        const isLastQuestion = duel.currentQuestionIndex >= duel.questions.length - 1;
+        if (isLastQuestion) {
+          advanceDuelRound(duel, entry);
+          continue;
+        }
         io.emit('duel:roundResult', {
           matchId,
           roundResult: timeoutRes.roundResult,
@@ -416,9 +575,92 @@ function createAppServer(listenPort = null) {
     }
   }, 500);
 
+  const FIRST_NAMES = ['Bora', 'Defne', 'Kaan', 'Ece', 'Arda', 'Zehra', 'Emirhan', 'Nehir', 'Yiğit', 'Beren', 'Mertcan', 'Sude'];
+  const LAST_NAMES = ['Aydın', 'Yıldız', 'Demir', 'Korkmaz', 'Çelik', 'Şahin', 'Polat', 'Özkan', 'Aksoy', 'Kaya', 'Öz', 'Karaca'];
+
+  function createRandomPlayerEntity() {
+    const randomId = 'p_rand_' + Math.random().toString(36).slice(2, 8);
+    const rFirst = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+    const rLast = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
+    const num = Math.floor(100 + Math.random() * 900);
+    const fullName = `${rFirst} ${rLast} (Öğrenci #${num})`;
+    const randomElo = Math.floor(Math.random() * 201) + 1150; // 1150 - 1350
+
+    const newPlayer = {
+      id: randomId,
+      name: fullName,
+      roleTag: 'Yeni Yarışmacı',
+      avatarUrl: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(rFirst + randomId)}&backgroundColor=b6e3f4`,
+      elo: randomElo,
+      streak: 0,
+      coins: 250,
+      islerPoints: 50,
+      weeklyMatchesPlayed: 0,
+      weeklyRewardClaimed: false,
+      weeklyLeaguePoints: 120,
+      coupons: [],
+      revisionTopics: [
+        {
+          topic: 'Kimyasal Tepkimeler ve Denge',
+          subject: 'kimya',
+          examType: 'TYT',
+          mistakeCount: 3,
+          lastMistakeAt: new Date().toISOString(),
+          wrongQuestions: [],
+          recommendedResources: getRecommendationsForTopic('kimya', 'Kimyasal Tepkimeler ve Denge', 'TYT'),
+        },
+        {
+          topic: 'Üslü ve Köklü Sayılar',
+          subject: 'matematik',
+          examType: 'TYT',
+          mistakeCount: 2,
+          lastMistakeAt: new Date().toISOString(),
+          wrongQuestions: [],
+          recommendedResources: getRecommendationsForTopic('matematik', 'Üslü ve Köklü Sayılar', 'TYT'),
+        },
+      ],
+      revisionDetails: [
+        {
+          topic: 'Kimyasal Tepkimeler ve Denge',
+          subject: 'kimya',
+          wrongCount: 3,
+          totalAttempts: 5,
+          errorRatePercent: 60,
+          failedQuestionIds: ['q_sb_018', 'q_tc_016'],
+        },
+        {
+          topic: 'Üslü ve Köklü Sayılar',
+          subject: 'matematik',
+          wrongCount: 2,
+          totalAttempts: 4,
+          errorRatePercent: 50,
+          failedQuestionIds: ['q_uc_comp_003', 'q_nc_021'],
+        },
+      ],
+      effectiveMmr: calculateEffectiveMMR(randomElo, 0),
+      bracket: getWeeklyBracket(randomElo),
+    };
+
+    store.players.set(randomId, newPlayer);
+    return newPlayer;
+  }
+
   // REST API routes
   app.get('/api/state', (_req, res) => {
     res.json(buildFullState());
+  });
+
+  app.post('/api/players/random', (_req, res) => {
+    const player = createRandomPlayerEntity();
+    broadcastState();
+    res.json({ ok: true, player });
+  });
+
+  app.post('/api/players/complete-revision-practice', (req, res) => {
+    const { playerId, solvedTopics } = req.body || {};
+    const result = store.completeRevisionPractice(playerId, solvedTopics);
+    broadcastState();
+    res.json(result);
   });
 
   app.post('/api/economy/claim-weekly', (req, res) => {
@@ -516,7 +758,16 @@ function createAppServer(listenPort = null) {
       }
     });
 
-    socket.on('queue:join', ({ playerId, examType, subjects, mode, tournamentId }) => {
+    socket.on('player:createRandom', (_data, ack) => {
+      const player = createRandomPlayerEntity();
+      socketToPlayerId.set(socket.id, player.id);
+      broadcastState();
+      if (typeof ack === 'function') {
+        ack({ ok: true, player });
+      }
+    });
+
+    socket.on('queue:join', ({ playerId, examType, subjects, mode, tournamentId, difficultyMode }) => {
       if (!isAuthorizedSocketPlayer(socketToPlayerId, socket.id, playerId)) {
         socket.emit('queue:error', { message: 'Yetkisiz oyuncu oturumu.' });
         return;
@@ -546,6 +797,7 @@ function createAppServer(listenPort = null) {
         subjects,
         mode: mode || 'ranked',
         tournamentId: mode === 'tournament' ? tournamentId : null,
+        difficultyMode: difficultyMode || 'adaptive',
         enqueuedAt: Date.now(),
       });
       broadcastState();

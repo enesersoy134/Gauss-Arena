@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "fizik",
+    "difficulty": "MEDIUM",
+    "defaultDurationMs": 20000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-FIZ-M-001",
+      "subTopic": "Sıvı Basıncı ve Pascal Prensibi",
+      "text": "Kapalı bir kaptaki sıvıya uygulanan basıncın sıvının her noktasına aynen iletilmesine ne ad verilir?",
+      "explanation": "Sıvıların sıkıştırılamaz olması nedeniyle basıncı her yöne aynen iletmesi Pascal prensibidir.",
+      "imageUrl": null,
+      "options": [
+        "Arşimet Prensibi",
+        "Pascal Prensibi",
+        "Bernoulli İlkesi",
+        "Torricelli Prensibi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-M-002",
+      "subTopic": "Açık Hava Basıncı (Torricelli)",
+      "text": "Torricelli deneyinde deniz seviyesinde ve 0 °C'de cıva sütununun yüksekliği kaç cm ölçülmüştür?",
+      "explanation": "Deniz seviyesinde 0 °C sıcaklıkta açık hava basıncı 76 cm-Hg olarak ölçülmüştür.",
+      "imageUrl": null,
+      "options": [
+        "66 cm",
+        "70 cm",
+        "76 cm",
+        "80 cm"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FIZ-M-003",
+      "subTopic": "Hareketli Makaralar",
+      "text": "Sürtünmelerin ve makara ağırlığının ihmal edildiği hareketli bir makarada 60 N ağırlığındaki yükü kaldırmak için kaç N kuvvet uygulanmalıdır?",
+      "explanation": "Hareketli makarada 2 kat kuvvet kazancı vardır: F = G / 2 = 60 / 2 = 30 N bulunur.",
+      "imageUrl": null,
+      "options": [
+        "15",
+        "30",
+        "60",
+        "120"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-M-004",
+      "subTopic": "Eğik Düzlem Hesaplama",
+      "text": "Boyu 6 metre, yüksekliği 2 metre olan sürtünmesiz bir eğik düzlemde kuvvet kazancı kaçtır?",
+      "explanation": "Kuvvet kazancı = Eğik düzlem boyu (L) / Yükseklik (h) = 6 / 2 = 3 olur.",
+      "imageUrl": null,
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-M-005",
+      "subTopic": "Katı Basıncını Değiştirme",
+      "text": "Aşağıdaki uygulamalardan hangisinde basıncı ARTIRMAK hedeflenmiştir?",
+      "explanation": "Bıçağın keskinleştirilmesi temas yüzey alanını küçülterek basıncı artırır.",
+      "imageUrl": null,
+      "options": [
+        "Kamyonlarda tekerlek sayısının fazla olması",
+        "Bıçakların keskinleştirilmesi",
+        "Ördeklerin ayaklarının perdeli olması",
+        "Kar ayakkabılarının geniş tabanlı olması"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-M-006",
+      "subTopic": "Çıkrık Sistemi",
+      "text": "Kuyu çıkrığında kol uzunluğu silindir yarıçapından büyük olduğuna göre çıkrıkla ilgili hangisi doğrudur?",
+      "explanation": "Çıkrık kolu yarıçaptan büyük olduğu için kuvvet kolu > yük kolu olur ve kuvvetten kazanç sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Kuvvetten kayıp vardır",
+        "Kuvvetten kazanç sağlar",
+        "Yoldan kazanç sağlar",
+        "İş kazancı vardır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-M-007",
+      "subTopic": "Manometre ve Gaz Basıncı",
+      "text": "Pipetle meyve suyu içerken kutunun içe doğru büzüşmesinin temel sebebi nedir?",
+      "explanation": "Pipetle hava çekildiğinde kutu içindeki gaz basıncı düşer; dışarıdaki açık hava basıncı kutuyu büzer.",
+      "imageUrl": null,
+      "options": [
+        "İç basıncın açık hava basıncından küçük olması",
+        "Sıvı yoğunluğunun azalması",
+        "Yerçekimi ivmesinin artması",
+        "Meyve suyunun buharlaşması"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-FIZ-M-008",
+      "subTopic": "Işığın Soğurulması ve Renkler",
+      "text": "Beyaz ışık altında mavi görünen bir kumaş parçası, karanlık bir odada sadece kırmızı ışıkla aydınlatılırsa hangi renkte görünür?",
+      "explanation": "Mavi kumaş kırmızı ışığı soğurur ve yansıtmaz, bu nedenle gözlemci kumaşı siyah görür.",
+      "imageUrl": null,
+      "options": [
+        "Mavi",
+        "Kırmızı",
+        "Beyaz",
+        "Siyah"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-FIZ-M-009",
+      "subTopic": "Basit Makinelerde Verim",
+      "text": "Tüm basit makineler için aşağıdakilerden hangisi daima ORTAKTIR?",
+      "explanation": "Hiçbir basit makine enerjiden veya işten kazanç sağlamaz; sadece iş kolaylığı sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Kuvvet kazancı 1'den büyüktür",
+        "Enerji veya iş kazancı kesinlikle yoktur",
+        "Yoldan daima kaybettirir",
+        "Destek daima ortadadır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-M-010",
+      "subTopic": "Güneş Işınlarının Geliş Açısı",
+      "text": "21 Mart tarihinde Ekvator'a dik gelen Güneş ışınları öğle vaktinde kaç derecelik açıyla düşer?",
+      "explanation": "Ekinoks tarihlerinde (21 Mart - 23 Eylül) Güneş ışınları öğle vakti Ekvator'a tam 90° dik açıyla düşer.",
+      "imageUrl": null,
+      "options": [
+        "45°",
+        "66.5°",
+        "90°",
+        "23.5°"
+      ],
+      "correctOptionIndex": 2
+    }
+  ]
+}

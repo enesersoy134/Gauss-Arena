@@ -3,7 +3,7 @@
  * Kaynak: soru_tasarimlari/soru_tipleri.md & sahsi/tasarim_dili.md
  */
 
-export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce';
+export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce' | 'fen' | 'sosyal' | 'geometri';
 export type DifficultyLevel = 'kolay' | 'orta' | 'zor';
 
 export type QuestionType =
@@ -25,6 +25,21 @@ export type QuestionType =
   | 'hotspot';
 
 /**
+ * Eksik Konu İstatistik Modeli (Hata Yüzdesi ve Başarısız Soru Havuzu)
+ */
+export interface RevisionDetail {
+  topic: string;
+  subject: string;
+  wrongCount: number;
+  totalAttempts: number;
+  errorRatePercent: number; // Math.round((wrongCount / totalAttempts) * 100)
+  failedQuestionIds: string[];
+}
+
+export type EducationLevel = 'lise' | 'ortaokul';
+export type ExamCategory = 'TYT' | 'AYT' | 'LGS';
+
+/**
  * Oyuncu Bilgi Modeli
  */
 export interface PlayerInfo {
@@ -33,6 +48,23 @@ export interface PlayerInfo {
   elo: number;
   avatarUrl: string;
   streak: number;
+  educationLevel?: EducationLevel;
+  gradeLevel?: string;
+  allowedExamTypes?: ExamCategory[];
+  dailyQuestExempt?: boolean;
+  coins?: number;
+  islerPoints?: number;
+  weeklyLeaguePoints?: number;
+  dailyCompleted?: boolean;
+  dailyQuestDone?: boolean;
+  completedMiniGames?: string[];
+  revisionTopics?: Array<{
+    topic: string;
+    subject: string;
+    mistakeCount: number;
+    lastMistakeAt?: string;
+  } | string>;
+  revisionDetails?: RevisionDetail[];
 }
 
 /**
@@ -64,11 +96,12 @@ export interface MatchSettings {
  */
 export interface BaseQuestion<T = unknown> {
   id: string;
-  examType?: 'TYT' | 'AYT' | string;
+  examType?: 'TYT' | 'AYT' | 'LGS' | 'KARMA' | string;
   subject: SubjectType;
   topic: string;
   type: QuestionType;
   difficulty: DifficultyLevel;
+  difficultyNumber?: 1 | 2 | 3;
   timeLimitSeconds: number;
   points: number;
   prompt: string;           // Oyuncuya gösterilecek ana soru metni / yönerge

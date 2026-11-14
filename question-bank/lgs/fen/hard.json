@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "fen",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-FEN-H-001",
+      "subTopic": "Bileşik Basınç ve U Borusu",
+      "text": "Taban alanı 2S olan h yüksekliğindeki d yoğunluklu sıvı kabın tabanına P basıncı yapmaktadır. Sıvı taban alanı S olan düşey bir kaba aktarılırsa tabandaki sıvı basıncı kaç P olur?",
+      "explanation": "V = 2S·h sabit kalır. Yeni yükseklik h' = 2S·h/S = 2h olur. Yeni basınç P' = 2h·d·g = 2P olur.",
+      "imageUrl": null,
+      "options": [
+        "P",
+        "2P",
+        "3P",
+        "4P"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-H-002",
+      "subTopic": "Eksen Eğikliği ve Güneş Açıları",
+      "text": "21 Haziran tarihinde Güneş ışınları Yengeç Dönencesi'ne (23° 27' K) dik açıyla (90°) geldiğinde, Kuzey Kutup Dairesi'nde (66° 33' K) gündüz süresi yaklaşık kaç saattir?",
+      "explanation": "21 Haziran'da Kuzey Kutup Dairesi ve kuzeyinde 24 saat kesintisiz gündüz yaşanır.",
+      "imageUrl": null,
+      "options": [
+        "12 saat",
+        "16 saat",
+        "20 saat",
+        "24 saat"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-FEN-H-003",
+      "subTopic": "Palanga Mekaniği",
+      "text": "Ağırlıkları ve sürtünmeleri ihmal edilen bir palangada yük 3 hareketli ip tarafından taşınmaktadır. 180 N ağırlığındaki yükü dengeleyen kuvvet kaç N olur?",
+      "explanation": "F = G / 3 = 180 / 3 = 60 N kuvvet gerekir.",
+      "imageUrl": null,
+      "options": [
+        "30 N",
+        "60 N",
+        "90 N",
+        "120 N"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-H-004",
+      "subTopic": "Periyodik Özelliklerin Değişimi",
+      "text": "Periyodik tabloda aynı periyotta soldan sağa doğru gidildikçe atom numarası ve metalik özellik nasıl değişir?",
+      "explanation": "Soldan sağa proton sayısı (atom numarası) artar, elektron verme eğilimi azaldığı için metalik özellik azalır.",
+      "imageUrl": null,
+      "options": [
+        "Atom numarası artar, metalik özellik azalır",
+        "Atom numarası azalır, metalik özellik artar",
+        "İkisi de artar",
+        "İkisi de azalır"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-FEN-H-005",
+      "subTopic": "DNA Replikasyonu ve Hata Onarımı",
+      "text": "DNA'nın tek bir zincirinde meydana gelen nükleotid eşleşme hataları veya boşlukları DNA ligaz ve polimeraz enzimleri ile onarılabilirken, hangi durumda DNA onarılamaz?",
+      "explanation": "Karşılıklı her iki zincirdeki nükleotidlerin birlikte kaybolduğu çift taraflı hasarlar onarılamaz (mutasyon kalıcı olur).",
+      "imageUrl": null,
+      "options": [
+        "Karşılıklı iki zincirde de aynı bölgedeki nükleotidlerin aynı anda kopması (çift zincir kırığı)",
+        "Adenin karşısına sitozin gelmesi",
+        "Timin karşısında boşluk kalması",
+        "Guanin nükleotidinin hasar görmesi"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-FEN-H-006",
+      "subTopic": "Asit Yağmurları ve Kimyasal Etkisi",
+      "text": "Fosil yakıtların yanması sonucu atmosfere salınan SO₂ ve NO₂ gazlarının su buharıyla tepkimeye girmesi sonucu oluşan asit yağmurları en çok hangi tarihi yapılara zarar verir?",
+      "explanation": "Asitler karbonatlı kayaçlarla (mermer ve kireç taşı: CaCO₃) tepkimeye girerek onları aşındırır ve CO₂ gazı çıkarır.",
+      "imageUrl": null,
+      "options": [
+        "Plastik heykellere",
+        "Kalker ve mermer (CaCO₃) içeren tarihi eserlere",
+        "Cam pencerelere",
+        "Saf altın kaplamalara"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-H-007",
+      "subTopic": "Bileşik Basit Makineler",
+      "text": "Kuvvet kazancı 2 olan bir kaldıraç ile kuvvet kazancı 4 olan bir eğik düzlemin art arda bağlandığı bileşik bir makine sisteminde toplam kuvvet kazancı kaçtır?",
+      "explanation": "Bileşik makinelerde toplam kuvvet kazancı bileşenlerin kuvvet kazançlarının çarpımına eşittir: 2 × 4 = 8.",
+      "imageUrl": null,
+      "options": [
+        "6",
+        "8",
+        "12",
+        "16"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-H-008",
+      "subTopic": "Besin Piramidinde Enerji Aktarımı",
+      "text": "Üreticiden son tüketiciye doğru gidildikçe basamaklar arasında aktarılan enerji oranı (yüzde 10 kuralı) ve biyolojik birikim (zehir) miktarı nasıl değişir?",
+      "explanation": "Her basamakta enerjinin yalnızca yaklaşık %10'u üst basamağa aktarılır, dokularda biriken zehirli madde miktarı ise artar.",
+      "imageUrl": null,
+      "options": [
+        "Enerji artar, zehir azalır",
+        "Enerji her basamakta %90 kaybedilir, zehir miktarı artar",
+        "İkisi de artar",
+        "İkisi de sabit kalır"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-H-009",
+      "subTopic": "Gaz Basıncı ve Hacim İlişkisi (Boyle-Mariotte)",
+      "text": "Hareketli sürtünmesiz pistonlu bir kapta bulunan gazın hacmi sıcaklık sabit tutularak yarıya (V/2) indirilirse gaz basıncı nasıl değişir?",
+      "explanation": "P · V = sabit (sıcaklık sabit). Hacim yarıya inince birim hacme düşen tanecik sayısı ve çarpışma iki katına çıkar, basınç 2P olur.",
+      "imageUrl": null,
+      "options": [
+        "Yarıya iner",
+        "2 katına çıkar",
+        "Değişmez",
+        "4 katına çıkar"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FEN-H-010",
+      "subTopic": "Biyoteknoloji ve Genetik Mühendisliği",
+      "text": "Ateş böceğinin ışık saçmasını sağlayan lüsiferaz geninin tütün bitkisine aktarılması sonucu tütün bitkisinin ışık saçması hangi biyoteknolojik yöntemle gerçekleşmiştir?",
+      "explanation": "Farklı bir canlı türünden istenen bir genin başka bir canlıya aktarılması gen aktarımıdır.",
+      "imageUrl": null,
+      "options": [
+        "Geleneksel ıslah",
+        "Gen aktarımı (Transgenik organizma / GDO)",
+        "Klonlama",
+        "Aşılama"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

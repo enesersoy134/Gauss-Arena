@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "matematik",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-MAT-H-001",
+      "subTopic": "Aralarında Asal Sayılar",
+      "text": "(2a - 1) ile (b + 3) sayıları aralarında asaldır. (2a - 1)/(b + 3) = 15/21 olduğuna göre a + b toplamı kaçtır?",
+      "explanation": "15/21 kesri 3 ile sadeleştirilirse 5/7 olur. 2a - 1 = 5 ⇒ a = 3; b + 3 = 7 ⇒ b = 4. Toplam 3 + 4 = 7 olur.",
+      "imageUrl": null,
+      "options": [
+        "7",
+        "9",
+        "11",
+        "13"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-MAT-H-002",
+      "subTopic": "Kareköklü Sayı Problemleri",
+      "text": "Alanı 180 m² olan kare şeklindeki bir bahçenin çevresi kaç metredir?",
+      "explanation": "Bir kenar a = √180 = 6√5 m. Çevre = 4a = 24√5 m olur.",
+      "imageUrl": null,
+      "options": [
+        "12√5",
+        "24√5",
+        "18√5",
+        "36√5"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-MAT-H-003",
+      "subTopic": "Olasılık ve Kombinasyon",
+      "text": "Bir torbada 4 kırmızı ve x tane mavi bilye vardır. Torbadan rastgele çekilen bir bilyenin kırmızı olma olasılığı 1/3 olduğuna göre torbadaki toplam bilye sayısı kaçtır?",
+      "explanation": "4 / (4 + x) = 1/3 ⇒ 4 + x = 12 (toplam bilye sayısı 12'dir).",
+      "imageUrl": null,
+      "options": [
+        "8",
+        "10",
+        "12",
+        "16"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-MAT-H-004",
+      "subTopic": "Cebirsel Modelleme",
+      "text": "Bir kenar uzunluğu (2x + 5) cm olan kare şeklindeki kartondan, köşelerinden bir kenarı 2 cm olan 4 adet kare kesilip atılıyor. Kalan alanın cebirsel ifadesi nedir?",
+      "explanation": "(2x + 5)² - 4·(2²) = 4x² + 20x + 25 - 16 = 4x² + 20x + 9 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "4x² + 20x + 9",
+        "4x² + 20x + 21",
+        "4x² + 10x + 9",
+        "4x² + 25"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-MAT-H-005",
+      "subTopic": "Silindirin Hacmi ve Yüzey Alanı",
+      "text": "Taban yarıçapı r = 3 cm ve yüksekliği h = 10 cm olan dik dairesel silindirin hacmi kaç cm³'tür? (π = 3 alınız)",
+      "explanation": "V = π · r² · h = 3 · 3² · 10 = 3 · 9 · 10 = 270 cm³ bulunur.",
+      "imageUrl": null,
+      "options": [
+        "180",
+        "270",
+        "360",
+        "540"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-MAT-H-006",
+      "subTopic": "Benzerlik ve Teorem",
+      "text": "Gölgesi 12 metre olan 3 metre boyundaki bir ağacın yanında duran 1.5 metre boyundaki bir çocuğun gölgesi kaç metre olur?",
+      "explanation": "3 / 12 = 1.5 / x ⇒ x = 6 metre bulunur.",
+      "imageUrl": null,
+      "options": [
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-MAT-H-007",
+      "subTopic": "Prizmalar",
+      "text": "Ayrıt uzunlukları 4 cm, 6 cm ve 8 cm olan dikdörtgenler prizmasının toplam yüzey alanı kaç cm²'dir?",
+      "explanation": "A = 2(ab + bc + ac) = 2(24 + 48 + 32) = 2(104) = 208 cm² olur.",
+      "imageUrl": null,
+      "options": [
+        "104",
+        "188",
+        "208",
+        "216"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-MAT-H-008",
+      "subTopic": "Doğrusal Eşitsizlik Grafikleri",
+      "text": "2x - y ≥ 4 eşitsizliği aşağıdaki noktalardan hangisi tarafından SAĞLANMAZ?",
+      "explanation": "(1, 2) için 2(1) - 2 = 0 ≥ 4 yanlış bir önermedir, eşitsizliği sağlamaz.",
+      "imageUrl": null,
+      "options": [
+        "(3, 1)",
+        "(4, 2)",
+        "(2, -1)",
+        "(1, 2)"
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-MAT-H-009",
+      "subTopic": "Koni Ana Doğrusu",
+      "text": "Taban yarıçapı 6 cm ve yüksekliği 8 cm olan dik dairesel koninin ana doğru (yanal ayrıt) uzunluğu kaç cm'dir?",
+      "explanation": "a² = r² + h² = 6² + 8² = 36 + 64 = 100 ⇒ a = 10 cm (6-8-10 üçgeni).",
+      "imageUrl": null,
+      "options": [
+        "9",
+        "10",
+        "12",
+        "14"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-MAT-H-010",
+      "subTopic": "Üslü Sayı Denklemleri",
+      "text": "2^(x+3) = 64 olduğuna göre 3^(x-1) ifadesinin değeri kaçtır?",
+      "explanation": "64 = 2⁶ ⇒ x + 3 = 6 ⇒ x = 3. 3^(3-1) = 3² = 9 bulunur.",
+      "imageUrl": null,
+      "options": [
+        "3",
+        "9",
+        "27",
+        "81"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

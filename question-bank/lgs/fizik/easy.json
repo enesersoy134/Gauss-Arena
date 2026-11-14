@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "fizik",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-FIZ-E-001",
+      "subTopic": "Mevsimlerin Oluşumu",
+      "text": "Dünya'nın Güneş etrafında dolanması ve eksen eğikliği sonucunda aşağıdakilerden hangisi meydana gelir?",
+      "explanation": "Dünya'nın 23° 27'lik eksen eğikliği ve yıllık hareketi mevsimleri oluşturur.",
+      "imageUrl": null,
+      "options": [
+        "Gece ve gündüzün ardalanması",
+        "Mevsimlerin oluşumu",
+        "Güneş tutulması",
+        "Ay evreleri"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-E-002",
+      "subTopic": "İklim ve Hava Hareketleri",
+      "text": "Geniş bir bölgede uzun yıllar boyunca gözlemlenen hava olaylarının ortalamasına ne ad verilir?",
+      "explanation": "Uzun yıllar (35-40 yıl) boyunca değişmeyen ortalama hava koşulları iklimdir.",
+      "imageUrl": null,
+      "options": [
+        "Hava durumu",
+        "İklim",
+        "Basınç",
+        "Rüzgâr"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-E-003",
+      "subTopic": "Katı Basıncı Temelleri",
+      "text": "Katı cisimlerin zemine uyguladığı basınç aşağıdakilerden hangisine bağlı DEĞİLDİR?",
+      "explanation": "Katı basıncı P = F / S formülüyle bulunur; cismin rengine bağlı değildir.",
+      "imageUrl": null,
+      "options": [
+        "Cismin ağırlığına",
+        "Temas yüzey alanına",
+        "Cismin rengine",
+        "Zemine uygulanan dik kuvvete"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FIZ-E-004",
+      "subTopic": "Rüzgâr Oluşumu",
+      "text": "Rüzgâr, yatay yönde hangi basınç alanından hangi basınç alanına doğru eser?",
+      "explanation": "Rüzgâr daima yüksek basınç (soğuk) alanından alçak basınç (sıcak) alanına doğru eser.",
+      "imageUrl": null,
+      "options": [
+        "Alçak basınçtan yüksek basınca",
+        "Yüksek basınçtan alçak basınca",
+        "Soğuk havadan soğuk havaya",
+        "Nemli alandan kuru alana"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-E-005",
+      "subTopic": "Basit Makineler (Kaldıraç)",
+      "text": "Aşağıdakilerden hangisi desteğin ortada olduğu çift taraflı bir kaldıraç örneğidir?",
+      "explanation": "Makas ve tahterevallide destek noktası yük ile kuvvetin ortasındadır.",
+      "imageUrl": null,
+      "options": [
+        "El arabası",
+        "Ceviz kıracağı",
+        "Makas",
+        "Cımbız"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FIZ-E-006",
+      "subTopic": "Sıvı Basıncı Temelleri",
+      "text": "Durgun sıvıların kap tabanına uyguladığı basınç sıvının hangi özelliğine bağlıdır?",
+      "explanation": "Sıvı basıncı P = h · d · g bağıntısıyla hesaplanır; derinlik ve yoğunluğa bağlıdır.",
+      "imageUrl": null,
+      "options": [
+        "Yalnızca hacmine",
+        "Yalnızca kabın şekline",
+        "Derinliğine ve yoğunluğuna",
+        "Kabın genişliğine"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FIZ-E-007",
+      "subTopic": "Makaralar",
+      "text": "Sabit makara kullanmanın sağladığı en temel kolaylık nedir?",
+      "explanation": "Sabit makarada kuvvet kazancı yoktur, kuvvetin yönünü değiştirerek iş kolaylığı sağlar.",
+      "imageUrl": null,
+      "options": [
+        "Kuvvetten kazanç sağlar",
+        "Yoldan kazanç sağlar",
+        "Kuvvetin yönünü değiştirir",
+        "İşten kazanç sağlar"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-FIZ-E-008",
+      "subTopic": "Gölge Boyu Değişimi",
+      "text": "Kuzey Yarım Küre'de öğle vaktinde cisimlerin gölge boyunun en kısa olduğu tarih hangisidir?",
+      "explanation": "21 Haziran yaz gündönümünde Güneş ışınları Yengeç Dönencesi'ne en dik açıyla geldiğinden gölge en kısadır.",
+      "imageUrl": null,
+      "options": [
+        "21 Mart",
+        "21 Haziran",
+        "23 Eylül",
+        "21 Aralık"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-E-009",
+      "subTopic": "Eğik Düzlem Temeli",
+      "text": "Sürtünmesiz bir eğik düzlemde yükü yukarı çıkarırken aşağıdakilerden hangisi kesinlikle sağlanır?",
+      "explanation": "Hiçbir basit makinede işten kazanç olmaz; eğik düzlem yoldan kaybettirerek kuvvetten kazanç sağlar.",
+      "imageUrl": null,
+      "options": [
+        "İşten kazanç",
+        "Kuvvetten kazanç",
+        "Yoldan kazanç",
+        "Enerjiden kazanç"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-FIZ-E-010",
+      "subTopic": "Dişli Çarklar",
+      "text": "Birbirine dıştan temas eden iki dişli çark döndürüldüğünde dönme yönleri nasıldır?",
+      "explanation": "Birbirini dıştan çeviren dişliler daima birbirine zıt yönde döner.",
+      "imageUrl": null,
+      "options": [
+        "Aynı yönde dönerler",
+        "Zıt yönde dönerler",
+        "İkisi de durur",
+        "Dönme yönleri tahmin edilemez"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

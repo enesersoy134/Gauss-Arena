@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "kimya",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-KIM-H-001",
+      "subTopic": "Kimyasal Tepkime Hesaplaması",
+      "text": "24 g magnezyum (Mg) ile 16 g oksijen (O₂) artansız birleşerek kaç g magnezyum oksit (MgO) oluşturur?",
+      "explanation": "Kütlenin korunumuna göre m(MgO) = 24 + 16 = 40 g bulunur.",
+      "imageUrl": null,
+      "options": [
+        "32 g",
+        "40 g",
+        "48 g",
+        "56 g"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-H-002",
+      "subTopic": "Periyodik Tabloda Grup Bulma",
+      "text": "Nötr bir X atomunun katman elektron dağılımı 2 - 8 - 7 şeklindedir. Bu element periyodik tabloda hangi periyot ve grupta yer alır?",
+      "explanation": "3 katmanı olduğu için 3. periyot, son katmanda 7 elektron olduğu için 7A grubudur.",
+      "imageUrl": null,
+      "options": [
+        "2. Periyot 7A",
+        "3. Periyot 7A",
+        "3. Periyot 8A",
+        "7. Periyot 3A"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-H-003",
+      "subTopic": "Asit-Baz Nötralleşme Tepkimesi",
+      "text": "Eşit mol sayısında HCl (asit) ile NaOH (baz) sulu ortamda karıştırılırsa hangi iki madde oluşur?",
+      "explanation": "HCl + NaOH → NaCl + H₂O tepkimesiyle tuz ve su (nötralleşme) meydana gelir.",
+      "imageUrl": null,
+      "options": [
+        "NaCl (Tuz) ve H₂O (Su)",
+        "H₂ gazı ve tuz",
+        "Cl₂ gazı ve baz",
+        "Yalnızca saf su"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-H-004",
+      "subTopic": "Isı ve Öz Isı Hesaplaması",
+      "text": "Öz ısısı 0.5 J/g°C olan 100 g katı bir maddenin sıcaklığını 20 °C artırmak için kaç Joule ısı verilmelidir?",
+      "explanation": "Q = m · c · ΔT = 100 · 0.5 · 20 = 1000 Joule bulunur.",
+      "imageUrl": null,
+      "options": [
+        "500 J",
+        "1000 J",
+        "2000 J",
+        "2500 J"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-H-005",
+      "subTopic": "Erime Isısı (Le)",
+      "text": "Erime sıcaklığındaki 50 g buzu tamamen eritmek için gereken ısı kaç Joule'dür? (Le = 334 J/g)",
+      "explanation": "Q = m · Le = 50 · 334 = 16700 Joule ısı gerekir.",
+      "imageUrl": null,
+      "options": [
+        "8350 J",
+        "16700 J",
+        "33400 J",
+        "66800 J"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-H-006",
+      "subTopic": "pH Ölçeğinde Seyrelme",
+      "text": "pH değeri 2 olan kuvvetli bir asit çözeltisine saf su eklendiğinde pH değeri ve hidrojen iyonu derişimi nasıl değişir?",
+      "explanation": "Su eklendikçe asit seyreltilir; H⁺ derişimi düşer ve pH 7'ye yaklaşarak artar.",
+      "imageUrl": null,
+      "options": [
+        "pH artar, H⁺ derişimi azalır",
+        "pH azalır, H⁺ derişimi artar",
+        "İkisi de artar",
+        "Değişmez"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-H-007",
+      "subTopic": "Periyodik Özelliklerin Kıyaslanması",
+      "text": "Aynı grupta bulunan X ve Y metallerinden X'in periyot numarası Y'den büyüktür. Buna göre hangisi KESİNLİKLE doğrudur?",
+      "explanation": "Periyot numarası büyük olanın katman sayısı ve atom yarıçapı daha büyüktür.",
+      "imageUrl": null,
+      "options": [
+        "X'in atom yarıçapı Y'den büyüktür",
+        "Y'nin proton sayısı X'ten büyüktür",
+        "X'in katman sayısı daha azdır",
+        "Y'nin elektron vermesi daha kolaydır"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-H-008",
+      "subTopic": "Tepkime Türleri (Yanma ve Asit-Baz)",
+      "text": "Metan gazının oksijenle tepkimeye girerek karbondioksit ve su oluşturması (CH₄ + 2O₂ → CO₂ + 2H₂O) hangi tepkime türüdür?",
+      "explanation": "Oksijen (O₂) gazı ile gerçekleşen kimyasal tepkimeler yanma tepkimesidir.",
+      "imageUrl": null,
+      "options": [
+        "Yanma tepkimesi",
+        "Nötralleşme tepkimesi",
+        "Fiziksel çözünme",
+        "Sentez tepkimesi"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-H-009",
+      "subTopic": "Hal Değişim Grafiği Yorumlama",
+      "text": "Saf bir maddenin sıcaklık-zaman grafiğinde sıcaklığın sabit kaldığı aralıklarda madde ile ilgili hangisi doğrudur?",
+      "explanation": "Saf maddeler hal değiştirirken (erime, kaynama) sıcaklıkları sabit kalır; alınan ısı potansiyel enerjiye dönüşür.",
+      "imageUrl": null,
+      "options": [
+        "Madde hal değiştirmektedir",
+        "Maddenin kütlesi azalmaktadır",
+        "Maddeye ısı verilmemektedir",
+        "Maddenin kimyasal yapısı değişmektedir"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-H-010",
+      "subTopic": "Asit Yağmurlarının pH Sınırı",
+      "text": "Normal yağmur suyunun hafif asidik (pH ≈ 5.6) olduğu bilinmektedir. Yağışın \"asit yağmuru\" sayılması için pH değeri ne olmalıdır?",
+      "explanation": "pH değeri 5.2 - 5.6'nın altına düşen yağışlar asit yağmuru olarak sınıflandırılır.",
+      "imageUrl": null,
+      "options": [
+        "pH < 5.2",
+        "pH > 7.0",
+        "pH = 7.0",
+        "pH > 8.5"
+      ],
+      "correctOptionIndex": 0
+    }
+  ]
+}

@@ -368,33 +368,45 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
                 type="button"
                 disabled={disabled || isSubmitted}
                 onClick={() => handleRegionClick(region.id)}
+                aria-label="Hedef Bölge"
                 className={`
-                  relative group flex items-center justify-center w-8 h-8 rounded-full transition-transform duration-150 cursor-pointer
-                  ${disabled || isSubmitted ? 'cursor-default' : 'hover:scale-110 active:scale-95'}
+                  relative group flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 cursor-pointer focus:outline-none
+                  ${disabled || isSubmitted ? 'cursor-default' : 'hover:scale-115 active:scale-95'}
                 `}
-                title={region.label}
               >
-                {/* Seçildikten Sonraki Halka */}
-                {isSelected && (
-                  <span
-                    className={`absolute -inset-1 rounded-full border-2 border-dashed ${
-                      isThisCorrect ? 'border-emerald-400' : 'border-rose-400'
-                    }`}
-                  />
+                {/* Dokunma noktası dikkat çekici nabız / radar efekti */}
+                {!isSubmitted && (
+                  <span className="absolute -inset-1 rounded-full bg-[#F14E13]/30 animate-ping pointer-events-none" />
                 )}
 
-                {/* Çekirdek Daire (Hotspot Core) */}
-                <div
+                {/* Dış Halka / Parlama */}
+                <span
                   className={`
-                    w-7 h-7 rounded-full flex items-center justify-center border-2 transition-colors duration-200
+                    absolute -inset-1 rounded-full border transition-all duration-300 pointer-events-none
                     ${
                       showSuccess
-                        ? 'bg-emerald-500 border-white text-white'
+                        ? 'border-emerald-400 bg-emerald-500/20 shadow-[0_0_12px_rgba(52,211,153,0.5)]'
                         : showWrong
-                        ? 'bg-rose-500 border-white text-white'
+                        ? 'border-rose-400 bg-rose-500/20 shadow-[0_0_12px_rgba(251,113,133,0.5)]'
                         : isSelected
-                        ? 'bg-[#F14E13] border-white text-white'
-                        : 'bg-[#0F0510] border-[#F14E13] text-[#F14E13] group-hover:bg-[#F14E13] group-hover:text-white'
+                        ? 'border-[#F14E13] bg-[#F14E13]/25 shadow-[0_0_12px_rgba(241,78,19,0.6)]'
+                        : 'border-[#F14E13]/40 bg-[#F14E13]/10 group-hover:border-[#F14E13] group-hover:scale-110 group-hover:bg-[#F14E13]/20 group-hover:shadow-[0_0_10px_rgba(241,78,19,0.4)]'
+                    }
+                  `}
+                />
+
+                {/* Çekirdek Hedef İkonu (Hotspot Core) */}
+                <div
+                  className={`
+                    w-7 h-7 rounded-full flex items-center justify-center border-2 transition-all duration-200 shadow-md
+                    ${
+                      showSuccess
+                        ? 'bg-emerald-500 border-white text-white shadow-[0_0_15px_rgba(16,185,129,0.8)] scale-110'
+                        : showWrong
+                        ? 'bg-rose-500 border-white text-white shadow-[0_0_15px_rgba(244,63,94,0.8)] scale-110'
+                        : isSelected
+                        ? 'bg-[#F14E13] border-white text-white shadow-[0_0_15px_rgba(241,78,19,0.8)]'
+                        : 'bg-[#0F0510]/90 border-[#F14E13] text-[#F14E13] group-hover:bg-[#F14E13] group-hover:text-white group-hover:border-white'
                     }
                   `}
                 >
@@ -403,28 +415,10 @@ export const Hotspot: React.FC<QuestionComponentProps<HotspotQuestion>> = ({
                   ) : showWrong ? (
                     <X className="w-4 h-4 stroke-[3]" />
                   ) : (
-                    <Crosshair className="w-4 h-4" />
+                    <Crosshair className="w-4 h-4 transition-transform group-hover:rotate-45 duration-300" />
                   )}
                 </div>
               </button>
-
-              {/* Bölge Etiketi (Kapsül) - Kesinlikle butonun merkezini kaydırmaz */}
-              <div
-                className={`
-                  absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-bold tracking-tight transition-all duration-200 pointer-events-none whitespace-nowrap border
-                  ${
-                    showSuccess
-                      ? 'bg-emerald-600 text-white border-emerald-400'
-                      : showWrong
-                      ? 'bg-rose-600 text-white border-rose-400'
-                      : isSelected
-                      ? 'bg-[#F14E13] text-white border-orange-400'
-                      : 'bg-[#0F0510]/90 text-[#B5CBC8] border-white/10 group-hover:text-white'
-                  }
-                `}
-              >
-                {region.label}
-              </div>
             </div>
           );
         })}

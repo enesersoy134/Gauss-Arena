@@ -109,6 +109,19 @@ function formatQuestionText(input) {
 }
 
 /**
+ * Dynamic duration determination for 1v1 duels:
+ * EASY: 15s (15000ms)
+ * MEDIUM: 20s (20000ms)
+ * HARD: 25s (25000ms)
+ */
+function getDurationByDifficulty(difficulty) {
+  const d = String(difficulty || '').toLowerCase();
+  if (d === 'easy' || d === 'kolay' || d === '1') return 15000;
+  if (d === 'hard' || d === 'zor' || d === '3') return 25000;
+  return 20000;
+}
+
+/**
  * Loads all JSON files in question-bank/{tyt,ayt}/{subject}/{easy,medium,hard}.json
  * and enriches them with interactiveQuestion objects for QuestionRenderer.
  * Also integrates the 14 interactive question types (18 rich questions).
@@ -154,6 +167,23 @@ function loadQuestionBank(baseDir) {
               const cleanOptions = (q.options || []).map((opt) => formatQuestionText(opt));
               const cleanExplanation = q.explanation ? formatQuestionText(q.explanation) : null;
 
+              // Süre belirleme sırası:
+              // 1. Sorunun kendi durationMs veya timeLimitSeconds değeri (varsa)
+              // 2. Dosya meta'sındaki defaultDurationMs (eğer 60000'den küçükse)
+              // 3. Zorluk derecesine göre dinamik süre: Kolay 15s, Orta 20s, Zor 25s
+              const diffDurationMs = getDurationByDifficulty(difficulty);
+              const metaDurationMs = (meta.defaultDurationMs && meta.defaultDurationMs < 60000)
+                ? meta.defaultDurationMs
+                : diffDurationMs;
+
+              const durationMs = q.durationMs
+                ? Number(q.durationMs)
+                : q.timeLimitSeconds
+                ? Number(q.timeLimitSeconds) * 1000
+                : metaDurationMs;
+
+              const timeLimitSeconds = Math.round(durationMs / 1000);
+
               const normalized = {
                 externalId: q.externalId,
                 examType,
@@ -164,9 +194,9 @@ function loadQuestionBank(baseDir) {
                 imageUrl: q.imageUrl || null,
                 options: cleanOptions,
                 correctOptionIndex: Number(q.correctOptionIndex),
-                // Spec: 60s (60000ms) duration per question
-                durationMs: 60000,
-                rawDurationMs: q.durationMs || meta.defaultDurationMs || 60000,
+                durationMs,
+                rawDurationMs: durationMs,
+                timeLimitSeconds,
                 explanation: cleanExplanation,
                 // Otomatik olarak QuestionRenderer uyumlu interactiveQuestion nesnesi ekle:
                 interactiveQuestion: {
@@ -175,7 +205,7 @@ function loadQuestionBank(baseDir) {
                   topic: q.subTopic || '',
                   type: 'universal_choice',
                   difficulty: difficulty.toLowerCase() === 'easy' ? 'kolay' : difficulty.toLowerCase() === 'hard' ? 'zor' : 'orta',
-                  timeLimitSeconds: Math.round((q.durationMs || 60000) / 1000),
+                  timeLimitSeconds,
                   points: 100,
                   prompt: cleanText,
                   explanation: cleanExplanation,
@@ -238,12 +268,26 @@ function loadQuestionBank(baseDir) {
 }
 
 /**
- * ELO-based question difficulty distribution:
+ * ELO / Zorluk Modu Dağılımı:
+ * easy: 4 Kolay, 1 Orta, 0 Zor
+ * medium: 1 Kolay, 3 Orta, 1 Zor
+ * hard: 0 Kolay, 1 Orta, 4 Zor
+ * adaptive (ELO tabanlı):
  * < 1200: 3 EASY, 2 MEDIUM
  * 1200 - 1600: 1 EASY, 3 MEDIUM, 1 HARD
  * > 1600: 1 MEDIUM, 4 HARD
  */
-function getDifficultyDistribution(averageElo) {
+function getDifficultyDistribution(averageElo, difficultyMode = 'adaptive') {
+  if (difficultyMode === 'easy') {
+    return { EASY: 4, MEDIUM: 1, HARD: 0 };
+  }
+  if (difficultyMode === 'medium') {
+    return { EASY: 1, MEDIUM: 3, HARD: 1 };
+  }
+  if (difficultyMode === 'hard') {
+    return { EASY: 0, MEDIUM: 1, HARD: 4 };
+  }
+
   const avg = Number(averageElo) || 1200;
   if (avg < 1200) {
     return { EASY: 3, MEDIUM: 2, HARD: 0 };
@@ -278,14 +322,21 @@ function isRichInteractive(q) {
 }
 
 /**
- * Selects `count` (5) questions matching the ELO difficulty distribution across `commonSubjects`.
+ * Selects `count` (5) questions matching the ELO/difficulty distribution across `commonSubjects`.
+ * Supports examType: 'LGS', 'TYT', 'AYT', 'KARMA'.
  * Ensures 2-3 questions come from rich interactive questions when available,
  * while strictly respecting the difficulty distribution and commonSubjects filter.
  */
-function selectMatchQuestions(bank, { examType = 'TYT', commonSubjects = ['matematik'], averageElo = 1200, count = 5 }) {
+function selectMatchQuestions(bank, {
+  examType = 'TYT',
+  commonSubjects = ['matematik'],
+  averageElo = 1200,
+  count = 5,
+  difficultyMode = 'adaptive',
+}) {
   const normExam = String(examType).toUpperCase();
   const subjects = (commonSubjects.length > 0 ? commonSubjects : ['matematik']).map((s) => String(s).toLowerCase());
-  const dist = getDifficultyDistribution(averageElo);
+  const dist = getDifficultyDistribution(averageElo, difficultyMode);
 
   const selected = [];
   const usedIds = new Set();
@@ -300,9 +351,19 @@ function selectMatchQuestions(bank, { examType = 'TYT', commonSubjects = ['matem
     if (needed <= 0) continue;
 
     let pool = [];
-    for (const subj of subjects) {
-      const list = (examMap[subj] && examMap[subj][diff]) || [];
-      pool.push(...list);
+    if (normExam === 'KARMA') {
+      for (const eKey of Object.keys(bank.byExamSubjectDifficulty || {})) {
+        const eMap = bank.byExamSubjectDifficulty[eKey] || {};
+        for (const subj of subjects) {
+          const list = (eMap[subj] && eMap[subj][diff]) || [];
+          pool.push(...list);
+        }
+      }
+    } else {
+      for (const subj of subjects) {
+        const list = (examMap[subj] && examMap[subj][diff]) || [];
+        pool.push(...list);
+      }
     }
     pool = shuffleArray(pool).filter((q) => !usedIds.has(q.externalId));
 
@@ -340,18 +401,47 @@ function selectMatchQuestions(bank, { examType = 'TYT', commonSubjects = ['matem
     }
   }
 
-  // Fallback if fewer than `count` found in requested subjects/difficulties
+  // Güvenli ve Kademeli Fallback: Filtrelerin (özellikle seçilen ders/branşın) korunması esastır
   if (selected.length < count) {
-    let fallbackPool = bank.allQuestions.filter(
-      (q) => q.examType === normExam && subjects.includes(q.subject) && !usedIds.has(q.externalId)
+    // 1. Kademe: İstenen sınav ve seçili branş havuzundaki kalan tüm sorular (farklı zorluklar dahil)
+    const sameExamSubjectPool = bank.allQuestions.filter(
+      (q) => (normExam === 'KARMA' || q.examType === normExam) && subjects.includes(q.subject) && !usedIds.has(q.externalId)
     );
-    if (fallbackPool.length < count - selected.length) {
-      fallbackPool = bank.allQuestions.filter((q) => !usedIds.has(q.externalId));
-    }
-    for (const q of shuffleArray(fallbackPool)) {
+    for (const q of shuffleArray(sameExamSubjectPool)) {
       if (selected.length >= count) break;
       selected.push(q);
       usedIds.add(q.externalId);
+    }
+  }
+
+  if (selected.length < count) {
+    // 2. Kademe: Seçilen BRANŞI ASLA BOZMADAN diğer sınavlardan aynı branşa ait sorular
+    const sameSubjectOtherExams = bank.allQuestions.filter(
+      (q) => subjects.includes(q.subject) && !usedIds.has(q.externalId)
+    );
+    for (const q of shuffleArray(sameSubjectOtherExams)) {
+      if (selected.length >= count) break;
+      selected.push(q);
+      usedIds.add(q.externalId);
+    }
+  }
+
+  if (selected.length < count) {
+    // 3. Kademe: Seçilen branşta hiç kullanılmamış soru kalmadıysa, başka branşa geçmek yerine aynı branş sorularını döngüyle tekrar ekle
+    const cycleSubjectPool = bank.allQuestions.filter((q) => subjects.includes(q.subject));
+    if (cycleSubjectPool.length > 0) {
+      for (const q of shuffleArray(cycleSubjectPool)) {
+        if (selected.length >= count) break;
+        selected.push(q);
+      }
+    } else {
+      // Sadece ve sadece soru bankasında bu branş hiç tanımlı değilse genel havuzdan al (güvenlik koruması)
+      const generalFallback = bank.allQuestions.filter((q) => !usedIds.has(q.externalId));
+      for (const q of shuffleArray(generalFallback)) {
+        if (selected.length >= count) break;
+        selected.push(q);
+        usedIds.add(q.externalId);
+      }
     }
   }
 
@@ -361,6 +451,7 @@ function selectMatchQuestions(bank, { examType = 'TYT', commonSubjects = ['matem
 module.exports = {
   loadQuestionBank,
   getDifficultyDistribution,
+  getDurationByDifficulty,
   selectMatchQuestions,
   isRichInteractive,
   formatQuestionText,

@@ -122,7 +122,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     const win2Url = `/?window=2&player=p3`;
     window.open(win1Url, 'studentWin1', 'width=520,height=920,left=60,top=30');
     window.open(win2Url, 'studentWin2', 'width=520,height=920,left=600,top=30');
-    showToast('Yan yana iki öğrenci penceresi açıldı (p2: Zeynep vs p3: Mert)!');
+    showToast('Yan yana iki öğrenci penceresi açıldı (p2: Zeynep vs p3: Mehmet)!');
   };
 
   const handleDistributeRewards = async (tournamentId: string) => {
@@ -136,6 +136,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
   const handleResetDemoState = async () => {
     await resetDemo();
+    if (typeof window !== 'undefined') {
+      try {
+        ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'].forEach((id) => {
+          localStorage.removeItem(`isler_daily_status_${id}`);
+        });
+      } catch {}
+    }
     showToast('🔄 Tüm demo durumu, kuyruklar ve maçlar sıfırlandı.');
   };
 
@@ -183,20 +190,27 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
               </div>
             </div>
 
-            <span
-              className={`flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full border shrink-0 ${
-                isConnected
-                  ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300'
-                  : 'bg-red-500/15 border-red-500/40 text-red-300'
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${isConnected ? 'bg-emerald-400 animate-ping' : 'bg-red-400'}`} />
-              <span>{isConnected ? 'Canlı Socket' : 'Bağlantı Kesildi'}</span>
-            </span>
+            {!isConnected && (
+              <span className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full border shrink-0 bg-red-500/15 border-red-500/40 text-red-300">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-400" />
+                <span>Bağlantı Kesildi</span>
+              </span>
+            )}
           </div>
 
           {/* Sağ: Hızlı Demo Aksiyonları (Yatay kaydırılabilir kompakt tek satır) */}
           <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0 flex-nowrap shrink-0">
+            {/* Rastgele Öğrenci Aç (/random) */}
+            <button
+              onClick={() => window.open('/random', '_blank')}
+              className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-orange-500/40 bg-orange-500/15 text-orange-300 hover:bg-orange-500/25 flex items-center gap-1.5 transition-all shadow-sm shadow-orange-500/10 shrink-0 whitespace-nowrap"
+              title="Yeni rastgele isim, ELO ve avatarla öğrenci hesabı açar (/random)"
+            >
+              <span className="text-sm">🎲</span>
+              <span className="sm:hidden">Rastgele</span>
+              <span className="hidden sm:inline">Rastgele Öğrenci Aç (/random)</span>
+            </button>
+
             {/* Akıllı Tahta Modu (/tahta) */}
             <button
               onClick={() => (onNavigateToSmartboard ? onNavigateToSmartboard() : onNavigateToStudent())}
@@ -223,7 +237,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             <button
               onClick={handleOpenSideBySideWindows}
               className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-blue-500/40 bg-blue-500/15 text-blue-300 hover:bg-blue-500/25 flex items-center gap-1.5 transition-all shadow-sm shadow-blue-500/10 shrink-0 whitespace-nowrap"
-              title="Öğrenci 1 (p2: Zeynep) ve Öğrenci 2 (p3: Mert) pencerelerini yan yana açar"
+              title="Öğrenci 1 (p2: Zeynep) ve Öğrenci 2 (p3: Mehmet) pencerelerini yan yana açar"
             >
               <ExternalLink className="w-3.5 h-3.5 text-blue-400 shrink-0" />
               <span className="sm:hidden">Yan Yana</span>
@@ -398,7 +412,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-1">
                             <h3 className="font-poppins font-bold text-sm text-white truncate" title={p.name}>
-                              {p.name}
+                              {p.name.split('(')[0].trim()}
                             </h3>
                             {isCurrentActive && (
                               <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#F14E13] text-white shrink-0">
@@ -406,11 +420,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               </span>
                             )}
                           </div>
-                          <p className="text-[11px] text-[#B5CBC8] font-mono mt-0.5 truncate">
-                            {p.roleTag || 'Standart Öğrenci'}
-                          </p>
 
-                          <div className="flex items-center gap-2 mt-2">
+                          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                             <span
                               className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full"
                               style={{
@@ -420,6 +431,32 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               }}
                             >
                               {p.bracket.tierName}
+                            </span>
+                            <span
+                              className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded-full ${
+                                p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul'
+                                  ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40'
+                                  : 'bg-purple-500/20 text-purple-300 border border-purple-500/40'
+                              }`}
+                            >
+                              {p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul'
+                                ? '🏫 Ortaokul (LGS)'
+                                : '🎓 Lise (YKS)'}
+                            </span>
+                            <span
+                              className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded-full ${
+                                p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul' || p.dailyQuestExempt
+                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                  : p.dailyCompleted || p.dailyQuestDone || p.id === 'p1' || p.id === 'p2'
+                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                  : 'bg-zinc-800/80 text-zinc-400 border border-white/10'
+                              }`}
+                            >
+                              {p.id === 'p3' || p.id === 'p4' || p.educationLevel === 'ortaokul' || p.dailyQuestExempt
+                                ? '✨ Görev: Muaf (Açık)'
+                                : p.dailyCompleted || p.dailyQuestDone || p.id === 'p1' || p.id === 'p2'
+                                ? '🎯 Görev: Yapıldı'
+                                : '🔒 Görev: Kilitli'}
                             </span>
                           </div>
                         </div>
@@ -437,8 +474,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         </div>
                         <div>
                           <div className="text-[10px] text-zinc-500 uppercase">Seri</div>
-                          <div className="font-bold text-amber-400 mt-0.5 flex items-center justify-center gap-0.5">
-                            <Flame className="w-3 h-3 fill-amber-400" />
+                          <div className={`font-bold mt-0.5 flex items-center justify-center gap-0.5 ${p.streak < 0 ? 'text-sky-400' : 'text-amber-400'}`}>
+                            {p.streak < 0 ? (
+                              <span>❄️</span>
+                            ) : (
+                              <Flame className="w-3 h-3 fill-amber-400" />
+                            )}
                             <span>{p.streak > 0 ? `+${p.streak}` : p.streak}</span>
                           </div>
                         </div>
@@ -813,7 +854,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       }`}
                     >
                       <Trophy className="w-3.5 h-3.5" />
-                      <span>{t.rewardsDistributed ? '✓ Ödüller Dağıtıldı' : '🏆 Turnuva Ödüllerini Dağıt'}</span>
+                      <span>{t.rewardsDistributed ? 'Ödüller Dağıtıldı' : 'Turnuva Ödüllerini Dağıt'}</span>
                     </button>
                   </div>
                 </div>

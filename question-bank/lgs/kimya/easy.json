@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "kimya",
+    "difficulty": "EASY",
+    "defaultDurationMs": 15000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-KIM-E-001",
+      "subTopic": "Fiziksel ve Kimyasal Değişimler",
+      "text": "Aşağıdaki olaylardan hangisi kimyasal bir değişime örnektir?",
+      "explanation": "Demirin paslanması oksijenle tepkimeye girdiği için kimyasal değişimdir; diğerleri fizikseldir.",
+      "imageUrl": null,
+      "options": [
+        "Buzun erimesi",
+        "Demirin paslanması",
+        "Camın kırılması",
+        "Tuzun suda çözünmesi"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-E-002",
+      "subTopic": "Periyodik Sistem Grupları",
+      "text": "Periyodik tablonun 1A grubunda bulunan elementlere genel olarak ne ad verilir?",
+      "explanation": "1A grubu elementleri alkali metaller, 2A toprak alkali, 7A halojen, 8A soygazlardır.",
+      "imageUrl": null,
+      "options": [
+        "Halojenler",
+        "Alkali metaller",
+        "Soygazlar",
+        "Toprak alkali metaller"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-E-003",
+      "subTopic": "Asit ve Bazların pH Değerleri",
+      "text": "Oda sıcaklığında (25 °C) nötr bir çözeltinin pH değeri kaçtır?",
+      "explanation": "25 °C sıcaklıkta saf su ve nötr çözeltilerin pH değeri 7'dir.",
+      "imageUrl": null,
+      "options": [
+        "0",
+        "7",
+        "10",
+        "14"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-E-004",
+      "subTopic": "Kimyasal Tepkime Temelleri",
+      "text": "Kimyasal bir tepkimede aşağıdakilerden hangisi KESİNLİKLE korunur?",
+      "explanation": "Kütlenin Korunumu Kanunu'na göre kimyasal tepkimelerde toplam kütle ve atom sayısı daima korunur.",
+      "imageUrl": null,
+      "options": [
+        "Molekül sayısı",
+        "Toplam kütle",
+        "Hacim",
+        "Fiziksel hâl"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-E-005",
+      "subTopic": "Asitlerin Ayıraçları",
+      "text": "Turnusol kâğıdı asidik bir çözeltiye batırıldığında hangi renge döner?",
+      "explanation": "Asitler mavi turnusolu kırmızıya çevirir, bazlar ise kırmızı turnusolu maviye çevirir.",
+      "imageUrl": null,
+      "options": [
+        "Mavi",
+        "Kırmızı",
+        "Sarı",
+        "Yeşil"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-E-006",
+      "subTopic": "Periyodik Sistem Periyot Sayısı",
+      "text": "Günümüz periyodik tablosunda kaç tane yatay sıra (periyot) bulunmaktadır?",
+      "explanation": "Periyodik tabloda 7 periyot ve 18 grup (8 tanesi A grubu) bulunur.",
+      "imageUrl": null,
+      "options": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-E-007",
+      "subTopic": "Elementlerin Sınıflandırılması",
+      "text": "Isı ve elektriği iyi ileten, parlak ve tel/levha hâline gelebilen element sınıfı hangisidir?",
+      "explanation": "Metaller tel ve levha haline gelebilir, ısı ve elektriği çok iyi iletir.",
+      "imageUrl": null,
+      "options": [
+        "Metaller",
+        "Ametaller",
+        "Soygazlar",
+        "Yarı metaller"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-KIM-E-008",
+      "subTopic": "Maddenin Halleri ve Isı",
+      "text": "Katı bir maddenin ısı alarak doğrudan gaz hâline geçmesine ne ad verilir?",
+      "explanation": "Katıdan doğrudan gaza geçiş süblimleşmedir (örn: naftalin ve kuru buz).",
+      "imageUrl": null,
+      "options": [
+        "Buharlaşma",
+        "Süblimleşme",
+        "Kırağılaşma",
+        "Yoğuşma"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-KIM-E-009",
+      "subTopic": "Asit Yağmurları Sebebi",
+      "text": "Aşağıdaki gazlardan hangisi havadaki su buharıyla birleşerek asit yağmurlarına yol açar?",
+      "explanation": "Kükürt dioksit (SO₂) ve azot dioksit (NO₂) gazları sülfürik ve nitrik asit yağmurlarını oluşturur.",
+      "imageUrl": null,
+      "options": [
+        "O₂",
+        "N₂",
+        "SO₂ (Kükürt dioksit)",
+        "He (Helyum)"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-KIM-E-010",
+      "subTopic": "Tepkimeye Girenler ve Ürünler",
+      "text": "Kimyasal bir tepkime denkleminde ok işaretinin (→) sol tarafında yer alan maddelere ne ad verilir?",
+      "explanation": "Kimyasal tepkimelerde okun sol tarafındakiler girenler, sağ tarafındakiler ürünlerdir.",
+      "imageUrl": null,
+      "options": [
+        "Ürünler",
+        "Girenler (Tepkimeye girenler)",
+        "Katalizörler",
+        "Çözeltiler"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}

@@ -14,6 +14,14 @@ export interface KahootPlayer {
   lastRoundTimeMs: number;
 }
 
+export interface TopicAnalyticsItem {
+  topic: string;
+  subject: string;
+  totalAttempts: number;
+  wrongAttempts: number;
+  wrongPercent: number; // Math.round((wrongAttempts / Math.max(1, totalAttempts)) * 100)
+}
+
 export interface KahootRoomState {
   pin: string;
   status: 'LOBBY' | 'QUESTION' | 'INTERMISSION' | 'FINISHED';
@@ -27,4 +35,5 @@ export interface KahootRoomState {
   answeredCount: number;
   totalPlayers: number;
   leaderboard: KahootPlayer[];
+  topicAnalytics?: TopicAnalyticsItem[];
 }

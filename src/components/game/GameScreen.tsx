@@ -10,6 +10,9 @@ import { MatchHeader } from './MatchHeader';
 import { QuestionStage } from './QuestionStage';
 import { IntermissionScreen } from './IntermissionScreen';
 import { MatchEndScreen } from './MatchEndScreen';
+import { Volume2, VolumeX } from 'lucide-react';
+import { soundEngine } from '../../utils/soundEngine';
+import { CriticalVignette } from '../effects/CriticalVignette';
 
 export type GameState = 'playing' | 'intermission' | 'matchEnd';
 
@@ -90,6 +93,27 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     Array<{ question: Question; result: RoundResult }>
   >([]);
   const [lastRoundResult, setLastRoundResult] = useState<RoundResult | null>(null);
+
+  // Ses Durumu ve Senkronizasyonu
+  const [isSoundMuted, setIsSoundMuted] = useState<boolean>(soundEngine.getMuted());
+  useEffect(() => {
+    return soundEngine.subscribe(() => {
+      setIsSoundMuted(soundEngine.getMuted());
+    });
+  }, []);
+
+  // Oyun Müzik Yönetimi
+  useEffect(() => {
+    if (gameState === 'playing' || gameState === 'intermission') {
+      soundEngine.startMusic('battle');
+    } else if (gameState === 'matchEnd') {
+      soundEngine.stopMusic();
+      soundEngine.playVictory();
+    }
+    return () => {
+      soundEngine.startMusic('lobby');
+    };
+  }, [gameState]);
 
   // 4. Aktif Soru Durumu
   const currentQuestion = questions[currentQuestionIndex];
@@ -213,14 +237,44 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     };
 
     setLastRoundResult(roundRes);
-    setRoundResultsHistory(prev => [...prev, { question: currentQuestion, result: roundRes }]);
+    const updatedHistory = [...roundResultsHistory, { question: currentQuestion, result: roundRes }];
+    setRoundResultsHistory(updatedHistory);
 
-    // 800ms sonra intermission ekranına geçiş yap
-    transitionTimeoutRef.current = setTimeout(() => {
-      setGameState('intermission');
-    }, 800);
+    const isLastQuestion = currentQuestionIndex + 1 >= questions.length;
+    if (isLastQuestion) {
+      // Son soru tamamlandığında ara bekleme (intermission) olmadan doğrudan Maç Sonu ekranına geç!
+      if (playerId) {
+        const mappedHistory = updatedHistory.map(({ question, result }, idx) => ({
+          questionIndex: idx,
+          externalId: question.id,
+          subject: question.subject,
+          subTopic: question.topic,
+          difficulty: question.difficulty.toUpperCase(),
+          text: question.prompt,
+          explanation: question.explanation || null,
+          interactiveQuestion: question,
+          answerA: { isCorrect: result.player1Correct, score: result.player1Points },
+          answerB: { isCorrect: result.player2Correct, score: result.player2Points },
+        }));
+        fetch('/api/revision/record-local', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ playerId, roundHistory: mappedHistory, examType: 'TYT' }),
+        }).catch(() => {});
+      }
+      setGameState('matchEnd');
+    } else {
+      // 800ms sonra intermission ekranına geçiş yap
+      transitionTimeoutRef.current = setTimeout(() => {
+        setGameState('intermission');
+      }, 800);
+    }
   }, [
     currentQuestion,
+    currentQuestionIndex,
+    questions.length,
+    playerId,
+    roundResultsHistory,
     players.currentPlayer.id,
     players.opponentPlayer.id,
     p1Streak,
@@ -272,13 +326,24 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   useEffect(() => {
     if (gameState !== 'playing' || !currentQuestion) return;
 
+    let lastSec = Math.ceil(currentQuestion.timeLimitSeconds);
     const timer = setInterval(() => {
       const elapsed = (Date.now() - questionStartTimeRef.current) / 1000;
       const remaining = Math.max(0, currentQuestion.timeLimitSeconds - elapsed);
       setTimeLeft(remaining);
 
+      const sec = Math.ceil(remaining);
+      soundEngine.setRemainingTime(sec, currentQuestion.timeLimitSeconds);
+      if (sec !== lastSec) {
+        lastSec = sec;
+        if (sec <= 5 && sec > 0) {
+          soundEngine.playTick(true);
+        }
+      }
+
       if (remaining <= 0) {
         clearInterval(timer);
+        soundEngine.resetTension();
         // Süre bitti: P1 cevap vermediyse otomatik yanlış say
         if (!p1AnswerResultRef.current) {
           p1AnswerResultRef.current = {
@@ -291,7 +356,10 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       }
     }, 100);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      soundEngine.resetTension();
+    };
   }, [gameState, currentQuestion, finishCurrentRound]);
 
   // --------------------------------------------------------------------------
@@ -300,13 +368,34 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   const handleP1Submit = (result: AnswerResult) => {
     if (p1Answered || isTransitioningRef.current || gameState !== 'playing') return;
 
+    soundEngine.resetTension();
+    soundEngine.playLock();
+    if (result.isCorrect) {
+      soundEngine.playCorrect();
+      if (p1Streak >= 1) {
+        soundEngine.playCombo(p1Streak + 1);
+      }
+    } else if ((result.accuracy || 0) > 0 && !result.isCorrect) {
+      soundEngine.playPartial();
+    } else if (!result.isCorrect) {
+      soundEngine.playWrong();
+    }
+
     const elapsedMs = Math.max(500, Date.now() - questionStartTimeRef.current);
     p1AnswerResultRef.current = { result, timeMs: elapsedMs };
     setP1Answered(true);
 
-    // Eğer rakip zaten cevap vermişse veya rakip bekleniyorsa:
-    // Kullanıcı deneyimi için oyuncu cevap verdikten hemen sonra (veya rakip de verdiyse) raundu bitir
-    if (opponentAnswered) {
+    const isLastQ = currentQuestionIndex + 1 >= questions.length;
+
+    // Kullanıcı son soruyu tamamladığı anda rakibi beklemeden anında hesapla ve bitir
+    if (isLastQ) {
+      if (opponentTimeoutRef.current) clearTimeout(opponentTimeoutRef.current);
+      if (!p2AnswerResultRef.current) {
+        p2AnswerResultRef.current = simulateOpponentAnswer(currentQuestion);
+      }
+      setOpponentAnswered(true);
+      finishCurrentRound();
+    } else if (opponentAnswered) {
       finishCurrentRound();
     } else {
       // Oyuncu cevapladı ama rakip henüz vermediyse en fazla 1 saniye bekle veya rakibi tamamla
@@ -353,6 +442,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   // Oyunu / Maçı Yeniden Başlatma
   // --------------------------------------------------------------------------
   const handleRestart = () => {
+    soundEngine.playClick();
     if (forcedQuestions && forcedQuestions.length > 0) {
       setQuestions(forcedQuestions);
     } else {
@@ -366,6 +456,12 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     setRoundResultsHistory([]);
     setLastRoundResult(null);
     setGameState('playing');
+  };
+
+  const handleExitClick = () => {
+    soundEngine.playClick();
+    soundEngine.startMusic('lobby');
+    if (onExit) onExit();
   };
 
   // --------------------------------------------------------------------------
@@ -387,7 +483,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
           roundResults={roundResultsHistory}
           eloWinDelta={matchSettings.eloWinDelta}
           eloLossDelta={matchSettings.eloLossDelta}
-          onRestart={onExit ? onExit : handleRestart}
+          onRestart={onExit ? handleExitClick : handleRestart}
         />
       </div>
     );
@@ -399,6 +495,30 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       <div className="min-h-screen bg-[#150A16] text-white flex flex-col justify-between relative overflow-hidden font-sans">
         <div className="hero-button-blur -top-24 -left-24 opacity-25 pointer-events-none" />
         <div className="hero-button-blur -bottom-24 -right-24 opacity-20 pointer-events-none" />
+
+        {/* Ses Aç / Kapat Düğmesi */}
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-40">
+          <button
+            onClick={() => {
+              soundEngine.toggleMute();
+              soundEngine.playClick();
+            }}
+            className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 hover:border-white/20 text-white/80 hover:text-white transition-all flex items-center gap-1.5 backdrop-blur-md shadow-lg text-xs font-mono"
+            title={isSoundMuted ? 'Sesi Aç' : 'Sesi Kapat'}
+          >
+            {isSoundMuted ? (
+              <>
+                <VolumeX className="w-3.5 h-3.5 text-red-400" />
+                <span className="hidden sm:inline text-[11px] text-red-300">Sessiz</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="hidden sm:inline text-[11px] text-emerald-300">Ses Açık</span>
+              </>
+            )}
+          </button>
+        </div>
 
         <MatchHeader
           player1={players.currentPlayer}
@@ -434,6 +554,33 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       {/* Arka plan glow efektleri */}
       <div className="hero-button-blur -top-24 -left-24 opacity-30 pointer-events-none" />
       <div className="hero-button-blur -bottom-24 -right-24 opacity-20 pointer-events-none" />
+
+      {/* Son 5 Saniye Kritik Vignette Kırmızı Nabız Işığı */}
+      <CriticalVignette active={timeLeft <= 5 && timeLeft > 0 && !p1Answered} timeLeft={timeLeft} />
+
+      {/* Ses Aç / Kapat Düğmesi */}
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-40">
+        <button
+          onClick={() => {
+            soundEngine.toggleMute();
+            soundEngine.playClick();
+          }}
+          className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 hover:border-white/20 text-white/80 hover:text-white transition-all flex items-center gap-1.5 backdrop-blur-md shadow-lg text-xs font-mono"
+          title={isSoundMuted ? 'Sesi Aç' : 'Sesi Kapat'}
+        >
+          {isSoundMuted ? (
+            <>
+              <VolumeX className="w-3.5 h-3.5 text-red-400" />
+              <span className="hidden sm:inline text-[11px] text-red-300">Sessiz</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="hidden sm:inline text-[11px] text-emerald-300">Ses Açık</span>
+            </>
+          )}
+        </button>
+      </div>
 
       {/* Üst Bar: Skorlar, Geri Sayım, Dinamometre */}
       <MatchHeader

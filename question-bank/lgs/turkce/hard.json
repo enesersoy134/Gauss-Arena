@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "examType": "LGS",
+    "subject": "turkce",
+    "difficulty": "HARD",
+    "defaultDurationMs": 25000
+  },
+  "questions": [
+    {
+      "externalId": "LGS-TUR-H-001",
+      "subTopic": "Fiilde Çatı (Etken - Edilgen - Dönüşlü)",
+      "text": "\"Okul bahçesindeki çöpler görevlilerce temizlendi.\" cümlesindeki fiilin çatı özelliği nedir?",
+      "explanation": "İşi yapan belli değildir (-n edilgenlik eki almıştır) ve \"onu temizlendi\" denilemediğinden geçişsizdir.",
+      "imageUrl": null,
+      "options": [
+        "Etken - Geçişli",
+        "Edilgen - Geçişsiz",
+        "Dönüşlü - Geçişli",
+        "İşteş - Geçişsiz"
+      ],
+      "correctOptionIndex": 1
+    },
+    {
+      "externalId": "LGS-TUR-H-002",
+      "subTopic": "Cümle Türleri (Biçimce ve Anlamca)",
+      "text": "\"Bu güzel havada evde oturulur mu hiç?\" cümlesinin yapısı ve anlamı aşağıdakilerden hangisidir?",
+      "explanation": "Cümlede olumsuzluk eki yoktur (biçimce olumlu), ancak kastedilen \"oturulmaz\"dır (anlamca olumsuz).",
+      "imageUrl": null,
+      "options": [
+        "Biçimce olumlu, anlamca olumsuz soru cümlesi",
+        "Biçimce ve anlamca olumlu",
+        "Biçimce olumsuz, anlamca olumlu",
+        "Biçimce ve anlamca olumsuz"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-003",
+      "subTopic": "Anlatım Bozuklukları (Özne-Yüklem Uyumsuzluğu)",
+      "text": "\"Herkes içeri girdi, tek kelime etmedi.\" cümlesindeki anlatım bozukluğunun nedeni nedir?",
+      "explanation": "\"Herkes\" olumlu öznedir; ikinci cümlenin yüklemi olumsuz olduğundan \"hiç kimse\" öznesi gerekir.",
+      "imageUrl": null,
+      "options": [
+        "Özne eksikliği (Hiç kimse tek kelime etmedi)",
+        "Nesne eksikliği",
+        "Tümleç uyuşmazlığı",
+        "Yüklem eksikliği"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-004",
+      "subTopic": "Mantık ve Muhakeme (Sözel Mantık)",
+      "text": "A, B, C ve D isimli dört arkadaş bir yarışta ilk dört dereceyi paylaşmıştır. A sonuncu değildir, B birinci veya ikinci olmuştur, C ise B'den hemen sonra gelmiştir. D kaçıncı olmuştur?",
+      "explanation": "B 1. ise C 2., A 3., D 4. olur (A sonuncu olamayacağı için D 4. sıradadır).",
+      "imageUrl": null,
+      "options": [
+        "1.",
+        "2.",
+        "3.",
+        "4."
+      ],
+      "correctOptionIndex": 3
+    },
+    {
+      "externalId": "LGS-TUR-H-005",
+      "subTopic": "Düşünceyi Geliştirme Yolları",
+      "text": "Yazarın savunduğu düşünceyi desteklemek için alanında tanınmış güvenilir bir kişinin sözünü aynen aktarmasına ne ad verilir?",
+      "explanation": "Kişinin adı ve tırnak içinde sözünün aktarılması tanık göstermedir.",
+      "imageUrl": null,
+      "options": [
+        "Tanık gösterme",
+        "Örneklendirme",
+        "Karşılaştırma",
+        "Benzetme"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-006",
+      "subTopic": "Kalıplaşmış Fiilimsiler (Kalıcı İsim)",
+      "text": "Aşağıdaki altı çizili sözcüklerden hangisi fiilimsi ekini alarak kalıcı bir ada (isme) dönüşmüştür?",
+      "explanation": "\"Sarma\" sözcüğü artık bir yiyeceğin kalıcı adı olmuştur, fiilimsi özelliğini yitirmiştir.",
+      "imageUrl": null,
+      "options": [
+        "Annemin yaptığı sarma çok lezzetliydi.",
+        "Etrafa su saçma sakın.",
+        "Koşarak gelen çocuğu gördüm.",
+        "Gülümseyen gözlerle baktı."
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-007",
+      "subTopic": "Noktalama İşaretleri (Tırnak ve Yay Ayraç)",
+      "text": "Cümle içinde başka bir kimseden veya yazıdan olduğu gibi aktarılan sözlerin başına ve sonuna hangi işaret konur?",
+      "explanation": "Doğrudan aktarma cümleleri tırnak işareti içine alınır.",
+      "imageUrl": null,
+      "options": [
+        "Tırnak işareti (\" \")",
+        "Yay ayraç (( ))",
+        "Köşeli ayraç ([ ])",
+        "Kesme işareti (')"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-008",
+      "subTopic": "Yazım Kuralları (Birleşik Sözcükler)",
+      "text": "Aşağıdaki cümlelerin hangisinde birleşik sözcüklerin yazımı ile ilgili bir YANLIŞLIK yapılmıştır?",
+      "explanation": "Ses düşmesi veya türemesi olmayan birleşik fiiller ayrı yazılır: \"fark etti\" olmalıdır.",
+      "imageUrl": null,
+      "options": [
+        "Bu olayı farkettiğimde çok geçti.",
+        "Soruları çözmeyi terk etti.",
+        "Tüm teklifleri reddetti.",
+        "Ona yardım etti."
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "externalId": "LGS-TUR-H-009",
+      "subTopic": "Paragrafta Anlatım Biçimleri",
+      "text": "Okuyucunun bir konudaki fikrini değiştirmek, kendi görüşünü kabul ettirmek amacıyla yazılan anlatım biçimi hangisidir?",
+      "explanation": "Fikir aşılama ve kanıları değiştirme gayesi taşıyan anlatım tartışmacı anlatımdır.",
+      "imageUrl": null,
+      "options": [
+        "Açıklama",
+        "Öyküleme",
+        "Tartışma",
+        "Betimleme"
+      ],
+      "correctOptionIndex": 2
+    },
+    {
+      "externalId": "LGS-TUR-H-010",
+      "subTopic": "Ses Olayları (Ünlü Düşmesi ve Ünsüz Yumuşaması)",
+      "text": "\"Ağzındaki baklayı nihayet çıkardı.\" cümlesindeki altı çizili sözcükte (ağzındaki) hangi ses olayı vardır?",
+      "explanation": "\"Ağız\" sözcüğüne ünlüyle başlayan ek gelince ikinci hecedeki dar ünlü düşmüştür (ağzı).",
+      "imageUrl": null,
+      "options": [
+        "Ünsüz benzeşmesi",
+        "Ünlü düşmesi (ağız -> ağzı)",
+        "Ünlü daralması",
+        "Ünsüz türemesi"
+      ],
+      "correctOptionIndex": 1
+    }
+  ]
+}
