@@ -93,10 +93,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
       soundEngine.playWrong();
     }
 
-    // Cevaplandığında çözüm kartına doğru yumuşak kaydır
-    setTimeout(() => {
-      feedbackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
+    // Cevaplandığında ekranı gereksiz aşağı çekme; alt bar fixed bottom-0 olarak ekranda sabit kalacaktır.
   };
 
   // Şimdi Tekrar Dene
@@ -321,7 +318,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
   const topRec = recommendations.length > 0 ? recommendations[0] : null;
 
   return (
-    <div className="min-h-screen bg-[#110712] text-white flex flex-col justify-between font-sans relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#110712] text-white flex flex-col justify-between font-sans relative overflow-x-clip">
       {/* Glow & Ambiyans */}
       <div className="hero-button-blur -top-24 -left-24 opacity-25 pointer-events-none" />
       <div className="hero-button-blur -bottom-24 -right-24 opacity-20 pointer-events-none" />
@@ -396,7 +393,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
       {/* =====================================================================
        * ORTA ALAN: SORU VE ETKİLEŞİM
        * ===================================================================== */}
-      <main className="max-w-4xl mx-auto w-full flex-1 px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-4">
+      <main className="max-w-4xl mx-auto w-full flex-1 px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 pb-28 sm:pb-32">
         {/* Soru Başlık Kartı: Konu & Rozetler */}
         <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#1A0E1C] via-[#210D24] to-[#120713] border border-white/10 shadow-xl flex flex-col gap-2">
           <div className="flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
@@ -519,11 +516,11 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
       </main>
 
       {/* =====================================================================
-       * STICKY BOTTOM AKSİYON BARI (EKRANI AŞAĞI KAYDIRMADAN TEK TIKLA GEÇİŞ)
-       * Kullanıcı soruya yanıt verdiği anda ekranın altında sabitlenir.
+       * FIXED BOTTOM AKSİYON BARI (EKRANIN EN ALTINA SABİTLENMİŞ AKSİYON)
+       * Kullanıcı soruya yanıt verdiği anda ekranın en altında sabit kalır.
        * ===================================================================== */}
       {hasAnswered && lastResult && (
-        <aside aria-label="Soru Aksiyonu" className="sticky bottom-0 z-50 w-full bg-[#160A18]/95 backdrop-blur-md border-t-2 border-orange-500/50 px-4 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] animate-slide-up">
+        <aside aria-label="Soru Aksiyonu" className="fixed bottom-0 left-0 right-0 z-50 w-full bg-[#160A18]/95 backdrop-blur-md border-t-2 border-orange-500/50 px-4 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] animate-slide-up">
           <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 min-w-0">
               <div
@@ -580,7 +577,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
         </aside>
       )}
 
-      <footer className="max-w-4xl mx-auto w-full text-center text-[11px] text-zinc-500 py-3">
+      <footer className="max-w-4xl mx-auto w-full text-center text-[11px] text-zinc-500 py-3 pb-24 sm:pb-28">
         İşler Teknoloji • Bireysel Eksik Konu Telafi Modülü
       </footer>
     </div>
