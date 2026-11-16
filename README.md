@@ -1,4 +1,4 @@
-# 🔥 İşler Teknoloji Arena (Halatı Bilim)
+# 🔥 Gauss Arena
 ### *İşler Hackathon '26 • EdTech Game Jam Projesi*
 
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -12,23 +12,23 @@
 
 ## 👥 Geliştirici Ekip
 
-| Geliştirici | Rol & Sorumluluk Alanı | İletişim / Katkı |
+| Geliştirici | Rol & Sorumluluk Alanı | İletişim  |
 | :--- | :--- | :--- |
-| 👨‍💻 **Enes Ersoy** | **Full-Stack & WebSocket Mimarı**<br>Otoriter Oyun Sunucusu, Momentum MMR Algoritması, Akıllı Tahta & Kahoot Socket Yaşam Döngüsü | [GitHub](https://github.com/enesersoy134) |
-| 🎨 **Kerim Onur Tunç** | **UI/UX & Frontend Mimarı**<br>10+ Zengin İnteraktif Soru Mekaniği, Prosedürel Web Audio Synthesizer, Bireysel Telafi & Slayt Sistemi | [GitHub](https://github.com/kerimonurtunc) |
+| 👨‍💻 **Enes Ersoy** | **Full-Stack & WebSocket Mimarı** | [GitHub](https://github.com/enesersoy134) |
+| 🎨 **Kerim Onur Tunç** | **UI/UX & Frontend Mimarı** | [GitHub](https://github.com/kerimonurtunc) |
 
 ---
 
 ## 🎯 Vizyon ve Proje Özeti
 
-Türkiye'de her yıl **3.5 milyondan fazla öğrenci** LGS, TYT ve AYT sınavlarına hazırlanmaktadır. Ancak klasik test çözümü öğrencide **pasif eleme alışkanlığı**, **erken bıkkınlık** ve **yüzeysel öğrenme** yaratmaktadır.
+Türkiye'de her yıl **milyonlarca öğrenci** LGS, TYT ve AYT sınavlarına hazırlanmaktadır. Ancak klasik test çözümü **konuyu kavrayamamaya**, **bıkkınlığa** ve **ezberlese bile bilgileri uygulamakta zorlanmaya** yol açmaktadır.
 
-**İşler Teknoloji Arena **; klasik çoktan seçmeli A-B-C-D-E testlerini:
-1. **Canlı 1v1 Düelloları**,
+**Gauss Arena **; klasik çoktan seçmeli A-B-C-D-E testlerini:
+1. **Canlı 1v1 düellolar**,
 2. **Kavramı deneyerek öğreten Başlangıç Mini Oyunlarına**,
 3. ** Akıllı Tahta ikili Takım Kapışmalarına (`/tahta`)**,
 4. **Tüm sınıfın telefonlarıyla katıldığı QR Canlı Sınıf Yarışmalarına (`/katil`)**,
-5. **Kazanım bazlı Yüzdesel Eksik Analizi (`Revision`) ve İşler Yayın Grubu Kaynak Önerilerine**
+5. **Kazanım bazlı Yüzdesel Eksik Analizi (`Revision`) ve Kaynak Önerilerine**
 
 dönüştüren bütünsel ve yeni nesil bir **EdTech Oyunlaştırma Ekosistemidir**.
 
@@ -40,12 +40,12 @@ dönüştüren bütünsel ve yeni nesil bir **EdTech Oyunlaştırma Ekosistemidi
 - **Momentum Formülü:** $MMR_{eff} = ELO + \text{sign}(S) \cdot \min(|S|-2, 6) \cdot 35$ *(S = Seri Galibiyet/Mağlubiyet)*.
 - **Smurf Kalkanı:** Arka arkaya maç kazanan başarılı oyuncuları hızla üst liglere taşır, yeni başlayanları korur.
 - **Dinamik Bar:** İki oyuncunun anlık doğruluk ve hız farkına göre dinamik olarak sağa/sola kayan canlı enerji üstünlük barı.
-- **Haftalık 15 Maç Barajı & Kupon Sadakat Modeli:** Haftalık coin ödülünü almak için 15 maç yapma şartı. 5.000 Coin = 10 İşler Puanı = Gerçek İşler Kitabevi indirim kuponu (`ISLER50`, `ISLER100`, `ISLER200`).
+- **Haftalık 15 Maç Barajı & Kupon Sadakat Modeli:** Haftalık coin ödülünü almak için 15 maç yapma şartı.
 
 ### 2. 🧪 10+ Zengin İnteraktif Soru Mekaniği (40+ Kazanım Havuzu)
 Klasik testlerin ötesine geçen dokunmatik ve analitik mekanikler:
-- `StepperBalance`: Kimyasal tepkime katsayılarını artı/eksi butonlarıyla dengeleme (tam eşleşme doğrulaması).
-- `MatrixToggle`: Mantık & özellik tablosu (bağımsız satır bazlı kısmi puanlama).
+- `StepperBalance`: Kimyasal tepkime katsayılarını artı/eksi butonlarıyla dengeleme.
+- `MatrixToggle`: Mantık & özellik tablosu.
 - `SliderEstimate`: Fiziksel büyüklükleri ve sayısal değerleri tolerans aralığında kaydırarak tahmin etme.
 - `TapToHighlight`: Paragrafta anlatım bozukluğu veya ana fikri dokunarak vurgulama.
 - `PairMatching`: Biyoloji ve kimya kavramlarını kartlarla eşleştirme.
@@ -67,12 +67,11 @@ Klasik testlerin ötesine geçen dokunmatik ve analitik mekanikler:
 ### 5. 📱 QR Kodlu Canlı Sınıf Yarışması (`/katil`) & Sınıf Eksik Raporu
 - Akıllı tahtada beliren QR kod veya 6 haneli PIN ile tüm sınıf telefonlarıyla anında katılır.
 - Süre bitene kadar telefon ekranında doğru şık gizlenir.
-- Yarışma bittiğinde sınıfın en çok yanlış yaptığı kazanımlar yüzdesel olarak raporlanır (Örn: *Hücre Bölünmeleri %75 Eksik*) ve doğrudan ilgili İşler Yayın Grubu konu kitabı tavsiye edilir.
+- Yarışma bittiğinde sınıfın en çok yanlış yaptığı kazanımlar yüzdesel olarak raporlanır (Örn: *Hücre Bölünmeleri %75 Eksik*) ve doğrudan ilgili konu kitabı tavsiye edilir.
 
 ### 6. 📚 Eksik Konu Analizi (`Revision`) & O2O Kitap Dönüşümü
 - Düellolarda yanlış yapılan sorular veritabanında konu başlığıyla işlenir.
 - **"🔀 Yanlışlarımı Karışık Çöz":** Sadece eksik olunan konulardan oluşan telafi antrenmanı.
-- Tamamlandığında eksiklik yüzdesi düşer, +30 Coin ödülü verilir ve Çap, Bilgi Sarmal, Aydın, Apotemi, Hız, Merkez Yayınları kitap önerisi sunulur.
 
 ### 7. 🎹 %100 Telifsiz Prosedürel Web Audio Ses Motoru
 - **Sıfır Harici MP3 / WAV Bağımlılığı:** Jüri telif güvenliği gereği harici dosya kullanılmaz.
@@ -90,11 +89,10 @@ Klasik testlerin ötesine geçen dokunmatik ve analitik mekanikler:
 | **`/tahta`** | **Akıllı Tahta Modu:** Sınıf içi 2 takım split-screen kopya korumalı tahta kapışması |
 | **`/katil`** | **Öğrenci Telefon Arayüzü:** QR kod veya 6 haneli PIN ile sınıftaki canlı yarışmaya katılma ekranı |
 | **`/admin`** | **Yönetim & Simülasyon Paneli:** 15 maç simülasyonu, lig ödülleri dağıtımı, soru bankası test aracı |
-| **`/sunum`** | **İnteraktif Web Sunum Slaytları:** 12 slaytlık tam ekran sunum, konuşmacı notları ve `.pptx` indirme |
 
 ---
 
-## 🎨 Tasarım Dili (İşler Teknoloji DNA)
+## 🎨 Tasarım Dili 
 
 - **Arena Dark:** `#150A16` (Odaklanmayı artıran koyu zemin)
 - **Surface Glass:** `#1A0E1C` (Yarı saydam cam efektli kartlar)
@@ -135,21 +133,21 @@ flowchart TD
 
 ### 1. Gereksinimler
 - **Node.js:** v18.0.0 veya üzeri
-- **Python:** v3.10+ *(Yalnızca PowerPoint `.pptx` sunumu üretmek için: `pip install python-pptx Pillow qrcode`)*
+- **Python:** v3.10+ 
 
-### 2. Bağımlılıkları Yükleme
+### 2. Yükleme
 ```bash
 npm install
 ```
 
 ### 3. Geliştirme Modunda Çalıştırma
 
-**Terminal 1 — Arka Uç Sunucusu (`http://localhost:3000`):**
+**Terminal 1 — Backend Sunucusu (`http://localhost:3000`):**
 ```bash
 npm run dev:server
 ```
 
-**Terminal 2 — Ön Yüz Uygulaması (`http://localhost:5173`):**
+**Terminal 2 — Frontend Uygulaması (`http://localhost:5173`):**
 ```bash
 npm run dev:client
 ```
@@ -161,19 +159,6 @@ npm start
 ```
 *Uygulama `http://localhost:3000` adresinde optimize edilmiş statik dosyalar ve WebSocket motoruyla canlıya alınır.*
 
-### 5. Otomatik Testleri Çalıştırma (34/34 Test)
-```bash
-npm test
-```
-*DuelSession, MatchmakingQueue, Efektif MMR, soru filtreleri ve socket doğrulamalarını içeren 34 testin tamamı çalıştırılır.*
-
-### 6. PowerPoint Sunumu Üretme (`.pptx`)
-```bash
-npm run pptx
-```
-*`Halati_Bilim_Sunum.pptx` ve `public/Halati_Bilim_Sunum.pptx` dosyalarını 16:9 formatında ve gömülü görsellerle günceller.*
-
----
 
 ## 🏆 Lisans ve Haklar
 
