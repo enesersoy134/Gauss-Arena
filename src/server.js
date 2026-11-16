@@ -1101,7 +1101,7 @@ if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   createAppServer(PORT).then(({ httpServer }) => {
     const addr = httpServer.address();
-    console.log(`İşler 1v1 Düello & Momentum Eşleştirme Sunucusu çalışıyor: http://localhost:${addr.port}`);
+    console.log(`Gauss Arena 1v1 Düello & Momentum Eşleştirme Sunucusu çalışıyor: http://localhost:${addr.port}`);
     console.log(`Pencere 1 (Oyuncu 1): http://localhost:${addr.port}/?window=1&player=p2`);
     console.log(`Pencere 2 (Oyuncu 2): http://localhost:${addr.port}/?window=2&player=p3`);
   });

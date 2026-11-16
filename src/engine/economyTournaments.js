@@ -154,7 +154,7 @@ function createInitialTournaments() {
       examType: 'TYT',
       allowedSubjects: ['matematik', 'fizik', 'kimya', 'turkce'],
       status: 'ACTIVE',
-      prizePoolDesc: '1.ye 1000 Coin + 100 İşler Puanı | 2.ye 600 Coin + 60 İşler Puanı | 3.ye 350 Coin + 35 İşler Puanı',
+      prizePoolDesc: '1.ye 1000 Coin + 100 Arena Puanı | 2.ye 600 Coin + 60 Arena Puanı | 3.ye 350 Coin + 35 Arena Puanı',
       rewardsDistributed: false,
       participants: [
         { playerId: 'p1', name: 'Ahmet Yılmaz (Standart)', points: 60, wins: 2, losses: 0, elo: 1250 },
@@ -168,7 +168,7 @@ function createInitialTournaments() {
       examType: 'AYT',
       allowedSubjects: ['matematik', 'fizik', 'kimya', 'turkce'],
       status: 'ACTIVE',
-      prizePoolDesc: '1.ye 1500 Coin + 150 İşler Puanı | 2.ye 900 Coin + 90 İşler Puanı | 3.ye 500 Coin + 50 İşler Puanı',
+      prizePoolDesc: '1.ye 1500 Coin + 150 Arena Puanı | 2.ye 900 Coin + 90 Arena Puanı | 3.ye 500 Coin + 50 Arena Puanı',
       rewardsDistributed: false,
       participants: [
         { playerId: 'p1', name: 'Ahmet Yılmaz (Standart)', points: 90, wins: 3, losses: 0, elo: 1250 },
@@ -181,7 +181,7 @@ function createInitialTournaments() {
       examType: 'LGS',
       allowedSubjects: ['turkce', 'matematik', 'sosyal', 'fen'],
       status: 'ACTIVE',
-      prizePoolDesc: '1.ye 1200 Coin + 120 İşler Puanı | 2.ye 700 Coin + 70 İşler Puanı | 3.ye 400 Coin + 40 İşler Puanı',
+      prizePoolDesc: '1.ye 1200 Coin + 120 Arena Puanı | 2.ye 700 Coin + 70 Arena Puanı | 3.ye 400 Coin + 40 Arena Puanı',
       rewardsDistributed: false,
       participants: [
         { playerId: 'p4', name: 'Ayşe Çelik (8. Sınıf LGS)', points: 90, wins: 3, losses: 0, elo: 1620 },
@@ -269,7 +269,7 @@ class GameStore {
     }
     const coins = Math.floor(Number(coinsToSpend) || 0);
     if (coins < 5000 || coins % 500 !== 0) {
-      return { ok: false, reason: 'En az 5000 ve 500\'ün katı Coin dönüştürülebilir (5000 Coin = 10 İşler Sadakat Puanı).' };
+      return { ok: false, reason: 'En az 5000 ve 500\'ün katı Coin dönüştürülebilir (5000 Coin = 10 Arena Sadakat Puanı).' };
     }
     if (p.coins < coins) {
       return { ok: false, reason: `Yetersiz Coin bakiyesi (Mevcut: ${p.coins} Coin).` };
@@ -283,7 +283,7 @@ class GameStore {
     const couponCode = `ISLER-${islerPointsAdded}TL-${randSuffix}`;
     p.coupons.unshift({
       code: couponCode,
-      description: 'İşler Kitabevi İndirim Kuponu',
+      description: 'Kitap Mağazası İndirim Kuponu',
       discountPercent: islerPointsAdded,
       pointsSpent: islerPointsAdded,
       islerPointsUsed: islerPointsAdded,

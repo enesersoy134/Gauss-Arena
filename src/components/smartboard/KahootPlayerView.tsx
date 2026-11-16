@@ -247,7 +247,7 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
                 CANLI SINIF YARIŞMASI
               </span>
               <h1 className="font-poppins font-black text-sm sm:text-base text-white">
-                İŞLER ARENA • KATIL
+                GAUSS ARENA • KATIL
               </h1>
             </div>
           </div>
@@ -354,7 +354,7 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
         </main>
 
         <footer className="max-w-md mx-auto w-full text-center text-[11px] text-zinc-500 pb-2">
-          İşler Teknoloji • Akıllı Tahta & Mobil Sınıf Deneyimi
+          Gauss Arena • Akıllı Tahta & Mobil Sınıf Deneyimi
         </footer>
       </div>
     );
@@ -717,7 +717,7 @@ export const KahootPlayerView: React.FC<KahootPlayerViewProps> = ({ onExit }) =>
         </main>
 
         <footer className="max-w-md mx-auto w-full text-center text-xs text-zinc-500 pb-2">
-          İşler Teknoloji Sınıf Yarışması
+          Gauss Arena Sınıf Yarışması
         </footer>
       </div>
     );

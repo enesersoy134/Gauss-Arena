@@ -72,8 +72,8 @@ export function getRecommendationsForTopic(
   return [
     {
       id: 'rec_generic_isler',
-      bookTitle: 'İşler Yayın Grubu Branş Soru Bankası',
-      publisher: 'İşler Yayın Grubu',
+      bookTitle: 'Branş Soru Bankası',
+      publisher: 'Eğitim Yayınları',
       recommendedSection: `${topic || subject} Konu Tarama Testleri`,
       level: 'Orta',
       studyTip: 'Yanlış yaptığın konunun özetini tekrar edip 2 tarama testi çöz.',

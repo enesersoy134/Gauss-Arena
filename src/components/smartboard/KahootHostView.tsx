@@ -1150,7 +1150,7 @@ export const KahootHostView: React.FC<KahootHostViewProps> = ({ onBackToDuel }) 
                     Sınıf Konu & Kazanım Analizi (En Çok Yanlış Yapılan Konular)
                   </h3>
                   <p className="text-xs text-zinc-400 font-mono">
-                    Öğrencilerin zorlandığı konular ve İşler Yayın Grubu hedef kaynak önerileri
+                    Öğrencilerin zorlandığı konular ve hedef kaynak önerileri
                   </p>
                 </div>
               </div>

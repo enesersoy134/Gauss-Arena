@@ -1,5 +1,5 @@
 # 🔥 Gauss Arena
-### *İşler Hackathon '26 • EdTech Game Jam Projesi*
+### *EdTech Game Jam & Eğitim Oyunlaştırma Projesi*
 
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18%2F19-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev/)
@@ -96,7 +96,7 @@ Klasik testlerin ötesine geçen dokunmatik ve analitik mekanikler:
 
 - **Arena Dark:** `#150A16` (Odaklanmayı artıran koyu zemin)
 - **Surface Glass:** `#1A0E1C` (Yarı saydam cam efektli kartlar)
-- **İşler Turuncusu:** `#F14E13` (Dinamik marka kimliği ve aksiyon rengi)
+- **Arena Turuncusu:** `#F14E13` (Dinamik marka kimliği ve aksiyon rengi)
 - **Rakip Mavisi:** `#3B82F6` | **Başarı Yeşili:** `#22C55E` | **Combo Moru:** `#A855F7`
 - **Tipografi:**
   - `Poppins` (Enerjik Başlıklar)
@@ -161,4 +161,4 @@ npm start
 
 ## 🏆 Lisans ve Haklar
 
-Bu proje **İşler Hackathon '26** kapsamında geliştirilmiştir. Kullanılan tüm arayüz bileşenleri, soru tipleri, ses sentezleme motoru ve algoritmalar özgün ve telifsizdir.
+Bu proje **EdTech Game Jam '26** kapsamında geliştirilmiştir. Kullanılan tüm arayüz bileşenleri, soru tipleri, ses sentezleme motoru ve algoritmalar özgün ve telifsizdir.

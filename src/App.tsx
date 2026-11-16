@@ -615,7 +615,7 @@ export default function App() {
     if (res?.ok) {
       soundEngine.playCorrect();
       const awardedPoints = res.islerPointsAwarded ?? res.islerPointsAdded ?? Math.floor(coinsToConvert / 500);
-      showToast(`Tebrikler! ${coinsToConvert} Coin karşılığında ${awardedPoints} İşler Puanı ve indirim kuponu kazandınız!`);
+      showToast(`Tebrikler! ${coinsToConvert} Coin karşılığında ${awardedPoints} Arena Puanı ve indirim kuponu kazandınız!`);
     } else {
       soundEngine.playWrong();
       showToast(res?.reason || 'Dönüştürme başarısız oldu.');
@@ -775,8 +775,8 @@ export default function App() {
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h1 className="font-poppins font-black text-sm sm:text-xl tracking-tight text-white whitespace-nowrap">
-                  <span className="hidden sm:inline">İŞLER TEKNOLOJİ </span>
-                  <span className="sm:hidden inline">İŞLER </span>
+                  <span className="hidden sm:inline">GAUSS </span>
+                  <span className="sm:hidden inline">GAUSS </span>
                   <span className="text-[#F14E13] text-xs sm:text-sm font-bold">ARENA</span>
                 </h1>
               </div>
@@ -1657,21 +1657,21 @@ export default function App() {
               </div>
             </div>
 
-            {/* SAĞ: Coin -> İşler Puanı Dönüştürücü & Kuponlar (5 Kolon) */}
+            {/* SAĞ: Coin -> Arena Puanı Dönüştürücü & Kuponlar (5 Kolon) */}
             <div className="lg:col-span-5 flex flex-col gap-6">
               {/* Dönüştürücü Kartı */}
               <div className="game-card p-6 flex flex-col gap-4 border-amber-500/30">
                 <div className="flex items-center justify-between">
                   <h3 className="font-poppins font-bold text-base text-white flex items-center gap-2">
                     <ShoppingBag className="w-4 h-4 text-amber-400" />
-                    <span>Coin ➔ İşler Sadakat Puanı</span>
+                    <span>Coin ➔ Sadakat Puanı</span>
                   </h3>
                 </div>
 
                 <p className="text-xs text-[#B5CBC8] leading-relaxed">
-                  Düellolardan kazandığınız Coin'leri, İşler Kitabevi şubelerinde geçerli indirim kuponlarına dönüştürün!
+                  Düellolardan kazandığınız Coin'leri, kitap mağazalarında geçerli indirim kuponlarına dönüştürün!
                   <br />
-                  <span className="font-mono text-amber-400 font-bold">5000 Coin = 10 İşler Puanı (%10 İndirim)</span>
+                  <span className="font-mono text-amber-400 font-bold">5000 Coin = 10 Arena Puanı (%10 İndirim)</span>
                 </p>
 
                 <div className="flex items-center gap-2 bg-[#0F0510] p-3 rounded-xl border border-white/10">
@@ -1705,7 +1705,7 @@ export default function App() {
               <div className="game-card p-5 flex flex-col gap-3">
                 <h3 className="font-poppins font-bold text-sm text-white flex items-center gap-2">
                   <Tag className="w-4 h-4 text-[#F14E13]" />
-                  <span>İşler Kitabevi Kuponlarım ({currentPlayer.coupons?.length || 0})</span>
+                  <span>Kitap Mağazası Kuponlarım ({currentPlayer.coupons?.length || 0})</span>
                 </h3>
 
                 {!currentPlayer.coupons || currentPlayer.coupons.length === 0 ? (
@@ -2142,12 +2142,12 @@ export default function App() {
                             </div>
                           </div>
 
-                          {/* İşler Yayın Grubu Kaynak Önerileri */}
+                          {/* Kaynak Önerileri */}
                           {recs && recs.length > 0 && (
                             <div className="pt-2 border-t border-white/5 flex flex-col gap-2">
                               <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-amber-300 uppercase tracking-wider">
                                 <BookOpen className="w-3.5 h-3.5 text-[#F14E13]" />
-                                <span>Önerilen İşler Yayını:</span>
+                                <span>Önerilen Kaynak:</span>
                               </div>
                               {recs.slice(0, 1).map((rec) => (
                                 <div

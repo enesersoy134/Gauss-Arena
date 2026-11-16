@@ -20,7 +20,7 @@ interface Particle {
 }
 
 const COLORS = [
-  '#F14E13', // İşler Turuncu
+  '#F14E13', // Arena Turuncu
   '#FBBF24', // Amber Altın
   '#22C55E', // Zümrüt Yeşil
   '#3B82F6', // Elektrik Mavi

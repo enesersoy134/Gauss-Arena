@@ -708,7 +708,7 @@ export const SmartboardScreen: React.FC<SmartboardScreenProps> = ({ onExit }) =>
                 <span className="text-xs font-mono text-[#B5CBC8]">/tahta</span>
               </div>
               <h1 className="font-poppins font-black text-lg sm:text-2xl text-white tracking-tight">
-                {boardMode === 'kahoot' ? '📱 CANLI SINIF YARIŞMASI' : '🖥️ İŞLER AKILLI TAHTA DÜELLO MODU'}
+                {boardMode === 'kahoot' ? '📱 CANLI SINIF YARIŞMASI' : '🖥️ AKILLI TAHTA DÜELLO MODU'}
               </h1>
             </div>
           </div>

@@ -305,7 +305,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
         </main>
 
         <footer className="max-w-2xl mx-auto w-full text-center text-xs text-zinc-500 pb-2">
-          İşler Teknoloji • Bireysel Adaptif Öğrenme Platformu
+          Gauss Arena • Bireysel Adaptif Öğrenme Platformu
         </footer>
       </div>
     );
@@ -325,7 +325,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
     );
   }
 
-  // Yanlış veya kısmi doğru yapıldığında İşler Yayınları kaynak tavsiyeleri
+  // Yanlış veya kısmi doğru yapıldığında kaynak tavsiyeleri
   const recommendations = getRecommendationsForTopic(
     currentQ.subject,
     currentQ.topic,
@@ -494,14 +494,14 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
               </p>
             </div>
 
-            {/* Yanlış/Kısmi Doğru ise: İşler Yayın Grubu Kaynak İpucu */}
+            {/* Yanlış/Kısmi Doğru ise: Kaynak İpucu */}
             {!lastResult.isCorrect && topRec && (
               <div className="p-4 rounded-2xl bg-gradient-to-r from-orange-500/15 to-amber-500/10 border border-orange-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                 <div className="flex items-start gap-2.5">
                   <BookOpen className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-poppins font-bold text-orange-300 block">
-                      📚 Önerilen İşler Kaynağı: {topRec.bookTitle} ({topRec.publisher})
+                      📚 Önerilen Kaynak: {topRec.bookTitle} ({topRec.publisher})
                     </span>
                     <span className="text-zinc-300 block mt-0.5">
                       Bölüm: <strong>{topRec.recommendedSection}</strong> • {topRec.studyTip}
@@ -594,7 +594,7 @@ export const RevisionPracticeScreen: React.FC<RevisionPracticeScreenProps> = ({
       )}
 
       <footer className="max-w-4xl mx-auto w-full text-center text-[11px] text-zinc-500 py-3 pb-24 sm:pb-28">
-        İşler Teknoloji • Bireysel Eksik Konu Telafi Modülü
+        Gauss Arena • Bireysel Eksik Konu Telafi Modülü
       </footer>
     </div>
   );

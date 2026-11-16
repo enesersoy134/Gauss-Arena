@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "İşler Yayın Grubu - Konu Bazlı Akıllı Kaynak Önerileri",
+    "title": "Gauss Arena - Konu Bazlı Akıllı Kaynak Önerileri",
     "version": "1.0.0",
     "description": "Oyuncunun düellolarda yanlış yaptığı konu başlıklarına (subTopic / topic) göre önerilen kitap, fasikül ve çalışma rehberi."
   },
@@ -176,7 +176,7 @@
       "examType": "AYT",
       "topicKeywords": ["söz sanat", "şiir", "islamiyet öncesi", "destan", "dede korkut", "geçiş dönemi", "kutadgu", "divanü", "halk edebiyatı", "tasavvuf", "divan edebiyatı", "gazel", "fuzûlî", "şeyh gâlip", "tanzimat", "servet-i fünun", "fecriati", "millî edebiyat", "cumhuriyet", "roman", "yazar", "garip", "ikinci yeni", "beş hececiler", "edebi akım", "tiyatro", "orta oyunu"],
       "bookTitle": "Bilgi Sarmal AYT Edebiyat Soru Bankası & Limit El Kitabı",
-      "publisher": "Bilgi Sarmal / İşler Yayın Grubu",
+      "publisher": "Bilgi Sarmal / Limit Yayınları",
       "recommendedSection": "Dönemlere Göre Yazar-Eser Eşleştirmeleri, Divan/Halk Şiiri ve Cumhuriyet Romanı",
       "level": "Orta - İleri",
       "studyTip": "Tanzimat, Servet-i Fünun ve Cumhuriyet dönemi başyapıt romanlarını (Tutunamayanlar, Huzur, İnce Memed, Mai ve Siyah) yazar-kahraman kartlarıyla eşleştirerek çalış."

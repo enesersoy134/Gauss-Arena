@@ -18,7 +18,7 @@ function loadResourceCatalog(filePath = defaultFilePath) {
     return parsed;
   } catch {
     return {
-      meta: { title: 'İşler Yayın Grubu Kaynak Önerileri' },
+      meta: { title: 'Gauss Arena Kaynak Önerileri' },
       topicRecommendations: [],
       defaultBySubject: {},
     };
@@ -27,7 +27,7 @@ function loadResourceCatalog(filePath = defaultFilePath) {
 
 /**
  * Yanlış yapılan ders (subject) ve konu başlığına (topic) göre kaynak-onerileri.json'dan
- * en uygun İşler Yayın Grubu kitap ve fasikül önerilerini döndürür.
+ * en uygun kitap ve fasikül önerilerini döndürür.
  */
 function getRecommendationsForTopic(subject = 'matematik', topic = '', examType = 'TYT') {
   const catalog = loadResourceCatalog();
@@ -85,8 +85,8 @@ function getRecommendationsForTopic(subject = 'matematik', topic = '', examType 
   return [
     {
       id: 'rec_generic_isler',
-      bookTitle: 'İşler Yayın Grubu Branş Soru Bankası',
-      publisher: 'İşler Yayın Grubu',
+      bookTitle: 'Branş Soru Bankası',
+      publisher: 'Eğitim Yayınları',
       recommendedSection: `${topic || subject} Konu Tarama Testleri`,
       level: 'Orta',
       studyTip: 'Yanlış yaptığın konunun özetini tekrar edip 2 tarama testi çöz.',

@@ -1,5 +1,5 @@
 /**
- * 🎮 İşler Hackathon '26 - Oyun & Soru Veri Tipleri
+ * 🎮 Gauss Arena - Oyun & Soru Veri Tipleri
  */
 
 export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce' | 'fen' | 'sosyal' | 'geometri';

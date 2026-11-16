@@ -185,7 +185,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   </h1>
                 </div>
                 <p className="text-xs text-[#B5CBC8] font-mono mt-0.5 hidden md:block">
-                  İşler Teknoloji Operatör Arayüzü • Canlı Eşleştirme & Oyuncu Yönetimi
+                  Gauss Arena Operatör Arayüzü • Canlı Eşleştirme & Oyuncu Yönetimi
                 </p>
               </div>
             </div>
@@ -493,7 +493,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             <span>Bakiye:</span>
                           </span>
                           <span className="text-white font-bold">
-                            {p.coins} Coin • {p.islerPoints} İşler Puanı
+                            {p.coins} Coin • {p.islerPoints} Arena Puanı
                           </span>
                         </div>
 

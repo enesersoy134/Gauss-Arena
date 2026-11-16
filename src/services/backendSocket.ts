@@ -670,7 +670,7 @@ export function useBackendGame() {
           examType: 'TYT',
           allowedSubjects: ['matematik', 'fizik', 'kimya', 'turkce'],
           status: 'ACTIVE',
-          prizePoolDesc: '1.ye 1000 Coin + 100 İşler Puanı | 2.ye 600 Coin + 60 İşler Puanı | 3.ye 350 Coin + 35 İşler Puanı',
+          prizePoolDesc: '1.ye 1000 Coin + 100 Arena Puanı | 2.ye 600 Coin + 60 Arena Puanı | 3.ye 350 Coin + 35 Arena Puanı',
           rewardsDistributed: false,
           participants: [
             { playerId: 'p1', name: 'Ahmet Yılmaz (Standart)', points: 60, wins: 2, losses: 0, elo: 1250 },
@@ -683,7 +683,7 @@ export function useBackendGame() {
           examType: 'AYT',
           allowedSubjects: ['matematik', 'fizik', 'kimya', 'turkce'],
           status: 'ACTIVE',
-          prizePoolDesc: '1.ye 1500 Coin + 150 İşler Puanı | 2.ye 900 Coin + 90 İşler Puanı | 3.ye 500 Coin + 50 İşler Puanı',
+          prizePoolDesc: '1.ye 1500 Coin + 150 Arena Puanı | 2.ye 900 Coin + 90 Arena Puanı | 3.ye 500 Coin + 50 Arena Puanı',
           rewardsDistributed: false,
           participants: [
             { playerId: 'p1', name: 'Ahmet Yılmaz (Standart)', points: 90, wins: 3, losses: 0, elo: 1250 },
@@ -695,7 +695,7 @@ export function useBackendGame() {
           examType: 'LGS',
           allowedSubjects: ['turkce', 'matematik', 'sosyal', 'fen'],
           status: 'ACTIVE',
-          prizePoolDesc: '1.ye 1200 Coin + 120 İşler Puanı | 2.ye 700 Coin + 70 İşler Puanı | 3.ye 400 Coin + 40 İşler Puanı',
+          prizePoolDesc: '1.ye 1200 Coin + 120 Arena Puanı | 2.ye 700 Coin + 70 Arena Puanı | 3.ye 400 Coin + 40 Arena Puanı',
           rewardsDistributed: false,
           participants: [
             { playerId: 'p4', name: 'Ayşe Çelik (8. Sınıf LGS)', points: 90, wins: 3, losses: 0, elo: 1620 },

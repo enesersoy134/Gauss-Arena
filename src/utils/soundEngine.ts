@@ -1,5 +1,5 @@
 /**
- * 🎵 İşler Hackathon Arena - %100 Telifsiz Web Audio Sentezleyici & Sequencer
+ * 🎵 Gauss Arena - %100 Telifsiz Web Audio Sentezleyici & Sequencer
  * 
  * Jüri ve lisans güvenliği kuralı gereğince hiçbir harici MP3/WAV kullanılmaz;
  * tüm ses efektleri ve fon müzikleri Web Audio API ile gerçek zamanlı olarak

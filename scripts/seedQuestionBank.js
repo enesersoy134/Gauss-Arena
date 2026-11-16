@@ -457,7 +457,7 @@ function seedAll() {
       examType: 'TYT & AYT',
       totalCount: RAW_INTERACTIVE_QUESTIONS.length,
       interactiveTypesCount: 14,
-      description: 'İşler Arena 14 İnteraktif Soru Tipi Havuzu (TYT & AYT Matematik, Fizik, Kimya, Biyoloji, Türkçe)',
+      description: 'Gauss Arena 14 İnteraktif Soru Tipi Havuzu (TYT & AYT Matematik, Fizik, Kimya, Biyoloji, Türkçe)',
     },
     questions: RAW_INTERACTIVE_QUESTIONS,
   };
