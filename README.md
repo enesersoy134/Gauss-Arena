@@ -23,10 +23,10 @@
 
 Türkiye'de her yıl **3.5 milyondan fazla öğrenci** LGS, TYT ve AYT sınavlarına hazırlanmaktadır. Ancak klasik test çözümü öğrencide **pasif eleme alışkanlığı**, **erken bıkkınlık** ve **yüzeysel öğrenme** yaratmaktadır.
 
-**İşler Teknoloji Arena (Halatı Bilim)**; klasik çoktan seçmeli A-B-C-D-E testlerini:
-1. **Canlı 1v1 Halat Çekme (Tug-of-War) Düellolarına**,
-2. **Kavramı dokunarak öğreten Başlangıç Mini Oyunlarına**,
-3. **Kopya korumalı Akıllı Tahta 2 Takım Kapışmalarına (`/tahta`)**,
+**İşler Teknoloji Arena **; klasik çoktan seçmeli A-B-C-D-E testlerini:
+1. **Canlı 1v1 Düelloları**,
+2. **Kavramı deneyerek öğreten Başlangıç Mini Oyunlarına**,
+3. ** Akıllı Tahta ikili Takım Kapışmalarına (`/tahta`)**,
 4. **Tüm sınıfın telefonlarıyla katıldığı QR Canlı Sınıf Yarışmalarına (`/katil`)**,
 5. **Kazanım bazlı Yüzdesel Eksik Analizi (`Revision`) ve İşler Yayın Grubu Kaynak Önerilerine**
 
@@ -39,7 +39,7 @@ dönüştüren bütünsel ve yeni nesil bir **EdTech Oyunlaştırma Ekosistemidi
 ### 1. ⚔️ Momentum Tabanlı Efektif MMR & Canlı 1v1 Düello
 - **Momentum Formülü:** $MMR_{eff} = ELO + \text{sign}(S) \cdot \min(|S|-2, 6) \cdot 35$ *(S = Seri Galibiyet/Mağlubiyet)*.
 - **Smurf Kalkanı:** Arka arkaya maç kazanan başarılı oyuncuları hızla üst liglere taşır, yeni başlayanları korur.
-- **Dinamik Halat Çekme (Tug-of-War) Barı:** İki oyuncunun anlık doğruluk ve hız farkına göre dinamik olarak sağa/sola kayan canlı enerji üstünlük barı.
+- **Dinamik Bar:** İki oyuncunun anlık doğruluk ve hız farkına göre dinamik olarak sağa/sola kayan canlı enerji üstünlük barı.
 - **Haftalık 15 Maç Barajı & Kupon Sadakat Modeli:** Haftalık coin ödülünü almak için 15 maç yapma şartı. 5.000 Coin = 10 İşler Puanı = Gerçek İşler Kitabevi indirim kuponu (`ISLER50`, `ISLER100`, `ISLER200`).
 
 ### 2. 🧪 10+ Zengin İnteraktif Soru Mekaniği (40+ Kazanım Havuzu)
@@ -53,7 +53,7 @@ Klasik testlerin ötesine geçen dokunmatik ve analitik mekanikler:
 - `DragDropLab`: Deney tüplerini ve düzenekleri sürükleyip bırakarak reaksiyon oluşturma.
 - `OrderingAndFormula`: Tarihsel olayları veya formül adımlarını kronolojik sıraya dizme.
 - `ChainConversion` & `MultiSelectBubble`: Çoklu kazanım doğrulaması.
-- **Sınav Kademeleri:** `LGS`, `TYT`, `AYT` ve `KARMA`.
+- **Sınav Kademeleri:** `LGS`, `TYT`, `AYT`.
 - **Seviye Motoru:** `Adaptif`, `Kolay`, `Orta` ve `Zor`.
 
 ### 3. 🎯 Bireysel Alıştırma Modu & Eğitsel Mini Oyunlar
