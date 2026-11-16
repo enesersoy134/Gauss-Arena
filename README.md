@@ -24,7 +24,7 @@
 Türkiye'de her yıl **milyonlarca öğrenci** LGS, TYT ve AYT sınavlarına hazırlanmaktadır. Ancak klasik test çözümü **konuyu kavrayamamaya**, **bıkkınlığa** ve **ezberlese bile bilgileri uygulamakta zorlanmaya** yol açmaktadır.
 
 **Gauss Arena **; klasik çoktan seçmeli A-B-C-D-E testlerini:
-1. **Canlı 1v1 düellolar**,
+1. **Canlı 1v1 düellolara**,
 2. **Kavramı deneyerek öğreten Başlangıç Mini Oyunlarına**,
 3. ** Akıllı Tahta ikili Takım Kapışmalarına (`/tahta`)**,
 4. **Tüm sınıfın telefonlarıyla katıldığı QR Canlı Sınıf Yarışmalarına (`/katil`)**,
