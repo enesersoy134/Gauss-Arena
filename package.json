@@ -10,8 +10,7 @@
     "start": "node src/server.js",
     "build": "tsc && vite build",
     "test": "node --test tests/*.test.js",
-    "seed": "node scripts/seedQuestionBank.js",
-    "pptx": "python scripts/generate_pptx.py"
+    "seed": "node scripts/seedQuestionBank.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",

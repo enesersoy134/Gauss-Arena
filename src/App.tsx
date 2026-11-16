@@ -7,7 +7,6 @@ import { getRecommendationsForTopic } from './utils/resourceRecommendations';
 import LiveDuelScreen from './components/game/LiveDuelScreen';
 import GameScreen from './components/game/GameScreen';
 import RevisionPracticeScreen from './components/game/RevisionPracticeScreen';
-import PresentationDeck from './components/presentation/PresentationDeck';
 import AdminPanel from './components/admin/AdminPanel';
 import SmartboardScreen from './components/smartboard/SmartboardScreen';
 import KahootPlayerView from './components/smartboard/KahootPlayerView';
@@ -419,17 +418,6 @@ export default function App() {
   // =========================================================================
   // ROUTE GÖRÜNÜMLERİ
   // =========================================================================
-
-  // 0. PROJE SUNUM SLAYTLARI (/sunum veya /slayt)
-  if (currentPath.startsWith('/sunum') || currentPath.startsWith('/slayt')) {
-    return (
-      <PresentationDeck
-        onExit={() => {
-          navigateTo('/');
-        }}
-      />
-    );
-  }
 
   // 1. /random YÜKLEME EKRANI
   if (currentPath.startsWith('/random')) {

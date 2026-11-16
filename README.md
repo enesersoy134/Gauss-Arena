@@ -21,7 +21,7 @@
 
 ## 🎯 Vizyon ve Proje Özeti
 
-Türkiye'de her yıl **milyonlarca öğrenci** LGS, TYT ve AYT sınavlarına hazırlanmaktadır. Ancak klasik test çözümü **konuyu kavrayamamaya**, **bıkkınlığa** ve **ezberlese bile bilgileri uygulamakta zorlanmaya** yol açmaktadır.
+Türkiye'de her yıl **milyonlarca öğrenci** LGS, TYT ve AYT sınavlarına hazırlanmaktadır. Ancak klasik test çözümü her zaman öğrencilerin konuları kavramasına yardımcı olmamaktadır.
 
 **Gauss Arena **; klasik çoktan seçmeli A-B-C-D-E testlerini:
 1. **Canlı 1v1 düellolara**,
@@ -133,7 +133,6 @@ flowchart TD
 
 ### 1. Gereksinimler
 - **Node.js:** v18.0.0 veya üzeri
-- **Python:** v3.10+ 
 
 ### 2. Yükleme
 ```bash

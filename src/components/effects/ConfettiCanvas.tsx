@@ -56,7 +56,6 @@ export const ConfettiCanvas: React.FC<ConfettiCanvasProps> = ({
     const particles: Particle[] = [];
     const count = Math.min(180, Math.floor(width / 7));
 
-    // Ekranın iki alt köşesinden ve ortadan yukarı doğru fırlayan patlama
     for (let i = 0; i < count; i++) {
       const fromLeft = i % 2 === 0;
       const startX = fromLeft ? width * 0.15 : width * 0.85;

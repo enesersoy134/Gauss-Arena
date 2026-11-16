@@ -1,6 +1,3 @@
-# Şahsi çalışma ve not klasörü
-sahsi/
-
 # Bağımlılıklar ve Sistem Dosyaları
 node_modules/
 .env
@@ -8,7 +5,5 @@ node_modules/
 .DS_Store
 dist/
 build/
-
-# Office / PowerPoint geçici kilit dosyaları
-~$*
+*.log
 *.tmp

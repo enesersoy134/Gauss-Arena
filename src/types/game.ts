@@ -1,6 +1,5 @@
 /**
  * 🎮 İşler Hackathon '26 - Oyun & Soru Veri Tipleri
- * Kaynak: soru_tasarimlari/soru_tipleri.md & sahsi/tasarim_dili.md
  */
 
 export type SubjectType = 'fizik' | 'kimya' | 'biyoloji' | 'matematik' | 'turkce' | 'fen' | 'sosyal' | 'geometri';
@@ -111,7 +110,7 @@ export interface BaseQuestion<T = unknown> {
 }
 
 /* =========================================================================
- * 1. UNIVERSAL CHOICE (Evrensel Seçim: test, true_false, comparison, odd_one_out)
+ * 1. UNIVERSAL CHOICE 
  * ========================================================================= */
 export type UniversalChoiceVariant = 'test' | 'true_false' | 'comparison' | 'odd_one_out';
 
@@ -134,7 +133,7 @@ export interface UniversalChoiceQuestion extends BaseQuestion<UniversalChoicePay
 }
 
 /* =========================================================================
- * 2. ORDERING AND FORMULA (Sıralama ve Formül İnşası)
+ * 2. ORDERING AND FORMULA 
  * ========================================================================= */
 export type OrderingMode = 'sequence' | 'formula_builder';
 
@@ -151,7 +150,7 @@ export interface OrderingAndFormulaQuestion extends BaseQuestion<OrderingAndForm
 }
 
 /* =========================================================================
- * 3. PAIR MATCHING (İkili Eşleştirme)
+ * 3. PAIR MATCHING 
  * ========================================================================= */
 export interface MatchingPair {
   pairId: string;
@@ -170,7 +169,7 @@ export interface PairMatchingQuestion extends BaseQuestion<PairMatchingPayload> 
 }
 
 /* =========================================================================
- * 4. SWIPE GROUPING (Kaydırarak Gruplama - Tinder Tarzı)
+ * 4. SWIPE GROUPING
  * ========================================================================= */
 export interface SwipeCategory {
   id: 'left' | 'right';
@@ -195,7 +194,7 @@ export interface SwipeGroupingQuestion extends BaseQuestion<SwipeGroupingPayload
 }
 
 /* =========================================================================
- * 5. NUMPAD CLOSEST (Sayısal Tahmin / Kasa Şifresi)
+ * 5. NUMPAD CLOSEST 
  * ========================================================================= */
 export interface NumpadClosestPayload {
   correctAnswer: number;
@@ -225,7 +224,7 @@ export interface NumpadClosestQuestion extends BaseQuestion<NumpadClosestPayload
 }
 
 /* =========================================================================
- * 6. MULTI SELECT BUBBLE (Baloncuk Avı / Çoklu Seçim)
+ * 6. MULTI SELECT BUBBLE
  * ========================================================================= */
 export interface BubbleItem {
   id: string;
@@ -244,7 +243,7 @@ export interface MultiSelectBubbleQuestion extends BaseQuestion<MultiSelectBubbl
 }
 
 /* =========================================================================
- * 7. STEPPER BALANCE (Katsayı Artır / Azalt)
+ * 7. STEPPER BALANCE
  * ========================================================================= */
 export interface StepperSlot {
   id: string;
@@ -267,7 +266,7 @@ export interface StepperBalanceQuestion extends BaseQuestion<StepperBalancePaylo
 }
 
 /* =========================================================================
- * 8. SPOT THE BUG (Hatalı Parçayı Bul)
+ * 8. SPOT THE BUG
  * ========================================================================= */
 export interface BugBlockItem {
   id: string;
@@ -287,7 +286,7 @@ export interface SpotTheBugQuestion extends BaseQuestion<SpotTheBugPayload> {
 }
 
 /* =========================================================================
- * 9. PROGRESSIVE CLUES (Aşamalı İpucu / Ben Kimim?)
+ * 9. PROGRESSIVE CLUES
  * ========================================================================= */
 export interface ProgressiveClueItem {
   stage: number;
@@ -308,7 +307,7 @@ export interface ProgressiveCluesQuestion extends BaseQuestion<ProgressiveCluesP
 }
 
 /* =========================================================================
- * 10. TARGET COMBINATION (Hedef Kombinasyon)
+ * 10. TARGET COMBINATION
  * ========================================================================= */
 export interface CombinationOptionItem {
   id: string;
@@ -328,7 +327,7 @@ export interface TargetCombinationQuestion extends BaseQuestion<TargetCombinatio
 }
 
 /* =========================================================================
- * 11. CHAIN CONVERSION (Zincirleme Dönüşüm)
+ * 11. CHAIN CONVERSION
  * ========================================================================= */
 export interface ChainStepItem {
   stepNumber: number;
@@ -347,7 +346,7 @@ export interface ChainConversionQuestion extends BaseQuestion<ChainConversionPay
 }
 
 /* =========================================================================
- * 12. MATRIX TOGGLE (Özellik Matrisi / Şalter Tablosu)
+ * 12. MATRIX TOGGLE
  * ========================================================================= */
 export interface MatrixRowItem {
   id: string;
@@ -377,7 +376,7 @@ export interface MatrixToggleQuestion extends BaseQuestion<MatrixTogglePayload> 
 }
 
 /* =========================================================================
- * 13. SLIDER (Parametre Ayarlama)
+ * 13. SLIDER
  * ========================================================================= */
 export interface SliderPayload {
   min: number;
@@ -395,7 +394,7 @@ export interface SliderQuestion extends BaseQuestion<SliderPayload> {
 }
 
 /* =========================================================================
- * 14. HOTSPOT (Görsel Hedefe Tıklama)
+ * 14. HOTSPOT
  * ========================================================================= */
 export interface HotspotRegion {
   id: string;
@@ -417,7 +416,7 @@ export interface HotspotQuestion extends BaseQuestion<HotspotPayload> {
 }
 
 /* =========================================================================
- * TÜM SORULARI KAPSAYAN ANA QUESTION UNION TİPİ
+ * TÜM SORULARI KAPSAYAN MAIN QUESTION UNION TYPE
  * ========================================================================= */
 export type Question =
   | UniversalChoiceQuestion

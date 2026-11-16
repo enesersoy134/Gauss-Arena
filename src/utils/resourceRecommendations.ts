@@ -12,7 +12,7 @@ export interface ResourceRecommendation {
 
 /**
  * Yanlış yapılan ders (subject) ve konu başlığına (topic) göre kaynak-onerileri.json
- * dosyasından en uygun İşler Yayın Grubu kaynak önerilerini döndürür.
+ * dosyasından en uygun kaynak önerilerini döndürür.
  */
 export function getRecommendationsForTopic(
   subject: string = 'matematik',

@@ -7,10 +7,7 @@ export interface CriticalVignetteProps {
   timeLeft?: number;
 }
 
-/**
- * Son 5 saniyeye girildiğinde ekranın kenarlarında atan
- * adrenalin dolu sinematik kırmızı/turuncu vignette nabzı
- */
+
 export const CriticalVignette: React.FC<CriticalVignetteProps> = ({ active, timeLeft }) => {
   if (!active) return null;
 
